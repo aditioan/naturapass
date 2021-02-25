@@ -1,0 +1,65 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block corps %}
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle container-index">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    {% include 'AdminNewsBundle:Include:slide-form.html.twig' %}
+
+                    <div class="news" ng-controller="SlideListController" ng-init="loadSlides()">
+                        <div ng-cloak class="container-md" ng-repeat="slide in slides | orderBy: 'sort': false" ng-class="{loading: slide.loading}">
+                            <button type="button" class="close" ng-click="deleteSlide($index, slide)">&times;</button>
+
+                            {% verbatim %}
+
+                            <div class="row">
+                                <div class="col-xs-9">
+                            <img ng-src="{{ slide.media.path }}">
+                                </div>
+                            </div>
+                            {% endverbatim %}
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <span>Active :</span>
+
+                                        <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                             data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                            {% verbatim %}
+                                            <input type="checkbox" id="slideActive{{ slide.id }}" ng-model="slide.active" ng-checked="slide.initActive" autocomplete="off" ng-change="activeSlide(slide)">
+                                            <label for="slideActive{{ slide.id }}"></label>
+                                            {% endverbatim %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <span>Ordre :</span>
+
+                                        <input type="number" ng-model="slide.sort" ng-change="updateSlideSort(slide)" min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/News/SlideControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

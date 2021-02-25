@@ -1,0 +1,23 @@
+naturapass_email_user_invitation:
+    path:    /invitation/{fullname}/{email}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:invitation }
+
+naturapass_email_user_friend:
+    path:    /friend/{user_fullname}/{fullname}/{user_tag}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:friend }
+
+naturapass_email_user_password:
+    path:    /password/{fullname}/{token}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:changePassword }
+
+naturapass_email_user_confirm:
+    path:    /confirm/{fullname}/{link}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:confirm }
+
+naturapass_email_user_register:
+    path:    /register/{fullname}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:register }
+
+naturapass_email_user_verify_device:
+    path:    /verify-device/{device}/{token}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:verifyDevice }

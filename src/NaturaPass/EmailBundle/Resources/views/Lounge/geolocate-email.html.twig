@@ -1,0 +1,21 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_lounge_geolocate', {'fullname': fullname, 'loungetag': lounge.loungetag}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    {% set DESCRIPTION =
+        lounge.description
+    %}
+    {% if DESCRIPTION != "" %}
+        {% set LOUNGE_DESCRIPTION =
+            ' - '~DESCRIPTION
+        %}
+    {% else %}
+        {% set LOUNGE_DESCRIPTION =
+            ''
+        %}
+    {% endif %}
+    <p>{{ 'lounge.geolocate_active.body'|trans({'%fullname%': fullname,'%loungename%': lounge.name,'%description%': LOUNGE_DESCRIPTION, '%lien%': app.request.schemeAndHttpHost~path('naturapass_lounge_show', {'loungetag': lounge.loungetag})},translation_name~'email')|raw }}</p>
+{% endblock body %}

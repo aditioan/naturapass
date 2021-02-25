@@ -1,0 +1,63 @@
+{% verbatim %}
+    <div class="col-xs-3">
+        <div class="thumbnail">
+            <img ng-src="{{ user.profilepicture }}" alt="{{ user.lastname }} {{ user.firstname }}">
+            <div class="caption">
+                <p>
+                    <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: user.usertag } }}"><b>{{ user.lastname }}</b> {{ user.firstname }}</a><br>
+                </p>
+                <div class="dropdown dropup">
+                    <button class="btn btn-primary btn-sm btn-block btn-icon dropdown-toggle icon-user-plus2" type="button"  data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2"
+                            ng-if="user.relation.friendship.state == 2">{% endverbatim %}{{ 'button.edit'|trans({},translation_name~'global') }} {% verbatim %}<span class="caret"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary  btn-sm btn-block  btn-icon dropdown-toggle icon-checkmark disabled" id="dropdownUser" data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-checkmark"
+                            ng-if="user.relation.friendship.state == 1 && user.relation.friendship.way == 2">{% endverbatim %}{{ 'button.sent'|trans({}, translation_name~'global') }} {% verbatim %}
+                    </button>
+                    <button type="button" class="btn btn-primary  btn-sm btn-block  btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2"
+                            ng-if="user.relation.friendship.state == 1 && user.relation.friendship.way == 3">{% endverbatim %}{{ 'button.valid'|trans({}, translation_name~'global') }} {% verbatim %}<span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu"  aria-labelledby="dropdownMenu1"
+                        ng-if="user.relation.friendship.state == 1">
+                        <li role="presentation"
+                            ng-if="user.relation.friendship.way == 3">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-users"
+                               ng-click="confirmFriendship(user)">
+                                {% endverbatim %}{{ 'button.valid'|trans({}, translation_name~'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                        <li role="presentation"
+                            ng-if="user.relation.friendship.way == 2">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                               ng-click="cancelFriendship(user, $index)">
+                                {% endverbatim %}{{ 'button.annul'|trans({}, translation_name~'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                        <li role="presentation"
+                            ng-if="user.relation.friendship.way == 3">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                               ng-click="rejectFriendship(user)">
+                                {% endverbatim %}{{ 'button.reject'|trans({}, translation_name~'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu"  aria-labelledby="dropdownMenu1"
+                        ng-if="user.relation.friendship.state == 2">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete" ng-click="removeFriendship(user)">
+                                {% endverbatim %}{{ 'button.friends.delete'|trans({}, translation_name~'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endverbatim %}

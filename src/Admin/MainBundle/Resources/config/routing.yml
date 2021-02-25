@@ -1,0 +1,49 @@
+admin_main_homepage:
+    path:     /
+    defaults: { _controller: AdminMainBundle:Default:index }
+
+admin_news:
+    resource: "@AdminNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+    options:
+        expose: true
+
+admin_game:
+    resource: "@AdminGameBundle/Resources/config/routing.yml"
+    prefix:   /game
+    options:
+        expose: true
+
+admin_animal:
+    resource: "@AdminAnimalBundle/Resources/config/routing.yml"
+    prefix:   /animal
+    options:
+        expose: true
+
+admin_entity:
+    resource: "@AdminZoneBundle/Resources/config/routing.yml"
+    prefix:   /entity
+    options:
+        expose: true
+
+admin_sentinelle:
+    resource: "@AdminSentinelleBundle/Resources/config/routing.yml"
+    prefix:   /sentinelle
+    options:
+        expose: true
+
+admin_distributor:
+    resource: "@AdminDistributorBundle/Resources/config/routing.yml"
+    prefix:   /distributor
+    options:
+        expose: true
+
+admin_graph:
+    resource: "@AdminGraphBundle/Resources/config/routing.yml"
+    prefix:   /graph
+
+admin_export:
+    resource: "@AdminExportBundle/Resources/config/routing.yml"
+    prefix:   /export
+    options:
+        expose: true

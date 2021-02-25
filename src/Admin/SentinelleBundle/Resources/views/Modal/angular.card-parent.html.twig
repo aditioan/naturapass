@@ -1,0 +1,46 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.card-parent.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title" >Ajouter une fiche à certains enfants</h4>
+    </div>
+    <div class="modal-body">
+        {% verbatim %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Catégories :</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <select name="category[]" multiple class="form-control" ng-model="select.category" ng-options="color.title for color in allcategory">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Fiches :</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <select name="card" class="form-control" ng-model="select.card" ng-options="color.name for color in allcards">
+                            <option value="">-- Choisir une fiche --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        {% endverbatim %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()" np-submit-loader="data.loading">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-danger" ng-click="cancel()" np-submit-loader="data.loading">{{ 'button.cancel'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

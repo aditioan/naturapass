@@ -1,0 +1,28 @@
+memoiregroupechasse:
+    title:          Tenez votre journal de chantier pour votre groupe de chantier
+    description:    Piquand TP vous permet de partager vos souvenirs et de tenir un vrai journal de chantier pour posséder une vraie mémoire de vos sorties de chantier
+    raw:            |
+                    <h1>Votre journal de chantier</h1>
+                    <p>Nous offrons avec la <a href="%url%">carte</a> la possibilité de gérer le « Où ? ». Avec le journal, vous pouvez gérer le « Quand ? ». Chaque élément saisi peut être daté pour rendre votre mémoire  infaillible.
+                    <h2>Conservez et partagez vos souvenirs</h2>
+                    <p>Plus concrètement vous pourrez  inscrire l’ensemble des informations que vous souhaitez conserver, par exemple :
+                    <ul>
+                    <li>Température d’une journée de chantier </li>
+                    <li>L’événement marquant que vous avez vu</li>
+                    <li>Vos récits de chantier  </li>
+                    <li>La photo du résultat final</li>
+                    <li>…</li>
+                    </ul>
+                    <p>Ces éléments seront soit conservés pour vous et donc gardés privés ou pourront être partagés avec les personnes de votre choix.
+                    <h2>Maitrisez le partage de vos informations</h2>
+                    <p>Depuis votre smartphone et/ou votre ordinateur, vous avez la possibilité de publier vos éléments (photos, vidéos, texte) en les datant et en les géolocalisant. Cela vous permettra d'immortaliser vos souvenirs pour posséder un journal de vos années de chantier.
+                    <p>Chaque information enregistrée dans votre journal de chantier et sur la carte (cf ci-dessus) peut être partagée (ou pas) avec les personnes de votre choix…
+                    <p>Nous avons apporté un soin tout particulier à la maîtrise de l’information par celui qui l’a créé, c’est-à-dire vous. Vous choisissez exactement avec qui vous partagez cette information et ces personnes ne peuvent pas la repartager. Vous profitez donc d’un réseau social sans en avoir les inconvénients.
+                    <p>Exemples de publications :
+                    <ul>
+                    <li>Paysages remarquables </li>
+                    <li>Nouvelles lois ou directives</li>
+                    <li>Comptes-rendus de réunions</li>
+                    <li>Photos</li>
+                    <li>… </li>
+                    </ul>

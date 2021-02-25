@@ -1,0 +1,38 @@
+{% verbatim %}
+
+<div class="media media-list container-md" ng-repeat="news in entities" ng-cloak>
+    <a ng-href="{{ 'admin_news_edit'|route: {news: news.id} }}" class="media-object pull-left"
+       title="{{ news.title }}">
+        <img class="media-object pull-left" ng-show="news.photo" ng-src="{{ news.photo.path }}" width="90" height="90">
+        <img class="media-object pull-left" ng-hide="news.photo" ng-src="/img/interface/default-media.jpg" width="90" height="90">
+    </a>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_news_edit'|route: {news: news.id} }}">{{ news.title }} </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+        <div class="row row-btn">
+            <div class="col-sm-4">
+                <a ng-href="{{ 'admin_news_edit'|route: {news: news.id} }}" {% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'news.action.administer'|trans({}, translation_name~'news') }}
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, news)"
+                   np-submit-loader="news.loading">
+                    {{ 'news.action.close'|trans({}, translation_name~'news') }}
+                </a>
+            </div>
+        </div>
+
+        {% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

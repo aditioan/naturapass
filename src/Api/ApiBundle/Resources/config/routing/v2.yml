@@ -1,0 +1,110 @@
+api_v2_users:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Users\UsersController
+
+api_v2_users_friends:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_users
+    resource:       Api\ApiBundle\Controller\v2\Users\UserFriendshipsController
+
+api_v2_users_conversations:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_users
+    resource:       Api\ApiBundle\Controller\v2\Users\UserConversationsController
+
+api_v2_users_profiles:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_users
+    resource:       Api\ApiBundle\Controller\v2\Users\UserProfilesController
+
+api_v2_notifications:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\NotificationsController
+
+api_v2_publications:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Publications\PublicationsController
+
+api_v2_shapes:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Shapes\ShapesController
+
+api_v2_distributors:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Distributors\DistributorsController
+
+api_v2_distributor_events:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Distributors\DistributorEventsController
+
+api_v2_publications_comments:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_publications
+    resource:       Api\ApiBundle\Controller\v2\Publications\PublicationCommentsController
+
+api_v2_publications_favorites:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_publications
+    resource:       Api\ApiBundle\Controller\v2\Publications\PublicationFavoritesController
+
+api_v2_publications_observations:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_publications
+    resource:       Api\ApiBundle\Controller\v2\Publications\PublicationObservationsController
+
+api_v2_groups:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Groups\GroupsController
+
+api_v2_group_subscribers:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_groups
+    resource:       Api\ApiBundle\Controller\v2\Groups\GroupSubscribersController
+
+api_v2_group_publications:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_groups
+    resource:       Api\ApiBundle\Controller\v2\Groups\GroupPublicationsController
+
+api_v2_group_messages:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_groups
+    resource:       Api\ApiBundle\Controller\v2\Groups\GroupMessagesController
+
+api_v2_hunts:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Hunts\HuntsController
+
+api_v2_hunt_publications:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_hunts
+    resource:       Api\ApiBundle\Controller\v2\Hunts\HuntPublicationsController
+
+api_v2_hunts_subscribers:
+    type:           rest
+    name_prefix:    api_v2_
+    parent:         api_v2_hunts
+    resource:       Api\ApiBundle\Controller\v2\Hunts\HuntSubscribersController
+
+api_v2_categories:
+    type:           rest
+    name_prefix:    api_v2_
+    resource:       Api\ApiBundle\Controller\v2\Categories\CategoriesController

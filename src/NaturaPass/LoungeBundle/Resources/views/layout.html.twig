@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% set ACCESS_PUBLIC, ACCESS_SEMIPROTECTED, ACCESS_PROTECTED, ACCESS_ADMIN, ACCESS_DEFAULT, ACCESS_RESTRICTED, ACCESS_INVITED, PARTICIPATION_NO, PARTICIPATION_YES, PARTICIPATION_DONTKNOW =
+constant('NaturaPass\\LoungeBundle\\Entity\\Lounge::ACCESS_PUBLIC'),
+constant('NaturaPass\\LoungeBundle\\Entity\\Lounge::ACCESS_SEMIPROTECTED'),
+constant('NaturaPass\\LoungeBundle\\Entity\\Lounge::ACCESS_PROTECTED'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_ADMIN'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_DEFAULT'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_RESTRICTED'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_INVITED'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::PARTICIPATION_NO'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::PARTICIPATION_YES'),
+constant('NaturaPass\\LoungeBundle\\Entity\\LoungeUser::PARTICIPATION_DONTKNOW') %}
+
+{% block body %}
+
+    {% include "NaturaPassMainBundle:Include:angular.menu-gauche.html.twig" %}
+
+    {% block corps %}
+
+    {% endblock corps %}
+
+    {% include "NaturaPassLoungeBundle:Modal:angular.subscribers.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.remove-entity.html.twig" %}
+
+{% endblock body %}

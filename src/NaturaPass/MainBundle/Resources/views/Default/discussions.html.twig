@@ -1,0 +1,29 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez les discussions !{% endblock %}
+{% block description %}Retrouvez la fonctionnalité discussions sur Naturapass (disponible sur application smartphone et site internet) sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Discussions Naturapass</li>
+    </ol>
+
+    <h1>Les discussions – Communiquer en temps réel avec l’ensemble de la communauté Naturapass</h1>
+    <h2>« Un bon chasseur est réactif »</h2>
+    <p>La fonctionnalité « discussions » permet d’échanger en temps réel avec tous les Natiz. Cela remplace avantageusement les multiples coups de téléphone, sms, emails,… ou même la trompe pendant la chasse.</p>
+    <p>Par le biais des discussions les chasseurs peuvent :</p>
+    <ul>
+        <li>Communiquer avec n’importe quelle personne inscrite <br> Naturapass est un réseau social et a pour vocation de permettre aux chasseurs de se rencontrer et d’échanger</li>
+    </ul>
+    <ul>
+        <li>Communiquer avec ses groupes<br> Naturapass permet de faciliter l’organisation au quotidien et, notamment, la communication au sien d’un groupe en envoyant des messages en une seule manipulation à tous les membres (exemples : tâches, réunions, organisation de chasse…)</li>
+    </ul>
+    <ul>
+        <li>Communiquer autour d’un événement (agenda) :<br> Cela permet de discuter en amont de la chasse pour faciliter son organisation mais aussi pendant la chasse. Vous pouvez communiquer avec tous les participants, même ceux que vous ne connaissez (exemples : annonces des animaux morts, début et fin de traque,…).</li>
+    </ul>
+    <p><img src="{{ asset('img/pages/discussions.png') }}" width="729" height="953" alt="Les discussions Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

@@ -1,0 +1,17 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.cgu.html{% endblock %}
+
+{% block template_body %}
+
+    <div class="container-md">
+        <h1>{{ 'cgu_subscribe.title'|trans({},translation_name~'cgu_subscribe') }}</h1>
+
+        <p>{{ 'cgu_subscribe.description'|trans({},translation_name~'cgu_subscribe') }}</p>
+
+        {{ 'cgu_subscribe.raw'|trans({},translation_name~'cgu_subscribe') | raw }}
+    </div>
+    <div class="form-group text-right">
+        <button style="margin-right:20px" type="button" ng-click="ok()" class="btn btn-primary" np-submit-loader="isLoading">Ok</button>
+    </div>
+{% endblock %}

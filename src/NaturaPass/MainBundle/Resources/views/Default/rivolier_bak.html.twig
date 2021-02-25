@@ -1,0 +1,265 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass.min.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass-theme.min.css') }}"/>
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,700">
+<link rel="stylesheet" type="text/css" href="/bower_components/bxslider-4/jquery.bxslider.css">
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsUUAfUkh896f9tgx0qgV3tqmkRFoccGM&sensor=true"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery.min.js') }}"><\/script>');</script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsUUAfUkh896f9tgx0qgV3tqmkRFoccGM&sensor=true"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+<html>
+<style>
+    #title:after {
+        content: '';
+        display: block;
+        position: relative;
+        height: 0.25%;
+        background-color: #84c24b;
+        width: 100%;
+        margin: auto;
+    }
+
+    #search {
+        background-color: #84c24b;
+        width: 100%;
+        margin: auto;
+        height: 25%;
+    }
+
+    #subtitle h1 {
+        border-bottom: none;
+    }
+
+    #search h1 {
+        color: #fff;
+        border-bottom: none;
+    }
+
+    #search .input-group {
+        margin-left: 25%;
+    }
+
+    #search .input-group .input-group-btn button {
+        color: black;
+        margin-left: -5%;
+        background-color: #fff;
+        height: 32px;
+    }
+
+    #result {
+        width: 90%;
+        margin-left: 10%;
+    }
+
+    .armory {
+        background-color: #fff;
+        border-width: 1px;
+        border-color: silver;
+        border-style: solid;
+        margin: 2.5%;
+        border-radius: 10px;
+    }
+
+    .armory h2 {
+        text-align: center;
+    }
+
+    .armory img {
+        height: 2.5%;
+        margin-top: -2%;
+    }
+
+    #footer img {
+        height: 10%;
+    }
+
+    #footer {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+</style>
+<body>
+<div id="title" class="text-center">
+    <img src="/img/rivolier.png">
+</div>
+<div id="subtitle" class="text-center">
+    </br>
+    <h1>Test du modérateur de son avec RIVOLIER</h1>
+    <h4> À partir du 1er septembre </h4>
+</div>
+
+<div id="search" class="text-center">
+    </br>
+    <h1>Entrez votre ville pour voir les armureries participantes</br> près de chez vous!</h1>
+    <div class="input-group col-xs-6 col-md-6">
+        <input type="text" class="form-control" placeholder="Entrez votre ville"/>
+        <span class="input-group-btn">
+                        <button type="submit"
+                                class="btn icon-search3">
+                        </button>
+        </span>
+    </div>
+</div>
+
+<div id="result" class=" tex-center">
+    <div class=" armory col-md-3 col-xs-3">
+        <h2>ARMES BASTILLES S N B</h2>
+        <p>61 Rue de Lyon, 75012 Paris</p>
+        <p><b>Tél.</b>: 01 43 43 46 90</p>
+        <p><img src="/img/geoloc.png"> à 10Km</p>
+        <p><img src="/img/calendar.png"> Du 20 avrril au 30 juin</p>
+        <p class="text-center">
+            <button  class="inscription btn btn-primary btn-block btn-icon icon-marker2">S'inscrire</button>
+        </p>
+    </div>
+    <div class=" armory col-md-3 col-xs-3">
+        <h2>ARMES BASTILLES S N B</h2>
+        <p>61 Rue de Lyon, 75012 Paris</p>
+        <p><b>Tél.</b>: 01 43 43 46 90</p>
+        <p><img src="/img/geoloc.png"> à 10Km</p>
+        <p><img src="/img/calendar.png"> Du 20 avrril au 30 juin</p>
+        <p class="text-center">
+            <button class="inscription btn btn-primary btn-block btn-icon icon-marker2">S'inscrire</button>
+        </p>
+    </div>
+    <div class=" armory col-md-3 col-xs-3">
+        <h2>ARMES BASTILLES S N B</h2>
+        <p>61 Rue de Lyon, 75012 Paris</p>
+        <p><b>Tél.</b>: 01 43 43 46 90</p>
+        <p><img src="/img/geoloc.png"> à 10Km</p>
+        <p><img src="/img/calendar.png"> Du 20 avrril au 30 juin</p>
+        <p class="text-center">
+            <button class="inscription btn btn-primary btn-block btn-icon icon-marker2">S'inscrire</button>
+        </p>
+    </div>
+</div>
+</body>
+<div id="footer" class="text-center cold-md-6 col-xs-6">
+    <img src="img/global/logo-naturapass_big.png">
+</div>
+</html>
+{#
+Second page when clic on "s'inscrire"
+<style>
+    #subtitle {
+        background-color: #84c24b;
+        width: 100%;
+        margin: auto;
+        height: 15%;
+    }
+
+    #subtitle h1 {
+        color: #fff;
+        border-bottom: none;
+    }
+
+    .container {
+        background-color: #fff;
+        border-width: 1px;
+        border-color: silver;
+        border-style: solid;
+        border-radius: 10px;
+        margin-top: 2.5%;
+    }
+.validate {
+    margin-left:20.835%;
+}
+    .armory {
+
+        margin: 2.5%;
+    }
+
+    .armory h2 {
+        text-align: center;
+    }
+
+    .armory img {
+        height: 2.5%;
+        margin-top: -2%;
+    }
+
+    .armory input {
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+    }
+
+    #footer img {
+        height: 10%;
+    }
+
+    #footer {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        margin-top:8%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+</style>
+<html>
+<body>
+<div id="title" class="text-center">
+    <img src="/img/rivolier.png">
+</div>
+<div id="subtitle" class="text-center">
+    </br>
+    </br>
+    <h1>Test du modérateur de son avec RIVOLIER
+    </h1>
+</div>
+<div class="container">
+    <div class="armory col-md-5 col-xs-5">
+        <h2>ARMES BASTILLES S N B</h2>
+        <p>61 Rue de Lyon, 75012 Paris</p>
+        <p><b>Tél.</b>: 01 43 43 46 90</p>
+        <p><img src="/img/geoloc.png"> à 10Km</p>
+        <p><img src="/img/calendar.png"> Du 20 avrril au 30 juin</p>
+    </div>
+    <div class="armory col-md-5 col-xs-5">
+
+        <input type="text" id="firstname"
+               placeholder="Nom" value=""
+               required="required"
+               class="form-control">
+        <input type="text" id="lastname"
+               placeholder="Prénom" value=""
+               required="required"
+               class="form-control">
+        <input type="email" id="email"
+               placeholder="Adresse email" value=""
+               required="required"
+               class="form-control">
+        <input type="text" id="phone"
+               placeholder="Téléphone" value=""
+               required="required"
+               class="form-control">
+        <input type="text" id="birthdate"
+               placeholder="Date de naissance" value=""
+               required="required"
+               class="form-control">
+        <div class="checkbox">
+            <input type="checkbox" id="accept_cgu" value="on"><label
+                    for="accept_cgu">En cochant cette case vous acceptez les <a href="">conditions</a></label></div>
+
+    </div>
+    <p class=" validate text-center col-md-7 col-xs-7">
+        <button class="inscription btn btn-primary btn-block btn-icon icon-marker2">S'inscrire</button>
+    </p>
+</div>
+<div id="footer" class="text-center cold-md-6 col-xs-6">
+    <img src="img/global/logo-naturapass_big.png">
+</div>
+</body>
+</html>
+#}

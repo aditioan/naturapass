@@ -1,0 +1,360 @@
+<div class="footer-widget" ng-controller="RegisterController" ng-init="initHome()" ng-cloak>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    Blog Naturapass<br>
+                    <small>retrouvez les actus de la chasse</small>
+                </h3>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="slider-blog">
+                        {% verbatim %}
+                            <div class="media">
+                                <div class="pull-left">
+                                    <a href="{{ blogs[0].featured_image.source }}" target="_blank">
+                                        <img src="{{ blogs[0].featured_image.source }}" width="240" height="240" class="media-object">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <span>{{blogs[0].date}}</span>
+                                    <h4 class="media-heading" ng-bind-html="blogs[0].title"></h4>
+                                    <div ng-bind-html="blogs[0].excerpt"></div>
+                                    <a href="{{blogs[0].link}}" target="_blank" class="btn btn-primary">Lire la suite</a>
+                                </div>
+                            </div>
+
+                            <div class="media">
+                                <div class="pull-left">
+                                    <a href="{{ blogs[1].featured_image.source }}" target="_blank">
+                                        <img src="{{ blogs[1].featured_image.source }}" width="240" height="240" class="media-object">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <span>{{blogs[1].date}}</span>
+                                    <h4 class="media-heading" ng-bind-html="blogs[1].title"></h4>
+                                    <div ng-bind-html="blogs[1].excerpt"></div>
+                                    <a href="{{blogs[1].link}}" target="_blank" class="btn btn-primary">Lire la suite</a>
+                                </div>
+                            </div>
+
+                            <div class="media">
+                                <div class="pull-left">
+                                    <a href="{{ blogs[2].featured_image.source }}" target="_blank">
+                                        <img src="{{ blogs[2].featured_image.source }}" width="240" height="240" class="media-object">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <span>{{blogs[2].date}}</span>
+                                    <h4 class="media-heading" ng-bind-html="blogs[2].title"></h4>
+                                    <div ng-bind-html="blogs[2].excerpt"></div>
+                                    <a href="{{blogs[2].link}}" target="_blank" class="btn btn-primary">Lire la suite</a>
+                                </div>
+                            </div>
+                        {% endverbatim %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>
+                    LA BOUTIQUE<br>
+                    <small>Top ventes</small>
+                </h3>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="slider-boutique">
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=13&controller=product" target="_blank">
+                                            <img src="/img/boutique/30-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Polo femme HUNTER</h4>
+                                        <p>Polo femme Conçu pour toutes les amoureuses de la chasse, ce polo « J’aime la Chasse » est un incontournable. Disponible en blanc et noir</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=13&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=24&controller=product" target="_blank">
+                                            <img src="/img/boutique/51-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">T-shirt homme BASIC</h4>
+                                        <p>T-shirt homme Conçu pour tous les amoureux de la chasse, ce t-shirt « J’aime la Chasse » est un classique. Disponible en blanc et noir</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=24&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=15&controller=product" target="_blank">
+                                            <img src="/img/boutique/32-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Pull Homme POLAR</h4>
+                                        <p>Pull à capuche homme Conçu pour tous les amoureux de la chasse, ce pull à capuche « J’aime la Chasse » est très confortable. Disponible en noir et vert sapin</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=15&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=32&controller=product" target="_blank">
+                                            <img src="/img/boutique/59-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Gilet MAN OF FIELD</h4>
+                                        <p>Gilet homme Conçu pour tous les amoureux de la chasse, ce gilet sans manches « J’aime la Chasse » est chaud et pratique. Disponible en vert sapin et noir</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=32&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=20&controller=product" target="_blank">
+                                            <img src="/img/boutique/37-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Casquette VISION</h4>
+                                        <p>Casquette Conçue pour tous les amoureux de la chasse, cette casquette « J’aime la Chasse » est idéale par tous les temps. Disponible en noir et marron.</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=20&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=19&controller=product" target="_blank">
+                                            <img src="/img/boutique/35-large_default.jpg" width="458" height="458" class="media-object">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Tablier COOKING HUNTER</h4>
+                                        <p>Tablier Conçu pour tous les amoureux de la chasse, ce tablier « J’aime la Chasse » est parfait pour les chasseurs cuisiniers.</p>
+                                        <a href="http://boutique.naturapass.com/index.php?id_product=19&controller=product" target="_blank" class="btn btn-primary">Voir le produit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if app.request.get('_route') == 'naturapass_main_homepage' %}
+
+    <div class="footer-videos">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>
+                        NOS VIDEOS<br>
+                        <small>Retrouvez toutes nos videos</small>
+                    </h3>
+
+                    <div class="slider-videos">
+                        {% for item in channel.items %}
+                            <div class="item">
+                                <a href="https://www.youtube.com/watch?v={{ item.id.videoId }}" target="_blank">
+                                    <p><img src="{{ item.snippet.thumbnails.medium.url }}" width="{{ item.snippet.thumbnails.medium.width }}" height="{{ item.snippet.thumbnails.medium.height }}" alt="{{ item.snippet.title }}" class="img-responsive center-block"></p>
+                                    <p class="item-label">{{ item.snippet.title }}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>
+                        LES CONSEILS DE TONTON JUJU<br>
+                        <small>Découvrez en vidéo les conseils de Tonton Juju</small>
+                    </h3>
+
+                    <div class="slider-videos">
+                        {% for item in playlist.items %}
+                            <div class="item">
+                                <a href="https://www.youtube.com/watch?v={{ item.snippet.resourceId.videoId }}" target="_blank">
+                                    <p><img src="{{ item.snippet.thumbnails.medium.url }}" width="{{ item.snippet.thumbnails.medium.width }}" height="{{ item.snippet.thumbnails.medium.height }}" alt="{{ item.snippet.title }}" class="img-responsive center-block"></p>
+                                    <p class="item-label">{{ item.snippet.title }}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if games is not empty %}
+    <div class="footer-concours" ng-controller="RegisterController">
+        <div class="container">
+            <h3>
+                JEUX CONCOURS<br>
+                <small>Les Jeux concours en cours</small>
+            </h3>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="slider-concours">
+                        {% for game in games %}
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="item-label" style="color:{{ game.color }}">Jeux concours rambouillet</span>
+                                        <h4 class="item-title">{{ game.title }}</h4>
+                                        <h4>{{ game.debutFormat | raw }} - {{ game.finFormat | raw }}</h4>
+                                        <br>
+                                        <p>
+                                            {{ game.resultat | raw }}
+                                        </p>
+                                        <a href="#" class="btn btn-primary" ng-click="openLogin()">Participez</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {#
+                        {% else %}
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-6"><img src="http://placehold.it/530x245" width="530" height="245" class="img-responsive center-block"></div>
+                                    <div class="col-md-6">
+                                        <span class="item-label">Jeux concours rambouillet</span>
+                                        <h4 class="item-title">Gagnez des places pour le salon de Rambouillet (du 24 et 27 mars)</h4>
+                                        <p>
+                                            Naturapass vous offre tous les jours des places pour salon de Rambouillet 2017 !<br>
+                                            Pour participer, inscrivez-vous sur Naturpass.<br>
+                                            <br>
+                                            Tirage au sort parmi les inscrits.
+                                        </p>
+                                        <a href="#" class="btn btn-primary">Participez</a>
+                                    </div>
+                                </div>
+                            </div>
+                        #}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+
+<div class="footer-partenaires">
+    <div class="container">
+        <h4>Partenaires</h4>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-1"><a href="https://www.opinel.com/" target="_blank"><img src="{{ asset('img/global/logo-opinel.jpg') }}" alt="Opinel" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="https://www.remington.com/" target="_blank"><img src="{{ asset('img/global/logo-remington.jpg') }}" alt="Remington" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="http://browning.eu/" target="_blank"><img src="{{ asset('img/global/logo-browning.jpg') }}" alt="Browning" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="https://fr.leica-camera.com/" target="_blank"><img src="{{ asset('img/global/logo-leica.jpg') }}" alt="Leica" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="http://www.sauer.de/fr/" target="_blank"><img src="{{ asset('img/global/logo-sauer.jpg') }}" alt="Sauer" width="331" height="96" class="img-responsive center-block"></a></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-3"><a href="http://www.aimpoint.com/" target="_blank"><img src="{{ asset('img/global/logo-aimpoint-AP.jpg') }}" alt="Aimpoint" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="http://www.beretta.com/" target="_blank"><img src="{{ asset('img/global/logo-beretta-AP.jpg') }}" alt="Beretta" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="https://www.tunet.fr/" target="_blank"><img src="{{ asset('img/global/logo-tunet.jpg') }}" alt="Tunet" width="331" height="96" class="img-responsive center-block"></a></div>
+            <div class="col-sm-2"><a href="https://en.winchesterint.com/" target="_blank"><img src="{{ asset('img/global/logo-win.jpg') }}" alt="Winchester" width="331" height="96" class="img-responsive center-block"></a></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3">
+                <img src="{{ asset('img/global/logo-naturapass-big-blanc.png') }}" width="242" height="168" alt="Naturapass - knowing the world" class="img-responsive center-block">
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-2 col-address">
+                <h4>Contact</h4>
+                <address>
+                    <p class="text-uppercase">Naturapass</p>
+                    <p>
+                        5 chemin de la Tactière<br>
+                        44470 Carquefou
+                    </p>
+                    <p>Tél. : 04 74 46 38 00</p>
+                </address>
+                <a href="{{ path("naturapass_main_contact") }}" class="btn btn-primary">Nous contacter</a>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2 col-nav">
+                <h4>Fonctionnalites</h4>
+                <ul class="list-unstyled">
+                    <li><a href="{{ path("naturapass_main_mur") }}">Mur</a></li>
+                    <li><a href="{{ path("naturapass_main_carte") }}">Carte</a></li>
+                    <li><a href="{{ path("naturapass_main_discussions") }}">Discussions</a></li>
+                    <li><a href="{{ path("naturapass_main_groupes") }}">Groupes</a></li>
+                    <li><a href="{{ path("naturapass_main_agenda") }}">Agenda</a></li>
+                    <li><a href="{{ path("naturapass_main_amis") }}">Amis</a></li>
+                </ul>
+                <h4><a href="http://blog-chasse.naturapass.com" target="_blank">Blog</a></h4>
+                <h4><a href="http://boutique.naturapass.com" target="_blank">Boutique</a></h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2 col-nav">
+                <h4>A propos de</h4>
+                <ul class="list-unstyled">
+                    <li><a href="{{ path("naturapass_main_naturapass") }}">Naturapass</a></li>
+                    <li><a href="{{ path("naturapass_main_jaime") }}">J'aime la chasse</a></li>
+                    <li><a href="{{ path("naturapass_main_realisations") }}">Réalisations</a></li>
+                    <li><a href="{{ path("naturapass_main_applications") }}">Gamme d'appli nature</a></li>
+                    {#<li><a href="{{ path("naturapass_concours_listing") }}">Jeux concours</a></li>#}
+                </ul>
+                <h4><a href="{{ path("naturapass_main_partenaire") }}">Partenaires</a></h4>
+                <h4><a href="{{ path("naturapass_main_presse") }}">Presse</a></h4>
+                <h4><a href="{{ path("naturapass_main_contact") }}">Contact</a></h4>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <h4>Inscription newsletter</h4>
+                <p>Inscrivez-vous à notre newsletter pour vous tenir informé de notre actualité.</p>
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Entrez votre email">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">OK</button>
+                        </span>
+                    </div>
+                </form>
+                <hr>
+                <p><a href="{{ path('naturapass_main_pro') }}" class="btn btn-primary">Espace pro</a></p>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center">
+            <ul class="list-inline list-social">
+                <li>Suivez nous aussi sur:</li>
+                <li><a href="https://fr-fr.facebook.com/chasse.et.chasseurs/" target="_blank" class="text-uppercase"><img src="{{ asset('img/global/link-facebook.png') }}" alt=""> Facebook</a></li>
+                <li><a href="https://www.youtube.com/channel/UC0o6HzkTPsTfxk8aSBOW1RA" target="_blank" class="text-uppercase"><img src="{{ asset('img/global/link-youtube.png') }}" alt="">Youtube</a></li>
+            </ul>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                Copyright © 2017 Naturapass. Tous droits réservés.
+            </div>
+            <div class="col-sm-6 footer-nav">
+                <a href="{{ path("naturapass_main_mention") }}">Mentions légales</a> - <a href="{{ path("naturapass_main_sitemap") }}">Plan du site</a> - <a href="{{ path("naturapass_main_contact") }}">Contact</a>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center">
+            <a href="{{ path("naturapass_main_smartpage_application_chasse") }}">Application chasse</a> - <a href="{{ path("naturapass_main_smartpage_application_de_chasse") }}">Application de chasse</a> - <a href="{{ path("naturapass_main_smartpage_application_pour_chasseur") }}">Application pour chasseur</a> - <a href="{{ path("naturapass_main_smartpage_reseau_chasse") }}">Reseau chasse</a> - <a href="{{ path("naturapass_main_smartpage_site_chasse") }}">Site chasse</a> - <a href="{{ path("naturapass_main_smartpage_site_de_chasse") }}">Site de chasse</a>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,61 @@
+<div class="container container-salon container-md"
+     ng-controller="NewsFormController">
+    <form enctype="multipart/form-data" role="form" ng-class="{loader: news.loading}">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <textarea class="form-control" ng-model="news.fr" placeholder="Français" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <textarea class="form-control" ng-model="news.en" placeholder="Anglais"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <textarea class="form-control" ng-model="news.de" placeholder="Allemand"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <span>Active :</span>
+
+                    <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                         data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                        <input type="checkbox" id="slideActive" ng-model="news.active" autocomplete="off">
+                        <label for="slideActive"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <span>Date :</span>
+
+                    <input type="text" ng-model="news.date" np-datetime-picker required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pull-right">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary btn-icon icon-paperplane" data-icon="icon-paperplane"
+                        np-submit-loader="news.loading"
+                        ng-click="persistNews()">
+                    {{ 'button.validate'|trans({}, translation_name~'global') }}
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

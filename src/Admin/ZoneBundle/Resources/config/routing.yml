@@ -1,0 +1,35 @@
+admin_entity_zone_add:
+    path:     /zone/add
+    defaults: { _controller: AdminZoneBundle:Zone:add }
+
+admin_entity_zone_edit:
+    path:     /zone/edit/{zone}
+    defaults: { _controller: AdminZoneBundle:Zone:edit }
+
+admin_entity_zone_list:
+    path:     /zone/
+    defaults: { _controller: AdminZoneBundle:Zone:list }
+
+admin_entity_zone_tree:
+    path:     /zone/tree/{zone}
+    defaults: { _controller: AdminZoneBundle:Zone:tree }
+
+admin_entity_receiver_add:
+    path:     /receiver/add
+    defaults: { _controller: AdminZoneBundle:Receiver:add }
+
+admin_entity_receiver_edit:
+    path:     /receiver/edit/{receiver}
+    defaults: { _controller: AdminZoneBundle:Receiver:edit }
+
+admin_entity_receiver_list:
+    path:     /receiver/
+    defaults: { _controller: AdminZoneBundle:Receiver:list }
+
+admin_entity_receiver_tree:
+    path:     /receiver/tree/{receiver}
+    defaults: { _controller: AdminZoneBundle:Receiver:tree }
+
+admin_entity_receiver_import:
+    path:     /receiver/import
+    defaults: { _controller: AdminZoneBundle:Receiver:import }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+
+    {% set
+    IS_GRANTED, USERFRIENDWAY_FRIENDTOUSER, FRIENDSHIP_ASKED, FRIENDSHIP_TYPE_BOTH, TYPE_KNOWING, TYPE_FRIEND,STATE_ASKED, STATE_CONFIRMED, STATE_REJECTED, USERTOFRIEND, FRIENDTOUSER =
+    app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED"),
+    constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_BOTH'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_KNOWING'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_FRIEND'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::CONFIRMED'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::REJECTED'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_USERTOFRIEND'),
+    constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER') %}
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title>{% block title %}{{ 'title.home_facebook'|trans({}, translation_name~'main') }}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{{ 'description.home_facebook'|trans({}, translation_name~'main') }}{% endblock %}"/>
+        <meta name="viewport" content="width=340, initial-scale=0.75, minimum-scale=0.5, maximum-scale=1.0"/>
+        <meta data-uid="{% if IS_GRANTED %}{{ app.user.id }}{% endif %}"/>
+
+        <link rel="canonical" href="http://www.naturapass.com/"/>
+
+        {% block meta %}
+            <meta property="og:title" content="{{ 'title.home_facebook'|trans({}, translation_name~'main') }}"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}/users/facebook"/>
+        {% endblock meta %}
+        <meta property="og:site_name" content="NaturaPass"/>
+        <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('uploads/global/icone-application-facebook.jpg') }}"/>
+        <meta property="fb:app_id" content="{{ facebook_id }}"/>
+        <meta property="og:locale" content="{{ app.request.locale }}_{{ app.request.locale | upper }}"/>
+        <meta property="og:description" content="{{ 'description.home_facebook'|trans({}, translation_name~'main') }}"/>
+
+        <link rel="icon" type="image/x-icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+        <link rel="shortcut icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass-theme.min.css') }}"/>
+
+        {% block stylesheets %}
+        {% endblock stylesheets %}
+
+        <script async src="{{ asset('js/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-8827106-4']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </head>
+    <body ng-app="app">
+        <div id="fb-root"></div>
+        {% block body %}
+        {% endblock body %}
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery.min.js') }}"><\/script>');</script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsUUAfUkh896f9tgx0qgV3tqmkRFoccGM&sensor=true"></script>
+
+        {% block javascripts %}
+            {% set asset_version = 'v2.0.0.1' %}
+            {% javascripts package='assetic'
+            'js/vendor/naturapass.min.js'
+            'js/vendor/plugin.min.js'
+            'bundles/bazingajstranslation/js/translator.min.js'
+            'bundles/fosjsrouting/js/router.js'
+            'js/vendor/angular-gmap.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+            {% endjavascripts %}
+            <script src="{{ asset('js/vendor/translations.' ~ app.request.locale ~ '.min.js') }}"></script>
+
+            {% if app.environment == 'dev' %}
+            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% else %}
+            <script src="{{ asset('static/js/fos_js_routes.js') }}"></script>
+            {% endif %}
+            {% javascripts filter='?yui_js' package='assetic'
+            'js/main.js'
+            'js/app/filters/naturapass.filters.js'
+            'js/app/directives/naturapass.directives.js'
+            'js/app/app.js'
+            'js/app/controllers/MenuController.js'
+            'js/app/controllers/Navbar/NavbarController.js'
+            'js/app/controllers/Navbar/SearchController.js'
+            'js/app/factories/UserFriendshipFactory.js'
+            'js/app/controllers/RightColumnController.js'
+            'js/app/controllers/DockingPanelController.js' %}
+            <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+            {% endjavascripts %}
+
+        {% endblock javascripts %}
+    </body>
+</html>

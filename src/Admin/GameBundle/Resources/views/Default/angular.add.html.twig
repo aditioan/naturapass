@@ -1,0 +1,165 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({},translation_name~'game') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'game') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="GameFormController" ng-init="init()">
+            {% if ajout != 0 %}
+                <h1>{{ 'game.title.creation'|trans({}, translation_name~'game') }}</h1>
+            {% elseif ajout == 0 %}
+                <h1>{{ 'game.title.edition'|trans({}, translation_name~'game') }}</h1>
+            {% endif %}
+
+            <form name="game" method="post" action="" class="form-naturapass_game_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.title) }}
+                            </span>
+                            {{ form_widget(form.title, {'class': 'inputType'}) }}
+                        </div>
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.color) }}
+                            </span>
+                            {{ form_widget(form.color) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.type) }}
+                            </span>
+                            {{ form_widget(form.type,{'attr':{'class':'inputType form-access'} }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.debut) }}
+                            </span>
+                            {{ form_widget(form.debut, {attr: {'np-datetime-picker': 'true'} }) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.fin) }}
+                            </span>
+                            {{ form_widget(form.fin, {attr: {'np-datetime-picker': 'true'} }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.visuel) }}
+                            </span>
+                            {{ form_widget(form.visuel) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.top1) }}
+                            </span>
+                            {{ form_widget(form.top1) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.top2) }}
+                            </span>
+                            {{ form_widget(form.top2) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.titleExplanation) }}
+                            </span>
+                            {{ form_widget(form.titleExplanation) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.explanation) }}
+                            </span>
+                            {{ form_widget(form.explanation) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row divChallenge">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.challenge) }}
+                            </span>
+                            {{ form_widget(form.challenge) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.reglement) }}
+                            </span>
+                            {{ form_widget(form.reglement) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.resultat) }}
+                            </span>
+                            {{ form_widget(form.resultat) }}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ tinymce_init() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Game/GameControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

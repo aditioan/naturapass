@@ -1,0 +1,30 @@
+parameters:
+    naturapass.oauth.user.provider.class: NaturaPass\UserBundle\Security\Core\User\FOSUBUserProvider
+
+services:
+    naturapass.logout.handler:
+        class:      NaturaPass\UserBundle\Handler\LogoutHandler
+        arguments:  [@naturapass.redis]
+
+    naturapass.login.listener:
+        class: 'NaturaPass\UserBundle\Listener\LoginListener'
+        arguments:  [@naturapass.redis]
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    naturapass.oauth.user.provider:
+        class:      "%naturapass.oauth.user.provider.class%"
+        arguments:  [@fos_user.user_manager,{facebook: facebook_id},{id: "%facebook_id%", secret: "%facebook_secret%"}]
+
+    naturapass.validator.username:
+        class: NaturaPass\UserBundle\Validator\Constraints\DoNotContainNaturaPassValidator
+        arguments:  ["@translator"]
+        tags:
+            - { name: validator.constraint_validator, alias: naturapass_validator_username }
+
+    activity_listener:
+        class: NaturaPass\UserBundle\Listener\Activity
+        arguments: [@security.token_storage, @doctrine]
+        tags:
+          - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
+

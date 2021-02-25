@@ -1,0 +1,6 @@
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset loader" role="form" ng-non-bindable>
+    {{ form_widget(form) }}
+    <div>
+        <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 btn-right">{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </div>
+</form>

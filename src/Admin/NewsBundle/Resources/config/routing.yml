@@ -1,0 +1,16 @@
+admin_news_homepage:
+    path:     /
+    defaults: { _controller: AdminNewsBundle:Default:index }
+
+admin_news_slides:
+    path:     /slides
+    defaults: { _controller: AdminNewsBundle:Default:slides }
+    
+admin_news_add:
+    path:     /add
+    defaults: { _controller: AdminNewsBundle:Default:add }
+    
+admin_news_edit:
+    path:     /edit/{news}
+    defaults: { _controller: AdminNewsBundle:Default:edit } 
+

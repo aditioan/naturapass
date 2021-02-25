@@ -1,0 +1,8 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ app.user.getFullname }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include "NaturaPassMainBundle:Include:angular.menu-gauche.html.twig" %}
+    {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+{% endblock body %}

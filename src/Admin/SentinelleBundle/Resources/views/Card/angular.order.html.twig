@@ -1,0 +1,58 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ 'card.title.order'|trans({'%card%': card.name},translation_name~'card') }}
+    | {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        ul .form-group {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        ul .form-group label {
+            margin: 7px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div id="idCardCategory" class="container container-salon container-md" ng-controller="CardOrderFormController" ng-init="init()">
+            <h1>{{ 'card.title.order'|trans({'%card%': card.name},translation_name~'card') }}</h1>
+
+            <form name="card" method="post" action="" class="form-naturapass_card_order" role="form" enctype="multipart/form-data" ng-submit="submit()">
+
+                <ul id="sortable" class="list-group">
+                    {% set key = 0 %}
+                    {% for label in card.labels %}
+                        {% set key = key+1 %}
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    <input type="text" name="order[{{ label.id }}]" value="{{ key }}" class="form-control disabled" readonly/>
+                                </div>
+                                <label>{{ label.name }}</label>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Card/CardOrderFormController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

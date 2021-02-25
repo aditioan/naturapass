@@ -1,0 +1,115 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.subscribers.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title" ng-if="!data.admin && !data.banish && !data.invitation">{{ 'lounge.title.members'|trans({}, translation_name~'lounge') }}</h4>
+        <h4 class="modal-title" ng-if="data.admin">{{ 'title.administrator'|trans({}, translation_name~'lounge') }}</h4>
+        <h4 class="modal-title" ng-if="data.banish">{{ 'title.banish'|trans({}, translation_name~'lounge') }}</h4>
+        <h4 class="modal-title" ng-if="data.invitation">{{ 'title.invite'|trans({}, translation_name~'lounge') }}</h4>
+    </div>
+    <div class="modal-body">
+            <div class="small-loading" ng-if="data.loading">
+            </div>
+        <div class="row">
+            <div class="col-xs-4" ng-repeat="subscriber in data.entity.subscribers | filter: filterSubscribers | orderBy : -access">
+                {% verbatim %}
+                <div class="media">
+                    <div class="pull-left">
+                        <a ng-href="{{ 'fos_user_profile_show_name' | route: {usertag: subscriber.user.usertag } }}"
+                           class="pull-left" title="{{ subscriber.user.fullname }}">
+                            <img class="media-object" ng-src="{{ subscriber.user.profilepicture }}" width="40"
+                                 height="40" alt="{{ subscriber.user.fullname }}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <a href="{{ 'fos_user_profile_show_name' | route: {usertag: subscriber.user.usertag } }}">
+                            {{ subscriber.user.fullname }}
+                        </a>
+                        <span class="icon-king"
+                              ng-if="subscriber.access == 3 && subscriber.user.id != data.entity.owner.id">{{ 'lounge.attributes.administrator' | trans:{}: 'lounge' }}</span>
+                        <span class="icon-king"
+                              ng-if="subscriber.access == 3 && subscriber.user.id == data.entity.owner.id">{{ 'lounge.attributes.owner' | trans:{}: 'lounge' }}</span>
+                    </div>
+                </div>
+                {% endverbatim %}
+                <div ng-if="data.validation">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <button class="btn btn-warning btn-sm"
+                                    np-submit-loader="subscriber.refusing"
+                                    ng-class="{disabled: subscriber.disabled || subscriber.accepting}"
+                                    ng-click="deleteSubscriber($index, subscriber)">
+                                {{ 'button.refuse'|trans({},translation_name~'global') }}
+                            </button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-sm"
+                                    np-submit-loader="subscriber.accepting"
+                                    ng-class="{disabled: subscriber.disabled || subscriber.refusing}"
+                                    ng-click="acceptAsk(subscriber)">
+                                {{ 'button.accept'|trans({},translation_name~'global') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="data.banish">
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-show="!subscriber.banishing"
+                            ng-click="subscriber.banishing = true">
+                        {{ 'group.action.banish'|trans({},translation_name~'group') }}
+                    </button>
+
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-show="subscriber.banishing"
+                            ng-click="deleteSubscriber($index, subscriber)">
+                        {{ 'label.confirm'|trans({},translation_name~'global') }}
+                    </button>
+                </div>
+                <div ng-if="data.admin">
+                    <button class="btn btn-primary btn-sm btn-block btn-icon icon-user-plus2"
+                            data-icon="icon-user-plus2"
+                            ng-if="subscriber.user.id != data.entity.owner.id && !subscriber.isAdmin"
+                            ng-click="promoteSubscriber(subscriber)">
+                        {{ 'group.action.promote'|trans({},translation_name~'group') }}
+                    </button>
+
+                    <button class="btn btn-primary btn-sm btn-block icon-user-minus2"
+                            data-icon="icon-user-minus2"
+                            ng-if="subscriber.user.id != data.entity.owner.id && subscriber.isAdmin"
+                            ng-click="promoteSubscriber(subscriber)">
+                        {{ 'group.action.destitute'|trans({},translation_name~'group') }}
+                    </button>
+                </div>
+                <div ng-if="data.invitation">
+                    <button class="btn btn-primary btn-icon btn-sm btn-block icon-paperplane"
+                            np-submit-loader="subscriber.inviting"
+                            data-icon="icon-paperplane"
+                            ng-if="!subscriber.invited && !subscriber.subscriber"
+                            ng-class="{disabled: subscriber.inviting}"
+                            ng-click="inviteSubscriber(subscriber)">
+                        {{ 'button.send'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-icon btn-sm btn-block"
+                            ng-if="subscriber.invited && !subscriber.subscriber"
+                            disabled>
+                        {{ 'button.sent'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-icon btn-sm btn-block"
+                            ng-if="subscriber.invited && subscriber.subscriber"
+                            disabled>
+                        {{ 'group.state.subscriber'|trans({},translation_name~'group') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+                <div class="alert alert-info" ng-if="(data.entity.subscribers | filter: filterSubscribers).length == 0 && data.validation">
+                    <p>{{ 'lounge.state.no_more_validation'|trans({}, translation_name~'lounge') }}</p>
+                </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

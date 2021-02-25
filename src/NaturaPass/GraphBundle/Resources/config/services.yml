@@ -1,0 +1,4 @@
+services:
+    naturapass.graph:
+        class: NaturaPass\GraphBundle\Component\GraphService
+        arguments: ["@doctrine.orm.entity_manager"]

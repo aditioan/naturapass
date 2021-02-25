@@ -1,0 +1,21 @@
+{#<html>
+    <head></head>
+    <body>{{ body|escape }}</body>
+</html>#}
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_lounge_invite', {'fullname': fullname, 'loungetag': lounge.loungetag, 'message': message}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    {% set DESCRIPTION = lounge.description %}
+    {% set MEETING = '<a href="https://www.google.fr/maps/search/'~lounge.meetingAddress.latitude~',+'~lounge.meetingAddress.longitude~'/@'~lounge.meetingAddress.latitude~','~lounge.meetingAddress.longitude~',17z">'~lounge.meetingAddress.address~'</a>' %}
+    {% if DESCRIPTION != "" %}
+        {% set LOUNGE_DESCRIPTION = '<b>Description</b> : '~DESCRIPTION %}
+    {% else %}
+        {% set LOUNGE_DESCRIPTION =
+        '' %}
+    {% endif %}
+    <p>{{ 'lounge.invite.body'|trans({'%fullname%': fullname,'%loungename%': lounge.name,'%startdate%': lounge.meetingDate|date("d-m-Y")~' &agrave; '~lounge.meetingDate|date("H:i"),'%enddate%': lounge.endDate|date("d-m-Y")~' &agrave; '~lounge.endDate|date("H:i"),'%metting%': MEETING,'%description%': LOUNGE_DESCRIPTION, '%lien%': app.request.schemeAndHttpHost~path('naturapass_lounge_invited', {'loungetag': lounge.loungetag}), '%message%':message},translation_name~'email')|raw }}</p>
+{% endblock body %}

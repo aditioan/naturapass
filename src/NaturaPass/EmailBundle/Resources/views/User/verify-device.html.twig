@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_user_verify_device', {'device': device.id, 'token': userDevice.verificationToken }) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'user.verify_device.body'|trans({'%fullname%': userDevice.owner.fullname, '%token%': userDevice.verificationToken, '%device%': device.name, '%link%': url('naturapass_user_profile_verify_device', {'token': userDevice.verificationToken}) },translation_name~'email')|raw }}</p>
+{% endblock body %}

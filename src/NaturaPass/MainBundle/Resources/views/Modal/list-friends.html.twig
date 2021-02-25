@@ -1,0 +1,25 @@
+<div id="friendsModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'user.attributes.friends'|transchoice(2, {}, translation_name~'user') }}</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-unstyled list-members">
+                    {% for friend in friends %}
+                        <li>
+                            <a href="{{ path('fos_user_profile_show_name', {usertag: friend.getUserTag() }) }}" class="pull-left">
+                                <img class="media-object" src="{{ friend.profilePicture|bProfilePict }}" width="20" height="20">
+                            </a>
+                            <a href="{{ path('fos_user_profile_show_name', {usertag: friend.getUserTag() }) }}">{{ friend.fullname }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+            </div>
+        </div>
+    </div>
+</div>

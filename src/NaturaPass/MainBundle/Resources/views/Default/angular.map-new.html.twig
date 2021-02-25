@@ -1,0 +1,378 @@
+{% extends "NaturaPassMainBundle::layout-no-recommendations-new.html.twig" %}
+
+{% block title %}{{ 'title.map'|trans({},translation_name~'main') }} | {{ parent() }}{% endblock %}
+
+{% block corps %}
+    <style>
+        .btn-colorselector {
+            height: 26px;
+            width: 26px;
+        }
+
+        .dropdown-colorselector > .dropdown-menu {
+            top: 80%;
+            left: -100px !important;
+            padding: 4px;
+            min-width: 130px;
+            max-width: 130px;
+        }
+
+        .dropdown-menu.pull-right.dropdown-caret:before {
+            left: auto;
+            right: 9px;
+        }
+
+        .dropdown-menu.pull-right.dropdown-caret:after {
+            left: auto;
+            right: 10px;
+        }
+    </style>
+    {% include "NaturaPassPublicationBundle:Include:angular.form-edit-map.html.twig" %}
+    <div id="corps-container" class="map-container no-right-column" ng-class="{loading: map.loading || !allImgLoaded}" ng-controller="MapController" ng-init="initGoogleMaps()">
+        <ui-gmap-google-map
+                center="map.center"
+                zoom="map.zoom"
+                bounds="map.bounds"
+                draggable="true"
+                dragging="map.dragging"
+                events="map.events"
+                pan="true"
+                options="map.options">
+
+            <ui-gmap-markers
+                    models="publications"
+                    coords="'coords'"
+                    icon="'icon'"
+                    type="'spider'"
+                    typeEvents="spiderEvents"
+                    typeOptions="spiderOptions"
+                    events="markersEvents"
+                    options="'options'"
+                    click="clickMarkerPublication">
+            </ui-gmap-markers>
+
+            <ui-gmap-markers
+                    models="distributors"
+                    coords="'coords'"
+                    icon="'icon'"
+                    type="'spider'"
+                    typeEvents="spiderEvents"
+                    options="'options'"
+                    click="clickMarkerDistributor">
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+
+        <div class="windows-container">
+            {# fix #}
+            {% verbatim %}
+            <div id="drawing-panel" ng-hide="map.data.adding || !drawingManagerControl.enableDrawing || !activeDrawing" ng-cloak>
+                <div id="color-palette" class="clearfix" ng-click="drawingManagerControl.showColorPalette=!drawingManagerControl.showColorPalette">
+                    <label>{% endverbatim %}{{ 'map.shape.label.color'|trans({}, translation_name~'map') }}{% verbatim %}</label>
+                    <span class="color-button active" style="background-color: {{drawingManagerControl.selectedColor}}"></span>
+                    <div class="clearfix" id="color-list" ng-show="drawingManagerControl.showColorPalette">
+                        <span class="color-button" ng-class="{'active': color[1]==drawingManagerControl.selectedColor}" ng-repeat="color in drawingManagerControl.colorPalette" style="background-color: {{color[1]}}" ng-click="drawingManagerControl.selectColor(color[1]);">
+                        </span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <label>{% endverbatim %}{{ 'map.shape.label.title'|trans({}, translation_name~'map') }}{% verbatim %}</label><br/>
+                    <input type="text" value="" id="shape-title"/>
+                </div>
+                <div class="clearfix">
+                    <label>{% endverbatim %}{{ 'map.shape.label.description'|trans({}, translation_name~'map') }}{% verbatim %}</label><br/>
+                    <textarea id="shape-description"></textarea>
+                </div>
+                <div class="clearfix sharing has-edit-permission">
+                    <label>{% endverbatim %}{{ 'map.shape.label.share'|trans({}, translation_name~'map') }}{% verbatim %}</label><br/>
+                    <ul class="nav nav-stacked">
+                        <li class="{{drawingManagerControl.selectedShape.sharing}}">
+                            <a href="#" ng-click="drawingManagerControl.updateSharing(0)" class="icon-user sharing-link sharing-0" ng-class="{active: drawingManagerControl.selectedShape.sharing == 0}">
+                                {% endverbatim %}{{ 'label.sharing.choice'|transchoice(0,{},'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="drawingManagerControl.updateSharing(1)" class="icon-users sharing-link sharing-1" ng-class="{active: drawingManagerControl.selectedShape.sharing == 1}">
+                                {% endverbatim %}{{ 'label.sharing.choice'|transchoice(1,{},'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="drawingManagerControl.updateSharing(3)" class="icon-users sharing-link sharing-3" ng-class="{active: drawingManagerControl.selectedShape.sharing == 3}">
+                                {% endverbatim %}{{ 'label.sharing.choice'|transchoice(3,{},'global') }}{% verbatim %}
+                            </a>
+                        </li>
+                    </ul>
+                    {% endverbatim %}
+            {% if naturapass_group and app.user.getAllGroups|length > 0 %}
+                <hr>
+                <label>{{ 'menu.title'|trans({},translation_name~'group') }}</label>
+                <ul class="nav nav-stacked">
+                    {% for group in app.user.getAllGroups %}
+                        <li>
+                            <a href="#" ng-click="drawingManagerControl.updateGroup({{ group.id }})" class="menu-wall-link {{ 'sharing'|icomoon('group') }} sharing-groups sharing-group-{{ group.id }}" data-toggle="tooltip" data-placement="top" title="{{ group.name }}" ng-class="{active: drawingManagerControl.selectedShape.groups.indexOf({{ group.id }}) > -1}">
+                                {{ group.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if app.user.getLounges|length > 0 %}
+                <hr>
+                <label>{{ 'menu.title'|trans({},translation_name~'lounge') }}</label>
+                <ul class="nav nav-stacked">
+                    {% for hunt in app.user.getLounges %}
+                        <li>
+                            <a href="#" ng-click="drawingManagerControl.updateHunt({{ hunt.id }})" class="menu-wall-link icon-drawer sharing-hunts sharing-hunt-{{ hunt.id }}" data-toggle="tooltip" data-placement="top" title="{{ hunt.name }}" ng-class="{active: drawingManagerControl.selectedShape.hunts.indexOf({{ hunt.id }}) > -1}">
+                                {{ hunt.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% verbatim %}
+                </div>
+                <div class="buttons clearfix has-edit-permission">
+                  <button class="btn btn-primary" id="save-button" ng-click="drawingManagerControl.updateShape(drawingManagerControl.selectedShape)">{% endverbatim %}{{ 'map.shape.action.save'|trans({},translation_name~'map') }}{% verbatim %}</button>
+                  <button class="btn btn-primary" id="delete-button" ng-click="drawingManagerControl.deleteSelectedShape()">{% endverbatim %}{{ 'map.shape.action.delete'|trans({},translation_name~'map') }}{% verbatim %}</button>
+                  <br/>
+                  <span id="save-result"></span>
+                </div>
+            </div>
+
+            <div ng-repeat="marker in publications" class="publication-infowindow infowindow{{ marker.publication.id}} hide" ng-cloak>
+                <p class="publication-owner">
+                    <a ng-href="{{ 'fos_user_profile_show_name' | route: {usertag: marker.publication.owner.usertag} }}">
+                        {{ marker.publication.owner.firstname}} {{ marker.publication.owner.lastname}}
+                    </a>
+                    <small>{{ marker.publication.created | relativetime}}</small>
+                </p>
+
+                <p class="publication-content" np-bind-html="marker.publication.content"></p>
+
+                <p class="media-media" ng-if="marker.publication.media">
+                    <img ng-if="marker.publication.media.type == 100" ng-src="{{ marker.publication.media.path}}"
+                         class="img-responsive">
+
+                    <np-video np-video-data="marker.publication.media" ng-if="marker.publication.media.type == 101"></np-video>
+
+                    <small class="media-tags"></small>
+                </p>
+
+                <p>
+                    <a href="#" class="icon-image" ng-click="openPublicationModal(marker.publication)">
+                        {% endverbatim %}{{ 'map.publication.show'|trans({},translation_name~'map') }}{% verbatim %}
+                    </a>
+                </p>
+            </div>
+            <div ng-repeat="markerD in distributors" class="distributor-infowindow infowindow{{ markerD.distributor.id}} hide" ng-cloak>
+                <p class="media-media" ng-if="markerD.distributor.logo">
+                    <img ng-if="markerD.distributor.logo.type == 100" ng-src="{{ markerD.distributor.logo.path}}" class="img-responsive img-distributor">
+                    <np-video np-video-data="markerD.distributor.logo" ng-if="markerD.distributor.logo.type == 101"></np-video>
+                    <small class="media-tags"></small>
+                </p>
+                <hr ng-if="markerD.distributor.logo">
+                <h2 class="distributor-name">{{ markerD.distributor.name}}</h2>
+                <p class="distributor-content">
+                    <ul class="list-unstyled lounge-info">
+                        <li> {{ markerD.distributor.address }}, {{ markerD.distributor.cp }} {{ markerD.distributor.city }}</li>
+                        <li ng-if="markerD.distributor.telephone != ''"> <strong>Tél.</strong> : {{ markerD.distributor.telephone }}</li>
+                        <li ng-if="markerD.distributor.email != ''"><strong>Email.</strong> : {{ markerD.distributor.email }}</li>
+                    </ul>
+                    <strong ng-if="markerD.distributor.brands.length > 0">PARTENAIRES :</strong>
+                    <ul class="list-unstyled lounge-info"  ng-if="markerD.distributor.brands.length > 0">
+                        <li ng-repeat="brand in markerD.distributor.brands" ng-if="brand.partner==1" ng-cloak>
+                            <p class="media-media" ng-if="brand.logo">
+                                <img ng-if="brand.logo.type == 100" ng-src="{{ brand.logo.path}}" class="img-responsive img-brand">
+                                <small class="media-tags">{{ brand.name }}</small>
+                            </p>
+                            <p ng-if="!brand.logo">{{ brand.name }}</p>
+                        </li>
+                    </ul>
+                </p>
+
+            </div>
+            {% endverbatim %}
+        </div>
+
+        <div id="google-maps-controls-new" class="hide">
+            <div class="controls-right hidden-print">
+                <div class="plan" title="{{ 'map.action.filter'|trans({}, translation_name~'map') }}" ng-hide="map.data.adding">
+                    <div class="dropdown dropdown-parent-category keepopen">
+                        <button type="button" class="btn-category-filter btn btn-primary btn-icon dropdown-toggle keepopen icon-list" id="dropdownUser" data-toggle="dropdown"
+                                data-icon="icon-list"><span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-category dropdown-menu-right" style="max-height: 400px; overflow-y: auto;" role="menu" aria-labelledby="dropdownUser">
+                            <li role="presentation">
+                                <input type="text" placeholder="{{ 'map.attributes.filter_category'|trans({}, translation_name~'map') }}" ng-model="filterCategories" class="form-control"/>
+                                {% verbatim %}
+                                        <treecontrol class="tree-naturapass"
+                                            tree-model="dataForTheTree"
+                                            options="treeOptions"
+                                            filter-expression="filterCategories"
+                                            selected-nodes="modelCategories">
+                                            {{node.name}}
+                                        </treecontrol>
+                                    {% endverbatim %}
+
+                                <button ng-click="validFilterCategories()" class="btn btn-primary btn-block">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="plan" title="{{ 'map.action.view'|trans({}, translation_name~'map') }}" ng-hide="map.data.adding">
+                    <div class="dropdown dropdown-parent-view">
+                        <button type="button" class="dropdown-view btn btn-primary btn-icon dropdown-toggle icon-eye" id="dropdownUser" data-toggle="dropdown" data-icon="icon-eye">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-view" role="menu" aria-labelledby="dropdownUser">
+                            <li role="presentation" class="active icon-view-text"><a role="menuitem" tabindex="-1" href="#" ng-click="iconWithLabels()">{{ 'map.attributes.view_text'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-view"><a role="menuitem" tabindex="-1" href="#" ng-click="iconWithoutLabels()">{{ 'map.attributes.view'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-photo-text"><a role="menuitem" tabindex="-1" href="#" ng-click="photoWithLabels()">{{ 'map.attributes.photo_text'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-photo"><a role="menuitem" tabindex="-1" href="#" ng-click="photoWithoutLabels()">{{ 'map.attributes.photo'|trans({}, translation_name~'map') }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="plan" title="{{ 'map.action.drawing'|trans({}, translation_name~'map') }}" ng-hide="map.data.adding || !activeDrawing">
+                    <div class="dropdown dropdown-parent-view drawing-manager-control">
+                        <button type="button" class="btn btn-primary btn-icon dropdown-toggle" ng-class="{'icon-marker2': drawingManagerControl.drawingOptions.drawingType==null,'shape-icon-circle': drawingManagerControl.drawingOptions.drawingType=='circle','shape-icon-rectangle': drawingManagerControl.drawingOptions.drawingType=='rectangle','shape-icon-polygon': drawingManagerControl.drawingOptions.drawingType=='polygon','shape-icon-polyline': drawingManagerControl.drawingOptions.drawingType=='polyline'}" id="dropdownUser" data-toggle="dropdown" data-icon="icon-marker2" ng-click="drawingManagerControl.controlToggle()">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right drawing-tools" role="menu" aria-labelledby="dropdownUser">
+                            <li role="presentation" ng-click="drawingManagerControl.clearSelection();drawingManagerControl.drawingManager.setDrawingMode(null);"><i class="shape-icon icon-hand" title="{{ 'map.shape.drawing_title.select'|trans({}, translation_name~'map') }}"></i> {{ 'map.shape.drawing_title.select'|trans({}, translation_name~'map') }}</li>
+                            <li role="presentation" ng-click="drawingManagerControl.startNewShape($event, 'circle')" ng-class="{active: drawingManagerControl.drawingOptions.drawingType=='circle'}"><i class="shape-icon shape-icon-circle" title="{{ 'map.shape.drawing_title.circle'|trans({}, translation_name~'map') }}"></i> {{ 'map.shape.drawing_title.circle'|trans({}, translation_name~'map') }}</li>
+                            <li role="presentation" ng-click="drawingManagerControl.startNewShape($event, 'rectangle')" ng-class="{active: drawingManagerControl.drawingOptions.drawingType=='rectangle'}"><i class="shape-icon shape-icon-rectangle" title="{{ 'map.shape.drawing_title.rectangle'|trans({}, translation_name~'map') }}"></i> {{ 'map.shape.drawing_title.rectangle'|trans({}, translation_name~'map') }}</li>
+                            <li role="presentation" ng-click="drawingManagerControl.startNewShape($event, 'polygon')" ng-class="{active: drawingManagerControl.drawingOptions.drawingType=='polygon'}"><i class="shape-icon shape-icon-polygon" title="{{ 'map.shape.drawing_title.polygon'|trans({}, translation_name~'map') }}"></i> {{ 'map.shape.drawing_title.polygon'|trans({}, translation_name~'map') }}</li>
+                            <li role="presentation" ng-click="drawingManagerControl.startNewShape($event, 'polyline')" ng-class="{active: drawingManagerControl.drawingOptions.drawingType=='polyline'}"><i class="shape-icon shape-icon-polyline" title="{{ 'map.shape.drawing_title.polyline'|trans({}, translation_name~'map') }}"></i> {{ 'map.shape.drawing_title.polyline'|trans({}, translation_name~'map') }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class=" add-publication" title="{{ 'map.action.click_add'|trans({}, translation_name~'map') }}" ng-hide="map.data.adding">
+                    <button class="btn btn-primary icon-map"
+                            ng-click="showMapOverlay()" title="{{ 'map.action.add'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="confirm-location"
+                        title="{{ 'map.action.confirm_location'|trans({}, translation_name~'map') }}"
+                        ng-show="map.data.adding && !map.data.confirmedGeolocation">
+                    <button class="btn btn-primary icon-checkmark"
+                            ng-click="openAddingModal()" title="{{ 'map.action.confirm_location'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="cancel-add"
+                        title="{{ 'map.action.cancel'|trans({}, translation_name~'map') }}"
+                        ng-show="map.data.adding">
+                    <button class="btn btn-warning icon-cancel"
+                            ng-click="hideMapOverlay()" title="{{ 'map.action.cancel'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="plan" title="{{ 'map.action.type'|trans({}, translation_name~'map') }}" ng-hide="map.data.adding">
+                    <div class="dropdown dropdown-parent-view">
+                        <button type="button" class="dropdown-view btn btn-primary btn-icon dropdown-toggle icon-earth" id="dropdownUser" data-toggle="dropdown" data-icon="icon-earth">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-map" role="menu" aria-labelledby="dropdownUser">
+                            <li role="presentation" class="active icon-hybrid"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('hybrid')">{{ 'map.hybrid'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-plan"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('roadmap')">{{ 'map.plan'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-satellite"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('satellite')">{{ 'map.satellite'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-relief"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('terrain')">{{ 'map.relief'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-ign"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('1:25000')">{{ 'map.1:25000'|trans({}, translation_name~'map') }}</a></li>
+                            <li role="presentation" class="icon-cadastre"><a role="menuitem" tabindex="-1" href="#" ng-click="changeMapType('cadastre')">{{ 'map.cadastre'|trans({}, translation_name~'map') }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                {# old map icon #}
+                {#
+                <div class="plan" ng-show="map.data.type == 'hybrid'"
+                        title="{{ 'map.plan'|trans({}, 'map') }}">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('roadmap')" title="{{ 'map.plan'|trans({}, 'map') }}">
+                    </button>
+                </div>
+                <div class="satellite" ng-show="map.data.type == 'roadmap'"
+                        title="{{ 'map.satellite'|trans({}, translation_name~'map') }}"
+                        style="cursor: pointer;">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('satellite')" title="{{ 'map.satellite'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="relief" ng-show="map.data.type == 'satellite'"
+                        title="{{ 'map.relief'|trans({}, 'map') }}">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('terrain')" title="{{ 'map.relief'|trans({}, 'map') }}">
+                    </button>
+                </div>
+                <div class="1:25000" ng-show="map.data.type == 'terrain'"
+                        title="{{ 'map.1:25000'|trans({}, 'map') }}">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('1:25000')" title="{{ 'map.1:25000'|trans({}, 'map') }}">
+                    </button>
+                </div>
+                <div class="cadastre" ng-show="map.data.type == '1:25000'"
+                        title="{{ 'map.cadastre'|trans({}, translation_name~'map') }}"
+                        style="cursor: pointer;">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('cadastre')" title="{{ 'map.cadastre'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="hybrid" ng-show="map.data.type == 'cadastre'"
+                        title="{{ 'map.hybrid'|trans({}, translation_name~'map') }}"
+                        style="cursor: pointer;">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('hybrid')" title="{{ 'map.hybrid'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                #}
+                <div class="hidden-print hidden-xs hidden-sm"
+                        ng-hide="map.data.adding">
+                    <a ng-href="{% verbatim %}{{ map.printable }}{% endverbatim %}" target="_blank" class="btn btn-primary icon-print" title="{{ 'map.action.print'|trans({}, translation_name~'map') }}"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-center hidden-print">
+            <div class="search-location" ng-hide="map.data.adding">
+                <div class="input-group">
+                    <input type="text" id="search_place" class="form-control" placeholder="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}"
+                            ng-keydown="searchAddress($event)"
+                            ng-model="map.data.input"/>
+                    <span class="input-group-btn">
+                        <button type="submit" title="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}" class="btn btn-primary icon-search3"
+                                ng-click="searchAddress()">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include "NaturaPassMainBundle:Modal:angular.add-publication.html.twig" %}
+    {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+    {% include "NaturaPassPublicationBundle:Modal:angular.publication.html.twig" %}
+    {% include "AdminDistributorBundle:Modal:angular.distributor.html.twig" %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.observation.html.twig' %}
+
+{% endblock corps %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        
+        {% javascripts package='assetic' filter='?yui_js'
+        'js/app/factories/PublicationFactory.js'
+        'js/app/factories/PublicationCommentFactory.js'
+        'js/app/controllers/Modal/ModalSharingController.js'
+        'js/app/controllers/Modal/ModalObservationController.js'
+        'js/vendor/angular-gmap-new.js'
+        'js/app/controllers/Map/BaseMapControllerNew.js'
+        'js/app/controllers/Map/MapControllerNew.js'
+        'js/app/controllers/Publications/PublicationFormController.js'
+        'js/app/controllers/Publications/PublicationMapController.js'
+        'js/app/controllers/Distributors/DistributorController.js'
+        'js/angular.rangeSlider.js'
+        'js/app/controllers/Publications/EditMapPublicationFormController.js'
+        'js/app/controllers/Publications/EditMapMediaPublicationFormController.js'
+        'js/app/controllers/Publications/PublicationFormColorLabel.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+

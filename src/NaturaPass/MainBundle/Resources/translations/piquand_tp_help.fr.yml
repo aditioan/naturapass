@@ -1,0 +1,168 @@
+## MainBundle translate FR
+menu:
+    title:          Piquand TP
+    description:    Aidez-nous à améliorer Piquand TP.
+    submenu1:       Qu'est-ce que Piquand TP
+    submenu2:       Signaler un problème / bug
+    submenu3:       Signaler un abus
+    submenu4:       Nous contacter
+
+publication:
+    legend:     Cet emplacement vous permet de faire une description succincte qui illustre votre publication.
+    form:
+        sharing:    |
+                    <p>Le choix du partage vous permet de choisir avec qui vous partagez vos contenus</p>
+                    <p class='icon-user'>Moi : Seulement vous pouvez voir vos contenus (pour vous constituer un journal de chasse personnel)</p>
+                    <p class='icon-leaf'>Membres Piquand TP : Vous partagez avec l'ensemble de la communauté Piquand TP</p>
+        geoloc:     |
+                    <p>La géolocalisation permet de géolocaliser vos médias :</p>
+                    <ul>
+                    <li>soit en récupérant l'information depuis votre photo ou vidéo,</li>
+                    <li>soit en la plaçant sur la carte.</li>
+                    </ul>
+        landmark:     |
+                    <p>La géolocalisation permet de géolocaliser vos médias :</p>
+                    <ul>
+                    <li>soit en récupérant l'information depuis votre photo ou vidéo,</li>
+                    <li>soit en la plaçant sur la carte.</li>
+                    </ul>
+        uploading:  Téléchargement en cours...
+        legend:     Cet emplacement vous permet de faire une description succincte qui illustre votre média.
+        tag:        Un tag est un mot clé assigné à votre publication afin de la retrouver plus rapidement (exemple trophée, trace, paysage,...)
+    formlegend:     Cet emplacement vous permet de faire une description succincte qui illustre votre média.
+    formsharing:        |
+                        Le choix du partage vous permet de choisir avec qui vous partagez vos contenus.<br>
+                        Moi : Vous serez le seul à voir vos contenus (pour vous constituer un journal de chasse personnel)<br>
+                        Membres Piquand TP : Vous partagez avec l'ensemble de la communauté Piquand TP<br>
+    formtag:            |
+                        Un tag est un mot clé assigné à votre publication afin de la retrouver plus rapidement (exemple: trophée, trace, paysage,...).
+    formgeoloc:         |
+                        La géolocalisation permet de géolocaliser vos médias :<br>
+                            - soit en récupérant l'information depuis votre photo ou vidéo (après le chargement de votre photo, si votre appareil photo le permet, le point sera placé automatiquement sur la carte),<br>
+                            - soit en plaçant le bon emplacement sur la carte.<br>
+salon:
+    favoriteAddress:    Selectionnez un lieu et géolocalisez sur la carte en déplaçant le curseur
+    action:
+        addnotmember:   |
+                        Listez les invités non-membres Piquand TP !<br>
+                        Pour les invités qui n'utilisent pas Piquand TP (ils n'ont pas de smartphones, ils n'utilisent pas l'email…), vous pouvez les ajouter ci-dessous et indiquer leur présence ou pas. Cela vous facilitera le comptage des présents à votre chantier.
+    start:      Date et heure du rdv de l'évenement lié à ce chantier.Par exemple, s'il s'agit d'un chantier, il faut saisir  la date et de l'heure du rdv le jour du chantier.
+    end:        Date de fin de l'événement, fixée par le ou les administrateurs.
+    geoloc:     Etat de la géolocalisation. Si elle est activée, les membres qui participent à l'événement et qui ont validé le fait d'être géolocalisés seront visibles sur la carte par les autres membres. Nous vous conseillons d'activer la géolocalisation uniquement pendant le chantier.
+    access:     |
+                <p>Type d'accès au chantier:</p>
+                <p>Public: tout le monde voit et peut entrer dans le chantier.</p>
+                <p>Privé: seuls les membres inivtés pourront voir le chantier et accéder au chantier.</p>
+                <p>Semi-privé: tout le monde peut voir et accéder au chantier, mais l'accès au chantier doit être validé par un administrateur du chantier.</p>
+    enter:      Permer d'accéder au chantier, c'est-à-dire aux discussions, aux autres membres et à la géolocalisation sur l'événement.
+    out:        Désinscrivez vous, vous permet de ne plus faire partie des membres de ce chantier et donc de renoncer à participer à l'événement objet de cd chantier.
+    event:      Renseignez à l'aide des 3 boutons ci-dessous votre statut de participation à l'événement auquel vous êtes invité
+    nom:        Nom court du chantier
+    desc:       Vous permet de mettre toutes les informations utiles au bon déroulement du chantier et à l'événement lié à ce chantier.
+    visuel:     Permet de mettre un visuel sur votre chantier. Ce visuel apparaît dans le listing des chantiers pour toutes les personnes ayant connaissance de ce chantier (pour connaître la liste des personnes ayant accès au chantier, voir ci-dessous le statut du chantier).
+    disabled:   chantiers désactivés
+
+text:
+    modal:          Aide
+    mur:            |
+                    <h1>Mur/Journal</h1>
+                    <p>Le mur de Piquand TP vous permet d'échanger avec vos amis et de constituer votre journal de chantier.</p>
+                    <p>Sur le mur, vous pouvez poster textes, photos et vidéos.</p>
+                    <p>Le mur est aussi une porte d'entrée pour la cartographie : chaque publication que vous géolocaliserez sera automatiquement positionnée sur votre carte (https://Piquand TP.e-conception.fr/map).</p>
+                    <h2>Géolocalisation des textes, photos et vidéos</h2>
+                    <h3>Géolocalisation manuelle</h3>
+                    <p>Toutes vos publications peuvent être géolocalisées manuellement. Pour cela, déplacez le curseur sur la carte. N'hésitez pas à zoomer pour plus de précisions.</p>
+                    <h3>Géolocalisation automatique des photos et vidéos</h3>
+                    <p>Si votre appareil ou votre caméscope le permettent, vous pouvez géolocaliser automatiquement vos photos. Les smartphones (iPhone, Samsung, LG…) et appareils récents géolocalisent les photos, si la fonctionnalité est activée dessus.</p>
+                    <p>Dans ce cas, il vous faut télécharger la photo ou la vidéo sur le Mur avec le bouton <em>Téléchargez</em>. Quand le téléchargement est complet, le point doit se situer sur la carte, si vous avez activé la géolocalisation. Vous pouvez redéplacer le point manuellement si besoin. Si le point est mal placé, cela provient des réglages de l'appareil avec lequel vous avez pris votre photo/vidéo. Par exemple sur un smartphone, n'oubliez pas d'activer le wifi pour plus de précision.</p>
+                    <h2>Date et heure</h2>
+                    <p>Vous pouvez entrer la date et l'heure de l'élément objet de votre publication. Cela vous permet de vous rappeler quand cet événement s'est passé. Pour vos photos et vidéos, si votre appareil photo, smartphone ou caméscope le permettent (la plupart des appareils récents le permettent) la date et l'heure seront entrés automatiquement.</p>
+                    <h2>Partage</h2>
+                    <p>Piquand TP vous permet de partager vos publications avec vos différents réseaux d'amis, de connaissance,…</p>
+                    <p>Contrairement à d'autres réseaux sociaux, nous sommes très vigilants et restrictifs sur la notion de partage. Nous voulons que VOUS contrôliez au maximum les éléments que vous partagez.</p>
+                    <p>C'est pourquoi un élément partagé ne peut pas être repartagé.</p>
+                    <p>C'est pourquoi vous pouvez garder des éléments privés.</p>
+                    <p>C'est pourquoi vous devez vous créer des groupes pour maîtriser au mieux vos partages.</p>
+                    <p>C'est pourquoi nous vous permettons d'exclure des personnes de vos partages.</p>
+                    <p>…</p>
+                    <h3>Partage général</h3>
+                    <p>Pour chaque publication, vous devez effectuer un partage général.</p>
+                    <p>Il existe 2 types de partage.</p>
+                    <ul>
+                    <li>Moi : seul vous verrez cette publication. C'est l'utilisation journal de chasse (se remémorez tous les événements même ceux qui sont anecdotiques) ou cartographie (repérez un coin à champignon et le garder pour soi!). Si vous voulez partager avec un groupe et uniquement avec lui, mettez <em>Moi</em> en partage général et le groupe en partage personnalisé.</li>
+                    <li>Membres Piquand TP : vos publications seront visibles par tous les membres Piquand TP. Cela permet de communiquer avec toute la communauté Piquand TP. Essayez d'utiliser cette fonctionnalité avec parcimonie pour ne pas encombrer le Mur Piquand TP.</li>
+                    </ul>
+                    <h3>Partage personnalisé</h3>
+                    <p>Dans le partage personnalisé, vous pouvez partager avec les groupes dont vous faites partie. Il peut s'agir de groupes thématiques (exemple : chasseurs de bécasse) ou de groupes organisationnelles (exemple : chasse de votre village)</p>
+                    <p>Dans le partage personnalisé, vous pouvez aussi exclure des personnes de vos partages. Ces personnes même si elles font partie d'un groupe cible seront exclues du partage. Elles ne pourront en aucun cas voir votre publication sur leur compte.</p>
+                    <h2>Commentaires</h2>
+                    <p>Vous pouvez commenter chaque publication ainsi que donner un avis court avec les <em>J'aime</em> et <em>J'aime pas</em>.</p>
+                    <h2>Quelques exemples d'utilisations du mur</h2>
+                    <h3>Se faire un journal de chantier</h3>
+                    <p>Le mur, et c'est son but 1er, est une extension de votre mémoire. Il vous permet de prendre des notes, des photos, des films et de les dater et géolocaliser. Ainsi, à tout moment, vous pouvez revenir sur le mur et vous remémorer vos grands moments de chantier.</p>
+                    <p>Vous choisissez à tout moment si vous partagez vos publications et avec qui.</p>
+                    <h3>Cartographier son territoire</h3>
+                    <p>Piquand TP est particulièrement utile pour cartographier son territoire en toute simplicité et rapidement.</p>
+                    <p>Soit vous utilisez l'application smartphone et vous publiez en temps réel sur le mur.</p>
+                    <p>Soit vous prenez des photos sur le terrain et vous les ajouter sur le mur en rentrant chez vous depuis votre ordinateur. Elles seront automatiquement géolocalisées. Il ne vous restera plus qu'à dire de quoi il s'agit.</p>
+                    <h3>Informer son réseau</h3>
+                    <p>Avec l'utilisation des partages, et notamment des partages avec les groupes, vous pouvez aisément utiliser Piquand TP pour informer ces derniers des actualités de votre groupe.</p>
+    salon:          |
+                    <h1>Chantier</h1>
+                    <p>La partie « Chantier » permet d'organiser vos chantiers de manières efficaces et de suivre leur bon déroulement en temps réel.</p>
+                    <p>Le principe est de regrouper un certain nombre de personnes autour d'un même chantier. </p>
+                    <h2>Type d'accès</h2>
+                    <p>Il existe 3 types d'accès déterminés par les administrateurs :</p>
+                        <ol>
+                    <li>Privé<br>
+                    Seules les personnes invitées par un des administrateurs peut voir et accéder au chantier</li>
+                    <li>Semi-privé<br>
+                    Tout le monde peut voir le chantier ou l'évènement mais les administrateurs valident toute inscription</li>
+                    <li>Public<br>
+                    Tout le monde peut voir et accéder au chantier ou l'évènement sans contrôle.</li>
+                    </ol>
+                    <h2>L'organisation de l'événement</h2>
+                    <p>Vous voulez organiser un événement et êtes fatigué de passer votre temps au téléphone ou à envoyer des convocations. La solution est Piquand TP. Il vous suffit de créer un chantier, d'envoyer les invitations et aux invités de répondre sur leur présence (oui/non/peut-être). Vous pouvez également utiliser le fil de discussion pour donner vos instructions. Vous pouvez également mettre des informations sur chaque participant.</p>
+                    <h2>Le jour de l'événement</h2>
+                    <p>Le jour de l'événement, les participants peuvent utiliser l'application smartphone pour profiter de Piquand TP en mobilité.</p>
+                    <p>Vous pouvez donc continuer d'utiliser le fil de discussion pour échanger des informations capitales pendant le chantier (début de chantier,…). Vous pouvez également utiliser la géolocalisation qui permet de voir les membres du chantier sur la carte.</p>
+    lounge_disabled:  |
+                      <h1>Fermeture de « Chantier »</h1>
+                      <p>Chères membres Piquand TP,</p>
+                      <p>La partie « chantier » est temporairement fermés sur Piquand TP, elle sera à nouveau accessible d'ici quelques jours.</p>
+                      <p>Nous avons du fermer cette partie de Piquand TP pour les raisons suivantes :</p>
+                      <ul>
+                      <li>Les chantiers vous permettent de vous localiser en temps réel sur le territoire par rapport aux autres participants. Il faut donc qu'ils fonctionnent avec les applications mobiles et il nous faut encore effectuer quelques réglages.</li>
+                      <li>Nous voulons qu'avant l'ouverture, vous utilisiez pleinement le Mur et la Carte de Piquand TP, d'échanger avec vos amis vos souvenirs de chantier et de cartographier votre territoire. Ainsi vous serez fin prêts en septembre.</li>
+                      </ul>
+                      <p>Bien naturellement,</p>
+                      <p>L'équipe Piquand TP.com</p>
+                      <h2>Pour en savoir plus, sur les chantiers, vous pouvez :</h2>
+                      <ul>
+                      <li>Consulter l'aide complète sur cette rubrique,</li>
+                      <li><a href='https://www.youtube.com/watch?v=DEoW3zJ51i4' target='_blank'>Regarder un exemple d'utilisation des chasses</a></li>
+                      </ul>
+    group:          |
+                    <h1>Groupes </h1>
+                    <p>Les groupes vous permettent de choisir simplement avec qui vous voulez communiquer.</p>
+                    <p>L'idée des groupes est de réunir un certain nombre de personnes en fonction de thématique ou d'organisation. </p>
+                    <h2>Type d'accès</h2>
+                    <p>Il existe 3 types d'accès déterminés par les administrateurs :</p>
+                    <ol>
+                    <li>Privé
+                    Seules les personnes invitées par un des administrateurs peut voir et accéder au groupe </li>
+                    <li>Semi-privé
+                    Tout le monde peut voir le groupe mais les administrateurs valident toute inscription</li>
+                    <li>Public
+                    Tout le monde peut voir et accéder au groupe sans contrôle. </li>
+                    </ol>
+    map:            |
+                    <h1>Carte</h1>
+                    <p>La carte est une extension de votre mémoire, vous pouvez l'alimenter en géolocalisant vos photos, vidéos et textes à l'intérieur de celle-ci. </p>
+                    <p>Quelques idées de points à localiser : </p>
+                    <ul>
+                    <li>Panneau, </li>
+                    <li>…</li>
+                    </ul>
+    friends:        Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
+    bug:            Vivamus sagittis lacus vel augue laoreet rutrum faucibus.

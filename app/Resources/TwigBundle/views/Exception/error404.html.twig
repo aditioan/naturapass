@@ -1,0 +1,25 @@
+{% extends "::base-error.html.twig" %}
+
+{% block body %}
+
+    {#    {% include "NaturaPassMainBundle:Default:menu.html.twig" %}#}
+    <div id="corps-container" class="large-container" ng-controller="MenuController">
+        <div class="container container-error">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>{{ 'error.404.h1'|trans({},'main') }}</h1>
+                    <h2>{{ 'error.404.h2'|trans({},'main') }}</h2>
+                    <div class="block-icon text-center">
+                        <div class="block-chien icon-chien-seul"></div>
+                        <div class="block-404 icon-bulle"></div>
+                    </div>
+                    <p class="text-center">
+                        <a href="{{ path('naturapass_main_homepage') }}" title="{{ 'nav.home'|trans({}, 'nav') }}" class="btn btn-primary">{{ 'error.link.home'|trans({},'main') }}</a>
+                        <a role="menuitem" tabindex="-1" href="#" ng-click="reportProblem()" data-toggle="modal" class="btn btn-primary">{{ 'error.link.bug'|trans({},'main') }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

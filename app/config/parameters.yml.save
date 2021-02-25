@@ -1,0 +1,56 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: naturapass
+    database_user: roo
+    database_password: QLE7hxsMfXACBaZv
+    mailer_transport: smtp
+    mailer_host: mail.gandi.net
+    mailer_user: contact@heolys.fr
+    mailer_password: "VpXhC7WoSbC3eYbw"
+    api_key_android: AIzaSyBbD1XUO0Ks5MQNivNWrvFZRQ3XqJ2kH_w
+    locale: fr
+    url_default:    https://www.naturapass.com
+    application: Naturapass
+    translation_name: 
+    facebook_id: 746119168733563
+    facebook_secret: d73b91ddc9a8b9f6dffa7eed5c5f9f1f
+    facebook_version: v2.0
+    app_store_link: https://itunes.apple.com/app/naturapass/id883300083?mt=8
+    play_store_link: https://play.google.com/store/apps/details?id=fr.appsolute.naturapass
+    project_id: 891258442461
+    ios_prefix: naturapass_
+    email_bcc:      suivi@naturapass.com
+    email_to:      team@naturapass.com
+    naturapass_facebook: true
+    visibility:
+        lounge_fb:      false
+        cgu:            true
+        free_logo:      true
+        interstice:     true
+        social_network: true
+        help_problem:   true
+        game:           true
+        partner:        true
+        home:           true
+        store:          true
+        img_email:      true
+        like:           true
+        comment:        true
+        admin:
+            news:       true
+            game:       true
+            graph:      true
+            distributor:    true
+            animal:     true
+            tree:       true
+            entity:     true
+            export:     true
+    secret: 2a619bb10cea1e63dffc10a26837e53f100
+    pdo.db_options:
+        db_table: session
+        db_id_col: session_id
+        db_data_col: session_value
+        db_time_col: session_time

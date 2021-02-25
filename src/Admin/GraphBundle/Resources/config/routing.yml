@@ -1,0 +1,3 @@
+admin_graph_pertinences:
+    path:     /pertinences
+    defaults: { _controller: AdminGraphBundle:Default:pertinences }

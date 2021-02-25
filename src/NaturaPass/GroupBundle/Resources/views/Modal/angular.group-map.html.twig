@@ -1,0 +1,27 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.group-map.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4 class="modal-title">{{ 'map.title'|trans({}, translation_name~'map') }}</h4>
+    </div>
+    <div class="modal-body" ng-class="{loading: map.loading}" style="min-height: 300px" ng-init="initGoogleMaps()">
+        <div class="map-media" np-google-maps="map.ready"
+             center="map.center"
+             zoom="map.zoom"
+             draggable="true"
+             dragging="map.dragging"
+             bounds="map.bounds"
+             events="map.events"
+             options="map.options"
+             refresh="map.refresh"
+             pan="true"
+             control="map.control">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

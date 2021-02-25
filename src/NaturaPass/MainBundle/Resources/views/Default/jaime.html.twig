@@ -1,0 +1,20 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - A propos de J'aime la Chasse{% endblock %}
+{% block description %}Découvrez la page Facebook J'aime la Chasse, une des premières pages dans le monde de la chasse ! Une belle création Naturapass !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">À propos de</li>
+        <li class="active">J'aime la Chasse</li>
+    </ol>
+
+    <h1>J'aime la Chasse</h1>
+    <p>La page Facebook J'aime la Chasse a été créée par Naturapass en 2014. Elle connaît un franc succès puisqu'elle détient plusieurs dizaines de milliers de fans. Cela la place dans le top 5 des pages Facebook du secteur de la chasse. Le record d'audience de J'aime la Chasse est de près de 4,7 millions de personnes atteintes, un chiffre exceptionnel dont l'équipe Naturapass est très fière !</p>
+    <p><img src="{{ asset('img/pages/record.png') }}" width="756" height="621" alt="A propos de J'aime la Chasse" class="img-responsive center-block"></p>
+    <p>Vous y retrouverez toutes sortes de publications telles que des actualités, des photos, des vidéos, des questions du permis de chasse, etc.</p>
+    <p>Devenez fan de J'aime la Chasse dès maintenant en <a title="cliquant ici" href="https://www.facebook.com/chasse.et.chasseurs/" target="_blank">cliquant ici</a> !</p>
+
+{% endblock corps %}

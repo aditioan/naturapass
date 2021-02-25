@@ -1,0 +1,8 @@
+chat:
+    title: "{0}Nouveau message|{1} %name%|{2} %name% et un autre membre|]2,Inf[ %name% et %count% membres"
+    message:
+        text_placeholder: Écrire un commentaire
+    header:
+        text_to: "Pour:"
+        text_done: Terminé
+        title_add_more_participants: Ajoutez plus de participants

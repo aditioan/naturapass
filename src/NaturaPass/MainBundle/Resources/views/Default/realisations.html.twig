@@ -1,0 +1,26 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - A propos de nos réalisations{% endblock %}
+{% block description %}Découvrez ici les réalisations faites grâce à Naturapass : court-métrage Opinel, partenariat avec le salon du Game Fair... Cliquez ici pour tout savoir !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">À propos de</li>
+        <li class="active">Nos réalisations</li>
+    </ol>
+
+    <h2>La quête de l'instant, le film Opinel par Naturapass</h2>
+    <img src="{{ asset('img/pages/opinel_logo.jpg') }}" width="700" height="467" alt="Opinel" style="width: 150px; margin-right:10px;" class="pull-left img-responsive">
+    <p>En 2016, Opinel a sorti son premier couteau de chasse, une date historique pour la marque et la chasse !</p>
+    <p>Afin d'annoncer sa sortie, Opinel a contacté Naturapass pour réaliser une vidéo. L'équipe Naturapass est donc partie en Savoie afin de tourner un court métrage pour l'Opinel n°12 eXplore !</p>
+    <p>De superbes images à retrouver ci-dessous.</p>
+    <p></p>
+    <h2>Naturapass, l'application officielle du Game Faire 2016 !</h2>
+    <p>En 2015, l'équipe d'organisation du Game Fair a contacté Naturapass car son salon a changé de lieu et les visiteurs peinaient à trouver leurs stands préférés. Naturapass a donc réfléchi à une solution et lui a proposé de géolocaliser tous les stands sur sa carte.</p>
+    <p>L'équipe de Naturapass a donc travaillé durant plusieurs jours afin de géolocaliser les stands du Game Fair 2016 quelques semaines avant l'ouverture du salon.</p>
+    <p>Le jour même de l'ouverture du Game Fair 2016, les visiteurs pouvaient télécharger l'application afin de se géolocaliser et de retrouver leurs stands préférés.</p>
+    <p><img src="{{ asset('img/pages/visu_game_fair_naturapass.jpg') }}" width="400" height="185" alt="nos réalisations naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

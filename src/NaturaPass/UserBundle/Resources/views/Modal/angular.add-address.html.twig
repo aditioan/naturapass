@@ -1,0 +1,58 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.add-address.html{% endblock %}
+
+{% block template_body %}
+    <form role="form" ng-submit="addAddress()">
+        <div class="modal-header">
+            <button type="button" class="close" aria-hidden="true" ng-click="close()">&times;</button>
+            <h4 class="modal-title">{{ 'user.action.add_address'|trans({}, translation_name~'user') }}</h4>
+        </div>
+        <div class="modal-body" style="min-height: 300px">
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label for="address_title">{{ 'user.attributes.address.title'|trans({}, translation_name~'user') }}</label>
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="{{ 'user.attributes.address.placeholder'|trans({}, translation_name~'user') }}" class="form-control" id="address_title" name="address[title]" ng-model="address.title" required/>
+                </div>
+            </div>
+
+            <div ng-class="{loading: map.loading}" style="min-height: 300px">
+                <div class="map-media" np-google-maps="map.ready"
+                        center="map.center"
+                        zoom="map.zoom"
+                        draggable="true"
+                        dragging="map.dragging"
+                        bounds="map.bounds"
+                        events="map.events"
+                        options="map.options"
+                        refresh="map.refresh"
+                        pan="true"
+                        control="map.control">
+                </div>
+            </div>
+
+            <div id="google-maps-controls" class="hide" ng-cloak>
+                <div class="controls-center">
+                    <div class="search-location">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}"
+                                    ng-keydown="searchAddress($event)"
+                                    ng-model="address.address"/>
+                            <span class="input-group-btn">
+                                <a href="#" title="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}" class="btn btn-primary icon-search3"
+                                        ng-click="searchAddress()">
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger" ng-class="{disabled: loading}" ng-click="close()">{{ 'button.cancel'|trans({}, translation_name~'global') }}</a>
+            <button type="submit" class="btn btn-primary btn-icon icon-paperplane" ng-class="{disabled: map.loading}" np-submit-loader="loading" data-icon="icon-paperplane">{{ 'user.action.add_address'|trans({}, translation_name~'user') }}</button>
+        </div>
+    </form>
+{% endblock %}

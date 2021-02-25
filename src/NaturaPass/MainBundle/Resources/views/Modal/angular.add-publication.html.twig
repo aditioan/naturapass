@@ -1,0 +1,19 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.add-publication.html{% endblock %}
+
+{% block template_body %}
+    <ul class="sharing-data hide" data-default="{{ app.user.parameters.publicationSharing.share }}">
+        {% for i in 0..3 %}
+            {% if i != 2 %}
+                {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                    <li data-sharing="{{ i }}" class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <div class="modal-body">
+        <a href="#" class="close" ng-click="cancel()">&times;</a>
+        {% include 'NaturaPassPublicationBundle:Include:angular.form.html.twig' %}
+    </div>
+{% endblock %}

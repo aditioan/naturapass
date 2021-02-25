@@ -1,0 +1,39 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Espace Pro{% endblock %}
+{% block description %}Vous êtes professionnels et vous voulez découvrir Naturapass ? Cliquez ici pour entrer dans la page Espace Pro et avoir plus de renseignements !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Espace Pro</li>
+    </ol>
+
+    <h1>Espace Pro</h1>
+    <h2>Une gamme d'applications dédiée à la nature</h2>
+    <p>Nous développons toute une gamme d'applications dédiée à la nature et à ses usagers : </p>
+    <p>- Saisie des collisions routières</p>
+    <p>- Remontée des informations environnementales</p>
+    <p>- Recensement des chemins ruraux</p>
+    <p>- Partage des espaces entres les usagers de la nature</p>
+    <p>Pour avoir plus de détails sur toutes les applications, <a href="{{ path('naturapass_main_applications') }}" title="Gamme d'applications nature">cliquez ici</a>.</p>
+    <p></p>
+    <p></p>
+
+    <h2>Devenir Partenaire</h2>
+    <p>Vous êtes une entreprise dans le domaine de la chasse ou vous êtes intéressés par notre application, et vous voulez soutenir Naturapass ?</p>
+    <p>Devenez Partenaire ! </p>
+    <p>Pour en savoir plus <a href="{{ path('naturapass_main_devenir') }}" title="Devenez Partenaire">cliquez ici</a>.</p>
+    <p></p>
+    <p></p>
+
+    <h2>Contact Pro </h2>
+    <address>
+        <strong class="text-primary">Responsable des Partenariats :</strong><br>
+        <strong>Julien PARIS</strong><br>
+        <a href="mailto:julien@naturapass.com">julien@naturapass.com</a><br>
+        06 62 56 05 40
+    </address>
+
+{% endblock corps %}

@@ -1,0 +1,29 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'privacy.title'|trans({},translation_name~'privacy') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block meta %}
+    <meta property="og:title" content="{{ 'privacy.title'|trans({},translation_name~'privacy') }}">
+    <meta property="og:url" content="{{ url('naturapass_main_privacy') }}">
+    <meta property="og:type" content="website"/>
+{% endblock meta %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                <h1>{{ 'privacy.title'|trans({},translation_name~'privacy') }}</h1>
+
+                <p>{{ 'privacy.description'|trans({},translation_name~'privacy') }}</p>
+
+                {{ 'privacy.raw'|trans({},translation_name~'privacy') | raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

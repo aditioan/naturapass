@@ -1,0 +1,17 @@
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request loader" role="form" ng-non-bindable>
+    <div>
+        {% if invalid_username is defined %}
+            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+        {% endif %}
+        {% if request_sent is defined %}
+            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+        {% endif %}
+        <div class="form-group">
+            <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="text" id="username" name="username" required="required" class="form-control"/>
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 btn-right">{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </div>
+</form>

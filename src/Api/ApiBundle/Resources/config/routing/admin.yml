@@ -1,0 +1,59 @@
+api_admin_news:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\NewsController
+
+api_admin_game:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\GameController
+
+api_admin_receiver:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\ReceiverController
+
+api_admin_category:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\CategoriesController
+
+api_admin_animal:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\AnimalController
+
+api_admin_observation:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\ObservationController
+
+api_admin_locality:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\LocalityController
+
+api_admin_group:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\GroupController
+
+api_admin_zone:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\ZoneController
+
+api_admin_card:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\CardsController
+
+api_admin_distributor:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\DistributorController
+
+api_admin_brand:
+    type:       rest
+    name_prefix:  api_admin_
+    resource:   Api\ApiBundle\Controller\Admin\BrandController

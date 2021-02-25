@@ -1,0 +1,78 @@
+{% extends "NaturaPassGroupBundle::layout.html.twig" %}
+
+{% block title %}
+    {% if 'naturapass_group_homepage' | isCurrentRoute %}
+        {{ 'title.all_groups'|trans({},translation_name~'group') }}
+    {% else %}
+        {{ 'title.my_groups'|trans({},translation_name~'group') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="GroupListController" data-invited="{{ ('naturapass_group_invite' | isCurrentRouteGroup)}}" data-owning="{{ 'naturapass_group_owning' | isCurrentRoute }}">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                    {% if 'naturapass_group_invite_wait' | isCurrentRoute %}
+                        <h1>{{ 'group.title.invitedListe'|trans({}, translation_name~'group') }}</h1>
+                        <p>{{ 'group.description.invitedListe'|trans({}, translation_name~'group') }}</p>
+                    {% else %}
+                        {% if 'naturapass_group_homepage' | isCurrentRoute %}
+                            <h1>{{ 'group.title.allListe'|trans({}, translation_name~'group') }}</h1>
+                            <p>{{ 'group.description.allListe'|trans({}, translation_name~'group') }}</p>
+                        {% else %}
+                            <h1>{{ 'group.title.myListe'|trans({}, translation_name~'group') }}</h1>
+                            <p>{{ 'group.description.myListe'|trans({},translation_name~ 'group') }}</p>
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="lounges" ng-cloak>
+                        <div class="media media-list container-md" >
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'group') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-group.placeholder'|trans({},translation_name~'group') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="groups" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "NaturaPassGroupBundle:Include:angular.group.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="params.owning && !loading && !entities.length && !filterNoMore" ng-cloak>
+                        {{ 'title.no_owning'|trans({}, translation_name~'group') }}
+                    </div>
+                    <div class="alert alert-info" ng-show="params.invited && !loading && !entities.length && !filterNoMore" ng-cloak>
+                        {{ 'title.no_pending'|trans({}, translation_name~'group') }}
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'group') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/LoungeGroup/LoungeGroupListController.js'
+    'js/app/controllers/Groups/GroupListController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js'%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

@@ -1,0 +1,4 @@
+Admin\SentinelleBundle\Entity\Card:
+    properties:
+            name:
+                - NotBlank: ~

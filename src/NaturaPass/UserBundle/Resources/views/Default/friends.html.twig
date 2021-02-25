@@ -1,0 +1,48 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'friends.title'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock title %}
+
+{% block body %}
+
+    {% include "NaturaPassMainBundle:Include:angular.menu-gauche.html.twig" %}
+
+    <div id="corps-container">
+
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <div class="container container-bulle" ng-controller="UserSearchController" ng-init="init()" data-id="{{app.user.id}}">
+
+            {% set users = app.user.getFriends() %}
+            <div class="container-lg container-result">
+                <h1>{{ 'nav.friends'|trans({},translation_name~'nav') }}</h1>
+                <p>{{ 'friends.description'|trans({},translation_name~'user') }}</p>
+
+                {% if users.count == 0 %}
+                    <p class="alert alert-warning">{{ 'friends.no_friends'|trans({},translation_name~'user') }}</p>
+                {% else %}
+
+                    <div class="row line-result" ng-repeat="user in users" ng-cloak ng-class="{loading: user.loading}">
+                        {% include "NaturaPassUserBundle:Include:angular.friends.html.twig" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="member-commun" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/User/UserSearchController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

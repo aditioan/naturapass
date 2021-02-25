@@ -1,0 +1,343 @@
+{% verbatim %}
+<a class="pull-left"
+   ng-href="{{ 'fos_user_profile_show_name' | route: {'usertag': publication.owner.usertag} }}">
+    <img class="media-object" ng-src="{{ publication.owner.photo }}" width="60"
+         height="60" alt="{{ publication.owner.fullname }}">
+</a>
+{% endverbatim %}
+<div class="dropdown option-publication" ng-hide="publication.editing"
+        {% if not app.user.hasRole("ROLE_SUPER_ADMIN") %}ng-if="connectedUser.id == publication.owner.id"{% endif %}>
+    <a class="btn btn-default btn-xs" data-toggle="dropdown">
+        <span class="icon-cog2"></span>
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation" ng-if="publication.media && publication.media.type == 100">
+            <a class="icon-interset" role="menuitem" tabindex="-1" href="#"
+                    np-eat-click
+                    ng-click="openPublicationModal($event)">{{ 'publication.action.crop_rotate'|trans({},translation_name~'publication') }}</a>
+        </li>
+
+        <li role="presentation" ng-hide="publication.editing || publication.owner.id == connectedUser.id">
+            <a class="icon-user-block2" role="menuitem" tabindex="-1" href="#"
+                    ng-click="lockUser()"
+                    np-eat-click>{{ 'publication.action.lockuser'|trans({},translation_name~'publication') }}</a>
+        </li>
+        <li role="presentation" ng-hide="publication.editing">
+            <a class="icon-marker" role="menuitem" tabindex="-1" href="#"
+                    ng-click="startEditingPublication($event)"
+                    np-eat-click>{{ 'publication.action.edit'|trans({},translation_name~'publication') }}</a>
+        </li>
+        <li role="presentation" ng-show="publication.editing">
+            <a class="icon-marker" role="menuitem" tabindex="-1" href="#"
+                    ng-click="stopEditingPublication()"
+                    np-eat-click>{{ 'publication.action.stop_edit'|trans({},translation_name~'publication') }}</a>
+        </li>
+
+        <li role="presentation" ng-hide="publication.removing">
+            <a class="icon-remove2" role="menuitem" tabindex="-1" href="#"
+                    ng-click="publication.removing = true"
+                    np-eat-click>{{ 'button.delete'|trans({},translation_name~'global') }}</a>
+        </li>
+        <li role="presentation" ng-show="publication.removing">
+            <a class="icon-remove2" role="menuitem" tabindex="-1" href="#"
+                    ng-click="remove()">{{ 'label.confirm'|trans({},translation_name~'global') }}</a>
+        </li>
+    </ul>
+</div>
+{#        debug#}
+{% verbatim %}
+<div class="dropdown sharing media-sharing" ng-hide="publication.editing"
+     ng-if="connectedUser.id == publication.owner.id">
+    <a href="#" class="btn btn-default btn-sm btn-xs"
+       ng-click="openSharingModal()">
+        {% endverbatim %}
+           {% verbatim %}
+                <span class="{{ currentSharing.icon }}"> {{ currentSharing.text }}</span>
+            {% endverbatim %}
+</a>
+</div>
+{% if not app.user.hasRole("ROLE_SUPER_ADMIN") %}
+    {% verbatim %}
+        <div class="dropdown option-publication"
+             ng-if="connectedUser.id != publication.owner.id">
+            <a href="#" class="btn btn-default btn-sm btn-xs"
+               ng-click="report()">
+                <span class="icon-warning2"></span>
+            </a>
+        </div>
+    {% endverbatim %}
+{% endif %}
+{% verbatim %}
+<div class="media-body">
+    <h4 class="media-heading">
+        <a ng-href="{{ 'fos_user_profile_show_name' | route: {'usertag': publication.owner.usertag} }}">{{ publication.owner.fullname }}</a>
+    </h4>
+    <small>
+        {% endverbatim %}{{ 'publication.state.published'|trans({}, translation_name~'publication') }}{% verbatim %} {{ publication.created | relativetime }}
+        <span ng-if="publication.date || publication.geolocation"> - </span>
+                <span class="media-event-date" ng-if="publication.date">
+                    {% endverbatim %}{{ 'publication.date.when'|trans({}, translation_name~'publication') }}{% verbatim %} {{ publication.date | date:'L' }}
+                </span>
+                <span class="media-geolocation" ng-if="publication.geolocation">
+                        <span ng-if="publication.date">{% endverbatim %}{{ 'publication.geolocation.at'|transchoice(0, {}, translation_name~'publication') }}{% verbatim %}</span>
+                        <span ng-if="!publication.date">{% endverbatim %}{{ 'publication.geolocation.at'|transchoice(1, {}, translation_name~'publication') }}{% verbatim %}</span>
+                        <a href="#" ng-click="openMapModal()" ng-if="publication.geolocation.address">{{ publication.geolocation.address }}</a>
+                        <a href="#" ng-click="openMapModal()" ng-if="!publication.geolocation.address">{% endverbatim %}{{ 'publication.geolocation.address_not_specified'|trans({}, translation_name~'publication') }} {% verbatim %}</a>
+                </span>
+                <br />
+        <span ng-hide="publication.editing">
+            <table>
+                <tr>
+                    <td style="vertical-align:top;width: 26px">
+                        <img src="/img/ic_share_mur.png" width="15px" />
+                    </td>
+                    <td>
+                        <div ng-bind="currentSharing.text"></div>
+                        <span ng-if="publication.shareusers.length > 0">
+                            Personne(s):
+                            <span ng-bind="publication.shareUsersName"></span>
+                        </span>
+                    </td>
+                </tr>
+                <tr ng-if="publication.savedGroups">
+                    <td></td>
+                    <td>
+                        <strong>{% endverbatim %}{{ 'publication.observation.group'|trans({}, translation_name~'publication') }}{% verbatim %}</strong>: <span style="padding-left: 5px;" ng-repeat="group in publication.savedGroups"><span np-bind-html="group.text" ></span>, </span>
+                    </td>
+                </tr>
+                <tr ng-if="publication.hunts">
+                    <td></td>
+                    <td>
+                        <strong>{% endverbatim %}{{ 'publication.observation.hunt'|trans({}, translation_name~'publication') }}{% verbatim %}</strong>:<span style="padding-left: 5px;" ng-repeat="chass in publication.hunts"><span np-bind-html="chass.name" ></span>, </span>
+                    </td>
+                </tr>
+                <tr ng-if="publication.observations.length && publication.observations[0].sharing_receiver.length">
+                    <td></td>
+                    <td>
+                        <strong>{% endverbatim %}{{ 'publication.observation.sentinelle'|trans({}, translation_name~'publication') }}{% verbatim %}</strong>:<span style="padding-left: 5px;" ng-repeat="sharing_receiver in publication.observations[0].sharing_receiver"><span np-bind-html="sharing_receiver.name" ></span>, </span>
+                    </td>
+                </tr>
+                <tr ng-cloak ng-repeat="observation in publication.observations" ng-show="publication.observations.length">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="vertical-align:top;;width: 47px">
+                                    <img src="/img/ic_binoculars.png" width="15px" />
+                                    {% endverbatim %}{{ 'publication.observation.obs'|trans({}, translation_name~'publication') }}{% verbatim %}:
+                                </td>
+                                <td>
+                                    <a href="#" class="ng-binding">
+                                        <span ng-cloak class="" ng-repeat="select in observation.tree">
+                                            <strong>{{ select }}</strong> /
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <table style="border-left: 1px solid silver; ">
+                                        <tr ng-repeat="attachment in observation.attachments">
+                                            <td style=";padding-left: 5px;;vertical-align: top" >
+                                                <span np-bind-html="attachment.label"></span>
+                                            </td>
+                                            <td ng-if="attachment.values.length">
+                                                <table>
+                                                    <tr ng-repeat="value in attachment.values">
+                                                        <td>
+                                                            <span style="padding-left: 10px;" np-bind-html="value"></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td ng-if="attachment.value.length">
+                                                <span style="padding-left: 10px;" np-bind-html="attachment.value"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </span>
+    </small>
+    <br>
+
+    <p class="media-contenu" ng-hide="publication.editing" np-bind-html="publication.content1"></p>
+    <div  ng-hide="publication.editing" class="media-media" ng-if="publication.media && !fromMap && !isModal">
+        <button type="button" class="btn btn-primary btn-xs btn-icon icon-interset"
+                ng-click="openPublicationModal($event)"
+                ng-if="connectedUser.id == publication.owner.id && publication.media.type == 100">{% endverbatim %}{{ 'publication.action.crop'|trans({}, translation_name~'publication') }}
+/ {{ 'publication.action.rotate'|trans({}, translation_name~'publication') }}{% verbatim %}</button>
+        <img class="img-responsive"
+             ng-if="publication.media.type == 100"
+             ng-src="{{ publication.media.path }}"
+             ng-class="{loading: publication.media.loading}"
+             ng-click="openPublicationModal($event)">
+        <np-video np-video-data="publication.media" ng-if="publication.media.type == 101" np-width="578"
+                  np-height="578"></np-video>
+    </div>
+
+    <div class="media-info" ng-if="!isModal">
+        <span class="media-legend">{{ publication.media.legend }}</span>
+                <span class="media-tags">
+                    <span class="media-tag" ng-repeat="tag in publication.media.tags">
+                        {{ tag.name }}
+                    </span>
+                </span>
+    </div>
+
+</div>
+{% endverbatim %}
+{% if visibility.like or visibility.comment %}
+    {% verbatim %}
+<div class="media-link">
+    <div class="clearfix">
+        <div class="media-link-info">
+            {% endverbatim %}
+    {% if visibility.comment %}
+        {% verbatim %}
+                    <span class="nbcomments-publication">{{ 'publication.attributes.comment' | transchoice: publication.comments.data.length + publication.comments.unloaded: {'count':publication.comments.data.length + publication.comments.unloaded}: 'publication' }}</span>
+                {% endverbatim %}
+    {% endif %}
+    {% if visibility.like and visibility.comment %}
+        -
+    {% endif %}
+    {% if visibility.like %}
+        {% verbatim %}
+            <span ng-if="publication.likes == 0">
+                <span class="like-publication">{{ publication.likes }}</span> {% endverbatim %}{{ 'label.like'|trans({},translation_name~'publication') }}{% verbatim %}
+            </span>
+            <a href="#" ng-click="openLikeModal()" ng-if="publication.likes > 0" class="ng-binding">
+                <span class="like-publication">{{ publication.likes }}</span> {% endverbatim %}{{ 'label.like'|trans({},translation_name~'publication') }}{% verbatim %}
+            </a>
+            {% endverbatim %}
+    {% endif %}
+    {% verbatim %}
+        </div>
+        <div class="media-link-button">
+            {% endverbatim %}
+    {% if naturapass_dev %}
+        {% verbatim %}
+            <button type="button" class="btn btn-link btn-xs" ng-click="shareOnFacebook()" ng-if="!publication.facebook_id">
+            <span class="icon-facebook"></span> {% endverbatim %}{{ 'label.sharing.share'|trans({},translation_name~'global') }}{% verbatim %}
+            </button>
+            <button type="button" class="btn btn-link btn-xs" ng-if="publication.facebook_id">
+            <a href="" class="icon-facebook">{% endverbatim %}{{ 'label.sharing.shared'|trans({},translation_name~'global') }}{% verbatim %}</a>
+            </button>
+            {% endverbatim %}
+    {% endif %}
+    {% if visibility.like %}
+        {% verbatim %}
+            <button type="button" class="btn btn-link btn-xs like" ng-class="{active: publication.isUserLike}"
+                    ng-click="actionOnLike()">
+                <span class="icon-thumbs-up3"></span> {% endverbatim %}{{ 'label.like'|trans({}, translation_name~'publication') }}{% verbatim %}
+            </button>
+            {% endverbatim %}
+    {% endif %}
+    {% if visibility.comment %}
+        {% verbatim %}
+            <button type="button" class="btn btn-link btn-xs comment" ng-click="focusOnComment()">
+                <span class="icon-bubble-dots3"></span> {% endverbatim %}{{ 'label.comment'|trans({},translation_name~'publication') }}{% verbatim %}
+            </button>
+            {% endverbatim %}
+    {% endif %}
+    {% verbatim %}
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+    {% if visibility.comment %}
+        {% verbatim %}
+<div class="media comments">
+    <button class="btn btn-primary btn-block comment view-all icon-bubble-dots3"
+            ng-disabled="publication.comments.loading"
+            ng-show="publication.comments.unloaded > 0"
+            ng-click="loadComments()"
+            np-bind-html="publication.comments.unloadedHTML">
+    </button>
+
+    <div class="small-loading" ng-if="publication.comments.loading"></div>
+
+    <div class="media comment media-comment" ng-class="{loading: comment.loading}"
+         ng-repeat="comment in publication.comments.data">
+        <a class="pull-left"
+           ng-href="{{ 'fos_user_profile_show_name' | route: {'usertag': comment.owner.usertag} }}">
+            <img class="media-object" ng-src="{{ comment.owner.photo }}" width="50" height="50"
+                 alt="{{ comment.owner.fullname }}">
+        </a>
+
+        <div class="media-body">
+            <h5 class="media-heading">
+                <a ng-href="{{ 'fos_user_profile_show_name' | route :{'usertag': comment.owner.usertag} }}">{{ comment.owner.fullname }}</a>
+                            <span class="media-time-like">
+                                <small>
+                                    - <span class="media-time">{{ comment.created | relativetime }}</span>
+                                </small>
+                                {% endverbatim %}
+        {% if visibility.like %}
+            {% verbatim %}
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-link btn-xs like like-comment"
+                                                            ng-class="{active: comment.isUserLike}"
+                                                            ng-click="actionOnCommentLike(comment)">
+                                                        <span class="icon-thumbs-up3"> {{ comment.likes }}</span> {% endverbatim %}{{ 'label.like'|trans({},translation_name~'publication') }}{% verbatim %}
+                                                    </button>
+                                                </div>
+                                                {% endverbatim %}
+        {% endif %}
+        {% verbatim %}
+                                            </span>
+
+                <div class="option-comment" ng-hide="comment.editing">
+                    <small ng-if="connectedUser.id == comment.owner.id">
+                        - <a href="#" ng-click="editComment(comment)"
+                             class="edit-comment">{% endverbatim %}{{ 'button.edit'|trans({},translation_name~'global') }}{% verbatim %}</a>
+                    </small>
+                    <small ng-if="connectedUser.id == comment.owner.id || connectedUser.id == publication.owner.id">
+                        - <a href="#" class="remove-comment" ng-hide="comment.deleting"
+                             ng-click="comment.deleting = true;">{% endverbatim %}{{ 'button.delete'|trans({},translation_name~'global') }}{% verbatim %}</a>
+                        <a href="#" class="remove-comment" ng-show="comment.deleting"
+                           ng-click="deleteComment($index)">{% endverbatim %}{{ 'label.confirm'|trans({},translation_name~'global') }}{% verbatim %}</a>
+                        <a href="#" class="remove-comment" ng-show="comment.deleting"
+                           ng-click="comment.deleting = false;">- {% endverbatim %}{{ 'button.cancel'|trans({},translation_name~'global') }}{% verbatim %}</a>
+                    </small>
+                </div>
+            </h5>
+            <p class="media-contenu" ng-hide="comment.editing" np-bind-html="comment.content1"></p>
+            <textarea ng-model="comment.content1"
+                      ng-class="{loading: comment.loading}"
+                      ng-keydown="updateComment($event, comment);"
+                      ng-show="comment.editing"
+                      class="form-control input-sm" rows="{{ comment.rows }}"></textarea>
+        </div>
+    </div>
+    {% endverbatim %}
+        <div class="media comment addcomment" ng-class="{loading: publication.comments.adding.loading}">
+            {% verbatim %}
+        <a class="pull-left" href="#">
+            <img class="media-object" ng-src="{{ connectedUser.photo }}" width="50" height="50"
+                 alt="{{ connectedUser.fullname }}">
+        </a>
+
+        <div class="media-body" ng-class="{'has-error': publication.comments.adding.hasError}">
+        <label class="control-label"
+               ng-show="publication.comments.adding.hasError">{{ publication.comments.adding.error }}</label>
+            <textarea class="form-control input-sm"
+                      rows="{{ publication.comments.adding.rows }}"
+                      placeholder="{% endverbatim %}{{ 'placeholder.add_comment'|trans({},translation_name~'publication') }}{% verbatim %}"
+                      ng-model="publication.comments.adding.content"
+                      ng-keydown="createComment($event)"
+                      np-focus-on="focusComment">
+
+            </textarea>
+            <small>{% endverbatim %}{{ 'label.add_comment'|trans({},translation_name~'publication') }}{% verbatim %}</small>
+        </div>
+        {% endverbatim %}
+        </div>
+    {% endif %}
+    </div>
+{% endif %}

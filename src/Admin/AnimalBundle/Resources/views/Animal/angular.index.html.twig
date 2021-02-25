@@ -1,0 +1,56 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+        {{ 'animal.all_animals'|trans({},translation_name~'animal') }} | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container" ng-controller="AnimalListController" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                        <h1>{{ 'animal.all_animals'|trans({}, translation_name~'animal') }}</h1>
+                        <p>{{ 'animal.description.list'|trans({}, translation_name~'animal') }}</p>
+
+                    <div class="animals" ng-cloak>
+                        <div class="media media-list container-md" >
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'animal') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-animal.placeholder'|trans({},'animal') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animals" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "AdminAnimalBundle:Include:angular.animal.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'animal') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "AdminAnimalBundle:Modal:angular.remove-animal.html.twig" %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Animal/AnimalListController.js'
+    'js/app/controllers/Admin/Receiver/Animal/AnimalModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

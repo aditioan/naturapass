@@ -1,0 +1,24 @@
+api_backoffice_locality:
+    type:       rest
+    name_prefix:  api_backoffice_
+    resource:   Api\ApiBundle\Controller\Backoffice\LocalityController
+
+api_backoffice_group:
+    type:       rest
+    name_prefix:  api_backoffice_
+    resource:   Api\ApiBundle\Controller\Backoffice\GroupController
+
+api_backoffice_observation:
+    type:       rest
+    name_prefix:  api_backoffice_
+    resource:   Api\ApiBundle\Controller\Backoffice\ObservationController
+
+api_backoffice_categories:
+    type:       rest
+    name_prefix:  api_backoffice_
+    resource:   Api\ApiBundle\Controller\Backoffice\CategoriesController
+
+api_backoffice_users:
+    type:       rest
+    name_prefix:  api_backoffice_
+    resource:   Api\ApiBundle\Controller\Backoffice\UsersController

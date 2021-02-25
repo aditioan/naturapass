@@ -1,0 +1,54 @@
+## Nav translate FR
+nav:
+    home:               Retour à l'accueil
+    logo:               Logo I-C
+    search:
+        placeholder:        Rechercher un membre
+        button:             Faire une recherche
+    map:                Carte
+    drop_param:
+        button:             Paramètres
+        parameter:          Mes paramètres
+        profil:             Modifiez votre profil
+        friends:            Retrouvez des amis
+        bug:                Signalez un problème
+    pop_invite:
+        nb_invitation:      "Aucune invitation|{1} %count% invitation|]1,Inf[ %count% invitations"
+        title:              Demandes d'ajout à la liste d'amis
+        no_invite:          Aucune nouvelle invitation
+    pop_notification:
+        nb_notification:    "Aucune notification|{1} %count% notification|]1,Inf[ %count% notifications"
+        title:              Liste des notifications
+        no_notif:           Aucune nouvelle notification
+        all:                Affichez toutes les notifications
+        all_suggestion:     Affichez toutes les suggestions
+        readall:            Marquer toutes comme lues
+    pop_message:
+        nb_message:         "Aucun message|{1} %count% message|]1,Inf[ %count% messages"
+        title:              Liste des messages
+        no_msg:             Aucun message
+        new_message:        Nouveau message
+        all:                Affichez tous
+    invite:             Invitez des amis
+    friends:            Mes amis
+
+problem:
+    title:              Signalez un problème
+    label:              |
+                        <b>Veuillez décrire le bogue le plus précisément possible.</b><br><br>
+                        Que faisiez-vous au moment du problème ?<br>
+                        Quelles sont les étapes à suivre pour reproduire le problème ?<br><br>
+    input:              Description du problème rencontré
+
+contact:
+    title:  Nous contacter
+    label:  |
+            N'hésitez pas à nous contacter pour faire part de vos remarques, conseils, encouragements...
+            Nous sommes là pour créer vos outils et sommes preneurs de vos bonnes idées.<br>
+    input:  Veuillez entrer un texte
+
+abuse:
+    title:  Signaler un abus
+    label:  |
+            Merci de nous faire passer les informations nécessaires, si vous constatez que des membres de I-C utilisent I-C à mauvais escient.<br>
+    input:  Veuillez entrer un texte

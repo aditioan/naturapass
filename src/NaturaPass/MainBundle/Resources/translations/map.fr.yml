@@ -1,0 +1,63 @@
+## Map translate FR
+
+map:
+    shape:
+        message:
+            noshape:    Aucune forme
+            saving:     En cours de sauvegarde
+            save_success:   Sauvé avec succès
+            save_fail:      Une erreur est survenue
+        action:
+            save:   Sauvegarder
+            delete: Supprimer
+        label:
+            color:  Couleur
+            share:  Partage
+            title:  Titre
+            description:    Description
+        drawing_title:
+            tool:   Dessiner
+            clear:  Effacer
+            select:  Selectionner
+            rectangle:  Rectangle
+            circle:     Cercle
+            polyline:   Ligne
+            polygon:    Polygone
+    drawing:
+        draw:       Dessiner sur la carte
+        hand:       Sélectionner une forme
+        circle:     Dessiner un cercle
+        rectangle:  Dessiner un rectangle
+        polygon:    Dessiner un polygon
+        polyline:   Dessiner une ligne
+    title:    Carte
+    publication:
+        show:            Afficher la publication
+    plan:       Plan
+    cadastre:   Cadastre IGN
+    satellite:  Satellite
+    hybrid:     Hybride
+    relief:     Relief
+    1:25000:    1:25000 IGN
+    position:   Votre position
+    action:
+        print:            Imprimer
+        cancel:           Annuler l'ajout
+        confirm_location: Confirmer la localisation
+        add:              Ajouter un repère
+        search_address:   Rechercher une adresse
+        filter:           Filtre
+        view:             Affichage
+        drawing:          Dessiner
+        type:             Type
+    attributes:
+        filter_category:    Filtrer
+        view:               Icône
+        view_text:          Icône + légende
+        photo:              Photo
+        photo_text:          Photo + légende
+
+    geocoder:
+        errors:
+            zero_results: Aucune adresse et/ou coordonnées géographiques correspondant à votre demande
+            others:       Une erreur s'est produite. Merci de réessayer ultérieurement

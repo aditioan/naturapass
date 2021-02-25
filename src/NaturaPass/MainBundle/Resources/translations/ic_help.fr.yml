@@ -1,0 +1,183 @@
+## MainBundle translate FR
+menu:
+    title:          I-C
+    description:    Aidez-nous à améliorer I-C.
+    submenu1:       Qu'est-ce que I-C
+    submenu2:       Signaler un problème / bug
+    submenu3:       Signaler un abus
+    submenu4:       Nous contacter
+
+publication:
+    legend:     Cet emplacement vous permet de faire une description succincte qui illustre votre publication.
+    form:
+        sharing:    |
+                    <p>Le choix du partage vous permet de choisir avec qui vous partagez vos contenus</p>
+                    <p class='icon-user'>Moi : Seulement vous pouvez voir vos contenus (pour vous constituer un journal de chasse personnel)</p>
+                    <p class='icon-users'>Amis : Vous partagez avec vos amis de I-C</p>
+                    <p class='icon-leaf'>Membres I-C : Vous partagez avec l'ensemble de la communauté I-C</p>
+        geoloc:     |
+                    <p>La géolocalisation permet de géolocaliser vos médias :</p>
+                    <ul>
+                    <li>soit en récupérant l'information depuis votre photo ou vidéo,</li>
+                    <li>soit en la plaçant sur la carte.</li>
+                    </ul>
+        landmark:     |
+                    <p>La géolocalisation permet de géolocaliser vos médias :</p>
+                    <ul>
+                    <li>soit en récupérant l'information depuis votre photo ou vidéo,</li>
+                    <li>soit en la plaçant sur la carte.</li>
+                    </ul>
+        uploading:  Téléchargement en cours...
+        legend:     Cet emplacement vous permet de faire une description succincte qui illustre votre média.
+        tag:        Un tag est un mot clé assigné à votre publication afin de la retrouver plus rapidement (exemple trophée, trace, paysage,...)
+    formlegend:     Cet emplacement vous permet de faire une description succincte qui illustre votre média.
+    formsharing:        |
+                        Le choix du partage vous permet de choisir avec qui vous partagez vos contenus.<br>
+                        Moi : Vous serez le seul à voir vos contenus (pour vous constituer un journal de chasse personnel)<br>
+                        Amis : Vous partagez avec le réseau de vos amis de I-C<br>
+                        Membres I-C : Vous partagez avec l'ensemble de la communauté I-C<br>
+    formtag:            |
+                        Un tag est un mot clé assigné à votre publication afin de la retrouver plus rapidement (exemple: trophée, trace, paysage,...).
+    formgeoloc:         |
+                        La géolocalisation permet de géolocaliser vos médias :<br>
+                            - soit en récupérant l'information depuis votre photo ou vidéo (après le chargement de votre photo, si votre appareil photo le permet, le point sera placé automatiquement sur la carte),<br>
+                            - soit en plaçant le bon emplacement sur la carte.<br>
+salon:
+    favoriteAddress:    Selectionnez un lieu et géolocalisez sur la carte en déplaçant le curseur
+    action:
+        addnotmember:   |
+                        Listez les invités non-membres I-C !<br>
+                        Pour les invités qui n'utilisent pas I-C (ils n'ont pas de smartphones, ils n'utilisent pas l'email…), vous pouvez les ajouter ci-dessous et indiquer leur présence ou pas. Cela vous facilitera le comptage des présents à votre événement.
+    start:      Date et heure du rdv de l'évenement lié à cette chasse.Par exemple, s'il s'agit d'un événement lié à une battue, il faut saisir  la date et de l'heure du rdv le jour de la battue.
+    end:        Date de fin de l'événement, fixée par le ou les administrateurs.
+    geoloc:     Etat de la géolocalisation. Si elle est activée, les membres qui participent à l'événement et qui ont validé le fait d'être géolocalisés seront visibles sur la carte par les autres membres. Nous vous conseillons d'activer la géolocalisation uniquement pendant la partie de chasse.
+    access:     |
+                <p>Type d'accès à l'événement:</p>
+                <p>Public: tout le monde voit et peut entrer dans l'événement.</p>
+                <p>Privé: seuls les membres inivtés pourront voir l'événement et accéder à l'événement.</p>
+                <p>Semi-privé: tout le monde peut voir et accéder à l'événement, mais l'accès à l'événement doit être validé par un administrateur de l'événement.</p>
+    enter:      Permer d'accéder à l'événement, c'est-à-dire aux discussions, aux autres membres et à la géolocalisation sur l'événement.
+    out:        Désinscrivez vous, vous permet de ne plus faire partie des membres de cet événement et donc de renoncer à participer à l'événement objet de la chasse.
+    event:      Renseignez à l'aide des 3 boutons ci-dessous votre statut de participation à l'événement auquel vous êtes invité
+    nom:        Nom court de l'événement
+    desc:       Vous permet de mettre toutes les informations utiles au bon déroulement de l'événement et à l'événement lié à cette chasse.
+    visuel:     Permet de mettre un visuel sur votre événement. Ce visuel apparaît dans le listing des événements pour toutes les personnes ayant connaissance de cette événement (pour connaître la liste des personnes ayant accès à l'événement, voir ci-dessous le statut de l'événement).
+    disabled:   événements désactivés
+
+text:
+    modal:          Aide
+    mur:            |
+                    <h1>Mur/Journal</h1>
+                    <p>Le mur de I-C vous permet d'échanger avec vos amis et de constituer votre journal de chasse.</p>
+                    <p>Sur le mur, vous pouvez poster textes, photos et vidéos.</p>
+                    <p>Le mur est aussi une porte d'entrée pour la cartographie : chaque publication que vous géolocaliserez sera automatiquement positionnée sur votre carte (http://www.I-C.com/map).</p>
+                    <h2>Géolocalisation des textes, photos et vidéos</h2>
+                    <h3>Géolocalisation manuelle</h3>
+                    <p>Toutes vos publications peuvent être géolocalisées manuellement. Pour cela, déplacez le curseur sur la carte. N'hésitez pas à zoomer pour plus de précisions.</p>
+                    <h3>Géolocalisation automatique des photos et vidéos</h3>
+                    <p>Si votre appareil ou votre caméscope le permettent, vous pouvez géolocaliser automatiquement vos photos. Les smartphones (iPhone, Samsung, LG…) et appareils récents géolocalisent les photos, si la fonctionnalité est activée dessus.</p>
+                    <p>Dans ce cas, il vous faut télécharger la photo ou la vidéo sur le Mur avec le bouton <em>Téléchargez</em>. Quand le téléchargement est complet, le point doit se situer sur la carte, si vous avez activé la géolocalisation. Vous pouvez redéplacer le point manuellement si besoin. Si le point est mal placé, cela provient des réglages de l'appareil avec lequel vous avez pris votre photo/vidéo. Par exemple sur un smartphone, n'oubliez pas d'activer le wifi pour plus de précision.</p>
+                    <h2>Date et heure</h2>
+                    <p>Vous pouvez entrer la date et l'heure de l'élément objet de votre publication. Cela vous permet de vous rappeler quand cet événement s'est passé. Pour vos photos et vidéos, si votre appareil photo, smartphone ou caméscope le permettent (la plupart des appareils récents le permettent) la date et l'heure seront entrés automatiquement.</p>
+                    <h2>Partage</h2>
+                    <p>I-C vous permet de partager vos publications avec vos différents réseaux d'amis, de connaissance,…</p>
+                    <p>Contrairement à d'autres réseaux sociaux, nous sommes très vigilants et restrictifs sur la notion de partage. Nous voulons que VOUS contrôliez au maximum les éléments que vous partagez.</p>
+                    <p>C'est pourquoi un élément partagé ne peut pas être repartagé.</p>
+                    <p>C'est pourquoi vous pouvez garder des éléments privés.</p>
+                    <p>C'est pourquoi vous devez vous créer des groupes pour maîtriser au mieux vos partages.</p>
+                    <p>C'est pourquoi nous vous permettons d'exclure des personnes de vos partages.</p>
+                    <p>…</p>
+                    <h3>Partage général</h3>
+                    <p>Pour chaque publication, vous devez effectuer un partage général.</p>
+                    <p>Il existe 4 types de partage.</p>
+                    <ul>
+                    <li>Moi : seul vous verrez cette publication. C'est l'utilisation journal de chasse (se remémorez tous les événements même ceux qui sont anecdotiques) ou cartographie (repérez un coin à champignon et le garder pour soi!). Si vous voulez partager avec un groupe et uniquement avec lui, mettez <em>Moi</em> en partage général et le groupe en partage personnalisé.</li>
+                    <li>Mes amis : vos publications seront diffusées auprès de votre réseau d'amis. Vous pouvez retrouver la liste de vos amis sur <a href='/users/friends'>www.I-C.com/users/friends</a></li>
+                    <li>Membres I-C : vos publications seront visibles par tous les membres I-C. Cela permet de communiquer avec toute la communauté I-C. Essayez d'utiliser cette fonctionnalité avec parcimonie pour ne pas encombrer le Mur I-C.</li>
+                    <li>Tout le monde : vos publications sont publiques et accessibles également aux non-membres de I-C. Dans la version actuelle de I-C, les non-membres n'ont pas accès au Mur mais cela pourra éventuellement changer à l'avenir.</li>
+                    </ul>
+                    <h3>Partage personnalisé</h3>
+                    <p>Dans le partage personnalisé, vous pouvez partager avec les groupes dont vous faites partie. Il peut s'agir de groupes thématiques (exemple : chasseurs de bécasse) ou de groupes organisationnelles (exemple : chasse de votre village)</p>
+                    <p>Dans le partage personnalisé, vous pouvez aussi exclure des personnes de vos partages. Ces personnes même si elles font partie d'un groupe cible seront exclues du partage. Elles ne pourront en aucun cas voir votre publication sur leur compte.</p>
+                    <h2>Commentaires/J'aime/J'aime pas</h2>
+                    <p>Vous pouvez commenter chaque publication ainsi que donner un avis court avec les <em>J'aime</em> et <em>J'aime pas</em>.</p>
+                    <h2>Quelques exemples d'utilisations du mur</h2>
+                    <h3>Se faire un journal de chasse</h3>
+                    <p>Le mur, et c'est son but 1er, est une extension de votre mémoire. Il vous permet de prendre des notes, des photos, des films et de les dater et géolocaliser. Ainsi, à tout moment, vous pouvez revenir sur le mur et vous remémorer vos grands moments de chasse.</p>
+                    <p>Quel jour j'ai tué ce beau cerf ?</p>
+                    <p>Quel temps il faisait, il y a un an ?</p>
+                    <p>Qui il y avait à cette partie de chasse en Alsace grâce à la photo de groupe postée sur I-C ?</p>
+                    <p>…</p>
+                    <p>Vous choisissez à tout moment si vous partagez vos publications et avec qui.</p>
+                    <h3>Cartographier son territoire</h3>
+                    <p>I-C est particulièrement utile pour cartographier son territoire en toute simplicité et rapidement.</p>
+                    <p>Soit vous utilisez l'application smartphone et vous publiez en temps réel sur le mur (exemple : la trace d'un gibier blessé pour la communiquer au conducteur de chien de sang).</p>
+                    <p>Soit vous prenez des photos sur le terrain et vous les ajouter sur le mur en rentrant chez vous depuis votre ordinateur. Elles seront automatiquement géolocalisées. Il ne vous restera plus qu'à dire de quoi il s'agit (Trace de sanglier, Poste 5 de la Traque 2, Coin à Morilles,…).</p>
+                    <p>Un exemple concret : cartographier une traque</p>
+                    <p>Vous pouvez par exemple identifier les postes sur une traque. Vous faites le tour de la traque en photographiant chaque poste. Vous les entrez depuis le Mur du site les unes après les autres en les nommant (Poste 1, Poste 2,…). Vous validez pour chaque photo la géolocalisation. Vous partagez avec votre groupe de chasseurs. Vous vous rendez sur la carte et vous voyez tous les postes sur la carte. Chaque personne avec qui vous avez partagé est informée du placement des postes. Vous pouvez également imprimer la carte pour ceux qui ne seraient pas membre I-C (les pauvres !).</p>
+                    <h3>Informer son réseau</h3>
+                    <p>Avec l'utilisation des partages, et notamment des partages avec les groupes, vous pouvez aisément utiliser I-C pour informer ces derniers des actualités de votre groupe.</p>
+                    <p>Par exemple, vous avez crée un groupe de la chasse de votre village. Pour prévenir des événements qui s'y déroulent (Assemblée générale, corvées, dates de battues, fêtes…), il vous suffit de publier sur le Mur en partageant avec ce groupe (et en laissant privé pour le partage général).</p>
+    salon:          |
+                    <h1>Agenda</h1>
+                    <p>La partie « Agenda » permet d'organiser vos événements de manières efficaces et de suivre leur bon déroulement en temps réel.</p>
+                    <p>Le principe est de regrouper un certain nombre de personnes autour d'un événement (une battue, une chasse à courre, une manifestation, une fête,…). </p>
+                    <h2>Type d'accès</h2>
+                    <p>Il existe 3 types d'accès déterminés par les administrateurs :</p>
+                        <ol>
+                    <li>Privé<br>
+                    Seules les personnes invitées par un des administrateurs peut voir et accéder à la chasse</li>
+                    <li>Semi-privé<br>
+                    Tout le monde peut voir la chasse ou l'évènement mais les administrateurs valident toute inscription</li>
+                    <li>Public<br>
+                    Tout le monde peut voir et accéder à la chasse ou l'évènement sans contrôle.</li>
+                    </ol>
+                    <h2>L'organisation de l'événement</h2>
+                    <p>Vous voulez organiser un événement (par exemple une battue) et êtes fatigué de passer votre temps au téléphone ou à envoyer des convocations. La solution est I-C. Il vous suffit de créer une chasse, d'envoyer les invitations et aux invités de répondre sur leur présence (oui/non/peut-être). Vous pouvez également utiliser le fil de discussion pour donner vos instructions. Vous pouvez également mettre des informations sur chaque participant (par exemple, distribuer les postes ou dire qui est posté, traqueur,…).</p>
+                    <h2>Le jour de l'événement</h2>
+                    <p>Le jour de l'événement, les participants peuvent utiliser l'application smartphone pour profiter de I-C en mobilité.</p>
+                    <p>Vous pouvez donc continuer d'utiliser le fil de discussion pour échanger des informations capitales pendant la chasse (début de traque, cerf mort, gibier blessé,…). Vous pouvez également utiliser la géolocalisation qui permet de voir les membres de la chasse sur la carte. Cela vous permet de voir par exemple pendant une battue, si un posté est mal placé, où est votre voisin, où sont les traqueurs,…</p>
+    lounge_disabled:  |
+                      <h1>Fermeture de « Agenda »</h1>
+                      <p>Chères membres I-C,</p>
+                      <p>La partie « Agenda » est temporairement fermés sur I-C, elle sera à nouveau accessible d'ici quelques jours.</p>
+                      <p>Nous avons du fermer cette partie de I-C pour les raisons suivantes :</p>
+                      <ul>
+                      <li>Les chasses vous permettent de vous localiser en temps réel sur le territoire par rapport aux autres participants. Il faut donc qu'ils fonctionnent avec les applications mobiles et il nous faut encore effectuer quelques réglages.</li>
+                      <li>Nous voulons qu'avant l'ouverture, vous utilisiez pleinement le Mur et la Carte de I-C, d'échanger avec vos amis vos souvenirs de chasse et de  cartographier votre territoire. Ainsi vous serez fin prêts en septembre.</li>
+                      </ul>
+                      <p>Bien naturellement,</p>
+                      <p>L'équipe I-C.com</p>
+                      <h2>Pour en savoir plus, sur les chasses, vous pouvez :</h2>
+                      <ul>
+                      <li>Consulter l'aide complète sur cette rubrique,</li>
+                      <li><a href='https://www.youtube.com/watch?v=DEoW3zJ51i4' target='_blank'>Regarder un exemple d'utilisation des chasses</a></li>
+                      </ul>
+    group:          |
+                    <h1>Groupes </h1>
+                    <p>Les groupes vous permettent de choisir simplement avec qui vous voulez communiquer.</p>
+                    <p>L'idée des groupes est de réunir un certain nombre de personnes en fonction de thématique ou d'organisation. Par exemple, il pourrait exister un groupe autour d'un type de chasse (la chasse à l'arc par exemple) ou un groupe de chasseurs ayant des connexions dans le monde réel (actionnaires ou partenaires d'une chasse). </p>
+                    <h2>Type d'accès</h2>
+                    <p>Il existe 3 types d'accès déterminés par les administrateurs :</p>
+                    <ol>
+                    <li>Privé
+                    Seules les personnes invitées par un des administrateurs peut voir et accéder à la chasse </li>
+                    <li>Semi-privé
+                    Tout le monde peut voir la chasse mais les administrateurs valident toute inscription</li>
+                    <li>Public
+                    Tout le monde peut voir et accéder à la chasse sans contrôle. </li>
+                    </ol>
+    map:            |
+                    <h1>Carte</h1>
+                    <p>« Un bon chasseur connaît son territoire ». Les créateurs de I-C croient en cette maxime. Pour aider le chasseur à connaître son territoire, nous permettons par le Mur ou sur la Carte de de localiser les éléments qui vous paraissent importants.</p>
+                    <p>La carte est une extension de votre mémoire, vous pouvez l'alimenter en géolocalisant vos photos, vidéos et textes à l'intérieur de celle-ci. </p>
+                    <p>Quelques idées de points à localiser : </p>
+                    <ul>
+                    <li>Postes et miradors, </li>
+                    <li>Passages de gibier, </li>
+                    <li>Terriers de renard, </li>
+                    <li>Coins à champignons, </li>
+                    <li>…</li>
+                    </ul>
+    friends:        Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
+    bug:            Vivamus sagittis lacus vel augue laoreet rutrum faucibus.

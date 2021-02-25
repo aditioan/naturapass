@@ -1,0 +1,136 @@
+title:
+    publication:        Publication
+
+menu:
+    title:              Tableau de bord
+    link:               Le tableau de bord
+    description:        Sélectionnez quelles informations vous voulez faire apparaître.
+
+tab:
+    publication:        Tableau de bord
+    media:              Photo / Vidéo
+
+label:
+    like:               vu
+    unlike:             j'aime pas
+    show_other:         Afficher l'autre commentaire|]1,+Inf[Afficher les <span class="view-all-num">%count%</span> autres commentaires
+    time:               Il y a
+    add_comment:        Touche "Entrée" pour valider & "MAJ + Entrée" pour un saut de ligne
+    comment:            Commenter
+    nothing_else:       Vous avez atteint la fin
+    nothing:            Aucune publication
+    color:              Couleur
+    color_disable:      Pas de couleur
+
+placeholder:
+    add_comment:        Écrire un commentaire
+
+report:
+    title:    Signalez un abus
+    explain:  <p><b>Expliquez de manière succincte pourquoi ce contenu vous semble inapproprié...</b><br>Nos équipes vont examiner votre signalement, nous serons avertis dès lors que vous l’aurez envoyé.</p>
+
+publication:
+    processing:
+        title:          Publication en cours de traitement
+        content:        |
+                        Votre publication est en cours de traitement. Vous serez notifié une fois disponible sur Rodypass.
+                        <br>
+                        En vous remerciant de votre patience,
+                        <br>
+                        L'équipe Rodypass.
+    observation:
+        show:               Observations
+        part:               Part
+        obs:                Obs
+        group:              Groupe
+        hunt:              Chantier
+        sentinelle:         Sentinelle
+        required:           Obligatoire
+        selected:           |
+                            SELECTION :
+        detail:             |
+                            Observation :
+        filter:
+            animal:         Tapez le nom de l'animal puis appuyez sur la touche entrée
+        nocard:
+            description:    Aucune fiche descriptive n'est disponible pour cette catégorie !
+        title:          Précisez votre publication
+        description:    |
+                        <strong>Voulez-vous préciser votre publication?</strong>
+                        Exemple : panneau...
+        edit:           |
+                        <strong>Voulez-vous modifier la précision de votre publication?</strong>
+                        Exemple : panneau...
+        sharing:
+            title:      Partagez avec
+            description:        |
+                                <strong>Voulez-vous partager cette précision?</strong>
+                                Si "non", vous garderez cette précision pour vous.
+    attributes:
+        file:           Téléchargez
+        content:        Contenu de votre publication
+        comment:        %count% commentaire|]1,+Inf[%count% commentaires
+        legend:         Entrez une légende qui apparaitra sur la carte (facultatif)
+        tags:           Saisissez des tags de marquage
+        media:          Modifier
+        date:           Date de l'évenement
+    action:
+        lockuser:       Bloquer cet utilisateur
+        crop:           Recadrer
+        rotate:         Rotation
+        crop_rotate:    Recadrer / Rotation
+        edit:           Éditer
+        stop_edit:      Stopper l'édition
+        media:          Glissez/déposez votre photo ou votre vidéo ou utilisez le bouton Téléchargez pour aller chercher sur votre disque
+        type_text:      Tapez le texte que vous voulez publier dans votre journal
+        type_media:     Ajoutez une photo ou une vidéo par un glisser/déposer ou en appuyant sur le bouton ci-dessous
+        landmark:       Voulez-vous que ce repère apparaisse comme une publication sur votre mur ?
+    state:
+        published:      Publié
+        person_likes:   Membres qui ont vu
+        person_unlikes: Membres qui n'ont pas vu
+    geolocation:
+        from:           De
+        at:             "{0}à|{1}À"
+    date:
+        when:           Le
+    sharing:
+        with:           |
+                        Cette publication est partagée avec:
+        with_which:     "{0}moi|{1}les amis|{3}les membres RodyPass|{4}tout le monde"
+        share:          Partager avec
+        exclude:        Exclure
+        people:         Ces personnes
+        exclude_people: Exclure des personnes
+        add_group:      Ajoutez des groupes
+    publication:
+        share:          Partager avec
+        exclude:        Exclure
+        people:         Ces personnes
+        exclude_people: Exclure des personnes
+        add_group:      Ajoutez des groupes
+    modal:
+      body:
+        userlock:       |
+                        Voulez-vous bloquer "%user_name%".
+                        Vous ne verrez plus ses publications sur le mur.
+                        Vous pourrez l'enlever de votre liste noire en vous rendant dans paramètres.
+
+sharing:
+    modal:
+        label:
+            title:          Partage personnalisé
+            partage_with:
+                title:      Partager avec
+                people:     Ces personnes
+                group:      Ces groupes
+            exclude:
+                title:      Exclure
+                people:     Ces personnes
+
+
+
+
+
+errors:
+    no_media:   Aucun média n'a été inséré

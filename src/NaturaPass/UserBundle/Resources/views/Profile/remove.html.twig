@@ -1,0 +1,30 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                <h1>{{ 'user.action.remove_account'|trans({}, translation_name~'user') }}</h1>
+
+                {% if passwordError is defined %}
+                    <p class="alert alert-danger">
+                        {{ 'user.state.incorrect_password'|trans({}, translation_name~'user') }}
+                    </p>
+                {% endif %}
+
+                <p>{{ 'user.action.confirm_remove'|trans({}, translation_name~'user') }}</p>
+                <form action="" method="POST" role="form" class="loader" ng-non-bindable>
+                    <label for="user[password]">{{ 'user.attributes.password'|trans({}, translation_name~'user') }}</label>
+                    <input type="password" name="user[password]" required>
+                    <button type="submit" class="btn btn-danger">{{ 'user.action.confirm_removing'|trans({}, translation_name~'user') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

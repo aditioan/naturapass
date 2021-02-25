@@ -1,0 +1,81 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User:  plaintext~
+        FOS\UserBundle\Model\UserInterface:
+            id:     naturapass_sha1salted.encoder
+        NaturaPass\UserBundle\Entity\User:
+            id:     naturapass_sha1salted.encoder
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
+
+    providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle]
+        main:
+            id: fos_user.user_provider.username_email
+        fos_userbundle:
+            id: fos_user.user_manager
+
+    firewalls:
+        main:
+            pattern:        ^
+            anonymous:      true
+            provider:       main
+
+            switch_user: { role: ROLE_ADMIN }
+
+            form_login:
+                provider:               fos_userbundle
+                login_path:             naturapass_main_homepage
+                check_path:             fos_user_security_check
+                default_target_path:    naturapass_main_homepage
+
+            logout:
+                path:       fos_user_security_logout
+                target:     naturapass_main_homepage
+                invalidate_session: false
+                handlers:   [naturapass.logout.handler]
+
+            remember_me:
+                key:      "%secret%"
+                lifetime: 2232000
+                path:     /
+                domain:   ~
+
+            oauth:
+                failure_path:           naturapass_main_homepage
+                login_path:             /oauth/connect
+                check_path:             /oauth/connect
+                default_target_path:    naturapass_main_homepage
+                use_forward:       true
+                resource_owners:
+                    facebook:     "/oauth/login/facebook"
+                oauth_user_provider:
+                    service:      naturapass.oauth.user.provider
+
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+    access_control:
+        - { path: ^/map, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/email/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/groups/invite-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/groups/, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/lounges/, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/secured/, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/publications, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/users/clear, role: ROLE_ADMIN }
+        - { path: ^/users/complete-profile, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/users/profile, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/users/invitation, role: [IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/users/, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/backoffice/, role: ROLE_BACKOFFICE }
+        - { path: ^/oauth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth, roles: ROLE_USER }
+        - { path: ^/, role: [IS_AUTHENTICATED_ANONYMOUSLY] }

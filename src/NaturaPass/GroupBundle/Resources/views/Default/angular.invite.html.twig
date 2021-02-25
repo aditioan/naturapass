@@ -1,0 +1,94 @@
+{% extends "NaturaPassGroupBundle::layout.html.twig" %}
+
+{% block title %}{{ 'title.invite'|trans({},translation_name~'group') }} | {{ parent() }}{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %}>
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-md container-invite" ng-controller="GroupInvitationController" ng-init="initInvitation()" data-group="{{ group.id }}">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                    <h1>{{ 'group.title.invite'|trans({},translation_name~'group') }}</h1>
+                    <p>{{ 'group.description.invite'|trans({},translation_name~'group') | raw }}</p>
+                    <div class="row">
+                        {% if visibility.social_network %}
+                            <div class="col-sm-3 panel-body">
+                                <a href="#" class="btn btn-primary btn-block btn-icon icon-user6" data-icon="icon-user6"
+                                        ng-click="openFriendsModal()"
+                                        np-submit-loader="!loaded">
+                                    {{ 'user.attributes.friends'|transchoice(2, {}, translation_name~'user') }} <i class="icon-arrow-right2"></i>
+                                    <div class="label-bulle"><span>{{ app.user.getFriends().count }}</span><i class="icon-bubble10"></i>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-sm-4 panel-body">
+                                <a href="#" class="btn btn-primary btn-block btn-icon icon-users" data-icon="icon-users"
+                                        ng-click="openGroupsModal()"
+                                        np-submit-loader="!loaded"
+                                        >{{ 'menu.my_groups'|trans({}, translation_name~'group') }} <i class="icon-arrow-right2"></i>
+                                    <div class="label-bulle"><span>{{ app.user.getAllGroupsNotIn(group).count }}</span><i class="icon-bubble10"></i>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-sm-5 panel-body">
+                                <a href="#" class="btn btn-primary btn-block icon-users4" data-icon="icon-users4"
+                                        ng-click="openMembersModal()">
+                                    {{ 'invite.members.title'|trans({}, translation_name~'main') }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-6 panel-body">
+                                <a href="#" class="btn btn-primary btn-block btn-icon icon-users" data-icon="icon-users"
+                                        ng-click="openGroupsModal()"
+                                        np-submit-loader="!loaded"
+                                        >{{ 'menu.my_groups'|trans({}, translation_name~'group') }} <i class="icon-arrow-right2"></i>
+                                    <div class="label-bulle"><span>{{ app.user.getAllGroupsNotIn(group).count }}</span><i class="icon-bubble10"></i>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-sm-6 panel-body">
+                                <a href="#" class="btn btn-primary btn-block icon-users4" data-icon="icon-users4"
+                                        ng-click="openMembersModal()">
+                                    {{ 'invite.members.title'|trans({}, translation_name~'main') }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <h1>{{ 'group.title.invitenotmember'|trans({},translation_name~'group') }}</h1>
+                    <p>{{ 'group.description.invitenotmember'|trans({},translation_name~'group') | raw }}</p>
+                    <div class="row" class="clearfix">
+                        <div class="col-sm-5 panel-body">
+                            <a href="#" class="btn btn-primary btn-block icon-envelop-opened" data-icon="icon-envelop-opened"
+                                    ng-click="openEmailModal()">
+                                {{ 'invite.title'|trans({}, translation_name~'main') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('naturapass_group_show', {grouptag: group.grouptag}) }}" class="btn btn-primary btn-right btn-icon icon-checkmark valid-invite">{{ 'group.action.access2'|trans({}, translation_name~'group') }}</a>
+        </div>
+    </div>
+
+    {% include "NaturaPassGroupBundle:Modal:angular.invite-friends.html.twig" %}
+    {% include "NaturaPassGroupBundle:Modal:angular.invite-groups.html.twig" %}
+    {% include "NaturaPassGroupBundle:Modal:angular.invite-email.html.twig" %}
+    {% include "NaturaPassGroupBundle:Modal:angular.invite-members.html.twig" %}
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/LoungeGroup/LoungeGroupInvitationController.js'
+    'js/app/controllers/Groups/GroupInvitationController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

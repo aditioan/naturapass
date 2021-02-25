@@ -1,0 +1,188 @@
+<div id="menu-gauche" class="hidden-print">
+    <div class="menu-gauche-scroll" role="complementary">
+
+        <div class="media menu-profil">
+            <a class="pull-left" href="{{ path('fos_user_profile_show_name', {'usertag': app.user.usertag}) }}">
+                <img class="media-object" src="{{ app.user.profilePicture|bProfilePict('thumb') }}" width="70" height="70" alt="{{ app.user.fullname }}">
+            </a>
+            <div class="media-body">
+                <p>
+                    <b>{{ app.user.firstname }}</b><br>
+                    {{ app.user.lastname }}
+                </p>
+                <a href="{{ path('fos_user_profile_show_name', {'usertag': app.user.usertag}) }}" target="_blank" class="btn btn-primary btn-sm btn-icon icon-user">{{ 'user.profil'|trans({}, translation_name~'user') }}</a>
+            </div>
+        </div>
+        {% if visibility.admin.news %}
+            <div class="panel-group" id="accordionNews">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionNews" href="#collapseNews" class="icon-pencil5 {% if 'admin_news'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Page d'accueil <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseNews" class="panel-collapse collapse {% if 'admin_news'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_news_homepage') }}" class="icon-drawer2">Listing des actualités</a></li>
+                                <li><a href="{{ path('admin_news_add') }}" class="icon-plus">Ajouter un actualité</a></li>
+                                {#                                <li><a href="{{ path('admin_news_slides') }}" class="icon-drawer2">Listing des slides</a></li>#}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.game %}
+            <div class="panel-group" id="accordionGame">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionGame" href="#collapseGame" class="icon-gamepad2 {% if 'admin_game'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Jeux <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseGame" class="panel-collapse collapse {% if 'admin_game'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_game_homepage') }}" class="icon-drawer2">Listing des jeux</a></li>
+                                <li><a href="{{ path('admin_game_add') }}" class="icon-plus">Ajouter un jeu</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.graph %}
+            <div class="panel-group" id="accordionGraph">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionGraph" href="#collapseGraph" class="icon-joomla {% if 'admin_graph'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Graphe <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseGraph" class="panel-collapse collapse {% if 'admin_graph'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_graph_pertinences') }}" class="icon-joomla">Pertinences</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.distributor %}
+            <div class="panel-group" id="accordionDistributor">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionDistributor" href="#collapseDistributor" class="icon-users4 {% if 'admin_distributor'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Distributeurs <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseDistributor" class="panel-collapse collapse {% if 'admin_distributor'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_distributor_brand_add') }}" class="icon-plus">Ajouter une marque</a></li>
+                                <li><a href="{{ path('admin_distributor_brand_homepage') }}" class="icon-office">Listing des marques</a></li>
+                                <li><a href="{{ path('admin_distributor_add') }}" class="icon-plus">Ajouter un distributeur</a></li>
+                                <li><a href="{{ path('admin_distributor_homepage') }}" class="icon-users4">Listing des distributeurs</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.animal %}
+            <div class="panel-group" id="accordionAnimal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionAnimal" href="#collapseAnimal" class="{% if 'admin_animal'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Animaux <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseAnimal" class="panel-collapse collapse {% if 'admin_animal'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_animal_tree') }}" class="icon-tree">Arborescence</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.tree %}
+            <div class="panel-group" id="accordionReceiver">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionReceiver" href="#collapseReceiver" class="{% if 'admin_sentinelle'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Arborescence <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseReceiver" class="panel-collapse collapse {% if 'admin_sentinelle'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_sentinelle_card_add') }}" class="icon-file-plus2">Ajouter une fiche</a></li>
+                                <li><a href="{{ path('admin_sentinelle_card_list') }}" class="icon-file">Liste des fiches</a></li>
+                                <li><a href="{{ path('admin_sentinelle_tree') }}" class="icon-tree">Arborescence</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.entity %}
+            <div class="panel-group" id="accordionEntity">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionEntity" href="#collapseEntity" class="{% if 'admin_entity'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Entités <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseEntity" class="panel-collapse collapse {% if 'admin_entity'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_entity_receiver_add') }}" class="icon-stack-plus">Ajouter une entité</a></li>
+                                <li><a href="{{ path('admin_entity_receiver_list') }}" class="icon-stack-list">Liste des entités</a></li>
+                                <li><a href="{{ path('admin_entity_zone_add') }}" class="icon-stack-plus">Ajouter une zone</a></li>
+                                <li><a href="{{ path('admin_entity_zone_list') }}" class="icon-stack-list">Liste des zones</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if visibility.admin.export %}
+            <div class="panel-group" id="accordionExport">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionExport" href="#collapseExport" class="{% if 'admin_export'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                Export <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseExport" class="panel-collapse collapse {% if 'admin_export'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_export_search') }}" class="icon-stack-list">Recherche</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

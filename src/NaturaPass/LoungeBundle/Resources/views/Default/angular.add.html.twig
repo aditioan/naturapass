@@ -1,0 +1,166 @@
+{% extends "NaturaPassLoungeBundle::layout.html.twig" %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({'%lounge%': form.name.vars.value},translation_name~'lounge') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'lounge') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %}>
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="LoungeFormController" ng-init="init()">
+            {% if ajout != 0 %}
+                <h1>{{ 'lounge.title.creation'|trans({}, translation_name~'lounge') }}</h1>
+            {% elseif ajout == 0 %}
+                <h1>{{ 'lounge.title.edition'|trans({}, translation_name~'lounge') }}</h1>
+            {% endif %}
+
+            <form name="lounge" method="post" action="" class="form-naturapass_lounge_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <h2>{{ 'lounge.description.creation'|trans({}, translation_name~'lounge') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+                        <div class="over-file help-container" style="background-image: url({% if form.photo.vars.value is not null %}{{ form.photo.vars.value.getWebPath }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %})">
+                            <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="right" data-content="{{ 'salon.visuel'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+                        <div class="hide-file">
+                            {{ form_widget(form.photo.file) }}
+                        </div>
+                        {{ form_label(form.photo.file) }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group help-container">
+                            {{ form_widget(form.name) }}
+                            <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="left" data-content="{{ 'salon.nom'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+                        <div class="form-group help-container">
+                            {{ form_widget(form.description,{'attr': {'rows': '6'} }) }}
+                            <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="left" data-content="{{ 'salon.desc'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <span class="lounge-access help-container">
+                                {{ form_label(form.access) }}
+                                <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="right" data-content="{{ 'salon.access'|trans({},translation_name~'help')|raw }}"></div>
+                            </span>
+                            {{ form_widget(form.access,{'attr':{'class':'form-access'} }) }}
+                            {{ form_row(form.allow_add,{'attr':{'class':'form-access'} }) }}
+                            {{ form_row(form.allow_show,{'attr':{'class':'form-access'} }) }}
+                            {{ form_row(form.allow_add_chat,{'attr':{'class':'form-access'} }) }}
+                            {{ form_row(form.allow_show_chat,{'attr':{'class':'form-access'} }) }}
+                        </div>
+                        <div class="form-group geoloc-container help-container">
+                            <span>{{ 'label.participationGeoloc'|trans({},translation_name~'global') }} :</span>
+                            <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}" data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                <input type="checkbox" id="lounge_geolocation" name="lounge[geolocation]" class="lounge-geoloc"
+                                        ng-model="geolocationActive"
+                                        ng-init="geolocationActive = '{{ form.geolocation.vars.value }}'"
+                                        ng-true-value="1"
+                                        ng-false-value="0">
+                                <label for="lounge_geolocation"></label>
+                            </div>
+                            <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="right" data-content="{{ 'salon.geoloc'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>{{ 'lounge.title.date'|trans({}, translation_name~'lounge') }}</h2>
+
+                <div class="form-group help-container">
+                    {{ form_widget(form.meetingDate, {attr: {'np-datetime-picker': 'true'} }) }}
+                    <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="left" data-content="{{ 'salon.start'|trans({},translation_name~'help')|raw }}"></div>
+                </div>
+                <div class="form-group help-container">
+                    {{ form_widget(form.endDate, {attr: {'np-datetime-picker': 'true'} }) }}
+                    <div class="help-popover icon-question4" data-container="body" data-html="true" data-toggle="popover" data-placement="left" data-content="{{ 'salon.end'|trans({},translation_name~'help')|raw }}"></div>
+                </div>
+                <h2>{{ 'lounge.placeholder.meetingAddress'|trans({}, translation_name~'lounge') }}</h2>
+                {% verbatim %}
+                <div class="small-loading" ng-show="address.loading"></div>
+                {% endverbatim %}
+                <div class="row" ng-show="favoriteAddresses.length" ng-cloak>
+                    <div class="col-sm-4">
+                        <span>{{ 'user.attributes.favoriteAddress'|trans({},translation_name~'user') }} :</span>
+                    </div>
+                    {% verbatim %}
+                    <div class="col-sm-8 help-container">
+                        <div class="favorite-container help-container">
+                            <select name="favorite-address" class="form-control" ng-change="chooseFavoriteAddress()" ng-model="selectedAddress" ng-options="color.title for color in favoriteAddresses" ng-class="{'loading-inner': address.loading}">
+                                <option value="">-- {% endverbatim %}{{ 'lounge.attributes.chooseAddress'|trans({},translation_name~'lounge') }}{% verbatim %} --</option>
+                            </select>
+                            <div class="help-popover icon-question4"  data-container="body" data-html="true" data-toggle="popover" data-placement="left" data-content="{% endverbatim %}{{ 'salon.favoriteAddress'|trans({},translation_name~'help')|raw }}{% verbatim %}"></div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="alert alert-info" ng-show="!favoriteAddresses.length && !address.loading" ng-cloak>
+                    {{ 'alert.no_addresses'|trans({'%lien%':  path('fos_user_profile_parameters')}, translation_name~'lounge')|raw }}
+                </div>
+                <br ng-show="favoriteAddresses.length && !address.loading" ng-cloak>
+                <div class="alert alert-info" ng-show="favoriteAddresses.length && !address.loading" ng-cloak>
+                    {{ 'alert.add_addresses'|trans({'%lien%':  path('fos_user_profile_parameters')}, translation_name~'lounge')|raw }}
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ form_widget(form.meetingAddress.address, {'attr': {'ng-disabled': 'map.loading', 'ng-keydown': 'searchAddress($event)', 'ng-model': 'geolocation.address', 'ng-init': 'geolocation.address = "' ~ form.meetingAddress.address.vars.value ~ '"; geolocation.longitude = "' ~ form.meetingAddress.longitude.vars.value ~ '"; geolocation.latitude = "' ~ form.meetingAddress.latitude.vars.value ~ '"' } }) }}
+                        <span class="input-group-btn" data-toggle="tooltip" data-placement="top" title="{{ 'lounge.attributes.updategeoloc'|trans({}, translation_name~'lounge') }}">
+                            <button class="btn btn-primary icon-location4" type="button" ng-click="searchAddress()" ng-disabled="map.loading"></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="{loading: map.loading}" style="min-height: 300px" ng-init="initGoogleMaps()">
+                    <div np-google-maps="map.ready"
+                            center="map.center"
+                            zoom="map.zoom"
+                            draggable="true"
+                            dragging="map.dragging"
+                            bounds="map.bounds"
+                            events="map.events"
+                            options="map.options"
+                            pan="true"
+                            control="map.control"></div>
+                </div>
+
+                {% if ajout == 0 %}
+                    <a href="#remove" class="btn btn-danger btn-left btn-icon icon-remove" ng-click="openDeleteModal({{ lounge.id }}, '{{ lounge.name }}')">
+                        {{ 'lounge.action.close'|trans({}, translation_name~'lounge') }}
+                    </a>
+                {% endif %}
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark" ng-disabled="map.loading">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                <div class="hide">
+                    {{ form_widget(form.meetingAddress.latitude, {'attr': {'ng-model': 'geolocation.latitude', 'ng-init': 'geolocation.latitude = "' ~ form.meetingAddress.latitude.vars.value ~ '"' } }) }}
+
+                    {{ form_widget(form.meetingAddress.longitude, {'attr': {'ng-model': 'geolocation.longitude', 'ng-init': 'geolocation.longitude = "' ~ form.meetingAddress.longitude.vars.value ~ '"' } }) }}
+                    {{ form_widget(form.meetingAddress.altitude, {'attr': {'ng-model': 'geolocation.altitude', 'ng-init': 'geolocation.altitude = "' ~ form.meetingAddress.altitude.vars.value ~ '"' } }) }}
+                </div>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+
+    {% include "NaturaPassLoungeBundle:Modal:angular.remove-entity.html.twig" %}
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js'
+    'js/app/controllers/Lounges/LoungeFormController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

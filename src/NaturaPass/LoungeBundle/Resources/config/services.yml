@@ -1,0 +1,4 @@
+parameters:
+#    natura_pass_lounge.example.class: NaturaPass\LoungeBundle\Example
+
+services:

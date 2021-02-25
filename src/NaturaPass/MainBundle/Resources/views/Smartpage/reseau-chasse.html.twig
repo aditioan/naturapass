@@ -1,0 +1,30 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Reseau chasse{% endblock %}
+{% block description %}Vous recherchez un reseau chasse pour partager votre passion avec une multitude de chasseurs ? Alors Naturapass est fait pour vous !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Qu’est-ce que le site chasse Naturapass ?</li>
+    </ol>
+    <p>
+        <a href="{{ path('naturapass_main_homepage') }}">
+            <img src="{{ asset('img/pages/banner.jpg') }}" width="750" height="200" alt="Un reseau chasse pour les chasseurs 2.0" style="width: 100%" class="img-responsive center-block">
+            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase">En savoir plus sur Naturapass !</button>
+        </a>
+    </p>
+    <hr>
+    <h1>Le reseau chasse Naturapass, pour les chasseurs de demain</h1>
+    <h2>Présentation du reseau chasse Naturapass</h2>
+    <p>Naturapass, la 1ère start-up de la chasse, a développé une application et un site de chasse visant à optimiser la gestion et l’organisation de chasses tout en échangeant avec une communauté de chasseurs à travers un reseau chasse .</p>
+    <p>Le reseau chasse (application mobile et site internet) détient six grandes fonctionnalités. La première fonctionnalité est le mur, qui sert à rester connecté avec les actualités de la communauté Naturapass. Ensuite, la carte permet de cartographier son territoire avec des points géolocalisés, qui peut être partagé à ses invités. Echanger avec un reseau chasse est important et c’est dans la partie « discussions » que cela se passe. On peut également créer et s’inscrire dans des groupes pour gérer au mieux son activité cynégétique. Les deux dernières fonctionnalités sont l’agenda, qui permet d’organiser son planning, et les amis pour rencontrer de nouveaux chasseurs.</p>
+    <h2>S’inscrire sur le reseau chasse Naturapass</h2>
+    <p>Vous pouvez vous inscrire sur le reseau chasse Naturapass en téléchargeant l’application smartphone sur l’App Store pour IOS (Apple) ou sur le Play Store pour Android (HTC, Sony, Samsung, Wiki, LG, Huawei, etc) ou en allant sur le site internet <a title="https://www.naturapass.com/" href="https://www.naturapass.com/">www.naturapass.com</a>. Ce service est absolument gratuit pour les chasseurs.</p>
+    <h2>L’équipe du reseau chasse à la pointe de l’innovation dans la chasse</h2>
+    <p>Le reseau chasse a tout d’abord été lancé sur le site internet Naturapass en juin 2014 puis sur application smartphone en septembre 2014. Toute la semaine, l’équipe Naturapass travaille sur le développement de l’application et du site internet afin d’animer le réseau et d’aider les membres dans leur utilisation de l’application.</p>
+    <p>Cette équipe a développé Sentinelle, un outil qui permet aux Natiz de faire remonter leurs observations terrain directement à la FDC de leur département. Celui-ci aide grandement les Fédérations Départementales des Chasseurs car il leur fait gagner énormément de temps et d’efficacité.</p>
+    <h2>Présentation du blog associé au reseau chasse Naturapass</h2>
+    <p>Un blog associé au réseau Naturapass a été créé afin que vous puissiez tout connaître sur Naturapass et ses actualités, mais aussi connaître les nouveautés du monde de la chasse, découvrir des photos, des vidéos,… Pour retrouver le blog, <a title="cliquez ici" href="http://blog-chasse.naturapass.com" target="_blank">cliquez ici</a>.</p>
+{% endblock corps %}

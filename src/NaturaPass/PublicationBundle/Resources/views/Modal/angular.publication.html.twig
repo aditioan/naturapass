@@ -1,0 +1,83 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.publication.html{% endblock %}
+
+{% block template_body %}
+<ul class="sharing-data hide" data-default="{{ app.user.parameters.publicationSharing.share }}">
+    {% for i in 0..3 %}
+        {% if i != 2 %}
+            {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                <li data-sharing="{{ i }}"
+                    class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</ul>
+    {% verbatim %}
+    <a href="#" class="close publication-close" ng-click="ok()">&times;</a>
+<div class="media modal-publication"
+     ng-controller="PublicationController"
+     ng-init="init()"
+     ng-class="{'float-img': publication.media.height <= 578, 'full-img': publication.media.height > 578, 'modal-publication-map': publication.fromMap}">
+    <div class="modal-publication-text" ng-class="{'pull-right': publication.media}">
+        <div class="scroll-publication media publication">
+            {% endverbatim %}
+            {% include 'NaturaPassPublicationBundle:Prototype:angular.publication.html.twig' %}
+            {% verbatim %}
+        </div>
+    </div>
+    <div class="media-body modal-publication-media"
+         ng-if="publication.media"
+         ng-class="{loading: publication.media.loading}">
+    <div class="modal-publication-media-ctn">
+    <img class="img-responsive img-center"
+         ng-if="publication.media.type == 100"
+         ng-show="!publication.media.cropping"
+         ng-src="{{ publication.media.original }}">
+    <np-video np-video-data="publication.media" ng-if="publication.media.type == 101"
+              np-width="578" np-height="publication.media.height"></np-video>
+
+    <np-image-crop ng-src="{{ publication.media.original}}"
+                   ng-if="publication.media.cropping && publication.media.type == 100"
+                   class="img-responsive"
+                   selected="cropping(coords)"
+                   released="cropReleased()">
+
+    </np-image-crop>
+    <div class="media-button"
+         ng-if="connectedUser.id == publication.owner.id && publication.media.type == 100">
+    <a href="#" class="icon-loop4" ng-click="publication.media.rotation = true"
+       ng-hide="publication.media.cropping || publication.media.rotation">
+    {% endverbatim %}{{ 'publication.action.rotate'|trans({}, translation_name~'publication') }}{% verbatim %}</a>
+    <a href="#" class="icon-interset" ng-click="publication.media.cropping = true"
+       ng-hide="publication.media.cropping || publication.media.rotation">
+    {% endverbatim %}{{ 'publication.action.crop'|trans({}, translation_name~'publication') }}{% verbatim %}</a>
+
+    <a href="#" class="icon-cancel" ng-show="publication.media.cropping || publication.media.rotation"
+       ng-click="disableMediaEditing()">
+    {% endverbatim %}{{ 'button.cancel'|trans({}, translation_name~'global') }}{% verbatim %}</a>
+    <a href="#" class="icon-checkmark"
+       ng-show="publication.media.cropping && !publication.media.cropStep2"
+       ng-click="publication.media.cropStep2 = true">
+    {% endverbatim %}{{ 'button.validate'|trans({}, translation_name~'global') }}{% verbatim %}</a>
+    <a href="#" class="icon-checkmark" ng-click="validateCropping()"
+       ng-show="publication.media.cropping && publication.media.cropStep2">
+    {% endverbatim %}{{ 'label.confirm'|trans({},translation_name~'global') }}{% verbatim %}</a>
+    </div>
+
+    <div class="media-rotation text-center" ng-if="publication.media.rotation">
+        <a href="#" class="btn btn-default btn-lg icon-redo pull-left" ng-click="rotateImage(90)"> </a>
+        <a href="#" class="btn btn-default btn-lg icon-sort2" ng-click="rotateImage(180)"></a>
+        <a href="#" class="btn btn-default btn-lg icon-undo pull-right" ng-click="rotateImage(270)"></a>
+    </div>
+    <div class="modal-publication-legend" ng-if='publication.media.legend || publication.media.tags'>
+        {{ publication.media.legend}}
+        <small class="media-tags" ng-if="publication.media.tags">
+            <span class="media-tag" ng-repeat="tag in publication.media.tags">{{ tag.name}} </span>
+        </small>
+    </div>
+    </div>
+    </div>
+    {% endverbatim %}
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Application de chasse{% endblock %}
+{% block description %}Vous recherchez une application de chasse pour partager votre passion avec des milliers de chasseurs ? Alors Naturapass est fait pour vous !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">L’ application de chasse Naturapass, pour les chasseurs de demain</li>
+    </ol>
+    <p>
+        <a href="{{ path('naturapass_main_homepage') }}">
+            <img src="{{ asset('img/pages/banner.jpg') }}" width="750" height="200" alt="Une application de chasse pour les chasseurs modernes" style="width: 100%" class="img-responsive center-block">
+            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase">En savoir plus sur Naturapass !</button>
+        </a>
+    </p>
+    <hr>
+    <h1>L’ application de chasse Naturapass, pour les chasseurs de demain</h1>
+    <h2>Présentation de l’ application de chasse Naturapass</h2>
+    <p>La société Naturapass est la première start-up de la chasse. Elle a développé un <a title="site chasse" href="https://www.naturapass.com/site-chasse">site chasse</a> <a title="www.naturapass.com" href="https://www.naturapass.com">www.naturapass.com</a> et une application de chasse. L’objectif premier de Naturapass est d’optimiser la planification et la coordination de chasses, tout en construisant une communauté qui puisse échanger sur la chasse.</p>
+    <p>Cette application de chasse et ce site sont composés de six fonctionnalités principales comme le mur pour se tenir informé en temps réel sur la communauté Naturapass et la carte afin de cartographier son territoire, grâce, entre autres, à des points géolocalisés, et de le communiquer à ses invités quand on le souhaite, notamment les jours de chasse. D’autres fonctionnalités sont présentes telles que les discussions pour échanger en temps réel avec toute la communauté Naturapass, les groupes pour conduire au mieux son activité cynégétique, l’agenda pour gérer son calendrier et ses invitations et les amis afin de rencontrer de nouveaux chasseurs.</p>
+    <h2>Télécharger l’application de chasse associée au site Naturapass</h2>
+    <p>Vous pouvez télécharger l’ application de chasse Naturapass sur le Play Store pour les smartphones Android (système d’exploitation de Samsung, Wiko, LG, Sony, Huawei, HTC,…) et sur l’App Store (système d’exploitation d’Apple). Vous pouvez accéder au site grâce à cette adresse : <a title="www.naturapass.com" href="https://www.naturapass.com">www.naturapass.com</a>. Les chasseurs peuvent installer, s’inscrire et utiliser Naturapass de manière totalement gratuite.</p>
+    <h2>L’équipe de l’ application de chasse à la pointe de l’innovation dans la chasse</h2>
+    <p>Le site internet a été lancé en juin 2014 et l’application smartphone, elle, a été publiée en septembre 2014. Une quinzaine de personnes est employée à plein temps pour développer l’ application de chasse et le site afin de faciliter la vie des membres de Naturapass (surnommés Natiz) et d’améliorer encore l’application.</p>
+    <p>L’outil Sentinelle développé par Naturapass, permet de faire remonter des informations terrain aux Fédérations Départementales des Chasseurs. Il permet aux membres de Naturapass de restituer leurs observations du terrain à la FDC du département dans lequel ils chassent.</p>
+    <h2>Présentation du blog associé à l’ application de chasse Naturapass</h2>
+    <p>Vous pouvez retrouver toutes les informations concernant Naturapass, des photos, des vidéos et vous tenir au courant sur les nouveautés dans le monde de la chasse grâce au <a title="blog" href="http://blog-chasse.naturapass.com/" target="_blank">blog</a> de l’ application de chasse et du site internet Naturapass.</p>
+{% endblock corps %}

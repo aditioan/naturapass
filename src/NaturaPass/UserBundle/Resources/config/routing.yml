@@ -1,0 +1,74 @@
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_facebook_videos:
+    path:    /videos
+    defaults: { _controller: NaturaPassUserBundle:Registration:videos }
+
+fos_user_facebook_game:
+    path:    /facebook
+    defaults: { _controller: NaturaPassUserBundle:Registration:registerFacebookGame }
+
+fos_user_facebook_game_fair:
+    path:    /facebook-2
+    defaults: { _controller: NaturaPassUserBundle:Registration:registerFacebookGameFair }
+
+naturapass_user_facebook_valid:
+    path:    /facebook/valid
+    defaults: { _controller: NaturaPassUserBundle:Registration:registerFacebookGameValid }
+
+naturapass_user_register:
+    path:    /register-challenge/{game}/{connect}
+    defaults: { _controller: NaturaPassUserBundle:Registration:registerChallenge }
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+naturapass_user_clear:
+    path:    /clear
+    defaults: { _controller: NaturaPassUserBundle:Default:clear }
+
+naturapass_user_invitation:
+    path:    /invitation
+    defaults: { _controller: NaturaPassUserBundle:Default:invitation }
+
+naturapass_user_complement:
+    path:    /complete-profile
+    defaults: { _controller: NaturaPassUserBundle:Default:complete }
+
+naturapass_user_search:
+    path:    /search
+    defaults:   { _controller: NaturaPassUserBundle:Default:search }
+
+naturapass_user_friend:
+    path:    /friends
+    defaults:   { _controller: NaturaPassUserBundle:Default:friends }
+
+naturapass_user_invitation_email:
+    path:    /email-invitation/{fullname}/{email}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:invitation }
+
+naturapass_user_friend_email:
+    path:    /email-friend/{user_fullname}/{fullname}/{user_tag}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:friend }
+
+naturapass_user_password_email:
+    path:    /email-password/{fullname}/{lien}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:changePassword }
+
+naturapass_user_confirm_email:
+    path:    /email-confirm/{fullname}/{lien}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:confirm }
+
+naturapass_user_register_email:
+    path:    /email-register/{fullname}
+    defaults:   { _controller: NaturaPassEmailBundle:EmailUser:register }

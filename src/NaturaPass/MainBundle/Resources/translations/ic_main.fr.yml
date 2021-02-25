@@ -1,0 +1,148 @@
+## MainBundle translate FR
+title:
+    map:            La carte des médias
+    search:         Résultat de recherche
+    cgu:            Conditions générales d'utilisation
+    presse:         Espace presse
+    home:           Inscrivez-vous sur I-C | I-C - Devenez un Natiz, le chasseur de demain
+    home_facebook:  Jeu concours - Gagnez vos places pour le salon de Rambouillet !
+    home_videos:    Naturapass - Retrouvez toutes les vidéos de chasse sur Naturapass !!
+    home_game_fair: I-C - Inscrivez-vous à l'application officielle du Game Fair !
+    register_game_fair: I-C - L'application offcielle du Game Fair !
+    concours:       Jeux concours
+
+description:
+    cgu:            Les condition générales d'utilisation du site de chasse I-C expliquent les conditions à respecter pour utiliser l'espace de chasse ainsi que le groupe de chasse I-C
+    presse:         Les communiqués de presse I-C décrivent le fonctionnement du site de chasse et du premier espace de chasse et groupe de chasse
+    home:           I-C est le site de chasse au service des Natiz, ces chasseurs qui vont pouvoir gérer leur espace de chasse et leur groupe de chasse
+    home_videos:    Naturapass, le réseau social des chasseurs vous propose toutes les dernières vidéos qui ont fait le buzz dans la chasse !
+    home_facebook:  Cliquez ici pour participez au jeu concours I-C, et gagner vos places au salon de la chasse de Rambouillet par tirage au sort ! Un tirage au sort par jour !! Rendez dans l’agenda sur l’application I-C pour connaitre les vainqueurs ! Places à retirer a l’accueil du salon.
+    home_game_fair: Cette année, I-C devient l'application officielle du Game Fair. Retrouvez le plan du salon, les actualités, l'infotrafic, ...
+    register_game_fair: l'application officielle du Game Fair et disposez sur votre smartphone du plan du salon, des actualités, de l'infotrafic...
+    concours:       Retrouvez l’ensemble des jeux concours et challenge I-C. Des milliers d'euros de lots à gagner
+
+map:
+    title:          Carte
+    link:           La carte
+    description:    Sélectionnez le type d’informations que vous souhaitez faire apparaitre.
+
+search:
+    form:
+        title:              Résultat de la recherche
+        description:        Pour rechercher une personne, veuillez entrer son nom et/ou prénom.
+        label:              Recherche
+        placeholder:        Nom et/ou prénom de la personne recherchée
+        total:              Afficher les <b>%count% résultats</b>
+        inviteFriends:      Vous n'avez pas trouvé la personne que vous cherchez ?<br>Invitez-la à rejoindre I-C
+    list:
+        title:
+            allresults:     Tous les résultats
+            proposal:     Proposition d'amis
+            mutualfriends:  Amis en commun
+        nbresult:           %count% résultat trouvé|]1,+Inf[%count% résultats trouvés
+        maybe_know:         Vous connaissez peut-être
+        have_not:           Vous n'avez pas d'amis en commun
+        have:               Vous avez
+        friend:             %count% ami en commun|]1,+Inf[ %count% amis en commun
+        isfriend:           Vous êtes ami
+        isknowing:          Vous êtes une connaissance
+        button:
+            add:
+
+invite:
+    members:
+        title:      Invitez d'autres membres
+    title:          Invitez de nouveaux membres
+    title_group:          Invitez des personnes dans votre groupe
+    title_lounge:         Invitez des personnes dans votre événement
+    label:
+        to:         Liste des destinataires
+        subject:    Objet de votre message
+        body:       Texte de votre message
+    placeholder:
+        to:         Destinataires séparés par des point-virgules ';'
+        subject:    "%fullname% vous invite à rejoindre %loungeOrGroup% sur I-C"
+        body:       Entrez votre texte
+    modal:
+        email:
+            title:  Invitation par email
+
+home:
+    ios:            I-C est aussi une application iPhone ! Voulez-vous être redirigé vers l'App Store pour la télécharger ?
+    android:        I-C est aussi une application Android ! Voulez-vous être redirigé vers le Google Play pour la télécharger ?
+    video:          Vidéos
+    brochure:       Consultez notre brochure
+    logo:           |
+                    I-C est une application mobile et un site web qui a pour objectif de vous assister dans ce que vous préférez !
+                    Cet outil est à la fois un réseau social, un système cartographique, votre mémoire virtuelle et un moyen de communication.
+    h1_title:           Bienvenue sur I-C,
+    h1_description:
+    tab_header:         L'outil du chasseur de demain
+    tab_1:              <span>Communauté</span><br> de chasseurs
+    tab_2:              Votre <span>journal</span><br> de chasse
+    tab_3:              <span>Organisation</span><br> de vos chasses
+    tab_4:              <span>Géolocalisation</span>
+    tab_5:              <span>Partage</span><br> photos/vidéos
+    tab_6:              <span>Cartographie</span><br> du territoire
+    more_information:   En savoir plus sur I-C
+presse:
+    link:           Espace presse
+    description:    |
+                    <p>Vous pouvez télécharger ci-dessous les éléments de presse relatifs à I-C.</p>
+    suite:          |
+                    <p>Si vous souhaitez obtenir plus d’informations ou si vous avez des questions, contactez-nous :</p>
+                    <adresse>
+                    <strong class="text-primary">Contact presse France :</strong><br>
+                    <strong>Patrick BURDEYRON</strong><br>
+                    <a href="mailto:patrick@I-C.com">patrick@I-C.com</a><br>
+                    06 80 44 07 48 / 04 74 46 38 01
+                    </adresse>
+    visuels:        Visuels (logos, photos d'écran, illustrations, ...)
+    communique:     Communiqué de presse
+    dossier:        Dossier de presse
+    all:            Tout télécharger
+concours:
+    title:
+        result:     RESULTAT DU CONCOURS
+        progress:   JEUX CONCOURS I-C EN COURS
+        complet:    JEUX CONCOURS I-C TERMINÉS
+        principe:   Principe du challenge I-C
+        challenge:  Les challenges
+        rule:       Règlement du jeu
+    btn:
+        join:       PARTICIPEZ
+        result:     VOIR LES RÉSULTATS
+        challenge:  Voir les challenges
+        rule:       Découvrir le réglement du jeu
+    date:
+        start:      Jusqu'au <strong>%date%</strong>
+        stop:       Terminé
+
+error:
+    link:
+        home:       Retournez sur la page d'accueil de I-C
+        bug:        Signalez un problème aux webmasters
+    general:
+        h1:         La page a rencontré une erreur.
+        h2:         |
+                    Un problème technique est survenu.<br>
+                    Vous pouvez signaler le problème à nos webmasters en cliquant sur le bouton ci-dessous «Signalez un problème aux webmasters».
+    400:
+        h1:         La syntaxe de la requête est erronée.
+        h2:         Un problème technique est survenu. Vous pouvez signaler le problème à nos webmasters en cliquant sur le bouton ci-dessous «Signalez un problème aux webmasters».
+    403:
+        h1:         L'accès à cette page a été refusé.
+        h2:         Vous n'avez pas les permissions nécessaires pour visiter cette page.
+    404:
+        h1:         La page demandée n'est malheureusement pas disponible.
+        h2:         L'url que vous avez suivi est temporairement indisponible ou est incorrecte.
+    500:
+        h1:         Erreur interne du serveur.
+        h2:         Essayer de vous connecter un peu plus tard. Merci de votre compréhension
+    503:
+        h1:         Le site est actuellement en cours de maintenance
+        h2:         |
+                    Afin de toujours être en mesure de vous apporter un service de qualité,<br>
+                    nous effectuons en ce moment des opérations de maintenance.<br>
+                    <br>
+                    Nous vous prions de nous excuser pour la gêne occasionnée.

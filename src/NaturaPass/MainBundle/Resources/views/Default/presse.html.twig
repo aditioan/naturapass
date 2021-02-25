@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'presse.title'|trans({},translation_name~'main') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container {% if app.request.get('_route') == 'naturapass_main_homepage' %}with-footer{% endif %}">
+        <div class="container container-lg">
+            <h1>{{ 'presse.title'|trans({},translation_name~'main') }}</h1>
+            <p>{{ 'presse.description'|trans({},translation_name~'main') }}</p>
+            <a href="#" class="btn btn-default btn-default-primary icon-download margin-icon">{{ 'presse.communique'|trans({},translation_name~'main') }}</a>
+            <a href="{{ asset('presse/Naturapass-Dossier-communiques-visuels.zip') }}" class="btn btn-default btn-default-primary icon-download margin-icon">{{ 'presse.visuels'|trans({},translation_name~'main') }}</a>
+        </div>
+    </div>
+
+{% endblock %}

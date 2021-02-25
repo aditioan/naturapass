@@ -1,0 +1,208 @@
+menu:
+    title:                      Chantiers
+    my_lounges:                 Mes chantiers
+    all_lounges:                Tous les chantiers
+    add_lounge:                 Organiser mon chantier
+    invited_lounges:            Invitations
+
+label:
+    allow_add:      Qui peut publier?
+    allow_show:     Qui peut consulter?
+    allow_add_chat:      Qui peut publier sur le chat?
+    allow_show_chat:     Qui peut consulter le chat?
+    all_members:    Tous les membres
+    admin:          Administrateurs
+title:
+    my_lounges:                 Liste de mes chantiers
+    all_lounges:                Liste de tous les chantiers
+    invited_lounge:             Liste des invitations aux chantiers
+    no_owning:                  Vous n'appartenez à aucun chantier
+    no_pending:                 Vous n'avez ni demandé l'accès à un chantier, ni reçu d'invitation
+    no_more:                    Vous avez chargé l'intégralité des chantiers
+    add:                        Organisation d'un chantier
+    edit:                       Édition du chantier %lounge%
+    invite:                     Inviter de nouveau membre à votre chantier
+    show:                       Chantier %lounge%
+    invited:                    Valider l'invitation
+
+filter-lounge:
+    placeholder:                Nom du chantier recherchée puis tapez Entrée
+
+filter:
+    label:                      Rechercher
+    placeholder:                Nom ou prénom de la personne recherché puis tapez Entrée
+
+alert:
+    no_addresses:                  |
+                                Vous n'avez pas d'adresses favorites, vous pouvez en ajouter en <a href="%lien%">cliquant ici</a>
+    add_addresses:                  |
+                                Pour configurer vos adresses favorites, <a href="%lien%">cliquez ici</a>
+    minFilter:                  Merci de saisir au minimum 3 caractères !
+lounge:
+    btn:
+        showMembers:            Listez les membres
+        hideMembers:            Cachez les membres
+        adminMembers:           Administrez les membres
+        showNotMembers:         Listez les non-membres
+        hideNotMembers:         Cachez les non-membres
+        adminNotMembers:        Administrez les non-membres
+        showInvited:            Listez les invités
+        hideInvited:            Cachez les invités
+        notmember:              Ajoutez des non-membres
+        invite:                 Invitez des membres
+        revive-invited:             Relancer
+        valid-invited:              Valider
+    name:                       Chasses
+    title:
+        participants:           Participation
+        participation:          Participants au chantier
+        you:                    Moi
+        creation:               Organiser mon chantier
+        edition:                Edition d'un chantier
+        invite:                 Invitez des membres dans votre chantier
+        invitenotmember:        Invitez des non-membres dans votre chantier
+        inviteGroup:            Invitez de nouveaux membres à votre chantier
+        information:            Informations
+        date:                   Dates
+        allListe:               Tous les chantiers
+        myListe:                Mes chantiers
+        invitedListe:           Liste des invitations aux chantiers
+        invited:                Validez l'invitation au chantier
+        members:                Membres
+        membersdetail:          Participants au chantier
+        chat:                   Discussion du chantier
+        map:                    Carte du chantier
+        listemembers:           Membres
+        listenotmembers:        Non-membres
+        listeinvited:           Invités qui n'ont pas répondu
+        close_lounge:           Fermeture du chantier
+        remove_member:          Supprimez un membre du chantier
+        remove_notmember:       Supprimez un non-membre du chantier
+        remove_invitedmember:   Annulez une invitation au chantier
+        valid_invitedmember:   Validez une invitation au chantier
+    description:
+        address:                |
+                                Lieu de rdv :
+        close_lounge:           |
+                                Attention, vous allez fermer définitivement le chantier <span style="color: red">%lounge%</span>. <br>
+                                Etes-vous sûr de fermer ce chantier?
+        allListe:               Vous retrouverez ci-dessous l'ensemble des chantiers disponibles
+        myListe:                Vous retrouverez ci-dessous l'ensemble de vos chantiers
+        invitedListe:           Vous retrouverez ci-dessous l'ensemble des chantiers auxquels vous avez été invité ou les chantiers en attente de validation
+        invited:                Vous pouvez valider ou refuser l'invitation à ce chantier
+        creation:               Description
+        invite:                 |
+                                Vous pouvez inviter des membres à rejoindre votre chantier.<br>
+                                Soit des groupes auxquels vous appartenez, soit des membres..
+        invitenotmember:        |
+                                Vous pouvez inviter des non-membres à rejoindre votre chantier en leur envoyant un email.<br>
+                                Pour savoir si une personne est membre, vous pouvez la chercher en cliquant sur le bouton "Invitez d'autres membres" ci-dessus.
+        liste:                  Voici la liste des chantiers
+        remove_member:          |
+                                Attention, vous allez Supprimer le membre : <span style="color: red">%member%</span> de ce chantier. <br>
+                                Etes-vous sûr de vouloir le supprimer?
+        remove_notmember:       |
+                                Attention, vous allez Supprimer le non-membre : <span style="color: red">%member%</span> de ce chantier. <br>
+                                Etes-vous sûr de vouloir le supprimer?
+        remove_invitedmember:   |
+                                Attention, vous allez annuler l'invitation du membre : <span style="color: red">%member%</span> de ce chantier. <br>
+                                Etes-vous sûr de vouloir l'annuler?
+        valid_invitedmember:   |
+                                Attention, vous allez valider l'invitation du membre : <span style="color: red">%member%</span> de ce chantier. <br>
+                                Etes-vous sûr de vouloir valider ce membre?
+    placeholder:
+        name:                   Nom du chantier
+        description:            Description du chantier
+        meetingAddress:         Lieu de rendez-vous
+        meetingDate:            Date de rendez-vous
+        endDate:                Date de fin de chantier
+        publicComment:          Commentaire public
+        privateComment:         Commentaire privé
+        quiet:                  Vous êtes en status silencieux
+    attributes:
+        date:
+            meetingDate:            Rdv le
+            endDate:                Fini le
+            at:                     à
+        chooseAddress:          Choisir une adresse favorite
+        updategeoloc:           Repositionner son point sur la carte
+        geolocinfo:             |
+                                Si vous activez la géolocalisation, les personnes qui participent à votre chantier seront géolocalisées sur la carte, si ils ont également activé la géolocalisation.
+                                Vous pouvez activer la géolocalisation plus tard.
+
+                                Conseil + : Activez la géolocalisation le jour de votre chantier.
+        accessinfo:             |
+                                Privé: seules les personnes que vous inviterez verront et pourront participer à votre chantier.
+                                Semi-privé: tout le monde verra votre chantier et pourra s'inscrire, mais seules les personnes que vous validerez pourront entrer dans votre chantier.
+                                Public: tout le monde peut voir et entrer librement dans votre chantier.
+
+                                Conseil + : Utilisez Privé pour les chantiers où vous limitez le nombre de personnes. Utilisez semi-privé pour les chantiers réguliers. Utilisez Public pour des manifestations libres
+        validation :            Valider
+        geolocation:            Géolocalisation
+        quiet:                  Silencieux
+        administrator:          Administrateur
+        participateNotMember:   Participe à l'événement
+        participateMember:      Participe à l'événement
+        participate:            Je participe à l'événement
+        participe:              Participation
+        administrator:          Administrateur
+        owner:                  Hôte
+        admin:                  '{0} Administré par <b>Vous</b>|{1} Administré par <b>Vous</b> et <b>%other%</b>|]1,Inf] Administré par <b>Vous</b> et <b>%count% personnes</b>'
+        name:                   Nom
+        description:            Description
+        dateEnd:                Fin le %date% à %hour%
+        notification:           Notification
+        meetingDate:            Date de rendez-vous
+        meetingAddress:         Adresse de rendez-vous
+        endDate:                Fin de l'événement
+        beginGeolocation:       Date de début de la géolocalisation
+        endGeolocation:         Date de fin de la géolocalisation
+        members:                %count% membre|]1,+Inf[%count% membres
+        subscribers:             %count% personne|]1,+Inf[%count% personnes
+        asks:                   %count% Demande|]1,+Inf[%count% Demandes
+        wait:                   en attente de validation
+        tchat:
+            admin:              Administrateur
+    state:
+        geolocate:              Géolocalisation désactivée
+        geolocation:            '{0} Géolocalisation désactivée|{1} Géolocalisation activée'
+        participate:
+            long:               '{0} ne participe pas|{1} participe|{2} ne sais pas'
+            short:              '{0} non|{1} oui|{2} peut-être'
+        joined:                 Inscrit
+        join_asked:             Demande envoyée
+        invite_sended:          Invitation envoyée
+        admin:                  Vous êtes administrateur de ce chantier
+        subscriber:             Membre
+        no_more_validation:      Il n'y a plus aucun personne en attente de validation
+    action:
+        add_not_member:
+            name:               Ajouter un non-membre
+        delete:                 Supprimez le chantier
+        back:                   Sortez du chantier
+        administer:             Administrez le chantier
+        edit:                   Éditez le chantier
+        access:                 Entrez dans la chantier
+        access2:                Accédez au chantier
+        message_delete :        Etes-vous sur de vouloir supprimer le chantier
+        removeuser:             Supprimez le participant
+        add_media:              Ajoutez un média
+        remove_ask:             Annulez la demande
+        remove_invitation:      Refusez l'invitation
+        join:                   Inscrivez-vous au chantier
+        valid_invite_join:      Acceptez l'invitation au chantier
+        ask_join:               Demandez à rejoindre
+        exit:                   Désinscrivez-vous du chantier
+        close:                  Fermez ce chantier
+        map:
+            subscribers:         participants
+            medias:             médias
+        invite:
+            friends:    Invitez des amis
+            send:       Envoyez une invitation
+            email:
+                name:       Invitation par email
+                subject:     Invitation pour rejoindre le chantier %lounge%
+    validation:
+        comment:
+            empty:              Le contenu du commentaire est vide

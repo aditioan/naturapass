@@ -1,0 +1,135 @@
+{% extends "NaturaPassMainBundle::layout-no-recommendations.html.twig" %}
+
+{% block title %}{{ 'title.search'|trans({}, translation_name~'backoffice') }} | {{ parent() }}{% endblock title %}
+{% block meta %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+{% endblock meta %}
+
+{% block corps %}
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container-full" ng-controller="FdcSearchController" ng-init="initFdcSearch()">
+            <h1>{{ 'search.form.title'|trans({}, translation_name~'backoffice') }}</h1>
+            <p>{{ 'search.form.description'|trans({}, translation_name~'backoffice') }}</p>
+            <form name="backoffice" action="{{ path('backoffice_fdc_listing', {} ) }}" method="POST">
+                <div class="row" ng-cloak>
+                    <div class="col-sm-4">
+                        <div class="panel panel-back">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">{{ 'search.title.date'|trans({}, translation_name~'backoffice') }}</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" ng-cloak>
+                                    <div class="col-sm-3">
+                                        <label class="control-label required" for="date">{{ 'search.attributes.date'|trans({},  translation_name~'backoffice') }}</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% verbatim %}
+                                            <input type="text" name="daterange" id="daterange" value="" />
+                                            <input type="hidden" name="startDate" id="startDate" />
+                                            <input type="hidden" name="endDate" id="endDate" />
+                                        {% endverbatim %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-back">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">{{ 'search.title.user'|trans({}, translation_name~'backoffice') }}</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" ng-cloak>
+                                    <div class="col-sm-3">
+                                        <label class="control-label required" for="users">{{ 'search.attributes.users'|trans({},  translation_name~'backoffice') }}</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% verbatim %}
+                                            <input id="modal-users-select2" ui-select2="multipleOptions('users')" class="modal-users-select2" ng-model="usersSelect" class="form-control" style="width:200px;" value="{{ data.json.users }}" ng-cloak>
+                                            <input id="users" type="hidden" name="users" value="{{ selected.users | json }}">
+                                        {% endverbatim %}
+                                    </div>
+                                </div>
+                                <div class="row" ng-cloak>
+                                    <div class="col-sm-3">
+                                        <label class="control-label required" for="groups">{{ 'search.attributes.groups'|trans({},  translation_name~'backoffice') }}</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% verbatim %}
+                                            <input id="modal-groups-select2" ui-select2="multipleOptions('groups')" class="modal-groups-select2" ng-model="groupsSelect" class="form-control" style="width:200px;" value="{{ data.json.groups }}" ng-cloak>
+                                            <input id="groups" type="hidden" name="groups" value="{{ selected.groups | json }}">
+                                        {% endverbatim %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-back">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">{{ 'search.title.zone'|trans({}, translation_name~'backoffice') }}</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" ng-cloak>
+                                    <div class="col-sm-3">
+                                        <label class="control-label required" for="localities">{{ 'search.attributes.localities'|trans({},  translation_name~'backoffice') }}</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% verbatim %}
+                                            <input id="modal-localities-select2" ui-select2="multipleOptions('localities')" class="modal-localities-select2" ng-model="localitiesSelect" class="form-control" style="width:200px;" value="{{ data.json.localities }}" ng-cloak>
+                                            <input id="localities" type="hidden" name="localities" value="{{ selected.localities | json }}">
+                                        {% endverbatim %}
+                                    </div>
+                                </div>
+                                <div class="row" ng-cloak>
+                                    <div class="col-sm-3">
+                                        <label class="control-label required" for="insees">{{ 'search.attributes.insees'|trans({},  translation_name~'backoffice') }}</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% verbatim %}
+                                            <input id="modal-insees-select2" ui-select2="multipleOptions('insees')" class="modal-insees-select2" ng-model="inseesSelect" class="form-control" style="width:200px;" value="{{ data.json.insees }}" ng-cloak>
+                                            <input id="insees" type="hidden" name="insees" value="{{ selected.insees | json }}">
+                                        {% endverbatim %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-cloak>
+                    <div class="col-sm-12">
+                        <div class="panel panel-back">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">{{ 'search.title.category'|trans({}, translation_name~'backoffice') }}</h2>
+                            </div>
+                            <div class="panel-body">
+                                {% verbatim %}
+                                    <treecontrol class="tree-naturapass"
+                                        tree-model="dataTree"
+                                        options="treeOptions"
+                                        selected-nodes="modelCategories">
+                                        {{node.name}}
+                                    </treecontrol>
+                                    <input type="hidden" name="categories" value="{{ modelCategories | json }}">
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button ng-click="submit()" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Backoffice/FdcSearchController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+{% endblock %}

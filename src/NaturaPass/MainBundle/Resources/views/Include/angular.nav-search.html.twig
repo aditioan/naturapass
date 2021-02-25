@@ -1,0 +1,24 @@
+<form action="{{ path('naturapass_main_search') }}" class="navbar-form navbar-search navbar-left hidden-xs hidden-sm" role="search" ng-controller="SearchController" ng-init="init()">
+    <div class="input-group">
+        <input type="text" ui-select2="options" class="form-control input-sm input-search navbar-search-select2" ng-model="select2"/>
+        {# fix #}
+        {% verbatim %}
+            <div class="media hide">
+                <a class='pull-left'><img ng-src="{{ user.photo}}" width="40" height="40" class='media-object' ></a>
+                <div class='media-body'><div class='select2-user-name'><b>{{ user.firstname}}</b> {{ user.lastname}}</span></div>
+                    <div class='select2-nb-friends' ng-if="user.friendship.state == 2">{% endverbatim %}{{ 'search.list.isfriend'|trans({}, translation_name~"main") }} "{% verbatim %}</div>
+                    <div class='select2-nb-friends' ng-if="user.friendship.state != 2 && user.mutualFriends > 0">
+                    {% endverbatim %}{{ 'search.list.have'|trans({}, translation_name~"main") }}{% verbatim %} {{ 'search.list.friend' | trans: user.relation.mutualFriends: {'count': user.relation.mutualFriends}: "main"}}
+                    </div>
+                    <div class='select2-nb-friends'>
+                    {% endverbatim %}{{ 'search.list.have_not'|trans({}, translation_name~"main") }}{% verbatim %}
+                    </div>
+                </div>
+            </div>
+        {% endverbatim %}
+
+        <span class="input-group-btn">
+            <button type="submit" title="{{ 'nav.search.button'|trans({},translation_name~'nav') }}" class="btn btn-primary btn-sm icon-search3"></button>
+        </span>
+    </div>
+</form>

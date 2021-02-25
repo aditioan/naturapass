@@ -1,0 +1,127 @@
+<?php
+
+namespace NaturaPass\LoungeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserTalkThread
+ *
+ * @ORM\Table(name="user_talk_thread")
+ * @ORM\Entity(repositoryClass="NaturaPass\LoungeBundle\Entity\UserTalkThreadRepository")
+ */
+class UserTalkThread {
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="NaturaPass\LoungeBundle\Entity\Thread")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $thread;
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="NaturaPass\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return LoungeUserThread
+     */
+    public function setContent($content) {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent() {
+        return $this->content;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return LoungeUserThread
+     */
+    public function setCreated($created) {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated() {
+        return $this->created;
+    }
+
+    /**
+     * Set thread
+     *
+     * @param \NaturaPass\CoreBundle\Entity\Thread $thread
+     * @return LoungeUserThread
+     */
+    public function setThread(\NaturaPass\CoreBundle\Entity\Thread $thread) {
+        $this->thread = $thread;
+
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return \NaturaPass\LoungeBundle\Entity\Thread
+     */
+    public function getThread() {
+        return $this->thread;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \NaturaPass\LoungeBundle\Entity\LoungeUser $user
+     * @return LoungeUserThread
+     */
+    public function setUser(\NaturaPass\UserBundle\Entity\User $user) {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \NaturaPass\LoungeBundle\Entity\LoungeUser
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+}

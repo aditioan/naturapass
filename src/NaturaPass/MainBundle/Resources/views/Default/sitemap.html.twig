@@ -1,0 +1,55 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Plan du site{% endblock %}
+{% block description %}Retrouvez ici le plan du site de Naturapass, la 1re application mobile des chasseurs.{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Plan du site</li>
+    </ol>
+
+    <h1>Plan du site</h1>
+
+    <ul class="list-unstyled">
+        <li>
+            <span>FONCTIONNALITES</span>
+            <ul>
+                <li><a href="{{ path("naturapass_main_mur") }}">Mur</a></li>
+                <li><a href="{{ path("naturapass_main_carte") }}">Carte</a></li>
+                <li><a href="{{ path("naturapass_main_discussions") }}">Discussions</a></li>
+                <li><a href="{{ path("naturapass_main_groupes") }}">Groupes</a></li>
+                <li><a href="{{ path("naturapass_main_agenda") }}">Agenda</a></li>
+                <li><a href="{{ path("naturapass_main_amis") }}">Amis</a></li>
+            </ul>
+        </li>
+        <li>
+            <span>A PROPOS DE</span>
+            <ul>
+                <li><a href="{{ path("naturapass_main_naturapass") }}">Naturapass</a></li>
+                <li><a href="{{ path("naturapass_main_jaime") }}">J'aime la chasse</a></li>
+                <li><a href="{{ path("naturapass_main_realisations") }}">Réalisations</a></li>
+                <li><a href="{{ path("naturapass_main_applications") }}">Gamme d'appli nature</a></li>
+                <li><a href="{{ path("naturapass_concours_listing") }}">Jeux concours</a></li>
+            </ul>
+        </li>
+        <li><a href="http://blog-chasse.naturapass.com" target="_blank">BLOG</a></li>
+        <li><a href="http://boutique.naturapass.com" target="_blank">BOUTIQUE</a></li>
+        <li><a href="{{ path("naturapass_main_partenaire") }}">PARTENAIRES</a></li>
+        <li><a href="{{ path("naturapass_main_presse") }}">PRESSE</a></li>
+        <li><a href="{{ path("naturapass_main_contact") }}">CONTACT</a></li>
+        <li><a href="{{ path("naturapass_main_mention") }}">MENTIONS LEGALES</a></li>
+        <li><a href="{{ path("naturapass_main_sitemap") }}">PLAN DU SITE</a></li>
+    </ul>
+
+    <ul class="list-unstyled text-uppercase">
+        <li><a href="{{ path("naturapass_main_smartpage_application_chasse") }}">Application chasse</a></li>
+        <li><a href="{{ path("naturapass_main_smartpage_application_de_chasse") }}">Application de chasse</a></li>
+        <li><a href="{{ path("naturapass_main_smartpage_application_pour_chasseur") }}">Application pour chasseur</a></li>
+        <li><a href="{{ path("naturapass_main_smartpage_reseau_chasse") }}">Reseau chasse</a></li>
+        <li><a href="{{ path("naturapass_main_smartpage_site_chasse") }}">Site chasse</a></li>
+        <li><a href="{{ path("naturapass_main_smartpage_site_de_chasse") }}">Site de chasse</a></li>
+    </ul>
+
+{% endblock corps %}

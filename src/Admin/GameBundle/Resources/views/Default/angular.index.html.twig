@@ -1,0 +1,63 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block corps %}
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle container-index">
+            {% verbatim %}
+            <div class="news" ng-controller="GameListController" ng-init="loadGame()">
+                <div ng-cloak class="container-md" ng-repeat="game in games" ng-class="{loading: game.loading}">
+                    <button type="button" class="close" ng-click="deleteGame($index, game)">&times;</button>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <span>Titre :</span>
+                                <span>{{ game.title }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <span>Couleur :</span>
+                                <span>{{ game.color }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <span>Type :</span>
+                                <span>{{ game.type | getGameType }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <span>Date de début :</span>
+                                <span>{{ game.debut | date:'D/M/YYYY à HH:mm' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <span>Date de fin :</span>
+                                <span>{{ game.fin | date:'D/M/YYYY à HH:mm' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <a href="{{ 'admin_game_edit'|route: {game: game.id} }}" class="btn btn-primary">Editer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endverbatim %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Game/GameControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

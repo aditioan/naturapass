@@ -1,0 +1,815 @@
+# Use the front controller as index file. It serves as a fallback solution when
+# every other rewrite/redirect fails (e.g. in an aliased environment without
+# mod_rewrite). Additionally, this reduces the matching process for the
+# start page (path "/") because otherwise Apache will apply the rewriting rules
+# to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
+DirectoryIndex app.php
+
+# ------------------------------------------------------------------------------
+# | Cross-domain AJAX requests                                                 |
+# ------------------------------------------------------------------------------
+
+# Enable cross-origin AJAX requests.
+# http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
+# http://enable-cors.org/
+
+ <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+ </IfModule>
+
+# ------------------------------------------------------------------------------
+# | CORS-enabled images                                                        |
+# ------------------------------------------------------------------------------
+
+# Send the CORS header for images when browsers request it.
+# https://developer.mozilla.org/en/CORS_Enabled_Image
+# http://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
+# http://hacks.mozilla.org/2011/11/using-cors-to-load-webgl-textures-from-cross-domain-images/
+
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+        <FilesMatch "\.(gif|ico|jpe?g|png|svg|svgz|webp)$">
+            SetEnvIf Origin ":" IS_CORS
+            Header set Access-Control-Allow-Origin "*" env=IS_CORS
+        </FilesMatch>
+    </IfModule>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | Web fonts access                                                           |
+# ------------------------------------------------------------------------------
+
+# Allow access from all domains for web fonts
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(eot|font.css|otf|ttc|ttf|woff)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | 404 error prevention for non-existing redirected folders                   |
+# ------------------------------------------------------------------------------
+
+# Prevent Apache from returning a 404 error for a rewrite if a directory
+# with the same name does not exist.
+# http://httpd.apache.org/docs/current/content-negotiation.html#multiviews
+# http://www.webmasterworld.com/apache/3808792.htm
+
+Options -MultiViews
+
+# ------------------------------------------------------------------------------
+# | Better website experience                                                  |
+# ------------------------------------------------------------------------------
+
+# Force IE to render pages in the highest available mode in the various
+# cases when it may not: http://hsivonen.iki.fi/doctype/ie-mode.pdf.
+# Use, if installed, Google Chrome Frame.
+
+<IfModule mod_headers.c>
+    Header set X-UA-Compatible "IE=edge,chrome=1"
+    # `mod_headers` can't match based on the content-type, however, we only
+    # want to send this header for HTML pages and not for the other resources
+    <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
+        Header unset X-UA-Compatible
+    </FilesMatch>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | Proper MIME types for all files                                            |
+# ------------------------------------------------------------------------------
+
+<IfModule mod_mime.c>
+
+  # CSS
+    AddType text/css                                    css
+
+  # Audio
+    AddType audio/mp4                                   m4a f4a f4b
+    AddType audio/ogg                                   oga ogg
+
+  # JavaScript
+    # Normalize to standard type (it's sniffed in IE anyways):
+    # http://tools.ietf.org/html/rfc4329#section-7.2
+    AddType application/javascript                      js jsonp
+    AddType application/json                            json
+
+  # Video
+    AddType video/mp4                                   mp4 m4v f4v f4p
+    AddType video/ogg                                   ogv
+    AddType video/webm                                  webm
+    AddType video/x-flv                                 flv
+
+  # Web fonts
+    AddType application/font-woff                       woff
+    AddType application/vnd.ms-fontobject               eot
+
+    # Browsers usually ignore the font MIME types and sniff the content,
+    # however, Chrome shows a warning if other MIME types are used for the
+    # following fonts.
+    AddType application/x-font-ttf                      ttc ttf
+    AddType font/opentype                               otf
+
+    # Make SVGZ fonts work on iPad:
+    # https://twitter.com/FontSquirrel/status/14855840545
+    AddType     image/svg+xml                           svg svgz
+    AddEncoding gzip                                    svgz
+
+  # Other
+    AddType application/octet-stream                    safariextz
+    AddType application/x-chrome-extension              crx
+    AddType application/x-opera-extension               oex
+    AddType application/x-shockwave-flash               swf
+    AddType application/x-web-app-manifest+json         webapp
+    AddType application/x-xpinstall                     xpi
+    AddType application/xml                             atom rdf rss xml
+    AddType image/webp                                  webp
+    AddType image/x-icon                                ico
+    AddType text/cache-manifest                         appcache manifest
+    AddType text/plain                                  lic
+    AddType text/vtt                                    vtt
+    AddType text/x-component                            htc
+    AddType text/x-vcard                                vcf
+
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | UTF-8 encoding                                                             |
+# ------------------------------------------------------------------------------
+
+# Use UTF-8 encoding for anything served as `text/html` or `text/plain`.
+AddDefaultCharset utf-8
+
+# Force UTF-8 for certain file formats.
+<IfModule mod_mime.c>
+    AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | Rewrite engine                                                             |
+# ------------------------------------------------------------------------------
+
+# Turning on the rewrite engine and enabling the `FollowSymLinks` option is
+# necessary for the following directives to work.
+
+# If your web host doesn't allow the `FollowSymlinks` option, you may need to
+# comment it out and use `Options +SymLinksIfOwnerMatch` but, be aware of the
+# performance impact: http://httpd.apache.org/docs/current/misc/perf-tuning.html#symlinks
+
+# Also, some cloud hosting services require `RewriteBase` to be set:
+# http://www.rackspace.com/knowledge_center/frequently-asked-question/why-is-mod-rewrite-not-working-on-my-site
+
+# ------------------------------------------------------------------------------
+# | Suppressing / Forcing the "www." at the beginning of URLs                  |
+# ------------------------------------------------------------------------------
+
+# The same content should never be available under two different URLs especially
+# not with and without "www." at the beginning. This can cause SEO problems
+# (duplicate content), therefore, you should choose one of the alternatives and
+# redirect the other one.
+
+# By default option 1 (no "www.") is activated:
+# http://no-www.org/faq.php?q=class_b
+
+# If you'd prefer to use option 2, just comment out all the lines from option 1
+# and uncomment the ones from option 2.
+
+# IMPORTANT: NEVER USE BOTH RULES AT THE SAME TIME!
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Option 1: rewrite www.example.com → example.com
+
+#<IfModule mod_rewrite.c>
+#    RewriteCond %{HTTPS} !=on
+#    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#    RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+#</IfModule>
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Option 2: rewrite example.com → www.example.com
+
+# Be aware that the following might not be a good idea if you use "real"
+# subdomains for certain parts of your website.
+
+ <IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
+    RewriteCond %{HTTP_HOST} !^ww2\..+$ [NC]
+    RewriteCond %{HTTP_HOST} !^api\..+$ [NC]
+    RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+ </IfModule>
+
+# ------------------------------------------------------------------------------
+# | File access                                                                |
+# ------------------------------------------------------------------------------
+
+# Block access to directories without a default document.
+# Usually you should leave this uncommented because you shouldn't allow anyone
+# to surf through every directory on your server (which may includes rather
+# private places like the CMS's directories).
+
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Block access to hidden files and directories.
+# This includes directories used by version control systems such as Git and SVN.
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{SCRIPT_FILENAME} -d [OR]
+    RewriteCond %{SCRIPT_FILENAME} -f
+    RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Block access to backup and source files.
+# These files may be left by some text editors and can pose a great security
+# danger when anyone has access to them.
+
+<FilesMatch "(^#.*#|\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+  # Options +SymLinksIfOwnerMatch
+    RewriteEngine On
+  # RewriteBase /
+
+    ########## Block bad user agents
+    ## The following list may include bots that no longer exist or are not a problem
+    ## for your site. The list will always be incomplete and it is therefore wise to
+    ## follow discussions on one of the many "security" mailing lists or on a forum
+    ## such as http://www.webmasterworld.com/search_engine_spiders/
+    ## It is also unwise to rely on this list as your ONLY security mechanism.
+    RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Express\ WebPictures [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^ExtractorPro [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^EyeNetIE [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^FlashGet [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^GetRight [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^GetWeb! [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^GrabNet [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Grafula [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^HMView [OR]
+    RewriteCond %{HTTP_USER_AGENT} HTTrack [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Image\ Stripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Image\ Sucker [OR]
+    RewriteCond %{HTTP_USER_AGENT} Indy\ Library [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^InterGET [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^JOC\ Web\ Spider [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^larbin [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^LeechFTP [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Mass\ Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^MIDown\ tool [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Mister\ PiX [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Navroad [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^NearSite [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^NetAnts [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^NetSpider [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^NetZIP [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Octopus [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Offline\ Explorer [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Offline\ Navigator [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^PageGrabber [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Papa\ Foto [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^pavuk [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^RealDownload [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^ReGet [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^SmartDownload [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^SuperBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^SuperHTTP [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Surfbot [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^tAkeOut [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Teleport\ Pro [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^VoidEYE [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Web\ Image\ Collector [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Web\ Sucker [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebAuto [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebCopier [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebFetch [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebGo\ IS [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebLeacher [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebReaper [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebSauger [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Website\ eXtractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Website\ Quester [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebStripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WebZIP [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Zeus
+    ## Note: The final RewriteCond must NOT use the [OR] flag.
+    ## Return 403 Forbidden error.
+    RewriteRule .* - [F]
+
+    ## Voici le code qui bloque tous les principaux aspirateurs de site web
+    RewriteCond %{HTTP_USER_AGENT} Advanced\ Email\ Extractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} almaden [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} @nonymouse [OR]
+    RewriteCond %{HTTP_USER_AGENT} Art-Online [OR]
+    RewriteCond %{HTTP_USER_AGENT} CherryPicker [OR]
+    RewriteCond %{HTTP_USER_AGENT} Crescent\ Internet\ ToolPack [OR]
+    RewriteCond %{HTTP_USER_AGENT} DirectUpdate [OR]
+    RewriteCond %{HTTP_USER_AGENT} Download\ Accelerator [OR]
+    RewriteCond %{HTTP_USER_AGENT} eCatch [OR]
+    RewriteCond %{HTTP_USER_AGENT} echo\ extense [OR]
+    RewriteCond %{HTTP_USER_AGENT} EmailCollector [OR]
+    RewriteCond %{HTTP_USER_AGENT} EmailWolf [OR]
+    RewriteCond %{HTTP_USER_AGENT} ExtractorPro [OR]
+    RewriteCond %{HTTP_USER_AGENT} Fetch\ API\ Request [OR]
+    RewriteCond %{HTTP_USER_AGENT} flashget [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} frontpage [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Go!Zilla [OR]
+    RewriteCond %{HTTP_USER_AGENT} HTTP\ agent [OR]
+    RewriteCond %{HTTP_USER_AGENT} HTTPConnect [OR]
+    RewriteCond %{HTTP_USER_AGENT} HTTrack [OR]
+    RewriteCond %{HTTP_USER_AGENT} DigExt [OR]
+    RewriteCond %{HTTP_USER_AGENT} Indy\ Library [OR]
+    RewriteCond %{HTTP_USER_AGENT} IPiumBot\ laurion(dot)com [OR]
+    RewriteCond %{HTTP_USER_AGENT} Kapere [OR]
+    RewriteCond %{HTTP_USER_AGENT} libwww-perl [OR]
+    RewriteCond %{HTTP_USER_AGENT} Microsoft\ URL\ Control [OR]
+    RewriteCond %{HTTP_USER_AGENT} minibot\(NaverRobot\) [OR]
+    RewriteCond %{HTTP_USER_AGENT} NICErsPRO [OR]
+    RewriteCond %{HTTP_USER_AGENT} NPBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} Offline\ Explorer [OR]
+    RewriteCond %{HTTP_USER_AGENT} Offline\ Navigator [OR]
+    RewriteCond %{HTTP_USER_AGENT} Program\ Shareware [OR]
+    RewriteCond %{HTTP_USER_AGENT} QuepasaCreep [OR]
+    RewriteCond %{HTTP_USER_AGENT} SiteMapper [OR]
+    RewriteCond %{HTTP_USER_AGENT} Star\ Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} SurveyBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} Teleport\ Pro [OR]
+    RewriteCond %{HTTP_USER_AGENT} Telesoft [OR]
+    RewriteCond %{HTTP_USER_AGENT} TuringOS [OR]
+    RewriteCond %{HTTP_USER_AGENT} TurnitinBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} vobsub [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} webbandit [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebCapture [OR]
+    RewriteCond %{HTTP_USER_AGENT} webcollage [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebCopier [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebDAV [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebEmailExtractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebReaper [OR]
+    RewriteCond %{HTTP_USER_AGENT} WEBsaver [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebStripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebZIP [OR]
+    RewriteCond %{HTTP_USER_AGENT} Wysigot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Zeus.*Webster [OR]
+    RewriteCond %{HTTP_USER_AGENT} Zeus [OR]
+    RewriteCond %{HTTP_REFERER} ^XXX [OR]
+    RewriteCond %{HTTP_USER_AGENT} ADSARobot [OR]
+    RewriteCond %{HTTP_USER_AGENT} ah-ha [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} aktuelles [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} amzn_assoc [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Anarchie [OR]
+    RewriteCond %{HTTP_USER_AGENT} ASPSeek [OR]
+    RewriteCond %{HTTP_USER_AGENT} ASSORT [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ATHENS [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Atomz [OR]
+    RewriteCond %{HTTP_USER_AGENT} attach [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} attache [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} autoemailspider [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} BackWeb [OR]
+    RewriteCond %{HTTP_USER_AGENT} Bandit [OR]
+    RewriteCond %{HTTP_USER_AGENT} BatchFTP [OR]
+    RewriteCond %{HTTP_USER_AGENT} bdfetch [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} big.brother [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} BlackWidow [OR]
+    RewriteCond %{HTTP_USER_AGENT} bmclient [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Boston\ Project [OR]
+    RewriteCond %{HTTP_USER_AGENT} BravoBrian\ SpiderEngine\ MarcoPolo [OR]
+    RewriteCond %{HTTP_USER_AGENT} Buddy [OR]
+    RewriteCond %{HTTP_USER_AGENT} Bullseye [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} bumblebee [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} capture [OR]
+    RewriteCond %{HTTP_USER_AGENT} ChinaClaw [OR]
+    RewriteCond %{HTTP_USER_AGENT} CICC [OR]
+    RewriteCond %{HTTP_USER_AGENT} clipping [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Crescent [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Crescent\ Internet\ ToolPak [OR]
+    RewriteCond %{HTTP_USER_AGENT} Custo [OR]
+    RewriteCond %{HTTP_USER_AGENT} cyberalert [OR]
+    RewriteCond %{HTTP_USER_AGENT} Deweb [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} diagem [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Digger [OR]
+    RewriteCond %{HTTP_USER_AGENT} Digimarc [OR]
+    RewriteCond %{HTTP_USER_AGENT} DIIbot [OR]
+    RewriteCond %{HTTP_USER_AGENT} disco [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} DISCoFinder [OR]
+    RewriteCond %{HTTP_USER_AGENT} Download\ Demon [OR]
+    RewriteCond %{HTTP_USER_AGENT} Download\ Wonder [OR]
+    RewriteCond %{HTTP_USER_AGENT} Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} Drip [OR]
+    RewriteCond %{HTTP_USER_AGENT} DSurf15a [OR]
+    RewriteCond %{HTTP_USER_AGENT} DTS.Agent [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} EasyDL [OR]
+    RewriteCond %{HTTP_USER_AGENT} ecollector [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} efp@gmx\.net [OR]
+    RewriteCond %{HTTP_USER_AGENT} Email\ Extractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} EirGrabber [OR]
+    RewriteCond %{HTTP_USER_AGENT} EmailSiphon [OR]
+    RewriteCond %{HTTP_USER_AGENT} Express\ WebPictures [OR]
+    RewriteCond %{HTTP_USER_AGENT} EyeNetIE [OR]
+    RewriteCond %{HTTP_USER_AGENT} fastlwspider [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} FavOrg [OR]
+    RewriteCond %{HTTP_USER_AGENT} Favorites\ Sweeper [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Fetch [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} FEZhead [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} FileHound [OR]
+    RewriteCond %{HTTP_USER_AGENT} FlashGet\ WebWasher [OR]
+    RewriteCond %{HTTP_USER_AGENT} FlickBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} fluffy [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} GalaxyBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} Generic [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Getleft [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} GetRight [OR]
+    RewriteCond %{HTTP_USER_AGENT} GetSmart [OR]
+    RewriteCond %{HTTP_USER_AGENT} GetWeb! [OR]
+    RewriteCond %{HTTP_USER_AGENT} GetWebPage [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} gigabaz [OR]
+    RewriteCond %{HTTP_USER_AGENT} Girafabot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} go-ahead-got-it [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} GornKer [OR]
+    RewriteCond %{HTTP_USER_AGENT} Grabber [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} GrabNet [OR]
+    RewriteCond %{HTTP_USER_AGENT} Grafula [OR]
+    RewriteCond %{HTTP_USER_AGENT} Green\ Research [OR]
+    RewriteCond %{HTTP_USER_AGENT} Harvest [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} hhjhj@yahoo [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} hloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} HMView [OR]
+    RewriteCond %{HTTP_USER_AGENT} HomePageSearch [OR]
+    RewriteCond %{HTTP_USER_AGENT} httpdown [OR]
+    RewriteCond %{HTTP_USER_AGENT} http\ generic [OR]
+    RewriteCond %{HTTP_USER_AGENT} IBM_Planetwide [OR]
+    RewriteCond %{HTTP_USER_AGENT} Image\ Stripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} Image\ Sucker [OR]
+    RewriteCond %{HTTP_USER_AGENT} imagefetch [OR]
+    RewriteCond %{HTTP_USER_AGENT} IncyWincy [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} informant [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Ingelin [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} InterGET [OR]
+    RewriteCond %{HTTP_USER_AGENT} Internet\ Ninja [OR]
+    RewriteCond %{HTTP_USER_AGENT} InternetLinkAgent [OR]
+    RewriteCond %{HTTP_USER_AGENT} InternetSeer\.com [OR]
+    RewriteCond %{HTTP_USER_AGENT} Iria [OR]
+    RewriteCond %{HTTP_USER_AGENT} Irvine [OR]
+    RewriteCond %{HTTP_USER_AGENT} JBH*Agent [OR]
+    RewriteCond %{HTTP_USER_AGENT} JetCar [OR]
+    RewriteCond %{HTTP_USER_AGENT} JOC [OR]
+    RewriteCond %{HTTP_USER_AGENT} JOC\ Web\ Spider [OR]
+    RewriteCond %{HTTP_USER_AGENT} JustView [OR]
+    RewriteCond %{HTTP_USER_AGENT} KWebGet [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Lachesis [OR]
+    RewriteCond %{HTTP_USER_AGENT} larbin [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} LeechFTP [OR]
+    RewriteCond %{HTTP_USER_AGENT} LexiBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} lftp [OR]
+    RewriteCond %{HTTP_USER_AGENT} libwww [OR]
+    RewriteCond %{HTTP_USER_AGENT} likse [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Link*Sleuth [OR]
+    RewriteCond %{HTTP_USER_AGENT} LINKS\ ARoMATIZED [OR]
+    RewriteCond %{HTTP_USER_AGENT} LinkWalker [OR]
+    RewriteCond %{HTTP_USER_AGENT} LWP [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} lwp-trivial [OR]
+    RewriteCond %{HTTP_USER_AGENT} Magnet [OR]
+    RewriteCond %{HTTP_USER_AGENT} Mac\ Finder [OR]
+    RewriteCond %{HTTP_USER_AGENT} Mag-Net [OR]
+    RewriteCond %{HTTP_USER_AGENT} Mass\ Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} MCspider [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} MIDown\ tool [OR]
+    RewriteCond %{HTTP_USER_AGENT} Mirror [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Missigua\ Locator [OR]
+    RewriteCond %{HTTP_USER_AGENT} Mister\ PiX [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} MMMtoCrawl\/UrlDispatcherLLL [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^Mozilla$ [OR]
+    RewriteCond %{HTTP_USER_AGENT} MSProxy [OR]
+    RewriteCond %{HTTP_USER_AGENT} multithreaddb [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} nationaldirectory [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Navroad [OR]
+    RewriteCond %{HTTP_USER_AGENT} NearSite [OR]
+    RewriteCond %{HTTP_USER_AGENT} Net\ Vampire [OR]
+    RewriteCond %{HTTP_USER_AGENT} NetAnts [OR]
+    RewriteCond %{HTTP_USER_AGENT} NetCarta [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} NetMechanic [OR]
+    RewriteCond %{HTTP_USER_AGENT} netprospector [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} NetResearchServer [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} NetSpider [OR]
+    RewriteCond %{HTTP_USER_AGENT} NetZIP [OR]
+    RewriteCond %{HTTP_USER_AGENT} NetZip\ Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} NetZippy [OR]
+    RewriteCond %{HTTP_USER_AGENT} NEWT [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} nicerspro [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} NPBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} Octopus [OR]
+    RewriteCond %{HTTP_USER_AGENT} OpaL [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Openfind [OR]
+    RewriteCond %{HTTP_USER_AGENT} OpenTextSiteCrawler [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} OrangeBot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} PackRat [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} PageGrabber [OR]
+    RewriteCond %{HTTP_USER_AGENT} Papa\ Foto [OR]
+    RewriteCond %{HTTP_USER_AGENT} pavuk [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} PersonaPilot [OR]
+    RewriteCond %{HTTP_USER_AGENT} pcBrowser [OR]
+    RewriteCond %{HTTP_USER_AGENT} PingALink [OR]
+    RewriteCond %{HTTP_USER_AGENT} Pockey [OR]
+    RewriteCond %{HTTP_USER_AGENT} Proxy [OR]
+    RewriteCond %{HTTP_USER_AGENT} psbot [OR]
+    RewriteCond %{HTTP_USER_AGENT} PSurf [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} puf [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Pump [OR]
+    RewriteCond %{HTTP_USER_AGENT} PushSite [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} QRVA [OR]
+    RewriteCond %{HTTP_USER_AGENT} RealDownload [OR]
+    RewriteCond %{HTTP_USER_AGENT} Reaper [OR]
+    RewriteCond %{HTTP_USER_AGENT} Recorder [OR]
+    RewriteCond %{HTTP_USER_AGENT} ReGet [OR]
+    RewriteCond %{HTTP_USER_AGENT} replacer [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} RepoMonkey [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Robozilla [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Rover [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} RPT-HTTPClient [OR]
+    RewriteCond %{HTTP_USER_AGENT} Rsync [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} SearchExpress [OR]
+    RewriteCond %{HTTP_USER_AGENT} searchhippo [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} searchterms\.it [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Second\ Street\ Research [OR]
+    RewriteCond %{HTTP_USER_AGENT} Seeker [OR]
+    RewriteCond %{HTTP_USER_AGENT} Shai [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} sitecheck [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} SiteSnagger [OR]
+    RewriteCond %{HTTP_USER_AGENT} SlySearch [OR]
+    RewriteCond %{HTTP_USER_AGENT} SmartDownload [OR]
+    RewriteCond %{HTTP_USER_AGENT} snagger [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} SpaceBison [OR]
+    RewriteCond %{HTTP_USER_AGENT} Spegla [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} SpiderBot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} SqWorm [OR]
+    RewriteCond %{HTTP_USER_AGENT} Stripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} Sucker [OR]
+    RewriteCond %{HTTP_USER_AGENT} SuperBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} SuperHTTP [OR]
+    RewriteCond %{HTTP_USER_AGENT} Surfbot [OR]
+    RewriteCond %{HTTP_USER_AGENT} SurfWalker [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Szukacz [OR]
+    RewriteCond %{HTTP_USER_AGENT} tAkeOut [OR]
+    RewriteCond %{HTTP_USER_AGENT} tarspider [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Templeton [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} TrueRobot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} TV33_Mercator [OR]
+    RewriteCond %{HTTP_USER_AGENT} UIowaCrawler [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} URL_Spider_Pro [OR]
+    RewriteCond %{HTTP_USER_AGENT} UtilMind [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Vacuum [OR]
+    RewriteCond %{HTTP_USER_AGENT} vagabondo [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} vayala [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} visibilitygap [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} VoidEYE [OR]
+    RewriteCond %{HTTP_USER_AGENT} vspider [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} w3mir [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} web\.by\.mail [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Web\ Data\ Extractor [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Web\ Downloader [OR]
+    RewriteCond %{HTTP_USER_AGENT} Web\ Image\ Collector [OR]
+    RewriteCond %{HTTP_USER_AGENT} Web\ Sucker [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebAuto [OR]
+    RewriteCond %{HTTP_USER_AGENT} Webclipping [OR]
+    RewriteCond %{HTTP_USER_AGENT} webcollector [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebCopier [OR]
+    RewriteCond %{HTTP_USER_AGENT} webcraft@bea [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} webdevil [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} webdownloader [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Webdup [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebFetch [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebGo\ IS [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebHook [OR]
+    RewriteCond %{HTTP_USER_AGENT} Webinator [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebLeacher [OR]
+    RewriteCond %{HTTP_USER_AGENT} WEBMASTERS [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebMiner [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebMirror [OR]
+    RewriteCond %{HTTP_USER_AGENT} webmole [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebReaper [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebSauger [OR]
+    RewriteCond %{HTTP_USER_AGENT} Website\ eXtractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} Website\ Quester [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebSnake [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Webster [OR]
+    RewriteCond %{HTTP_USER_AGENT} WebStripper [OR]
+    RewriteCond %{HTTP_USER_AGENT} websucker [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} webvac [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} webwalk [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebWhacker [OR]
+    RewriteCond %{HTTP_USER_AGENT} webweasel [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WebZIP [OR]
+    RewriteCond %{HTTP_USER_AGENT} whizbang [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WhosTalking [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Widow [OR]
+    RewriteCond %{HTTP_USER_AGENT} WISEbot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} WUMPUS [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} Wweb [OR]
+    RewriteCond %{HTTP_USER_AGENT} WWWOFFLE [OR]
+    RewriteCond %{HTTP_USER_AGENT} Xaldon\ WebSpider [OR]
+    RewriteCond %{HTTP_USER_AGENT} XGET [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} x-Tractor [OR]
+    RewriteCond %{HTTP_USER_AGENT} Yandex [OR]
+    RewriteCond %{REMOTE_HOST} ^private$ [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} traffixer [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} netfactual [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} netcraft [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^[^?]*iaea\.org [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^[^?]*addresses\.com [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^[^?]*\.ideography\.co\.uk [NC]
+
+    RewriteRule .* - [F]
+
+    # Determine the RewriteBase automatically and set it as environment variable.
+    # If you are using Apache aliases to do mass virtual hosting or installed the
+    # project in a subdirectory, the base path will be prepended to allow proper
+    # resolution of the app.php file and to redirect to the correct URI. It will
+    # work in environments without path prefix as well, providing a safe, one-size
+    # fits all solution. But as you do not need it in this case, you can comment
+    # the following 2 lines to eliminate the overhead.
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+
+    # Redirect to URI without front controller to prevent duplicate content
+    # (with and without `/app.php`). Only do this redirect on the initial
+    # rewrite by Apache and not on subsequent cycles. Otherwise we would get an
+    # endless redirect loop (request -> rewrite to front controller ->
+    # redirect -> request -> ...).
+    # So in case you get a "too many redirects" error or you always get redirected
+    # to the start page because your Apache does not expose the REDIRECT_STATUS
+    # environment variable, you have 2 choices:
+    # - disable this feature by commenting the following 2 lines or
+    # - use Apache >= 2.3.9 and replace all L flags by END flags and remove the
+    #   following RewriteCond (best solution)
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
+
+    # If the requested filename exists, simply serve it.
+    # We only want to let Apache serve files and not directories.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .? - [L]
+
+    # Rewrite all other queries to the front controller.
+    RewriteRule .? %{ENV:BASE}/app.php [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        # When mod_rewrite is not available, we instruct a temporary redirect of
+        # the start page to the front controller explicitly so that the website
+        # and the generated links can still be used.
+        RedirectMatch 302 ^/$ /app.php/
+        # RedirectTemp cannot be used instead
+    </IfModule>
+</IfModule>
+
+
+
+# ------------------------------------------------------------------------------
+# | Compression                                                                |
+# ------------------------------------------------------------------------------
+
+<IfModule mod_deflate.c>
+
+    # Force compression for mangled headers.
+    # http://developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping
+    <IfModule mod_setenvif.c>
+        <IfModule mod_headers.c>
+            SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+            RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+        </IfModule>
+    </IfModule>
+
+    # Compress all output labeled with one of the following MIME-types
+    # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
+    #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines
+    #  as `AddOutputFilterByType` is still in the core directives).
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE application/atom+xml \
+                                      application/javascript \
+                                      application/json \
+                                      application/rss+xml \
+                                      application/vnd.ms-fontobject \
+                                      application/x-font-ttf \
+                                      application/x-web-app-manifest+json \
+                                      application/xhtml+xml \
+                                      application/xml \
+                                      font/opentype \
+                                      image/svg+xml \
+                                      image/x-icon \
+                                      text/css \
+                                      text/html \
+                                      text/plain \
+                                      text/x-component \
+                                      text/xml
+    </IfModule>
+
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# | ETag removal                                                               |
+# ------------------------------------------------------------------------------
+
+# Since we're sending far-future expires headers (see below), ETags can
+# be removed: http://developer.yahoo.com/performance/rules.html#etags.
+
+# `FileETag None` is not enough for every server.
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+
+FileETag None
+
+# ------------------------------------------------------------------------------
+# | Expires headers (for better cache control)                                 |
+# ------------------------------------------------------------------------------
+
+# The following expires headers are set pretty far in the future. If you don't
+# control versioning with filename-based cache busting, consider lowering the
+# cache time for resources like CSS and JS to something like 1 week.
+
+<IfModule mod_expires.c>
+
+    ExpiresActive on
+    ExpiresDefault                                      "access plus 1 month"
+
+  # CSS
+  # ExpiresByType text/css                              "access plus 1 year"
+    ExpiresByType text/css                              "access plus 1 day"
+
+  # Data interchange
+    ExpiresByType application/json                      "access plus 0 seconds"
+    ExpiresByType application/xml                       "access plus 0 seconds"
+    ExpiresByType text/xml                              "access plus 0 seconds"
+
+  # Favicon (cannot be renamed!)
+    ExpiresByType image/x-icon                          "access plus 1 week"
+
+  # HTML components (HTCs)
+    ExpiresByType text/x-component                      "access plus 1 month"
+
+  # HTML
+    ExpiresByType text/html                             "access plus 0 seconds"
+
+  # JavaScript
+   ExpiresByType application/javascript                "access plus 1 day"
+   ExpiresByType text/javascript                       "access plus 1 day"
+   ExpiresByType application/x-javascript              "access plus 1 day"
+#    ExpiresByType application/javascript                "access plus 0 seconds"
+
+  # Manifest files
+    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
+    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
+
+  # Media
+    ExpiresByType audio/ogg                             "access plus 1 month"
+    ExpiresByType image/gif                             "access plus 1 month"
+    ExpiresByType image/jpeg                            "access plus 1 month"
+    ExpiresByType image/png                             "access plus 1 month"
+    ExpiresByType video/mp4                             "access plus 1 month"
+    ExpiresByType video/ogg                             "access plus 1 month"
+    ExpiresByType video/webm                            "access plus 1 month"
+
+  # Web feeds
+    ExpiresByType application/atom+xml                  "access plus 1 hour"
+    ExpiresByType application/rss+xml                   "access plus 1 hour"
+
+  # Web fonts
+    ExpiresByType application/font-woff                 "access plus 1 month"
+    ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
+    ExpiresByType application/x-font-ttf                "access plus 1 month"
+    ExpiresByType font/opentype                         "access plus 1 month"
+    ExpiresByType image/svg+xml                         "access plus 1 month"
+
+</IfModule>

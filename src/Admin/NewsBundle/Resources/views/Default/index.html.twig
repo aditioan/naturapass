@@ -1,0 +1,63 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block corps %}
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle container-index">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    {% include 'AdminNewsBundle:Include:form.html.twig' %}
+
+                    <div class="news" ng-controller="NewsListController" ng-init="loadNews()">
+                        <div ng-cloak class="container-md" ng-repeat="new in news" ng-class="{loading: new.loading}">
+                            <button type="button" class="close" ng-click="deleteNews($index, new)">&times;</button>
+
+                            {% verbatim %}
+                            <p ng-if="new.fr">{{ new.fr }}</p>
+                            <p ng-if="new.en">{{ new.en }}</p>
+                            <p ng-if="new.de">{{ new.de }}</p>
+                            <p ng-if="new.es">{{ new.es }}</p>
+                            {% endverbatim %}
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <span>Active :</span>
+
+                                        <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                             data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                            {% verbatim %}
+                                            <input type="checkbox" id="slideActive{{ new.id }}" ng-model="new.active" ng-checked="new.initActive" autocomplete="off" ng-change="activeNews(new)">
+                                            <label for="slideActive{{ new.id }}"></label>
+                                            {% endverbatim %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        Date : <span>{{ new.date | date:'l' }}</span>
+                                    </div>
+                                </div>
+                                {% endverbatim %}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/News/NewsControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

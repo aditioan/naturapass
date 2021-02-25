@@ -1,0 +1,10 @@
+NaturaPass\UserBundle\Entity\User:
+    properties:
+            email:
+                - Email: ~
+            firstname:
+                - NotBlank: ~
+                - NaturaPass\UserBundle\Validator\Constraints\DoNotContainNaturaPass: ~
+            lastname:
+                - NotBlank: ~
+                - NaturaPass\UserBundle\Validator\Constraints\DoNotContainNaturaPass: ~

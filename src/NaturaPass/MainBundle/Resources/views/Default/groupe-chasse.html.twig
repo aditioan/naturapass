@@ -1,0 +1,20 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'groupechasse.title'|trans({},translation_name~'groupechasse') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'groupechasse.description'|trans({},translation_name~'groupechasse') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                {{ 'groupechasse.raw'|trans({},translation_name~'groupechasse') | raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

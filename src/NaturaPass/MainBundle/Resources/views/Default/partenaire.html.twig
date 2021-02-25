@@ -1,0 +1,38 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez nos partenaires{% endblock %}
+{% block description %}De grands noms de la chasse sont partenaires de Naturapass, découvrez-les ici !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Nos Partenaires</li>
+    </ol>
+
+    <h1>Nos Partenaires</h1>
+    <h2>Browning</h2>
+    <p>Depuis 1897, Browning crée des armes de chasses. A la pointe de l'innovation, il consacre beaucoup à la recherche et c’est grâce à cela qu’il est l’inventeur du fusil semi-automatique, du fusil superposé, de la carabine semi-automatique,…</p>
+    <p>Browning est l'un des leaders mondiaux en ce qui concerne les fusils et les carabines de chasse. Toujours soucieux de la qualité de ces produits, il s'entoure de personnel qualifié et au savoir-faire reconnu dans la recherche et développement et lors de la fabrication.</p>
+    <p class="text-center">
+        <a title="Cliquez ici pour vous rendre sur le site de Browning" href="http://browning.eu/" target="_blank"><img src="{{ asset('img/pages/browing_logo.jpg') }}" width="480" height="318" alt="Browning" style="width: 240px;" class="center-block img-responsive"></a>
+        <a title="Cliquez ici pour vous rendre sur le site de Browning" href="http://browning.eu/" target="_blank">Cliquez ici</a> pour vous rendre sur le site de Browning
+    </p>
+    <p></p>
+    <h2>Opinel</h2>
+    <p>Opinel a été créé au XIXème siècle en Savoie et est devenu une marque incontournable en matière de couteaux. Chaque couteau est nommé par un numéro qui définit sa taille : plus le numéro est grand, plus le couteau est grand. Les Opinel du n°1 au n°12 ont été créé en 1897 par Joseph Opinel.</p>
+    <p>La très grande qualité des couteaux Opinel est due à sa lame unique et à un manche résistant. Au commencement, la lame était en acier carbone, depuis le XXème siècle elle est en acier inoxydable et donc adaptée. Elle subit un traitement thermique spécifique, et a un profil bombé qui lui procure une grande résistance. <br>Le manche reste inchangé depuis sa création. Il est fabriqué en bois de hêtre pour les modèles classiques et en bois d’olivier, de chêne, de noyer, de buis, de bouleau, de charme,… Opinel privilégie les approvisionnements locaux issus de forêts gérées durablement.</p>
+    <p class="text-center">
+        <a title="Cliquez ici pour vous rendre sur le site d'Opinel" href="https://www.opinel.com/" target="_blank"><img src="{{ asset('img/pages/opinel_logo.jpg') }}" width="700" height="467" alt="Opinel" style="width: 240px;" class="center-block img-responsive"></a>
+        <a title="Cliquez ici pour vous rendre sur le site d'Opinel" href="https://www.opinel.com/" target="_blank">Cliquez ici </a>pour vous rendre sur le site d'Opinel
+    </p>
+    <p></p>
+    <h2>Remington</h2>
+    <p>Depuis 1816, Remington fabrique des armes avec une précision hors-pair. Chaque arme produite est étudiée avec soin par un petit groupe de techniciens et armuriers hautement qualifiés. Remington mêle l’équipement des armes à feu à disposition aujourd’hui, aux technologies les plus avancées et à des normes de qualité très strictes à l’Ingénieur Performance. Autrement dit, une précision inégalée et une grande fiabilité, pour la durée d’une vie et plus encore.</p>
+    <p>Le siège de Remington Arms Company, Inc. est à Madison, N.C. : l'entreprise conçoit, fabrique et vend des articles de sport pour la chasse et de tir, ainsi que des produits pour les militaires, le gouvernement et les forces de l’ordre. Fondée dans l’État de New York, la Société est l’un des plus anciens fabricants opérant en continu de la nation. Remington est le seul fabricant américain de deux armes à feu et de produits de munitions et l'un des plus grands producteurs nationaux de fusils et de carabines.</p>
+    <p class="text-center">
+        <a title="Cliquez ici pour vous rendre sur le site de Remington" href="https://www.remington.com/" target="_blank"><img src="{{ asset('img/pages/remington_logo.jpg') }}" width="300" height="300" alt="Remington" style="width: 240px;" class="center-block img-responsive"></a>
+        <a title="Cliquez ici pour vous rendre sur le site de Remington" href="https://www.remington.com/" target="_blank">Cliquez ici</a> pour vous rendre sur le site de Remington
+    </p>
+
+{% endblock corps %}

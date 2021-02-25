@@ -1,0 +1,44 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.invite-email.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+        <h4>{{ 'lounge.action.invite.email.name'|trans({}, translation_name~'lounge') }}</h4>
+    </div>
+    <form class="form-horizontal">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="email[to]" class="col-sm-3 control-label">{{ 'invite.label.to'|trans({},translation_name~'main') }}</label>
+
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="email[to]" placeholder="{{ 'invite.placeholder.to'|trans({},translation_name~'main') }}" required
+                            ng-model="email.to"/>
+                </div>
+            </div>
+            {#<div class="form-group">
+                <label class="col-sm-3 control-label">{{ 'invite.label.subject'|trans({},'main') }}</label>
+
+                {% verbatim %}
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" ng-model="email.subject"/>
+                </div>
+                {% endverbatim %}
+            </div>#}
+            <div class="form-group">
+                <label for="email[body]"
+                        class="col-sm-3 control-label">{{ 'invite.label.body'|trans({},translation_name~'main') }}</label>
+
+                <div class="col-sm-9">
+                    <textarea name="email[body]" class="form-control" placeholder="{{ 'invite.placeholder.body'|trans({},translation_name~'main') }}"
+                            ng-model="email.body"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-icon icon-paperplane" data-icon="icon-paperplane" np-submit-loader="data.loading" ng-click="ok()">{{ 'button.send'|trans({}, translation_name~'global') }}</button>
+            <button class="btn btn-danger" ng-click="cancel()" ng-class="{disabled: data.loading}">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+        </div>
+    </form>
+{% endblock %}

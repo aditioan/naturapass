@@ -1,0 +1,201 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'title.parameter'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock title %}
+
+{% block body %}
+
+    {% include "NaturaPassMainBundle:Include:angular.menu-gauche.html.twig" %}
+
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="ParametersController" ng-init="init()">
+
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <div class="container container-bulle">
+            <div class="container-edit-profil container-md">
+                <h1>{{ 'user.parameter.title'|trans({},translation_name~'user') }}</h1>
+                <p>{{ 'user.parameter.description'|trans({},translation_name~'user') }}</p>
+            </div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#sharing" data-toggle="tab" class="icon-users2"> {{ 'user.parameter.sharing'|trans({},translation_name~'user') }}</a>
+                </li>
+                <li>
+                    <a href="#email" data-toggle="tab" class="icon-mail-send"> {{ 'user.parameter.email'|trans({},translation_name~'user') }}</a>
+                </li>
+                {% if smartphone %}
+                    <li>
+                        <a href="#notification" data-toggle="tab" class="icon-bell"> {{ 'user.parameter.notification'|trans({},translation_name~'user') }}</a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a href="#addresses" data-toggle="tab" class="icon-location"> {{ 'user.attributes.addresses'|trans({},translation_name~'user') }}</a>
+                </li>
+                <li>
+                    <a href="#userslock" data-toggle="tab" class="icon-locl"> {{ 'user.attributes.userlock'|trans({},translation_name~'user') }}</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content container-edit-profil container-md">
+                <div class="tab-pane clearfix active" id="sharing">
+                    <h2>{{ 'user.parameter.sharing'|trans({},translation_name~'user') }}</h2>
+                    <form class="form-horizontal">
+                        <div class="form-group" ng-repeat="sharing in sharings" ng-show="initiated">
+                            <label class="control-label col-sm-5 required" ng-class="{'loading-inner': sharing.loading, 'loading-ok': sharing.success, 'loading-ko': sharing.error}" ng-bind="sharing.description"></label>
+                            <div class="col-sm-7">
+                                <select required="required" class="form-control" ng-model="sharing.share" ng-change="updateSharing(sharing)">
+                                    <option value="0"><span class="{{ 'sharing'|icomoon(0) }}">{{ 'label.sharing.choice'|transchoice(0, {},translation_name~'global') }}</span></option>
+                                    {% if visibility.social_network %}
+                                        <option value="1"><span class="{{ 'sharing'|icomoon(1) }}">{{ 'label.sharing.choice'|transchoice(1,{},translation_name~'global') }}</span></option>
+                                    {% endif %}
+                                    {#<option value="2"><span class="icon-users2">{{ 'label.sharing.acquaintance'|trans({},'global') }}</span></option>#}
+                                    <option value="3"><span class="{{ 'sharing'|icomoon(3) }}">{{ 'label.sharing.choice'|transchoice(3,{},translation_name~'global') }}</span></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <ul class="hide sharings-data">
+                            <li data-type="publication_sharing" data-share="{{ app.user.parameters.publicationSharing.share }}">{{ 'user.parameter.sharing'|trans({}, translation_name~'user') }}</li>
+                        </ul>
+                    </form>
+                    {% if visibility.social_network %}
+                        <h2>{{ 'label.others'|trans({},translation_name~'global') }}</h2>
+                        <form class="form-horizontal">
+                            <div class="form-group" ng-show="initiated">
+                                <label class="control-label col-sm-8 required" ng-class="{'loading-inner': friends.loading, 'loading-ok': friends.success, 'loading-ko': friends.error}">
+                                    {{ 'user.parameter.friends'|trans({},translation_name~'user') }}
+                                </label>
+                                <div class="col-sm-4">
+                                    <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}" data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                        <input type="checkbox" id="slideFriends" autocomplete="off" ng-true-value="1" ng-false-value="0" ng-model="friends.value" ng-checked="friends.init" ng-init="friends.init = {% if app.user.parameters.friends %}1{% else %}0{% endif %}" ng-change="updateFriends()">
+                                        <label for="slideFriends"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="tab-pane clearfix" id="email">
+                    <h2>{{ 'user.parameter.email'|trans({},translation_name~'user') }}</h2>
+                    <form class="form-horizontal" role="form">
+                        {% verbatim %}
+                        <div class="form-group" ng-repeat="email in emails">
+                            <label class="control-label col-sm-6 required" ng-class="{'loading-inner': email.loading, 'loading-ok': email.success, 'loading-ko': email.error}">
+                                {{ email.description }}
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="slideCheck" data-before="{% endverbatim %}{{ 'button.yes'|trans({},translation_name~'global') }}{% verbatim %}" data-after="{% endverbatim %}{{ 'button.no'|trans({},translation_name~'global') }}{% verbatim %}">
+                                    <input type="checkbox" id="slideEmail{{ email.id }}" autocomplete="off" ng-true-value="1" ng-false-value="0" ng-model="email.wanted" ng-checked="email.initWanted" ng-change="updateEmail(email)">
+                                    <label for="slideEmail{{ email.id }}"></label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endverbatim %}
+                    </form>
+
+                    <ul class="hide emails-data">
+                        {% for email in emails %}
+                            {% set description = email.type ~ '.description' %}
+                            {% set option = app.user.parameters.getEmailByType(email.type) %}
+                            <li data-id="{{ email.id }}" data-type="{{ email.type }}" data-periodicity="{{ email.periodicity }}" data-wanted="{% if (option != false and option.wanted) or option == false %}1{% else %}0{% endif %}">{{ description|trans({}, 'email') }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if smartphone %}
+                    <div class="tab-pane clearfix" id="notification">
+                        <h2>{{ 'user.parameter.notification'|trans({},translation_name~'user') }}</h2>
+                        <form class="form-horizontal" role="form">
+                            {% verbatim %}
+                            <div class="form-group" ng-repeat="notification in notifications">
+                                <label class="control-label col-sm-6 required" ng-class="{'loading-inner': notification.loading, 'loading-ok': notification.success, 'loading-ko': notification.error}">
+                                    {{ notification.description }}
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="slideCheck" data-before="{% endverbatim %}{{ 'button.yes'|trans({},translation_name~'global') }}{% verbatim %}" data-after="{% endverbatim %}{{ 'button.no'|trans({},translation_name~'global') }}{% verbatim %}">
+                                        <input type="checkbox" id="slideNotification{{ $index }}" autocomplete="off" ng-true-value="1" ng-false-value="0" ng-model="notification.wanted" ng-checked="notification.initWanted" ng-change="updateNotification(notification)">
+                                        <label for="slideNotification{{ $index }}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endverbatim %}
+                        </form>
+
+                        <ul class="hide notifications-data">
+                            {% for notification in notifications %}
+                                {% set description = 'description.' ~ notification %}
+                                {% set option = app.user.parameters.getNotificationByType(notification) %}
+                                <li data-type="{{ notification }}" data-wanted="{% if (option != false and option.wanted) or option == false %}1{% else %}0{% endif %}">{{ description|trans({}, translation_name~'notifications') }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <div class="tab-pane clearfix" id="addresses">
+                    <h2>
+                        {{ 'user.attributes.addresses'|trans({},translation_name~'user') }}
+                        <button class="btn btn-primary btn-sm pull-right" ng-click="openAddAddressModal()">{{ 'user.action.add_address'|trans({}, translation_name~'user') }}</button>
+                    </h2>
+
+                    <div class="small-loading" ng-show="address.loading"></div>
+
+                    {% verbatim %}
+                    <div class="list-group" ng-show="addresses.length" ng-cloak>
+                        <a href="#" class="list-group-item"
+                                ng-repeat="a in addresses"
+                                ng-class="{'icon-star6': a.favorite, 'icon-star4': !a.favorite, 'loading-inner': a.loading, 'loading-ok': a.success, 'loading-ko': a.error}"
+                                ng-click="putFavoriteAddress(a)">
+                          <b>{{ a.title }}</b> -
+                          <small ng-bind="a.address"></small>
+                          <span class="close" ng-hide="a.loading || a.success || a.error" ng-click="deleteAddress($event, a, $index)">&times;</span>
+                        </a>
+                    </div>
+                    {% endverbatim %}
+
+                    <div class="alert alert-info" ng-show="!addresses.length && !loading" ng-cloak>
+                        {{ 'user.state.no_addresses'|trans({}, translation_name~'user')|raw }}
+                    </div>
+
+                    <div class="alert alert-info" ng-show="addresses.length && !loading" ng-cloak>
+                        {{ 'user.action.favorite_address'|trans({}, translation_name~'user') }}
+                    </div>
+                </div>
+
+                <div class="tab-pane clearfix" id="userslock">
+                    <h2>
+                        {{ 'user.attributes.userlock'|trans({},translation_name~'user') }}
+                    </h2>
+
+                    <div class="small-loading" ng-show="userlock.loading"></div>
+
+                    {% verbatim %}
+                    <div class="list-group" ng-show="locks.length" ng-cloak>
+                        <div href="#" class="list-group-item"  ng-repeat="user in locks" ng-class="{'loading-inner': user.loading, 'loading-ok': user.success, 'loading-ko': user.error}">
+                            <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: user.usertag} }}" target="_blank">{{ user.fullname }}</a>
+                            <span class="close" ng-hide="user.loading || user.success || user.error" ng-click="deleteUserLock($event, user, $index)">&times;</span>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+
+                    <div class="alert alert-info" ng-show="!locks.length && !loading" ng-cloak>
+                        {{ 'user.state.no_user_lock'|trans({}, translation_name~'user')|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'NaturaPassUserBundle:Modal:angular.add-address.html.twig' %}
+    </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/User/ParametersController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

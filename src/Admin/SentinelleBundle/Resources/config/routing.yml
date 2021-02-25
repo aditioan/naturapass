@@ -1,0 +1,19 @@
+admin_sentinelle_tree:
+    path:     /
+    defaults: { _controller: AdminSentinelleBundle:Default:tree }
+
+admin_sentinelle_card_add:
+    path:     /card/add
+    defaults: { _controller: AdminSentinelleBundle:Card:add }
+
+admin_sentinelle_card_edit:
+    path:     /card/edit/{card}
+    defaults: { _controller: AdminSentinelleBundle:Card:edit }
+
+admin_sentinelle_card_order:
+    path:     /card/order/{card}
+    defaults: { _controller: AdminSentinelleBundle:Card:order }
+
+admin_sentinelle_card_list:
+    path:     /card
+    defaults: { _controller: AdminSentinelleBundle:Card:list }

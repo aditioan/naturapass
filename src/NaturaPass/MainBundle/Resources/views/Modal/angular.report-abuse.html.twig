@@ -1,0 +1,26 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.report-abuse.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">{{ 'abuse.title'|trans({},translation_name~'nav') }}</h4>
+    </div>
+    <div class="modal-body">
+        <form method="POST" class="emailproblem form-horizontal">
+            <div class="modal-body">
+                <p>{{ 'abuse.label'|trans({},translation_name~'nav')|raw }}</p>
+                <div class="alert alert-danger" ng-show="email.error" ng-bind="email.error"></div>
+                <textarea ng-model="email.body" class="form-control"
+                        placeholder="{{ 'abuse.input'|trans({},translation_name~'nav') }}" rows="5" required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger"
+                        ng-click="cancel()" ng-class="{disabled: loading}">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+                <button type="submit" class="btn btn-primary" ng-click="ok()"
+                        np-submit-loader="loading">{{ 'button.send'|trans({},translation_name~'global') }}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

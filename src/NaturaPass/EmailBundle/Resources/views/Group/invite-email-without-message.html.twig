@@ -1,0 +1,21 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_group_invite_wm', {'fullname': fullname, 'grouptag': group.grouptag}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    {% set DESCRIPTION =
+        group.description
+    %}
+    {% if DESCRIPTION != "" %}
+        {% set GROUP_DESCRIPTION =
+            ' - '~DESCRIPTION
+        %}
+    {% else %}
+        {% set GROUP_DESCRIPTION =
+            ''
+        %}
+    {% endif %}
+    <p>{{ 'group.invite.body_wm'|trans({'%fullname%': fullname,'%groupname%': group.name,'%description%': GROUP_DESCRIPTION, '%lien%': app.request.schemeAndHttpHost~path('naturapass_group_invited', {'grouptag': group.grouptag})},translation_name~'email')|raw }}</p>
+{% endblock body %}

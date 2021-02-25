@@ -1,0 +1,42 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez le mur !{% endblock %}
+{% block description %}Découvrez la fonctionnalité mur de l'application et du site internet Naturapass et toutes les possibilités qu'elle offre, sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Mur Naturapass</li>
+    </ol>
+
+    <h1>Le mur – L’information en temps réel du réseau Naturapass</h1>
+    <h2>« Un bon chasseur sait partager »</h2>
+    <p>Chaque Natiz a la possibilité de publier de l’information à destination de lui-même, de ses amis ou de l’ensemble du réseau Naturapass.</p>
+    <p>Les informations publiées peuvent être à usage ludique (photo d’un paysage, d’un tableau de chasse,…) ou plus pratiques (observation d’animaux rares, déclaration de tir, …).</p>
+    <p>Vous pouvez poster toutes sortes de publications :</p>
+    <ul>
+        <li>Vos récits de chasses</li>
+        <li>La photo de vos trophées</li>
+        <li>Des conditions climatiques pour s’en souvenir d’une année sur l’autre</li>
+        <li>L’événement marquant que vous avez vu</li>
+        <li>Les photos de vos voyages de chasse</li>
+        <li>...</li>
+    </ul>
+    <p>Les informations publiées sur Naturapass sont très qualifiées, grâce à la possibilité d’enrichir sa publication :</p>
+    <ul>
+        <li>Qui a publié ?</li>
+        <li>Où cela a été publié (altitude, latitude, longitude, commune + carte) ?</li>
+        <li>Quand cela a été publié ?</li>
+        <li>Quel est l’objet de l’observation (animal, équipements, habitats,… plus de 200 informations différentes peuvent être saisies !) ?</li>
+        <li>Avec qui elle est partagée : moi, mes groupes, mes amis, l’ensemble de la communauté ?</li>
+        <li>Quel est le niveau de précision de la publication ?</li>
+    </ul>
+    <p>Vous pouvez également ajouter certaines de vos publications en favoris afin d’augmenter la vitesse de saisie et simplifier votre utilisation.</p>
+    <p></p>
+    <p><strong>Comment ?</strong></p>
+    <p>Depuis votre smartphone et/ou votre ordinateur, vous saisissez les éléments avec possibilité d’intégrer photos et vidéos.</p>
+    <p><img src="{{ asset('img/pages/mur.jpg') }}" width="913" height="987" alt="Le mur Naturapass" class="img-responsive"></p>
+
+{% endblock corps %}

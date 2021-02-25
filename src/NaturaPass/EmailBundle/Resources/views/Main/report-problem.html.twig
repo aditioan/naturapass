@@ -1,0 +1,6 @@
+{% extends "::base-email.html.twig" %}
+
+{% block body %}
+    <p>Problème : </p>
+    <p>{{ body|escape }}</p><br />
+{% endblock body %}

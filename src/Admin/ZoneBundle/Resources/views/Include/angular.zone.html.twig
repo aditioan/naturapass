@@ -1,0 +1,38 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="zone in entities" ng-cloak>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_entity_zone_edit' | route: {zone: zone.id} }}">{{ zone.name }}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+        <div class="row row-btn">
+            <div class="col-sm-4">
+                <a ng-href="{{ 'admin_entity_zone_edit'|route: {zone: zone.id} }}" {% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'zone.action.administer'|trans({}, translation_name~'zone') }}
+                </a>
+            </div>
+            <div class="col-sm-4">
+                {% verbatim %}<a ng-href="{{ 'admin_entity_zone_tree'|route: {zone: zone.id} }}"{% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'zone.action.tree'|trans({}, translation_name~'zone') }}
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, zone)"
+                   np-submit-loader="zone.loading">
+                    {{ 'zone.action.close'|trans({}, translation_name~'zone') }}
+                </a>
+            </div>
+        </div>
+
+        {% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

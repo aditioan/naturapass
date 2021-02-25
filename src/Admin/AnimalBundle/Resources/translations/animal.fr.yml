@@ -1,0 +1,35 @@
+animal:
+    tree:
+        close_tree:             Supprimer un niveau
+        description:
+            closeanimal:   |
+                                Attention, vous allez supprimer le niveau <span style="color: red">%animal%</span>. <br>
+                                Etes-vous sûr de supprimer ce niveau?
+    title:
+        edit:                   |
+                                Modification de l'animal : %animal%
+        add:                    Ajout d'un animal
+    description:
+        creation:               Description
+        list:                   Description
+        closeanimal:              |
+                                Attention, vous allez supprimer définitivement l'animal <span style="color: red">%animal%</span>. <br>
+                                Etes-vous sûr de supprimer cet animal?
+    all_animals:                Liste des animaux
+    action:
+        administer:             Editer
+        close:                  Supprimer
+    close_animal:                 Supprimer l'animal
+    placeholder:
+        name:                   Nom de l'animal
+
+title:
+    no_more:                    Vous avez chargé l'intégralité des animaux
+
+filter:
+    label:                      Filtre
+filter-animal:
+    placeholder:                Nom de l'animal recherché puis tapez Entrée
+
+
+

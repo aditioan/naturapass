@@ -1,0 +1,125 @@
+natura_pass_email:
+    resource: "@NaturaPassEmailBundle/Resources/config/routing.yml"
+    prefix:   /email
+
+natura_pass_message:
+    resource: "@NaturaPassMessageBundle/Resources/config/routing.yml"
+    prefix:   /
+
+natura_pass_main:
+    resource: "@NaturaPassMainBundle/Resources/config/routing.yml"
+    prefix:   /
+    options:
+        expose: true
+
+natura_pass_user:
+    prefix:   /users
+    resource: "@NaturaPassUserBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+natura_pass_group:
+    prefix:   /groups
+    resource: "@NaturaPassGroupBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+natura_pass_notification:
+    prefix:   /notifications
+    resource: "@NaturaPassNotificationBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+natura_pass_lounge:
+    prefix:   /lounges
+    resource: "@NaturaPassLoungeBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+natura_pass_publication:
+    prefix:   /publications
+    resource: "@NaturaPassPublicationBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /oauth/connect
+    options:
+        expose: true
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /oauth/connect
+    options:
+        expose: true
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /oauth/connect
+    options:
+        expose: true
+
+hwi_facebook_login:
+    path: /oauth/login/facebook
+    options:
+        expose: true
+
+api_v1:
+    type:         rest
+    prefix:       /api/v1
+    defaults:
+        _format:    json
+    resource:   "@ApiApiBundle/Resources/config/routing/v1.yml"
+    options:
+        expose: true
+
+api_v2:
+    type:         rest
+    prefix:       /api/v2
+    defaults:
+        _format:    json
+    resource:   "@ApiApiBundle/Resources/config/routing/v2.yml"
+    options:
+        expose: true
+
+api_old:
+    type:         rest
+    prefix:       /api
+    defaults:
+        _format:    json
+    resource:   "@ApiApiBundle/Resources/config/routing/old_v1.yml"
+    options:
+        expose: true
+
+api_admin:
+    type:         rest
+    prefix:       /api/admin
+    defaults:
+        _format:    json
+    resource:     "@ApiApiBundle/Resources/config/routing/admin.yml"
+    options:
+        expose: true
+
+api_backoffice:
+    type:         rest
+    prefix:       /api/backoffice
+    defaults:
+        _format:    json
+    resource:     "@ApiApiBundle/Resources/config/routing/backoffice.yml"
+    options:
+        expose: true
+
+admin_main:
+    resource: "@AdminMainBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+backoffice_fdc:
+    resource: "@BackofficeFdcBundle/Resources/config/routing.yml"
+    prefix:   /backoffice

@@ -1,0 +1,110 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({'%distributor%': form.name.vars.value},translation_name~'distributor') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'distributor') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="DistributorFormController">
+            {% if ajout != 0 %}
+                <h1>{{ 'distributor.title.creation'|trans({}, translation_name~'distributor') }}</h1>
+            {% elseif ajout == 0 %}
+                <h1>{{ 'distributor.title.edition'|trans({}, translation_name~'distributor') }}</h1>
+            {% endif %}
+
+            <form name="distributor" method="post" action="" class="form-naturapass_distributor_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <h2>{{ 'distributor.description.creation'|trans({}, translation_name~'distributor') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+                        <div class="over-file" style="background-image: url({% if form.logo.vars.value is not null %}{{ form.logo.vars.value.getWebPath }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %})">
+                        </div>
+                        <div class="hide-file">
+                            {{ form_widget(form.logo.file) }}
+                        </div>
+                        {{ form_label(form.logo.file) }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.address) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.cp) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.city) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.telephone) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.email) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.brands) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ form_widget(form.geolocation.address, {'attr': {'ng-disabled': 'map.loading', 'ng-keydown': 'searchAddress($event)', 'ng-model': 'geolocation.address', 'ng-init': 'geolocation.address = "' ~ form.geolocation.address.vars.value ~ '"; geolocation.longitude = "' ~ form.geolocation.longitude.vars.value ~ '"; geolocation.latitude = "' ~ form.geolocation.latitude.vars.value ~ '"' } }) }}
+                        <span class="input-group-btn" data-toggle="tooltip" data-placement="top" title="{{ 'distributor.attributes.updategeoloc'|trans({}, translation_name~'distributor') }}" >
+                            <button class="btn btn-primary icon-location4" type="button" ng-click="searchAddress()" ng-disabled="map.loading"></button>
+                        </span>
+                    </div>
+                </div>
+                <div ng-class="{loading: map.loading}" style="min-height: 300px" ng-init="initGoogleMaps()">
+                    <div np-google-maps="map.ready"
+                         center="map.center"
+                         zoom="map.zoom"
+                         draggable="true"
+                         dragging="map.dragging"
+                         bounds="map.bounds"
+                         events="map.events"
+                         options="map.options"
+                         pan="true"
+                         control="map.control"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark" ng-disabled="map.loading">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                <div class="hide">
+                    {{ form_widget(form.geolocation.latitude, {'attr': {'ng-model': 'geolocation.latitude', 'ng-init': 'geolocation.latitude = "' ~ form.geolocation.latitude.vars.value ~ '"' } }) }}
+
+                    {{ form_widget(form.geolocation.longitude, {'attr': {'ng-model': 'geolocation.longitude', 'ng-init': 'geolocation.longitude = "' ~ form.geolocation.longitude.vars.value ~ '"' } }) }}
+                    {{ form_widget(form.geolocation.altitude, {'attr': {'ng-model': 'geolocation.altitude', 'ng-init': 'geolocation.altitude = "' ~ form.geolocation.altitude.vars.value ~ '"' } }) }}
+                </div>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ tinymce_init() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/Admin/Distributor/DistributorFormController.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

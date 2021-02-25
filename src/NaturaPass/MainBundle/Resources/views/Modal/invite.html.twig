@@ -1,0 +1,133 @@
+{% set friends, groups, access =
+app.user.getFriends() ,
+app.user.getAllGroups,
+[ACCESS_DEFAULT,ACCESS_INVITED,ACCESS_ADMIN,ACCESS_RESTRICTED] %}
+{% if lounge is defined %}
+    {% set nameObject, allGroup =
+    lounge.name,
+    app.user.getAllGroups %}
+{% else %}
+    {% set nameObject, allGroup =
+    group.name,
+    app.user.getAllGroupsNotIn(group) %}
+{% endif %}
+<div id="friends" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'invite.title'|trans({}, translation_name~'user') }}</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="media-list">
+                    {% for friend in friends %}
+                        {% if lounge is defined %}
+                            {% set isSubscriber, isSubscriberWait =
+                            lounge.isSubscriber(friend, access),
+                            lounge.isSubscriber(friend, [ACCESS_INVITED]) %}
+                        {% else %}
+                            {% set isSubscriber, isSubscriberWait =
+                            group.isSubscriber(friend, access),
+                            group.isSubscriber(friend, [ACCESS_INVITED]) %}
+                        {% endif %}
+                        <li class="media">
+                            <a target="_blank" href="{{ path('fos_user_profile_show_name', {'usertag': friend.usertag}) }}" class="pull-left">
+                                <img src="{{ friend.profilePicture|bProfilePict }}" class="media-object" width="20" height="20">
+                            </a>
+                            <div class="media-body">
+                                <a target="_blank" href="{{ path('fos_user_profile_show_name', {'usertag': friend.usertag}) }}" alt="{{ friend.getFullname }}">{{ friend.getFullname }}</a>
+                                <button class="btn btn-primary btn-sm {% if isSubscriber == 0 %}invitefriend{% else %}disabled{% endif %}" data-uid="{{ friend.id }}">
+                                    {% if isSubscriber == 0 %}
+                                        {{ 'button.send'|trans({}, translation_name~'global') }}
+                                    {% elseif isSubscriberWait %}
+                                        {{ 'button.asked'|trans({}, translation_name~'global') }}
+                                    {% else %}
+                                        {{ 'button.joined'|trans({}, translation_name~'global') }}
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% if naturapass_group %}
+    <div id="groups" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ 'invite.title'|trans({}, translation_name~'group') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="media-list">
+                        {% for group in allGroup %}
+                            <li class="media">
+                                <a target="_blank" href="{{ path('naturapass_group_show', {'grouptag': group.grouptag}) }}" class="pull-left">
+                                    <img src="{{ asset('img/interface/default-avatar.jpg') }}" class="media-object" width="40" height="40">
+                                </a>
+                                <div class="media-body">
+                                    <a target="_blank" href="{{ path('naturapass_group_show', {'grouptag': group.grouptag}) }}">{{ group.name }}</a>
+                                    <p>{{ group.description }}</p>
+                                    <a class="btn btn-primary btn-sm" href="#subscribers" data-grouptag="{{ group.grouptag }}" data-toggle="modal">{{ 'group.attributes.subscribers'|transchoice(group.subscribers.count(),{}, translation_name~'group') }}</a>
+                                    <button class="btn btn-primary btn-sm invitegroup" data-gid="{{ group.id }}">{{ 'button.send'|trans({}, translation_name~'global') }}</button>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<div id="email" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>{{ 'invite.modal.email.title'|trans({}, translation_name~'main') }}</h4>
+            </div>
+            <form method="POST" class="emailinvit form-horizontal" ng-non-bindable>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email[to]" class="col-sm-3 control-label">{{ 'invite.label.to'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="email[to]" placeHolder="{{ 'invite.placeholder.to'|trans({},translation_name~'main') }}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email[subject]" class="col-sm-3 control-label">{{ 'invite.label.subject'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="email[subject]" value="{{ 'invite.placeholder.subject'|trans({'%fullname%': app.user.getFullName(),'%loungeOrGroup%': nameObject},translation_name~'main') }}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email[body]" class="col-sm-3 control-label">{{ 'invite.label.body'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <textarea name="email[body]" class="form-control" placeholder="{{ 'invite.placeholder.body'|trans({},translation_name~'main') }}" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary sendmail">{{ 'button.send'|trans({}, translation_name~'global') }}</button>
+                    <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="subscribers" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

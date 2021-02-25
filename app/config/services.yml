@@ -1,0 +1,68 @@
+# SERVICES
+services:
+    pdo:
+        class:  PDO
+        arguments:
+            dsn:        "mysql:host=%database_host%;dbname=%database_name%"
+            user:       %database_user%
+            password:   %database_password%
+        calls:
+            - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
+    session.handler.pdo:
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        arguments: [@pdo, %pdo.db_options%]
+
+    naturapass.twig.extension:
+        class: NaturaPass\MainBundle\Twig\NaturaPassExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.intl:
+      class: Twig_Extensions_Extension_Intl
+      tags:
+        - { name: twig.extension }
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    naturapass_sha1salted.encoder:
+        class: NaturaPass\UserBundle\Security\Sha1Salted
+
+    naturapass_user.form.type.registration:
+        class:      NaturaPass\UserBundle\Form\Type\RegistrationFormType
+        arguments: ["@security.context"]
+        tags:
+            - { name: form.type, alias: user }
+
+    naturapass_user.form.handler.registration:
+        class: NaturaPass\UserBundle\Form\Handler\RegistrationFormHandler
+        arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator.default"]
+        scope: request
+
+    naturapass_user.form.type.change_password:
+        class:      NaturaPass\UserBundle\Form\Type\ChangePasswordFormType
+        arguments: ["@security.context"]
+        tags:
+            - { name: form.type, alias: change_password }
+
+    naturapass_user.form.handler.change_password:
+        class: NaturaPass\UserBundle\Form\Handler\ChangePasswordFormHandler
+        arguments: ["@fos_user.change_password.form", "@request", "@fos_user.user_manager"]
+        scope: request
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+    cache:
+            class: Doctrine\Common\Cache\ApcCache

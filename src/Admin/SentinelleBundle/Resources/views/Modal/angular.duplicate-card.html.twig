@@ -1,0 +1,21 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.duplicate-card.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Dupliquer ce formulaire</h4>
+    </div>
+    <div class="modal-body">
+        <p>
+        Cela va créer une copie de ce formulaire en dessous de celui-ci. {# {% verbatim %} <span style="color: red">{{ data.entity.name }}</span> {% endverbatim %} #}<br />
+        Voulez-vous dupliquer ce formulaire ?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-hide="data.removing" ng-click="data.removing = true">{{ 'button.yes'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-primary" ng-show="data.removing" ng-click="duplicate()" np-submit-loader="data.loading">{{ 'label.confirm'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-danger" ng-click="cancel()" np-submit-loader="data.loading">{{ 'button.no'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

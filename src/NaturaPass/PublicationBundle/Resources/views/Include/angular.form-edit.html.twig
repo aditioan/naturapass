@@ -1,0 +1,328 @@
+{# Ajout d'une publication / Photo / Vidéo#}
+<div ng-show="show" class="edit-publication" id="edit-publication" ng-controller="EditPublicationFormController" ng-cloak>
+
+    <!-- Tab panes -->
+    <div class="tab-content tab-publication" style="padding: 0px; border: 0px;">
+        <div class="tab-pane fade in active"
+                ng-class="{in: currentPane == 'Publication', active: currentPane == 'Publication'}"
+                id="editTabEditPublication">
+            <form class="form-publication" enctype="multipart/form-data" role="form" ng-class="{loader: isLoading}"
+                    ng-submit="updatePublication($event)">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            {{ form_widget(editPublicationForm.content, {'attr': {
+                                'placeholder' : 'publication.action.type_text',
+                                'ng-model': 'publication.content'
+                            }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div id="editpublicationMapCtn" class="map-container" ng-class="{loading: map.loading}"
+                                np-slide="publication.geolocation.active">
+                            <div class="input-group">
+                                <input type="text" ng-model="publication.geolocation.address" class="form-control"
+                                        ng-keydown="searchAddress($event)">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary icon-location"
+                                            ng-click="searchAddress()"></button>
+                                </span>
+                            </div>
+                            <google-map class="google-map map-media"
+                                    center="map.center"
+                                    zoom="map.zoom"
+                                    draggable="true"
+                                    dragging="map.dragging"
+                                    bounds="map.bounds"
+                                    events="map.events"
+                                    options="map.options"
+                                    refresh="map.refresh"
+                                    pan="true"
+                                    control="map.control">
+                            </google-map>
+                        </div>
+                    </div>
+                </div>
+                <div class="infosForm" np-slide="publication.geolocation.active" ng-cloak>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="form-group help-container">
+                                {{ form_widget(editPublicationForm.legend,  {'attr': {
+                                    'ng-model': 'publication.legend'
+                                }
+                                }) }}
+                                <div class="help-popover icon-question4" data-container="body" data-toggle="popover"
+                                        data-placement="left"
+                                        data-content="{{ 'publication.legend'|trans({},translation_name~'help')|raw }}"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" np-slide="publication.geolocation.active" ng-cloak>
+                            <div class="geoloc-container help-container" style="min-width: auto;">
+                                <span>{{ 'label.color'|trans({},translation_name~'publication') }} :</span>
+                                <div style="display: inline-block">
+                                    {{ form_widget(editPublicationForm.publicationcolor, {'attr': {'class':'edit_publication_publicationcolor', 'ng-model': 'publication.publicationcolor'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 option-bar">
+                        <div class="dropdown sharing help-container">
+                            <a data-toggle="dropdown" ng-click="openSharingModal()" href="#" class="btn btn-default btn-sm">
+                                {% verbatim %}
+                                        <span class="{{ currentSharing.icon }}" ng-bind="currentSharing.text"></span>
+                                    {% endverbatim %}
+                            </a>
+
+                            <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                    data-toggle="popover" data-placement="bottom"
+                                    data-content="{{ 'publication.formsharing'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+
+                        <div class="geoloc-container help-container">
+                            <span>{{ 'label.geoloc'|trans({},translation_name~'global') }} :</span>
+
+                            <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                    data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                <input type="checkbox" id="editslideCheckPublication" ng-model="publication.geolocation.active"
+                                        ng-change="toggleGeolocation()" name="geoloc" autocomplete="off">
+                                <label for="editslideCheckPublication"></label>
+                            </div>
+                            <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                    data-toggle="popover" data-placement="right"
+                                    data-content="{{ 'publication.form.geoloc'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+
+                        <div class="date-container">
+                            {{ form_widget(editPublicationForm.date, {'attr': {'ng-model': 'publication.editdate', 'np-datetime-picker': 'true'} }) }}
+                        </div>
+                        <div class="col-xs-12">
+                            <button ng-click="cancelEditing()" np-eat-click class="btn btn-danger btn-sm btn-icon icon-cancel pull-left">{{ 'button.cancel'|trans({},translation_name~'global') }}</button>
+                            <button class="btn btn-primary btn-sm btn-icon icon-paperplane pull-right"
+                                    data-icon="icon-paperplane">{{ 'button.update'|trans({},translation_name~'global') }}</button>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" ng-if="fromMap" ng-cloak>
+                        <div class="geoloc-container help-container">
+                            <span>{{ 'publication.action.landmark'|trans({},translation_name~'publication') }}</span>
+
+                            <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                    data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                <input type="checkbox" id="editslideLandmark" ng-model="publication.showOnFeed" autocomplete="off">
+                                <label for="slideLandmark"></label>
+                            </div>
+                            <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                    data-toggle="popover" data-placement="right"
+                                    data-content="{{ 'publication.form.landmark'|trans({},translation_name~'help')|raw }}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(editPublicationForm.sharing.share, {'attr': {'ng-model': 'publication.sharing.share', 'ng-init': app.user.parameters.publicationSharing.share } }) }}
+                    {{ form_widget(editPublicationForm.sharing.withouts, {'attr': {'ng-model': 'publication.sharing.withouts' }}) }}
+
+                    {{ form_widget(editPublicationForm.geolocation.address, {'attr': {'ng-model': 'publication.geolocation.address' }}
+                    ) }}
+                    {{ form_widget(editPublicationForm.geolocation.latitude, {'attr': {'ng-model': 'publication.geolocation.latitude' }}
+                    ) }}
+                    {{ form_widget(editPublicationForm.geolocation.longitude, {'attr': {'ng-model': 'publication.geolocation.longitude' }}
+                    ) }}
+                    {{ form_widget(editPublicationForm.geolocation.altitude, {'attr': {'ng-model': 'publication.geolocation.altitude' }}
+                    ) }}
+                </div>
+
+                {#{{ form_end(editPublicationForm, {'render_rest': false}) }}#}
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{# Ajout d'une publication / Photo / Vidéo#}
+<div ng-show="show" ng-controller="EditMediaPublicationFormController" id="edit-media-publication" ng-cloak>
+
+    <!-- Tab panes -->
+    <div class="tab-content tab-publication" style="padding: 0px; border: 0px;" np-drag-over="changePane('Media')" ng-class="{loading: isPersisting}">
+        <div class="tab-pane fade in active"
+                ng-class="{in: currentPane == 'Media', active: currentPane == 'Media'}" id="tabMedia">
+            <p class="alert alert-danger alert-media"
+                    np-slide="hasMediaError">{{ 'errors.no_media'|trans({}, translation_name~'publication') }}</p>
+
+            <form class="form-media" enctype="multipart/form-data" role="form" ng-class="{loader: isLoading}"
+                    data-file-upload="fileUploadOptions" ng-submit="updatePublication()">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            {{ form_widget(editMediaPublicationForm.content, {'attr': {
+                                'class': 'content-photo',
+                                'placeholder' : 'publication.action.media',
+                                'ng-model': 'publication.content'
+                            }
+                            }) }}
+                            <div class="file-container">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        {{ form_label(editMediaPublicationForm.media.file,'publication.attributes.file', {'attr': {'ng-class': '{loading: isFileLoading}'},'label_attr': {'class': 'file-label btn btn-primary btn-sm btn-icon icon-camera'} }) }}
+                                        {{ form_widget(editMediaPublicationForm.media.file, {'attr': {'class': 'file-input'} }) }}
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="progress-container">
+                                            <div class="progress active" data-file-upload-progress="progress()">
+                                                <div class="progress-bar progress-bar-success"
+                                                        ng-style="{width: fileProgress + '%'}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {#                        debug#}
+                            {% verbatim %}
+                    <div class="preview-container">
+                        <div class="files ng-cloak">
+                            <div class="file" data-ng-repeat="file in queue"
+                                 data-ng-class="{'processing': file.$processing()}">
+                                <div data-ng-switch data-on="!!file.thumbnailUrl">
+                                    <div class="preview" data-ng-switch-default data-file-upload-preview="file" style="max-width: 200px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                        </div>
+                        <div class="alert alert-info" np-slide="fileAdded">
+                            {{ 'publication.form.uploading'|trans({}, translation_name~'help') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="infosForm">
+                    <div class="row" np-slide="publication.geolocation.active" ng-cloak>
+                        <div class="col-sm-9">
+                            <div class="form-group help-container">
+                                <input type="text" ng-model="publication.legend" placeholder="{{ 'publication.attributes.legend'|trans({}, translation_name~'publication') }}"
+                                        class="form-control">
+                                <div class="help-popover icon-question4" data-container="body" data-toggle="popover"
+                                        data-placement="left"
+                                        data-content="{{ 'publication.legend'|trans({},translation_name~'help')|raw }}"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" np-slide="publication.geolocation.active" ng-cloak>
+                            <div class="geoloc-container help-container" style="min-width: auto;">
+                                <span>{{ 'label.color'|trans({},translation_name~'publication') }} :</span>
+                                <div style="display: inline-block">
+                                    {{ form_widget(editMediaPublicationForm.publicationcolor, {'attr': {'class':'edit_media_publication_publicationcolor', 'ng-model': 'publication.publicationcolor'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        {#<div class="col-sm-6">#}
+                        {#<div class="form-group help-container">#}
+                        {#<input ui-select2="tagsOptions" class="form-tags-select2" ng-model="publication.media.tags"#}
+                        {#class="form-control" type="hidden">#}
+
+                        {#<div class="help-popover icon-question4" data-container="body" data-toggle="popover"#}
+                        {#data-placement="left"#}
+                        {#data-content="{{ 'publication.formtag'|trans({},translation_name~'help')|raw }}"></div>#}
+                        {#</div>#}
+                        {#</div>#}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="publicationMapCtn" class="map-container" ng-class="{loading: map.loading}"
+                                    np-slide="publication.geolocation.active">
+                                <div class="input-group">
+                                    <input type="text" ng-model="publication.geolocation.address"
+                                            class="form-control geolocation-address" ng-keydown="searchAddress($event)">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary icon-location4 geolocation-search"
+                                                ng-click="searchAddress()"></button>
+                                    </span>
+                                </div>
+                                <google-map class="google-map map-media"
+                                        center="map.center"
+                                        zoom="map.zoom"
+                                        draggable="true"
+                                        dragging="map.dragging"
+                                        bounds="map.bounds"
+                                        events="map.events"
+                                        options="map.options"
+                                        refresh="map.refresh"
+                                        pan="true"
+                                        control="map.control">
+                                </google-map>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 option-bar">
+                            <div class="dropdown sharing help-container">
+                                <a ng-click="open()" href="#" class="btn btn-default btn-sm">
+                                    {#                            debug#}
+                                    {% verbatim %}
+                                        <span class="{{ currentSharing.icon }}" ng-bind="currentSharing.text"></span>
+                                    {% endverbatim %}
+                                </a>
+
+                                <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                        data-toggle="popover" data-placement="bottom"
+                                        data-content="{{ 'publication.formsharing'|trans({},translation_name~'help')|raw }}"></div>
+                            </div>
+
+                            <div class="geoloc-container help-container">
+                                <span>{{ 'label.geoloc'|trans({},translation_name~'global') }} :</span>
+
+                                <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                        data-after="{{ 'button.no'|trans({},'global') }}">
+                                    <input type="checkbox" id="editslideCheckMediaPublication" name="geoloc"
+                                            ng-model="publication.geolocation.active" ng-change="toggleGeolocation()"
+                                            autocomplete="off"/>
+                                    <label for="editslideCheckMediaPublication"></label>
+                                </div>
+                                <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                        data-toggle="popover" data-placement="right"
+                                        data-content="{{ 'publication.form.geoloc'|trans({},translation_name~'help')|raw }}"></div>
+                            </div>
+
+                            <div class="date-container">
+                                {{ form_widget(editMediaPublicationForm.date, {'attr': {'ng-model': 'publication.editdate', 'np-datetime-picker': 'true'} }) }}
+                            </div>
+
+                            <div class="col-xs-12">
+                                <button ng-click="cancelEditing()" np-eat-click class="btn btn-danger btn-sm btn-icon icon-cancel pull-left">{{ 'button.cancel'|trans({},translation_name~'global') }}</button>
+                                <button class="btn btn-primary btn-sm btn-icon icon-paperplane pull-right" type="submit"
+                                        np-submit-loader="isPersisting || isFileLoading || isLoading" data-icon="icon-paperplane">{{ 'button.update'|trans({},translation_name~'global') }}</button>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12" ng-if="fromMap" ng-cloak>
+                            <div class="form-group help-container">
+                                <span>{{ 'publication.action.landmark'|trans({},translation_name~'publication') }}</span>
+
+                                <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                                        data-after="{{ 'button.no'|trans({},'global') }}">
+                                    <input type="checkbox" id="slideLandmark"
+                                            ng-model="publication.showOnFeed"
+                                            autocomplete="off">
+                                    <label for="slideLandmark"></label>
+                                </div>
+                                <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                        data-toggle="popover" data-placement="right"
+                                        data-content="{{ 'publication.form.landmark'|trans({},translation_name~'help')|raw }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(editMediaPublicationForm.sharing.share, {'attr': {'ng-model': 'publication.sharing.share', 'ng-init': app.user.parameters.publicationSharing.share } }) }}
+                    {{ form_widget(editMediaPublicationForm.sharing.withouts, {'attr': {'ng-model': 'publication.sharing.withouts' }}) }}
+
+                    {{ form_widget(editMediaPublicationForm.geolocation.address, {'attr': {'ng-model': 'publication.geolocation.address' }}) }}
+                    {{ form_widget(editMediaPublicationForm.geolocation.latitude, {'attr': {'ng-model': 'publication.geolocation.latitude' }}) }}
+                    {{ form_widget(editMediaPublicationForm.geolocation.longitude, {'attr': {'ng-model': 'publication.geolocation.longitude' }}
+                    ) }}
+                    {{ form_widget(editMediaPublicationForm.geolocation.altitude, {'attr': {'ng-model': 'publication.geolocation.altitude' }}) }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

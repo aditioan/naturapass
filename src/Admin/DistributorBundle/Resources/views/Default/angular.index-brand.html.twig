@@ -1,0 +1,56 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ 'brand.all_brands'|trans({},translation_name~'brand') }} | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container" ng-controller="BrandListController">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                    <h1>{{ 'brand.title.list'|trans({}, translation_name~'brand') }}</h1>
+                    <p>{{ 'brand.description.list'|trans({}, translation_name~'brand') }}</p>
+
+                    <div class="brands" ng-cloak>
+                        <div class="media media-list container-md">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'brand') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-brand.placeholder'|trans({},translation_name~'brand') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brands" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "AdminDistributorBundle:Include:angular.brand.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'brand') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "AdminDistributorBundle:Modal:angular.remove-brand.html.twig" %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Distributor/Brand/BrandListController.js'
+    'js/app/controllers/Admin/Distributor/Brand/BrandModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

@@ -1,0 +1,80 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.observation.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'publication.observation.title'|trans({}, translation_name~'publication') }}</h4>
+    </div>
+    <div class="modal-body container-observation">
+        <form name="observationForm" novalidate ng-init="init()">
+            <div ng-show="stackSelect.length" class="row select-category"><strong class="bg-danger-category">{{ 'publication.observation.selected'|trans({}, translation_name~'publication') }}</strong>
+                <span ng-cloak class="" ng-repeat="select in stackSelect">
+                    {% verbatim %}
+                        {{ select }} /
+                    {% endverbatim %}
+                </span>
+            </div>
+            <div class="small-loading" ng-show="data.loading"></div>
+            <div class="row" ng-show="btn.search">
+                <input type="text" class="form-control ng-pristine ng-valid" placeholder="{{ 'publication.observation.filter.animal'|trans({}, translation_name~'publication') }}" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)"/>
+            </div>
+            <div class="row">
+                <div ng-show="step.firstQuestion">
+                    {% verbatim %}
+                    <p ng-hide="editing" np-bind-html="'publication.observation.description'|trans: {}: 'publication'"></p>
+                    <p ng-show="editing" np-bind-html="'publication.observation.edit'|trans: {}: 'publication'"></p>
+                {% endverbatim %}
+                </div>
+                <hr>
+                <div ng-cloak ng-show="step.listCategories" class="form-control btn btn-primary btn-category"
+                        ng-repeat="node in listCategories" ng-click="next(node)">
+                    {% include 'NaturaPassPublicationBundle:Prototype:angular.form-observation.html.twig' %}
+                </div>
+            </div>
+            <div class="row" ng-show="step.searchAnimal">
+                <div ng-cloak class="form-control btn btn-default btn-category"
+                        ng-repeat="node in allAnimals" ng-click="next(node)">
+                    {% include 'NaturaPassPublicationBundle:Prototype:angular.form-observation.html.twig' %}
+                </div>
+            </div>
+            <div class="row" ng-show="step.hasCard">
+                <div ng-cloak class=""
+                        ng-repeat="label in model.attachments">
+                    {% include 'NaturaPassPublicationBundle:Prototype:angular.form-card-observation.html.twig' %}
+                </div>
+                {#<button class="btn btn-primary btn-icon" ng-click="valideCard(model)">Test</button>#}
+            </div>
+            <div class="row" ng-show="step.noCard">
+                {% verbatim %}
+                    <p np-bind-html="'publication.observation.nocard.description'|trans: {}: 'publication'"></p>
+                {% endverbatim %}
+            </div>
+            <div class="row" ng-show="step.shareQuestion">
+                {% verbatim %}
+                    <p np-bind-html="'publication.observation.sharing.description'|trans: {}: 'publication'"></p>
+                {% endverbatim %}
+            </div>
+            <div class="row" ng-show="step.sharing">
+                <div>
+                    <h1>{{ 'publication.observation.sharing.title'|trans({}, translation_name~'publication') }}</h1>
+                    <div ng-cloak class="" ng-repeat="share in sharing">
+                        {% include 'NaturaPassPublicationBundle:Prototype:angular.form-share-observation.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer footer-observation">
+        <button class="btn btn-danger pull-left" ng-show="btn.previous" ng-click="previous()" np-submit-loader="data.loading">{{ 'button.prev'|trans({}, translation_name~'global') }}</button>
+
+        <button class="btn btn-danger" ng-show="step.firstQuestion" ng-click="cancel()" np-submit-loader="data.loading">{{ 'button.no'|trans({}, translation_name~'global') }}</button>
+
+        <button class="btn btn-primary" ng-show="step.shareQuestion" ng-click="sharingAction()">{{ 'button.yes'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-danger" ng-show="step.shareQuestion" ng-click="save(observationForm.$valid)" np-submit-loader="data.loading">{{ 'button.no'|trans({},translation_name~ 'global') }}</button>
+
+        <button class="btn btn-primary" ng-show="step.isSharing" ng-click="questionSharing()" np-submit-loader="data.loading">{{ 'button.next'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-primary" ng-show="btn.validate && !step.isSharing" ng-click="save(observationForm.$valid)" np-submit-loader="data.loading">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

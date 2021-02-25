@@ -1,0 +1,147 @@
+{% extends connect ? "NaturaPassMainBundle::layout.html.twig" : "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'title.concours'|trans({},translation_name~'main') }} - {{ game.title }} | {{ parent() }}{% endblock %}
+{% block description %}{{ game.getExplanationDescription() }}{% endblock %}
+
+{% block corps %}
+    <div  ng-controller="GameDetailController" data-game="{{ game.id }}" ng-init="init()">
+        <div id="corps-container" {% if connect == 0 %}class="large-container"{% endif %}>
+            {% verbatim %}
+            <div class="container home-container">
+                <div class="panel panel-concours panel-default small-loading" ng-show="loading"></div>
+                <div class="panel panel-concours panel-default" ng-hide="loading" ng-cloak>
+                    <div class="panel-heading" style="background-color: {{ game.color }}">{{ game.title }}</div>
+                    <div class="panel-body">
+                        <div class="img-responsive center-block" width="720" height="620" np-bind-html="game.top1"></div>
+                        <div class="img-responsive center-block" width="720" height="620" np-bind-html="game.top2"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% endverbatim %}
+                    {% if connect == 0 %}
+                    <div class="col-xs-12 col-sm-6">
+                    {% else %}
+                    <div class="col-xs-12 col-sm-12">
+                    {% endif %}
+                    {% verbatim %}
+                        <div class="tool-container small-loading" ng-show="loading"></div>
+                        <div class="tool-container" ng-hide="loading" ng-cloak>
+                            <div class="tool-header">
+                                {{ game.titleExplanation }}
+                            </div>
+                            <div class="container-md">
+                                <div np-bind-html="game.explanation"></div>
+                                <div ng-if="game.type = 1 && game.challenge" class="text-center">
+                                    <button type="button" data-toggle="modal" data-target="#modalChallenge" class="btn btn-primary btn-icon icon-trophy">{% endverbatim %}{{ 'concours.btn.challenge'|trans({},translation_name~'main') }}{% verbatim %}</button>
+                                </div>
+                                <div ng-if="game.reglement" class="text-center">
+                                    <button type="button" data-toggle="modal" data-target="#modalRule" class="btn btn-primary btn-icon icon-list">{% endverbatim %}{{ 'concours.btn.rule'|trans({},translation_name~'main') }}{% verbatim %}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                    {% if connect == 0 %}
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="container-md register-container" ng-controller="RegisterController">
+                                <h1>{{ 'home.register.title'|trans({},translation_name~'user') }}</h1>
+
+                                {#<p class="text-center">
+                                    <button class="btn btn-fb btn-icon icon-facebook" data-icon="icon-facebook" np-submit-loader="loading" ng-click="fbRegister()">{{ 'home.register.connect'|trans({}, translation_name~'user') }}</button>
+                                </p>#}
+
+                                <p>{{ 'home.register.description'|trans({},translation_name~'user') }}</p>
+                                {{ include("NaturaPassUserBundle:Registration:register_content.html.twig") }}
+                            </div>
+                            <div class="container-md app-container">
+                                <a href="https://itunes.apple.com/fr/app/naturapass/id883300083?mt=8" title="Télécharger dans l'App Store" target="_blank"><img src="{{ asset("img/interface/mobile-app_store-fr.png") }}" title="Télécharger dans l'App Store" alt="Télécharger dans l'App Store" width="153" height="45"></a>
+                                <a href="https://play.google.com/store/apps/details?id=fr.appsolute.naturapass" title="Disponible sur Google play" target="_blank"><img src="{{ asset("img/interface/mobile-google_play-fr.png") }}" title="Disponible sur Google play" alt="Disponible sur Google play" width="132" height="45"></a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% verbatim %}
+        <div class="modal fade" id="modalChallenge" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-if="game.type = 1 && game.challenge" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% endverbatim %}{{ 'button.close'|trans({},translation_name~'global') }}{% verbatim %}</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% endverbatim %}{{ 'concours.title.challenge'|trans({},translation_name~'main') }}{% verbatim %}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div np-bind-html="game.challenge"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% endverbatim %}{{ 'button.close'|trans({},translation_name~'global') }}{% verbatim %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalRule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-if="game.reglement">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% endverbatim %}{{ 'button.close'|trans({},translation_name~'global') }}{% verbatim %}</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% endverbatim %}{{ 'concours.title.rule'|trans({},translation_name~'main') }}{% verbatim %}</h4>
+                    </div>
+                    <div class="modal-body">
+                       <div np-bind-html="game.reglement"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% endverbatim %}{{ 'button.close'|trans({},translation_name~'global') }}{% verbatim %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endverbatim %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Game/GameControllers.js'
+    'js/app/controllers/User/RegisterController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.fancybox').fancybox();
+        });
+    </script>
+    <script type="text/javascript">
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        var redirect = true;
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == "redirect")
+            {
+                redirect = false;
+            }
+        }
+        if(redirect){
+            if(navigator.userAgent.match(/iPhone|iPod/i)) {
+                if (document.cookie.indexOf("ios_redirect=false") == -1) {
+                    if(window.confirm("{{ 'home.ios'|trans({}, translation_name~'main')|raw }}")) {
+                        window.location = 'https://itunes.apple.com/app/naturapass/id883300083?mt=8'
+                    } else {
+                        document.cookie="ios_redirect=false";
+                    };
+                }
+            } else if(navigator.userAgent.match(/Android/i)) {
+                if (document.cookie.indexOf("android_redirect=false") == -1) {
+                    if(window.confirm("{{ 'home.android'|trans({}, translation_name~'main')|raw }}")) {
+                        window.location = 'https://play.google.com/store/apps/details?id=fr.appsolute.naturapass'
+                    } else {
+                        document.cookie="android_redirect=false";
+                    };
+                }
+            }
+        }
+    </script>
+{% endblock javascripts %}

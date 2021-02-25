@@ -1,0 +1,15 @@
+naturapass_email_group:
+    resource: "@NaturaPassEmailBundle/Resources/config/routing/group.yml"
+    prefix:   /group
+
+naturapass_email_lounge:
+    resource: "@NaturaPassEmailBundle/Resources/config/routing/lounge.yml"
+    prefix:   /lounge
+
+naturapass_email_publication:
+    resource: "@NaturaPassEmailBundle/Resources/config/routing/publication.yml"
+    prefix:   /publication
+
+naturapass_email_user:
+    resource: "@NaturaPassEmailBundle/Resources/config/routing/user.yml"
+    prefix:   /user

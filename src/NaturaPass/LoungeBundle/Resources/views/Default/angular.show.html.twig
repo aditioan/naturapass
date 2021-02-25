@@ -1,0 +1,573 @@
+{% extends "NaturaPassLoungeBundle::layout.html.twig" %}
+
+{% block title %}{{ 'title.show'|trans({'%lounge%': lounge.name},translation_name~'lounge') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .angular-google-map-container, .google-maps, .angular-google-map {
+            height: 302px;
+            position: relative;
+        }
+    </style>
+{% endblock %}
+
+{% block corps %}
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="LoungeController" data-lounge="{{ lounge.id }}" ng-init="initLounge()">
+
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        {% verbatim %}
+        <div class="container small-loading" ng-hide="loaded"></div>
+        <div class="container container-bulle container-detail-salon" ng-show="loaded" ng-cloak>
+            <div class="row">
+                <div class="col-sm-12 hidden-xs">
+                    <div class="container-sm clearfix">
+                        <div class="lounge-description media">
+                            <div class="pull-left">
+                                <img ng-src="{{ lounge.photo }}" width="140" height="140">
+                            </div>
+                            <div class="media-body">
+                                <a href="#validation" class="btn btn-info btn-group-validation pull-right"
+                                   ng-click="openValidationModal()"
+                                   ng-if="lounge.nbPending && lounge.connected.access == 3">
+                                            <span class="icon-user-plus">
+                                                <b>{{ 'lounge.attributes.subscribers'|transchoice: lounge.nbPending: {'count': lounge.nbPending}: 'lounge' }}</b><br>
+                                                {% endverbatim %}{{ 'lounge.attributes.wait'|trans({}, translation_name~'lounge') }}{% verbatim %}
+                                            </span>
+                                </a>
+
+                                <h1>{{ lounge.name }}</h1>
+                                <ul class="list-unstyled list-inline lounge-info">
+                                    <li class="icon-clock4">{{ lounge.endDate|date:'DD/MM/YYYY HH:mm' }}</li>
+                                    <li class="icon-location5">{{ 'lounge.state.geolocation'|transchoice: lounge.geolocation: {}: 'lounge' }}</li>
+                                    <li class="icon-lock2">{{ 'label.access.label'|trans: {}: 'global' }} {{ 'label.access.access_type'|transchoice: lounge.access: {}: 'global' }}</li>
+                                </ul>
+                                <p>{% endverbatim %}{{ lounge.description|nl2br }}{% verbatim %}</p>
+
+                                <p ng-if="lounge.meetingAddress">{{ 'lounge.description.address'|trans:{}:'lounge' }}
+                                    <strong>{{ lounge.meetingAddress.address }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                        {% endverbatim %}
+        <a ng-if="lounge.connected.access == 3" href="{{ path('naturapass_lounge_edit', {loungetag: lounge.loungetag}) }}"
+                class="btn btn-primary btn-left btn-icon icon-pencil btn-exit-lounge">
+            {{ 'lounge.action.administer'|trans({}, translation_name~'lounge') }}
+        </a>
+        <a href="{{ path('naturapass_lounge_homepage') }}"
+                class="btn btn-danger btn-right btn-icon icon-exit3 btn-exit-lounge">
+            {{ 'lounge.action.back'|trans({}, translation_name~'lounge') }}
+        </a>
+        {% verbatim %}
+                    </div>
+                </div>
+            </div>
+            {% endverbatim %}
+        <div class="visible-xs">
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="#loungeMemberAdmin" data-toggle="collapse" ng-if="lounge.connected.access == 3">{{ 'lounge.title.participation'|trans({},translation_name~'lounge') }}</a></li>
+                <li><a href="#loungeMember" data-toggle="collapse" ng-if="lounge.connected.access != 3">{{ 'lounge.title.participants'|trans({},translation_name~'lounge') }}</a></li>
+                <li><a href="#loungeTchat" data-toggle="collapse">{{ 'lounge.title.chat'|trans({},translation_name~'lounge') }}</a></li>
+                <li><a href="#loungePublications" data-toggle="collapse">{{ 'lounge.title.publications'|trans({},translation_name~'lounge') }}</a></li>
+                {#<li><a href="#loungeMap" data-toggle="collapse">{{ 'lounge.title.map'|trans({},translation_name~'lounge') }}</a></li>#}
+            </ul>
+        </div>
+        {% verbatim %}
+            <div class="row">
+                <div ng-class="{'col-sm-12': !(lounge.allow_show_chat || lounge.connected.access == 3),'col-sm-5': (lounge.allow_show_chat || lounge.connected.access == 3)}">
+                    <div class="collapse lounge-members" id="loungeMember" ng-if="lounge.connected.access != 3">
+                        <div class="container-sm">
+                            <h3>{% endverbatim %}{{ 'lounge.title.you'|trans({}, translation_name~'lounge') }}{% verbatim %}</h3>
+                            <div class="media lounge-me" ng-class="{loading: lounge.connected.loading}">
+                                <a ng-href="{{ 'fos_user_profile_show_name'|route: {route: connectedUser.usertag} }}" class="pull-left">
+                                    <img ng-src="{{ connectedUser.profilepicture }}" width="40" height="40">
+                                </a>
+
+                                <div class="media-body">
+                                    <span title="{{ 'lounge.state.participate.long'|transchoice: lounge.access:{}:'lounge' }}"
+                                          class="lounge-user-participe lounge-members-smiley pull-right"
+                                          ng-class="{'icon-sad2': lounge.connected.participation == 0, 'icon-smiley2': lounge.connected.participation == 1, 'icon-neutral2': lounge.connected.participation == 2}"></span>
+                                    <a href="{{ 'fos_user_profile_show_name'|route: {usertag: connectedUser.usertag } }}">{{ connectedUser.fullname }}</a><br>
+
+                                    <!-- EDITION COMMENTAIRES -->
+                                    <span ng-if="lounge.connected.access != 3" ng-bind="lounge.connected.publicComment"></span>
+
+                                        <span class="text-edit" ng-if="!lounge.connected.editingPublicComment && lounge.connected.access == 3" ng-click="editPublicComment(lounge.connected)" ng-bind="lounge.connected.publicComment"></span>
+
+                                    <span class="text-edit"
+                                          ng-if="(!lounge.connected.publicComment && !lounge.connected.editingPublicComment) && lounge.connected.access == 3"
+                                          ng-click="editPublicComment(lounge.connected)">{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}</span>
+
+                                    <input type="text"
+                                           placeholder="{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+                                           ng-model="lounge.connected.publicComment"
+                                           ng-show="lounge.connected.editingPublicComment"
+                                           ng-keydown="updatePublicComment($event, lounge.connected)"
+                                           ng-blur="stopEditingPublicComment(lounge.connected)">
+                                    <!-- FIN EDITION COMMENTAIRES -->
+                                </div>
+                                {% endverbatim %}
+        {#<div  ng-hide="true" class="geoloc-container" ng-if="lounge.connected.participation == 1">#}
+        {#<span>{{ 'lounge.attributes.geolocation'|trans({}, translation_name~'lounge') }} : </span>#}
+
+        {#<div class="slideCheck"#}
+        {#data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"#}
+        {#data-after="{{ 'button.no'|trans({},translation_name~'global') }}">#}
+        {#<input type="checkbox" id="slideCheckMyGeoloc" ng-model="lounge.connected.geolocation"#}
+        {#ng-checked="lounge.connected.initGeolocation"#}
+        {#ng-init="lounge.connected.initGeolocation = lounge.connected.geolocation"#}
+        {#ng-change="updateConnectedGeolocation()">#}
+        {#<label for="slideCheckMyGeoloc"></label>#}
+        {#</div>#}
+        {#</div>#}
+        <div class="lounge-participe">
+            <span>{{ 'lounge.attributes.participate'|trans({}, translation_name~'lounge') }} : </span>
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 1}"
+                        ng-click="updateParticipation(1)">
+                    <input type="radio"
+                            class="btn-participate"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_YES,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 2}"
+                        ng-click="updateParticipation(2)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_DONTKNOW }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_DONTKNOW,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 0}"
+                        ng-click="updateParticipation(0)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_NO }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_NO,{}, translation_name~'lounge') }}
+                </label>
+            </div>
+        </div>
+        {% verbatim %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse lounge-members" id="loungeMemberAdmin" ng-if="lounge.connected.access == 3">
+                        <div class="container-sm">
+                            {% endverbatim %}
+        <h2 class="icon-users">{{ 'lounge.title.membersdetail'|trans({}, translation_name~'lounge') }}</h2>
+        {% verbatim %}
+                            <div class="small-loading" ng-show="subscribersLoading && subscribersNotMemberLoading"></div>
+                            <div class="media lounge-user" ng-hide="subscribersLoading && subscribersNotMemberLoading">
+                                <ul class="nav nav-justified">
+                                    <li class="text-center">
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}" class="lounge-members-smiley icon-smiley2"></span>
+                                        <span ng-if="lounge.connected.participation == 1" class="aside-smiley aside-good">{{resultsParticipe.length + resultsNotMemberParticipe.length + 1}}</span>
+                                        <span ng-if="lounge.connected.participation != 1" class="aside-smiley aside-good">{{resultsParticipe.length + resultsNotMemberParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center" ng-if="lounge.connected.access != 3">
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}" class="lounge-members-smiley icon-neutral2"></span>
+                                        <span ng-if="lounge.connected.participation == 2" class="aside-smiley aside-neutral">{{resultsNeutral.length + resultsNotMemberNeutral.length + 1}}</span>
+                                        <span ng-if="lounge.connected.participation != 2" class="aside-smiley aside-neutral">{{resultsNeutral.length + resultsNotMemberNeutral.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center" ng-if="lounge.connected.access == 3">
+                                        <div class="media lounge-user" ng-hide="true" ng-repeat="subscriber in resultsOfInvite = (lounge.subscribers | filter: filterSubscribersInvited)"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}" class="lounge-members-smiley icon-neutral2"></span>
+                                        <span ng-if="lounge.connected.participation == 2" class="aside-smiley aside-neutral">{{resultsNeutral.length + resultsNotMemberNeutral.length + resultsOfInvite.length + 1}}</span>
+                                        <span ng-if="lounge.connected.participation != 2" class="aside-smiley aside-neutral">{{resultsNeutral.length + resultsNotMemberNeutral.length + resultsOfInvite.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center">
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}" class="lounge-members-smiley icon-sad2"></span>
+                                        <span ng-if="lounge.connected.participation == 0" class="aside-smiley aside-sad">{{resultsNotParticipe.length + resultsNotMemberNotParticipe.length + 1}}</span>
+                                        <span ng-if="lounge.connected.participation != 0" class="aside-smiley aside-sad">{{resultsNotParticipe.length + resultsNotMemberNotParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}</p>
+                                    </li>
+                                </ul>
+                                <a href="#" ng-show="!showAllMember && lounge.connected.access == 3" ng-click="showAllMember = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.adminMembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="!showAllMember && lounge.connected.access != 3" ng-click="showAllMember = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.showMembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="showAllMember" ng-click="showAllMember = false" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-up">{% endverbatim %}{{ 'lounge.btn.hideMembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                            </div>
+                            <div class="media lounge-me" ng-class="{loading: lounge.connected.loading}" ng-hide="!showAllMember">
+                                <a ng-href="{{ 'fos_user_profile_show_name'|route: {route: connectedUser.usertag} }}" class="pull-left">
+                                    <img ng-src="{{ connectedUser.profilepicture }}" width="40" height="40">
+                                </a>
+
+                                <div class="media-body">
+                                    <span title="{{ 'lounge.state.participate.long'|transchoice: lounge.access:{}:'lounge' }}"
+                                          class="lounge-user-participe lounge-members-smiley pull-right"
+                                          ng-class="{'icon-sad2': lounge.connected.participation == 0, 'icon-smiley2': lounge.connected.participation == 1, 'icon-neutral2': lounge.connected.participation == 2}"></span>
+                                    <a href="{{ 'fos_user_profile_show_name'|route: {usertag: connectedUser.usertag } }}">{{ connectedUser.fullname }}</a><br>
+
+                                    <!-- EDITION COMMENTAIRES -->
+                                    <span ng-if="lounge.connected.access != 3" ng-bind="lounge.connected.publicComment"></span>
+
+                                        <span class="text-edit" ng-if="!lounge.connected.editingPublicComment && lounge.connected.access == 3" ng-click="editPublicComment(lounge.connected)" ng-bind="lounge.connected.publicComment"></span>
+
+                                    <span class="text-edit"
+                                          ng-if="(!lounge.connected.publicComment && !lounge.connected.editingPublicComment) && lounge.connected.access == 3"
+                                          ng-click="editPublicComment(lounge.connected)">{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}</span>
+
+                                    <input type="text"
+                                           placeholder="{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+                                           ng-model="lounge.connected.publicComment"
+                                           ng-show="lounge.connected.editingPublicComment"
+                                           ng-keydown="updatePublicComment($event, lounge.connected)"
+                                           ng-blur="stopEditingPublicComment(lounge.connected)">
+                                    <!-- FIN EDITION COMMENTAIRES -->
+                                </div>
+                                {% endverbatim %}
+        <div ng-hide="true" class="geoloc-container" ng-if="lounge.connected.participation == 1">
+            <span>{{ 'lounge.attributes.geolocation'|trans({}, translation_name~'lounge') }} : </span>
+
+            <div class="slideCheck"
+                    data-before="{{ 'button.yes'|trans({},'global') }}"
+                    data-after="{{ 'button.no'|trans({},'global') }}">
+                <input type="checkbox" id="slideCheckMyGeoloc" ng-model="lounge.connected.geolocation"
+                        ng-checked="lounge.connected.initGeolocation"
+                        ng-init="lounge.connected.initGeolocation = lounge.connected.geolocation"
+                        ng-change="updateConnectedGeolocation()">
+                <label for="slideCheckMyGeoloc"></label>
+            </div>
+        </div>
+        <div class="lounge-participe">
+            <span>{{ 'lounge.attributes.participate'|trans({}, translation_name~'lounge') }} : </span>
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 1}"
+                        ng-click="updateParticipation(1)">
+                    <input type="radio"
+                            class="btn-participate"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_YES,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 2}"
+                        ng-click="updateParticipation(2)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_DONTKNOW }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_DONTKNOW,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 0}"
+                        ng-click="updateParticipation(0)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_NO }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_NO,{}, translation_name~'lounge') }}
+                </label>
+            </div>
+        </div>
+        {% verbatim %}
+                            </div>
+                            <div class="media lounge-user" ng-repeat="subscriber in resultsSubscribersMembers = (lounge.subscribers | filter: filterSubscribers)"
+                                 ng-hide="!showAllMember"
+                                 ng-class="{loading: subscriber.loading}">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-member.html.twig' %}{% verbatim %}
+                            </div>
+                            <div  class="media lounge-user" ng-repeat="member in lounge.subscribersNotMember"
+                                 ng-hide="!showAllMember"
+                                 ng-class="{loading: member.loading}">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-not-member.html.twig' %}{% verbatim %}
+                            </div>
+                            <div class="media lounge-user"
+                                ng-hide="!showAllMember"
+                                ng-repeat="subscriber in resultsOfInvite = (lounge.subscribers | filter: filterSubscribersInvited)">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-invited.html.twig' %}{% verbatim %}
+                            </div>
+                        </div>
+
+                        <div class="container-sm">
+                            <h3>{% endverbatim %}{{ 'lounge.title.you'|trans({}, translation_name~'lounge') }}{% verbatim %}</h3>
+                            <div class="media lounge-me" ng-class="{loading: lounge.connected.loading}">
+                                <a ng-href="{{ 'fos_user_profile_show_name'|route: {route: connectedUser.usertag} }}" class="pull-left">
+                                    <img ng-src="{{ connectedUser.profilepicture }}" width="40" height="40">
+                                </a>
+
+                                <div class="media-body">
+                                    <span title="{{ 'lounge.state.participate.long'|transchoice: lounge.access:{}:'lounge' }}"
+                                          class="lounge-user-participe lounge-members-smiley pull-right"
+                                          ng-class="{'icon-sad2': lounge.connected.participation == 0, 'icon-smiley2': lounge.connected.participation == 1, 'icon-neutral2': lounge.connected.participation == 2}"></span>
+                                    <a href="{{ 'fos_user_profile_show_name'|route: {usertag: connectedUser.usertag } }}">{{ connectedUser.fullname }}</a><br>
+
+                                    <!-- EDITION COMMENTAIRES -->
+                                    <span ng-if="lounge.connected.access != 3" ng-bind="lounge.connected.publicComment"></span>
+
+                                        <span class="text-edit" ng-if="!lounge.connected.editingPublicComment && lounge.connected.access == 3" ng-click="editPublicComment(lounge.connected)" ng-bind="lounge.connected.publicComment"></span>
+
+                                    <span class="text-edit"
+                                          ng-if="(!lounge.connected.publicComment && !lounge.connected.editingPublicComment) && lounge.connected.access == 3"
+                                          ng-click="editPublicComment(lounge.connected)">{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}</span>
+
+                                    <input type="text"
+                                           placeholder="{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+                                           ng-model="lounge.connected.publicComment"
+                                           ng-show="lounge.connected.editingPublicComment"
+                                           ng-keydown="updatePublicComment($event, lounge.connected)"
+                                           ng-blur="stopEditingPublicComment(lounge.connected)">
+                                    <!-- FIN EDITION COMMENTAIRES -->
+                                </div>
+                                {% endverbatim %}
+        <div ng-hide="true" class="geoloc-container" ng-if="lounge.connected.participation == 1">
+            <span>{{ 'lounge.attributes.geolocation'|trans({}, translation_name~'lounge') }} : </span>
+
+            <div class="slideCheck"
+                    data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                    data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                <input type="checkbox" id="slideCheckMyGeoloc" ng-model="lounge.connected.geolocation"
+                        ng-checked="lounge.connected.initGeolocation"
+                        ng-init="lounge.connected.initGeolocation = lounge.connected.geolocation"
+                        ng-change="updateConnectedGeolocation()">
+                <label for="slideCheckMyGeoloc"></label>
+            </div>
+        </div>
+        <div class="lounge-participe">
+            <span>{{ 'lounge.attributes.participate'|trans({}, translation_name~'lounge') }} : </span>
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 1}"
+                        ng-click="updateParticipation(1)">
+                    <input type="radio"
+                            class="btn-participate"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_YES,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 2}"
+                        ng-click="updateParticipation(2)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_DONTKNOW }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_DONTKNOW,{}, translation_name~'lounge') }}
+                </label>
+                <label class="btn btn-default btn-sm"
+                        ng-class="{active: lounge.connected.participation == 0}"
+                        ng-click="updateParticipation(0)">
+                    <input type="radio" class="btn-participate"
+                            value="{{ PARTICIPATION_NO }}"> {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_NO,{}, translation_name~'lounge') }}
+                </label>
+            </div>
+        </div>
+        {% verbatim %}
+                            </div>
+                        </div>
+
+                        <div class="container-sm">
+                            <h3>{% endverbatim %}{{ 'lounge.title.listemembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</h3>
+                            <div class="small-loading" ng-show="subscribersLoading"></div>
+                            <div class="media lounge-user" ng-hide="subscribersLoading">
+                                <ul class="nav nav-justified btn-block">
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsParticipe = (lounge.subscribers | filter: filterSubscribersParticipe)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}" class="lounge-members-smiley icon-smiley2"></span>
+                                        <span class="aside-smiley aside-good">{{resultsParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsNeutral = (lounge.subscribers | filter: filterSubscribersNeutral)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}" class="lounge-members-smiley icon-neutral2"></span>
+                                        <span class="aside-smiley aside-neutral">{{resultsNeutral.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsNotParticipe = (lounge.subscribers | filter: filterSubscribersNotParticipe)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}" class="lounge-members-smiley icon-sad2"></span>
+                                        <span class="aside-smiley aside-sad">{{resultsNotParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}</p>
+                                    </li>
+                                </ul>
+                                <a ng-show="lounge.connected.access == 3" ng-href="{{ 'naturapass_lounge_invite'|route: {loungetag: lounge.loungetag} }}"  class="pull-left btn btn-primary btn-block btn-icon icon-envelop-opened">{% endverbatim %}{{ 'lounge.btn.invite'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="!showMembers && lounge.connected.access == 3 && resultsSubscribersMembers.length" ng-click="showMembers = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.adminMembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="!showMembers && lounge.connected.access != 3 && resultsSubscribersMembers.length" ng-click="showMembers = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.showMembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="showMembers && resultsSubscribersMembers.length" ng-click="showMembers = false" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-up">{% endverbatim %}{{ 'lounge.btn.hideMembers'|trans({}, 'lounge') }}{% verbatim %}</a>
+                            </div>
+                            <div class="media lounge-user" ng-repeat="subscriber in resultsSubscribersMembers = (lounge.subscribers | filter: filterSubscribers)"
+                                ng-hide="subscribersLoading || !showMembers"
+                                ng-class="{loading: subscriber.loading}">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-member.html.twig' %}{% verbatim %}
+                            </div>
+                        </div>
+
+                        <div class="container-sm">
+                            <h3>{% endverbatim %}{{ 'lounge.title.listenotmembers'|trans({}, translation_name~'lounge') }}{% verbatim %}</h3>
+                            <div class="small-loading" ng-show="subscribersNotMemberLoading"></div>
+                            <div class="media lounge-user" ng-hide="subscribersNotMemberLoading">
+                                <ul class="nav nav-justified">
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsNotMemberParticipe = (lounge.subscribersNotMember | filter: filterSubscribersNotMemberParticipe)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}" class="lounge-members-smiley icon-smiley2"></span>
+                                        <span class="aside-smiley aside-good">{{resultsNotMemberParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 1:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsNotMemberNeutral = (lounge.subscribersNotMember | filter: filterSubscribersNotMemberNeutral)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}" class="lounge-members-smiley icon-neutral2"></span>
+                                        <span class="aside-smiley aside-neutral">{{resultsNotMemberNeutral.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}</p>
+                                    </li>
+                                    <li class="text-center">
+                                        <div ng-repeat="subscriber in resultsNotMemberNotParticipe = (lounge.subscribersNotMember | filter: filterSubscribersNotMemberNotParticipe)"
+                                            ng-hide="1"></div>
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}" class="lounge-members-smiley icon-sad2"></span>
+                                        <span class="aside-smiley aside-sad">{{resultsNotMemberNotParticipe.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 0:{}:'lounge' }}</p>
+                                    </li>
+                                </ul>
+                                <div class="help-container pull-left btn-block" ng-if="lounge.connected.access == 3">
+                                    <a href="#" class="btn-block" ng-hide="1"></a>
+                                    <a href="#" class="btn btn-primary btn-block btn-icon icon-user-plus"
+                                        ng-click="openAddNotMembersModal()">
+                                         {% endverbatim %}{{ 'lounge.btn.notmember'|trans({}, translation_name~'lounge') }}{% verbatim %}
+                                     </a>
+                                    <div class="help-popover icon-question4" data-container="body" data-html="true"
+                                        data-toggle="popover" data-placement="right"
+                                        data-content="{% endverbatim %}{{ 'salon.action.addnotmember'|trans({},translation_name~'help')|raw }}{% verbatim %}">
+                                    </div>
+                                </div>
+                                <a href="#" ng-show="!showNotMembers && lounge.connected.access == 3 && lounge.subscribersNotMember.length" ng-click="showNotMembers = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.adminNotMembers'|trans({}, 'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="!showNotMembers && lounge.connected.access != 3 && lounge.subscribersNotMember.length" ng-click="showNotMembers = true" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.showNotMembers'|trans({}, 'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="showNotMembers && lounge.subscribersNotMember.length" ng-click="showNotMembers = false" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-up">{% endverbatim %}{{ 'lounge.btn.hideNotMembers'|trans({}, 'lounge') }}{% verbatim %}</a>
+                            </div>
+                            <div class="media lounge-user" ng-repeat="member in lounge.subscribersNotMember"
+                                ng-hide="subscribersNotMemberLoading || !showNotMembers"
+                                ng-class="{loading: member.loading}">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-not-member.html.twig' %}{% verbatim %}
+                            </div>
+                        </div>
+
+                        <div class="container-sm" ng-if="lounge.connected.access == 3">
+                            <h3> {% endverbatim %}{{ 'lounge.title.listeinvited'|trans({}, translation_name~'lounge') }}{% verbatim %}</h3>
+                            <div class="small-loading" ng-show="subscribersLoading"></div>
+                            <div class="media lounge-user" ng-hide="subscribersLoading">
+                                <ul class="nav nav-justified btn-block">
+                                    <li class="text-center">
+                                        <span title="{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}" class="lounge-members-smiley icon-neutral2"></span>
+                                        <span class="aside-smiley aside-neutral">{{resultsOfInvite.length}}</span>
+                                        <p class="label-smiley">{{ 'lounge.state.participate.long'|transchoice: 2:{}:'lounge' }}</p>
+                                    </li>
+                                </ul>
+                                <a href="#" ng-show="!showListInvited && resultsOfInvite.length" ng-click="clickBtnListInvite()" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.showInvited'|trans({}, 'lounge') }}{% verbatim %}</a>
+                                <a href="#" ng-show="showListInvited && resultsOfInvite.length" ng-click="clickBtnListInvite()" class="pull-left btn btn-primary btn-block btn-icon icon-arrow-down">{% endverbatim %}{{ 'lounge.btn.hideInvited'|trans({}, 'lounge') }}{% verbatim %}</a>
+                            </div>
+                            <div class="media lounge-user" ng-hide="subscribersLoading || !showListInvited"
+                                ng-repeat="subscriber in resultsOfInvite = (lounge.subscribers | filter: filterSubscribersInvited)">
+                                {% endverbatim %}{% include 'NaturaPassLoungeBundle:Include:angular.liste-invited.html.twig' %}{% verbatim %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7" ng-show="lounge.allow_show_chat || lounge.connected.access == 3">
+                    <div id="loungeTchat" class="collapse lounge-tchat container-sm" ng-controller="LoungeMessagesController">
+                        {% endverbatim %}
+        <h2 class="icon-bubbles2">{{ 'lounge.title.chat'|trans({}, translation_name~'lounge') }}</h2>
+
+        <div class="lounge-tchat-messages"
+                np-scrollbar
+                np-scrollbar-position="scroll.position"
+                np-scrollbar-scrolled-back="onScrolledBack()"
+                ng-class="{loading: socket.reconnecting || socket.disconnected}">
+            <div class="small-loading" ng-show="previousLoading"></div>
+            {% include "NaturaPassLoungeBundle:Include:angular.message.html.twig" %}
+        </div>
+        {% verbatim %}
+                        <div class="media lounge-container-chat-input" ng-class="{loading: message.loading}">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" ng-src="{{ lounge.connected.user.profilepicture }}" width="36"
+                                     height="36">
+                            </a>
+
+                            <div class="media-body" ng-show="!lounge.connected.quiet && lounge.allow_add_chat">
+                                <label class="control-label"
+                                       ng-show="message.error">{{ message.error }}</label>
+                                <!--<div class="input-group">
+                                     <span class="input-group-addon">
+                                         <input type="checkbox" class="lounge-chat-admin">
+                                     </span>-->
+                                <textarea  class="form-control input-sm" rows="{{ message.rows }}"
+                                          ng-model="message.content"
+                                          ng-keydown="persistMessage($event)"
+                                          np-read-only="socket.reconnecting || socket.disconnected"></textarea>
+                                <!--</div>
+                                <em>Cocher pour savoir qui a lu votre publication</em>-->
+                            </div>
+
+                            <div class="media-body" ng-show="lounge.connected.quiet">
+                                <label class="control-label">{% endverbatim %}{{ 'lounge.placeholder.quiet'|trans({}, translation_name~'lounge') }}{% verbatim %}</label>
+                                <!--<div class="input-group">
+                                     <span class="input-group-addon">
+                                         <input type="checkbox" class="lounge-chat-admin">
+                                     </span>-->
+                                <textarea class="form-control input-sm" rows="{{ message.rows }}"
+                                          np-read-only="true"></textarea>
+                                <!--</div>
+                                <em>Cocher pour savoir qui a lu votre publication</em>-->
+                            </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+    </div>
+    </div>
+    <div id="loungePublications" class="collapse lounge-publication container container-bulle container-index" ng-class="{in: loaded}" ng-controller="PublicationListController" ng-init="init()" data-hunt="{{ lounge.id }}" data-name="{{ lounge.name }}" ng-cloak>
+        <ul class="sharing-data hide" data-default="{{ app.user.parameters.publicationSharing.share }}">
+            {% for i in 0..3 %}
+                {% if i != 2 %}
+                    {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                        <li data-sharing="{{ i }}"
+                                class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="row">
+            <div class="col-xs-12">
+                {% if IS_GRANTED %}
+                    {% include "NaturaPassPublicationBundle:Include:angular.form-edit.html.twig" %}
+                {% endif %}
+                {# LISTING DE PUBLICATIONS #}
+                {% include "NaturaPassPublicationBundle:Include:angular.publications.html.twig" %}
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+    {% include "NaturaPassPublicationBundle:Modal:angular.publication.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.add-not-member.html.twig" %}
+
+    {% include "NaturaPassLoungeBundle:Modal:angular.remove-member.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.remove-notmember.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.remove-invitedmember.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.valid-invitedmember.html.twig" %}
+    {% include "NaturaPassLoungeBundle:Modal:angular.revive-invitedmember.html.twig" %}
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.processing-publication.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.map.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.observation.html.twig' %}
+
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/Map/MapController.js'
+    'js/app/controllers/Lounges/LoungeController.js'
+    'js/app/controllers/Lounges/LoungeMessagesController.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Lounges/LoungeMapController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Modal/ModalObservationController.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Publications/PublicationController.js'
+    'js/app/controllers/Publications/PublicationListController.js'
+    'js/app/controllers/Publications/PublicationFormController.js'
+    'js/app/controllers/Publications/EditPublicationFormController.js'
+    'js/app/controllers/Publications/MediaPublicationFormController.js'
+    'js/app/controllers/Publications/PublicationFormColorLabel.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

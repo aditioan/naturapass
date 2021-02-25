@@ -1,0 +1,105 @@
+<!--[if lt IE 8]>
+<div class="alert alert-danger"><p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a
+        href="http://browsehappy.com/" class="alert-link">upgrade your browser</a> or <a
+        href="http://www.google.com/chromeframe/?redirect=true" class="alert-link">activate Google Chrome Frame</a> to
+    improve your experience.</p></div>
+<![endif]-->
+<nav id="navbar-ctrl" class="navbar navbar-fixed-top" role="navigation" ng-controller="NavbarController">
+    <div class="container{% if IS_GRANTED %}-fluid{% endif %}">
+        {% if IS_GRANTED %}
+            <div class="navbar-hide-menu">
+                <a href="#" class="icon-grid3"></a>
+            </div>
+        {% endif %}
+        <div class="navbar-header">
+            {% if IS_GRANTED %}
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {% endif %}
+            <a class="navbar-brand" href="{{ path('naturapass_main_homepage') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'home.logo'|trans({}, translation_name~'main') }}">
+                <img src="{{ asset("uploads/global/logo-application.png") }}" alt="{{ 'nav.logo'|trans({}, translation_name~'nav') }}" width="180" height="34">
+            </a>
+        </div>
+        {% if IS_GRANTED %}
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                {% include "NaturaPassMainBundle:Include:angular.nav-search.html.twig" %}
+                <ul class="nav navbar-nav navbar-right">
+                    {# fix #}
+                    {% if visibility.social_network %}
+                        {% verbatim %}
+                        <li>
+                            <a href="#" class="icon-users invitations link-icon-nav" data-toggle="tooltip" data-placement="left" ng-attr-title="{{ invitationsTitle}}" np-popover=".popover-invitations">
+                                <span class="badge" ng-cloak ng-show="untreatedInvitations" ng-bind="untreatedInvitations"></span>
+                            </a>
+                        {% endverbatim %}
+                        {% include "NaturaPassMainBundle:Include:angular.nav-invitation.html.twig" %}
+                    {% endif %}
+                    {% verbatim %}
+                        </li>
+                        <li>
+                            <a href="#" class="icon-bell notifications link-icon-nav" data-toggle="tooltip" data-placement="left" title="{{ notificationsTitle}}" np-popover=".popover-notifications">
+                                <span class="badge" ng-cloak ng-show="unreadedNotifications">{{ unreadedNotifications}}</span>
+                            </a>
+                        {% endverbatim %}
+                    {% include "NaturaPassMainBundle:Include:angular.nav-notification.html.twig" %}
+                    {% verbatim %}
+                        </li>
+                        <li>
+                            <a href="#" class="icon-bubbles messages link-icon-nav" data-toggle="tooltip" data-placement="left" title="{{ messagesTitle}}" np-popover=".popover-messages">
+                                <span class="badge" ng-cloak ng-show="unreadedMessages">{{ unreadedMessages}}</span>
+                            </a>
+                            {% endverbatim %}
+                    {% include "NaturaPassMessageBundle:Include:angular.nav-message.html.twig" %}
+                    {% verbatim %}
+                        </li>
+                    {% endverbatim %}
+                    {% if visibility.social_network %}
+                        <li>
+                            <a href="{{ path('naturapass_main_search') }}" class="link-icon-nav icon-users" data-toggle="tooltip" data-placement="left" title="{{ 'nav.drop_param.friends'|trans({},translation_name~'nav') }}"></a>
+                        </li>
+                    {% endif %}
+                    {% if visibility.social_network %}
+                        <li>
+                            <a href="{{ path('naturapass_user_invitation') }}" class="link-icon-nav icon-user-plus2" data-toggle="tooltip" data-placement="left" title="{{ 'nav.invite'|trans({},translation_name~'nav') }}"></a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ path('naturapass_main_map') }}" class="link-icon-nav icon-earth" data-toggle="tooltip" data-placement="left" title="{{ 'nav.map'|trans({},translation_name~'nav') }}"></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="btn btn-primary btn-icon dropdown-toggle icon-cog2" id="dropdownNavMenu" data-toggle="dropdown">{{ 'nav.drop_param.button'|trans({},translation_name~'nav') }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownNavMenu">
+                            {% if naturapass_parametre %}
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="{{ path('fos_user_profile_parameters') }}" class="icon-cog2">{{ 'nav.drop_param.parameter'|trans({},translation_name~'nav') }}</a>
+                                </li>
+                            {% endif %}
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_profile_edit') }}" class="icon-user">{{ 'nav.drop_param.profil'|trans({},translation_name~'nav') }}</a></li>
+                            {% if visibility.social_network %}
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('naturapass_main_search') }}" class="icon-users">{{ 'nav.drop_param.friends'|trans({},translation_name~'nav') }}</a></li>
+                            {% endif %}
+                            {% if visibility.social_network %}
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('naturapass_user_invitation') }}" class="icon-user-plus2">{{ 'nav.invite'|trans({},translation_name~'nav') }}</a></li>
+                            {% endif %}
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_security_logout') }}" class="icon-exit3">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a href="#" role="menuitem" class="icon-bug" ng-click="reportProblem()">{{ 'nav.drop_param.bug'|trans({},translation_name~'nav') }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                {% include "NaturaPassMainBundle:Modal:angular.report-problem.html.twig" %}
+            </div>
+        {% else %}
+            {#
+            {{ render(controller("FOSUserBundle:Security:login")) }}
+            #}
+        {% endif %}
+
+    </div>
+    <!--/.container -->
+</nav>

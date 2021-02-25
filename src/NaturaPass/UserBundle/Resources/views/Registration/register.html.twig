@@ -1,0 +1,18 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{#{% extends "NaturaPassMainBundle:Default:inscription.html.twig" %}#}
+
+{% block body %}
+    {#<div id="corps-container" class="large-container">
+        <div class="container container-bulle">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-6">
+                    <div class="container-md">
+                        <h1>{{ 'home.register.title'|trans }}</h1>
+                        <p>{{ 'home.register.description'|trans }}</p>#}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    {#</div>
+</div>
+</div>
+</div>
+</div>#}
+{% endblock body %}

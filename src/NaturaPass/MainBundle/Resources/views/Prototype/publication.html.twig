@@ -1,0 +1,77 @@
+<div class="media publication prototype hide" data-id="" data-uid="">
+    <a class="pull-left" href="#">
+        <img class="media-object" src="{{ asset('img/interface/default-avatar.jpg') }}" width="60" height="60">
+    </a>
+{#     {% if IS_GRANTED %}
+        <div class="dropdown option-publication">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                <span class="icon-cog2"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a class="edit-publication icon-pencil6" role="menuitem" tabindex="-1" href="#">{{ 'button.edit'|trans({},translation_name~'global') }}</a></li>
+                <li role="presentation"><a class="remove-publication icon-remove2" role="menuitem" tabindex="-1" href="#">{{ 'button.delete'|trans({},translation_name~'global') }}</a></li>
+            </ul>
+        </div>
+        <div class="dropdown media-sharing">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" id="dropdownPublication" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownPopoverInvite">
+                {% for i in 0..4 %}
+                    <li><a href="#" data-sharing="{{ i }}" class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</a></li>
+                {% endfor %}
+                <li role="presentation" class="divider"></li>
+                <li class=""><a href="#" data-toggle="modal" data-target="#modalPartage" class="icon-cog2">{{ 'label.sharing.perso'|trans({},translation_name~'global') }}</a></li>
+            </ul>
+        </div>
+    {% endif %} #}
+    <div class="media-body">
+        <h4 class="media-heading">
+            <a href=""></a>
+        </h4>
+        <small></small>
+        <br>
+
+        <p class="media-contenu"></p>
+
+        <p class="media-media">
+            <img src="" class="img-responsive"/>
+        </p>
+
+        <div class="media-info">
+            <span class="media-legend"></span>
+            <span class="media-tags"></span>
+        </div>
+    </div>
+
+{#     <div class="media-link">
+        <div class="clearfix">
+            <div class="pull-left">
+                <span class="nbcomments-publication">{{ 'publication.attributes.comment'|transchoice(0,{},'publication') }}</span> - <span class="like-publication">0</span> {{ 'label.like'|trans({},'publication') }} - <span class="unlike-publication">0</span> {{ 'label.unlike'|trans({},'publication') }}
+            </div>
+            {% if IS_GRANTED %}
+                <div class="pull-right">
+                    <button type="button" class="btn btn-link btn-xs like {% if not IS_GRANTED %}disabled{% endif %}"><span class="icon-thumbs-up3"></span> {{ 'label.like'|trans({},'publication') }}</button>
+                    <button type="button" class="btn btn-link btn-xs unlike {% if not IS_GRANTED %}disabled{% endif %}"><span class="icon-thumbs-up4"></span> {{ 'label.unlike'|trans({},'publication') }}</button>
+                    <button type="button" class="btn btn-link btn-xs comment"><span class="icon-bubble-dots3"></span> {{ 'label.comment'|trans({},'publication') }}</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+ #}
+    {# <div class="media comments">
+        <div class="media comment view-all hide">
+            <a href="#"><span class="icon-bubble-dots3"></span> {{ 'label.aff_other'|trans({'%count%': 0},'publication') }}</a>
+        </div>
+        <div class="media comment addcomment">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="{{ asset('img/interface/default-avatar.jpg') }}" width="50" height="50">
+            </a>
+
+            <div class="media-body">
+                <textarea name="parent_addcomment" class="form-control input-sm" rows="1" placeholder="{{ 'placeholder.add_comment'|trans({},'publication') }}"></textarea>
+                <small>{{ 'label.add_comment'|trans({},'publication') }}</small>
+            </div>
+        </div>
+    </div> #}
+
+</div>

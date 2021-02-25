@@ -1,0 +1,40 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="card in entities" ng-cloak>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_sentinelle_card_edit' | route: {card: card.id} }}">{{ card.name }}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+        <div class="row row-btn">
+            <div class="col-sm-3">
+                <a ng-href="{{ 'admin_sentinelle_card_edit'|route: {card: card.id} }}"
+                   class="btn-access btn btn-primary btn-block">
+                    {% endverbatim %}{{ 'card.action.administer'|trans({}, translation_name~'card') }}{% verbatim %}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a ng-href="{{ 'admin_sentinelle_card_order'|route: {card: card.id} }}" class="btn-access btn btn-primary btn-block">
+                {% endverbatim %}{{ 'card.action.order'|trans({}, translation_name~'card') }}{% verbatim %}{% endverbatim %}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a ng-href="#" class="btn-access btn btn-primary btn-block" style="width: 163px;margin-left: -7px;" ng-click="openDuplicateModal($index, card)" np-submit-loader="card.loading">
+                Dupliquer ce formulaire
+                </a>
+            </div>
+            {% verbatim %}
+            <div class="col-sm-3">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, card)"
+                   np-submit-loader="card.loading">
+                     {% endverbatim %}{{ 'card.action.close'|trans({}, translation_name~'card') }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

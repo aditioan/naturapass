@@ -1,0 +1,74 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({'%brand%': form.name.vars.value},translation_name~'brand') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'brand') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="BrandFormController">
+            {% if ajout != 0 %}
+                <h1>{{ 'brand.title.creation'|trans({}, translation_name~'brand') }}</h1>
+            {% elseif ajout == 0 %}
+                <h1>{{ 'brand.title.edition'|trans({}, translation_name~'brand') }}</h1>
+            {% endif %}
+
+            <form name="brand" method="post" action="" class="form-naturapass_brand_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <h2>{{ 'brand.description.creation'|trans({}, translation_name~'brand') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+                        <div class="over-file" style="background-image: url({% if form.logo.vars.value is not null %}{{ form.logo.vars.value.getWebPath }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %})">
+                        </div>
+                        <div class="hide-file">
+                            {{ form_widget(form.logo.file) }}
+                        </div>
+                        {{ form_label(form.logo.file) }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div class="form-group geoloc-container">
+                            <span>{{ 'label.partner'|trans({},translation_name~'brand') }} :</span>
+                            <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}" data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                                <input type="checkbox" id="lounge_geolocation" name="brand[partner]" class="lounge-geoloc"
+                                    ng-model="partnerActive"
+                                    ng-init="partnerActive = '{{ form.partner.vars.value }}'"
+                                    ng-true-value="1"
+                                    ng-false-value="0">
+                                <label for="lounge_geolocation"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark" ng-disabled="map.loading">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ tinymce_init() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Distributor/Brand/BrandFormController.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

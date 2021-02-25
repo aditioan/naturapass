@@ -1,0 +1,19 @@
+naturapass_email_group_invite:
+    path:  /invite/{grouptag}/{fullname}/{message}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:invite }
+
+naturapass_email_group_invite_wm:
+    path:  /invite-wm/{grouptag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:inviteWithoutMessage }
+
+naturapass_email_group_publication_added:
+    path:  /publication-added/{grouptag}/{senders}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:publicationAdded }
+
+naturapass_email_group_valid_invite:
+    path:  /valid-invite/{grouptag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:validInvite }
+
+naturapass_email_group_accessvalidated:
+    path:  /access-validated/{grouptag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:accessValidated }

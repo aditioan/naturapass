@@ -1,0 +1,44 @@
+menu:
+    title:                      Jeux concours
+    listing:                    Accueil newsx concours
+title:
+    add:                        Ajout d'une actualité
+    edit:                       Modification d'une actualité
+    no_more:                    Vous avez chargé l'intégralité des actualités
+filter:
+    label:                      Filtre
+filter-new:
+    placeholder:                Nom de l'actualité recherchée puis tapez Entrée
+news:
+    no_news:                    Auncun news en cours pour le moment
+    title:
+        creation:               Création d'une actualité
+        edition:                Modification d'une actualité
+        active:                 Voulez-vous activer cette actualité?
+        active_yes:             Oui
+        active_no:              Non
+        list:                   Liste des actualités
+        description:            Description
+        creation:               Ajoutez une actualité
+        edition:                Edition d'une actualité
+        close_new:            Supprimer l'actualité
+    placeholder:
+        title:                  Titre de l'actualité
+        content:                Contenu de l'actualité
+        date:                   Date
+        link:                   URL de l'actualité
+    attributes:
+        title:                  Titre
+        content:                Contenu de l'actualité
+        date:                   Date
+        link:                   URL de l'actualité
+    all_news:                   Liste des actualités
+    action:
+        administer:             Editer
+        close:                  Supprimer
+    description:
+        creation:               Description
+        list:                   Liste des actualités
+        closenew:      |
+                                Attention, vous allez supprimer définitivement l'actualité <span style="color: red">%new%</span>. <br>
+                                Etes-vous sûr de supprimer cette actualité?

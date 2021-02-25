@@ -1,0 +1,32 @@
+{% extends "NaturaPassMainBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'menu.title'|trans({},translation_name~'partner') }} | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container">
+        <div class="container">
+            <h1>{{ 'menu.title'|trans({},translation_name~'partner') }}</h1>
+            <div class="panel panel-concours panel-default">
+                <div class="panel-body">
+                    <img src="{{ asset("img/partenaires/haut.PNG") }}" alt="{{ 'menu.title'|trans({}, 'partner') }}" width="650" class="img-responsive center-block">
+                    <a href="http://fr.browning.eu/" target="_blank"><img src="{{ asset("img/partenaires/browning.PNG") }}" alt="browning" width="650" class="img-responsive center-block"></a>
+                    <a href="https://www.remington.com/" target="_blank"><img src="{{ asset("img/partenaires/remington.PNG") }}" alt="remington" width="650" class="img-responsive center-block"></a>
+                    <a href="https://www.opinel.com/" target="_blank"><img src="{{ asset("img/partenaires/opinel.PNG") }}" alt="opinel" width="650" class="img-responsive center-block"></a>
+                    <a href="http://www.gamefair.fr/" target="_blank"><img src="{{ asset("img/partenaires/game_fair.PNG") }}" alt="game fair" width="650" class="img-responsive center-block"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

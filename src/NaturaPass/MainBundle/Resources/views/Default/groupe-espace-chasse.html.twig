@@ -1,0 +1,21 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'groupeespacechasse.title'|trans({},translation_name~'groupeespacechasse') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'groupeespacechasse.description'|trans({},translation_name~'groupeespacechasse') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                {{ 'groupeespacechasse.raw'|trans({},translation_name~'groupeespacechasse') | raw }}
+                <img src="{{ asset('uploads/global/logo-application-accroche.gif') }}" class="img-responsive center-block">
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

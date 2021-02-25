@@ -1,0 +1,26 @@
+geolocalisationgroupechasse:
+    title:          Géolocaliser les participants de votre groupe de chasse
+    description:    Avec I-C, vous pouvez organiser vos chasses et géolocaliser les participants de votre groupe de chasse ou association de chasse
+    raw:            |
+                    <h1>Géolocalisez les autres chasseurs  pendant la chasse</h1>
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <p><em>"Un bon chasseur est organisé"</em></p>
+                    <p>Par l’intermédiaire de la partie « Jours de chasse » vous pouvez organiser vos chasses, et tout particulièrement vos battues. Cela vous évitera de nombreux appels, sms, emails… et les incertitudes liées à cet exercice.</p>
+                    <h2>Simplifiez l'organisation de vos chasses</h2>
+                    <p>Avant le jour de chasse, vous allez simplifier votre organisation en vous connectant sur le site ou sur l’application I-C. Vous aurez à votre disposition un système d’invitations, de gestion des présences et de discussion en temps réel par un « chat ». Un gain de temps certain et, plus de chance d’être le bon nombre le jour de la chasse.</p>
+                    <h2>Les atouts de la géolocalisation</h2>
+                    <p>Le jour de la battue, vous pourrez toujours utiliser le chat, mais aussi lancer la géolocalisation des chasseurs participant à cette chasse, ce qui vous permettra notamment de :</p>
+                    <ul>
+                    <li>Vérifier le placement des postés </li>
+                    <li>Faire les annonces (supplée la traditionnelle trompe !) </li>
+                    <li>Communiquer entre chefs de ligne</li>
+                    <li>Ne pas oublier sur le terrain des personnes postées </li>
+                    <li>Repérer l’endroit du tir d’un animal blessé</li>
+                    <li>… </li>
+                    </ul>
+                    </div>
+                    <div class="col-sm-4">
+                    <img src="%img%" class="img-responsive center-block" />
+                    </div>
+                    </div>

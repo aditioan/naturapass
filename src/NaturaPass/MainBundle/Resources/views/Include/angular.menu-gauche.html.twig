@@ -1,0 +1,317 @@
+{% if IS_GRANTED %}
+    {% set
+    LOUNGE_ACCESS_INVITED, LOUNGE_ACCESS_RESTRICTED, GROUP_ACCESS_INVITED, GROUP_ACCESS_RESTRICTED =
+    constant('\\NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_INVITED'),
+    constant('\\NaturaPass\\LoungeBundle\\Entity\\LoungeUser::ACCESS_RESTRICTED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_INVITED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_RESTRICTED') %}
+    {% set
+    LOUNGES_WAITING, GROUPS_WAITING, LOUNGES_INVITED, GROUPS_INVITED =
+    app.user.getLoungesUserWaiting(),
+    app.user.getGroupsUserWaiting(),
+    app.user.getLounges([LOUNGE_ACCESS_INVITED, LOUNGE_ACCESS_RESTRICTED]).count(),
+    app.user.getAllGroups([GROUP_ACCESS_INVITED, GROUP_ACCESS_RESTRICTED]).count() %}
+    {% if menuInit is defined %}
+        <div id="menu-gauche" class="hidden-print" ng-controller="MenuController" ng-init="initMenu(false)">
+    {% else %}
+        <div id="menu-gauche" class="hidden-print" ng-controller="MenuController" ng-init="initMenu(true)">
+    {% endif %}
+    <div class="menu-gauche-arrow"><span class="icon-arrow-right2"></span></div>
+    <div class="menu-gauche-scroll" role="complementary">
+        <div class="media menu-profil">
+            <a class="pull-left" href="{{ path('fos_user_profile_show_name', {'usertag': app.user.usertag}) }}">
+                <img class="media-object" src="{{ app.user.profilePicture|bProfilePict('thumb') }}" width="70" height="70" alt="{{ app.user.fullname }}">
+            </a>
+            <div class="media-body">
+                <p>
+                    <b>{{ app.user.firstname }}</b><br>
+                    {{ app.user.lastname }}
+                </p>
+                <a href="{{ path('fos_user_profile_show_name', {'usertag': app.user.usertag}) }}" class="btn btn-primary btn-sm btn-icon icon-user">{{ 'user.profil'|trans({}, translation_name~'user') }}</a>
+            </div>
+        </div>
+        {# Bloc des favoris #}
+        <div class="panel-group" id="accordionMenuGauche">
+            <div class="panel panel-default favorites">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseMur" class="icon-bubble-dots3 {% if 'naturapass_main_homepage'|isCurrentRoute == false %}collapsed{% endif %}">
+                            {{ 'menu.title'|trans({}, translation_name~'publication') }} <i class="icon-arrow-down"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseMur" ng-class="{loading: loadingFilter}" class="panel-collapse collapse {% if 'naturapass_main_homepage'|isCurrentRoute %}in{% endif %}">
+                    <div class="panel-body">
+                        <ul class="nav nav-stacked" style="margin-left: -10px">
+                            <li><a href="{{ path('naturapass_main_homepage') }}" class="icon-bubble-dots3">{{ 'menu.link'|trans({},translation_name~'publication') }}</a></li>
+                        </ul>
+                        <p>
+                            {{ 'menu.description'|trans({},translation_name~'publication') }}
+                        </p>
+                        <ul class="nav nav-stacked publication-normal">
+                            <li><a href="{{ path('naturapass_main_homepage') }}#/?me" ng-click="updateSharing(0)" ng-class="{active: sharing==0, overide: sharing>0}" class="menu-wall-link {{ 'sharing'|icomoon(0) }}">{{ 'label.sharing.choice'|transchoice(0,{},translation_name~'global') }}</a></li>
+                            {% if visibility.social_network %}
+                                <li><a href="{{ path('naturapass_main_homepage') }}#/?friends" ng-click="updateSharing(1)" ng-class="{active: sharing==1, overide: sharing>1}" class="menu-wall-link {{ 'sharing'|icomoon(1) }}">{{ 'label.sharing.choice'|transchoice(1,{},translation_name~'global') }}</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('naturapass_main_homepage') }}#/?naturapass" ng-click="updateSharing(3)" ng-class="{active: sharing==3, overide: sharing>3}" class="menu-wall-link {{ 'sharing'|icomoon(3) }}">{{ 'label.sharing.choice'|transchoice(3,{},translation_name~'global') }}</a></li>
+                        </ul>
+                        {% if naturapass_group and app.user.getAllGroups|length > 0 %}
+                            <hr>
+                            <ul class="nav nav-stacked publication-group">
+                                {% for group in app.user.getAllGroups %}
+                                    <li>
+                                        <a href="{{ path('naturapass_main_homepage') }}#/?group={{ group.id }}" groupid="{{ group.id }}" ng-click="updateGroup({{ group.id }}, 'publication')" ng-class="{active: group.indexOf({{ group.id }}) > -1}" class="menu-group-in-mur menu-wall-link {{ 'sharing'|icomoon('group') }}" data-toggle="tooltip" data-placement="top" title="{{ group.name }}">
+                                            {{ group.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <hr>
+                        <div class="clearfix">
+                            <button type="button" class="btn btn-menu btn-icon pull-right help-popover icon-question4" data-toggle="modal" data-target="#helpModal" data-html="{{ 'text.mur'|trans({},translation_name~'help')|raw }}">{{ 'button.help'|trans({},translation_name~'global') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+            {# Bloc des salons #}
+            <!--<div class="panel-group" id="accordionSalon">-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseSalon" class="icon-compass2 {% if 'naturapass_lounge'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                            {{ 'menu.title'|trans({},translation_name~'lounge') }} <i class="icon-arrow-down"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseSalon" class="panel-collapse collapse {% if 'naturapass_lounge'|isCurrentRouteGroup %}in{% endif %}">
+                    <div class="panel-body">
+                        <ul class="nav nav-stacked">
+                            <li><a href="{{ path('naturapass_lounge_owning') }}" class="icon-drawer">{{ 'menu.my_lounges'|trans({}, translation_name~'lounge') }} {% if LOUNGES_WAITING > 0 %}<span class="badge badge-admin">{{ LOUNGES_WAITING }}</span>{% endif %}</a></li>
+                            {% if LOUNGES_INVITED > 0 %}
+                                <li><a href="{{ path('naturapass_lounge_invite_wait') }}" class="icon-drawer2">{{ 'menu.invited_lounges'|trans({}, translation_name~'lounge') }} <span class="badge">{{ LOUNGES_INVITED }}</span></a></li>
+                            {% endif %}
+                            <li><a href="{{ path('naturapass_lounge_homepage') }}" class="icon-mail4">{{ 'menu.all_lounges'|trans({}, translation_name~'lounge') }}</a></li>
+                            <li><a href="{{ path('naturapass_lounge_add') }}" class="icon-plus-circle2">{{ 'menu.add_lounge'|trans({}, translation_name~'lounge') }}</a></li>
+                        </ul>
+                        <div class="clearfix">
+                            <button type="button" class="btn btn-menu btn-icon pull-right help-popover icon-question4" data-toggle="modal" data-target="#helpModal" data-html="{{ 'text.salon'|trans({},translation_name~'help')|raw }}">{{ 'button.help'|trans({},translation_name~'global') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+            {% if naturapass_group %}
+                {# Bloc des groupes #}
+                <!--<div class="panel-group" id="accordionGroup">-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseGroup" class="icon-users {% if 'naturapass_group'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                {{ 'menu.title'|trans({}, translation_name~'group') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseGroup" class="panel-collapse collapse {% if 'naturapass_group'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('naturapass_group_owning') }}" class="icon-users">{{ 'menu.my_groups'|trans({}, translation_name~'group') }} {% if GROUPS_WAITING > 0 %}<span class="badge badge-admin">{{ GROUPS_WAITING }}</span>{% endif %}</a></li>
+                                {% if GROUPS_INVITED > 0 %}
+                                    <li><a href="{{ path('naturapass_group_invite_wait') }}" class="icon-mail4">{{ 'menu.invited_groups'|trans({}, translation_name~'group') }} <span class="badge">{{ GROUPS_INVITED }}</span></a></li>{% endif %}
+                                <li><a href="{{ path('naturapass_group_homepage') }}" class="icon-users4">{{ 'menu.all_groups'|trans({}, translation_name~'group') }}</a></li>
+                                <li><a href="{{ path('naturapass_group_add') }}" class="icon-plus-circle2">{{ 'menu.add_group'|trans({}, translation_name~'group') }}</a></li>
+                            </ul>
+                            <hr>
+                            <div class="clearfix">
+                                <button type="button" class="btn btn-menu btn-icon pull-right help-popover icon-question4" data-toggle="modal" data-target="#helpModal" data-html="{{ 'text.group'|trans({},translation_name~'help')|raw }}">{{ 'button.help'|trans({},translation_name~'global') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            {% endif %}
+            {# Bloc de la carte #}
+            <!--<div class="panel-group" id="accordionMap">-->
+            <div class="panel panel-default favorites">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseMap" class="icon-earth {% if 'naturapass_main_map'|isCurrentRoute == false %}collapsed{% endif %}">
+                            {{ 'map.title'|trans({},translation_name~'main') }} <i class="icon-arrow-down"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseMap" ng-class="{loading: loadingFilter}" class="panel-collapse collapse {% if 'naturapass_main_map'|isCurrentRoute %}in{% endif %}">
+                    <div class="panel-body">
+                        <ul class="nav nav-stacked">
+                            <li><a href="{{ path('naturapass_main_map') }}" class="icon-earth">{{ 'map.link'|trans({},translation_name~'main') }}</a></li>
+                        </ul>
+                        <p>
+                            {{ 'map.description'|trans({},translation_name~'main') }}
+                        </p>
+                        <ul class="nav nav-stacked publication-normal">
+                            <li><a href="{{ path('naturapass_main_map') }}#/?me" ng-click="updateSharing(0)" ng-class="{active: sharing==0, overide: sharing>0}" class="menu-wall-link {{ 'sharing'|icomoon(0) }}">{{ 'label.sharing.choice'|transchoice(0,{},translation_name~'global') }}</a></li>
+                            {% if visibility.social_network %}
+                                <li><a href="{{ path('naturapass_main_map') }}#/?friends" ng-click="updateSharing(1)" ng-class="{active: sharing==1, overide: sharing>1}" class="menu-wall-link {{ 'sharing'|icomoon(1) }}">{{ 'label.sharing.choice'|transchoice(1,{},translation_name~'global') }}</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('naturapass_main_map') }}#/?naturapass" ng-click="updateSharing(3)" ng-class="{active: sharing==3, overide: sharing>3}" class="menu-wall-link {{ 'sharing'|icomoon(3) }}">{{ 'label.sharing.choice'|transchoice(3,{},translation_name~'global') }}</a></li>
+                        </ul>
+                        {% if naturapass_group and app.user.getAllGroups|length > 0 %}
+                            <hr>
+                            <ul class="nav nav-stacked publication-group">
+                                {% for group in app.user.getAllGroups %}
+                                    <li><a href="{{ path('naturapass_main_map') }}#/?group={{ group.id }}" ng-click="updateGroup({{ group.id }})" ng-class="{active: group.indexOf({{ group.id }}) > -1}" class="menu-wall-link {{ 'sharing'|icomoon('group') }}">{{ group.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <hr>
+                        <ul class="nav nav-stacked">
+                            <li><a href="{{ path('naturapass_main_map') }}#/?landmark" ng-click="mapAddPublication()">{{ 'map.action.add'|trans({}, translation_name~'map') }}</a></li>
+                        </ul>
+                        <hr>
+                        <div class="clearfix">
+                            <button type="button" class="btn btn-menu btn-icon pull-right help-popover icon-question4" data-toggle="modal" data-target="#helpModal" data-html="{{ 'text.map'|trans({},translation_name~'help')|raw }}">{{ 'button.help'|trans({},translation_name~'global') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+            {% if app.user.hasRole('ROLE_BACKOFFICE') %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseBackoffice" class="icon-list {% if 'backoffice_fdc'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                {{ 'menu.title'|trans({}, translation_name~'backoffice') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseBackoffice" class="panel-collapse collapse {% if 'backoffice_fdc'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('backoffice_fdc_search') }}" class="icon-list">{{ 'menu.title'|trans({}, translation_name~'backoffice') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if app.user.hasRole('ROLE_ADMIN') or app.user.hasRole('ROLE_SUPER_ADMIN') %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseAdmin" class="icon-king">
+                                Admin <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseAdmin" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('admin_main_homepage') }}" class="icon-king">Admin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if visibility.social_network %}
+                {# Bloc des amis #}
+                <!--<div class="panel-group" id="accordionFriends">-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseFriends" class="icon-users {% if 'naturapass_user'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                {{ 'friends.title'|trans({},translation_name~'user') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFriends" class="panel-collapse collapse {% if 'naturapass_user'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('naturapass_main_search') }}" class="icon-users">{{ 'nav.drop_param.friends'|trans({},translation_name~'nav') }}</a></li>
+                                <li><a href="{{ path('naturapass_user_invitation') }}" class="icon-user-plus2">{{ 'nav.invite'|trans({},translation_name~'nav') }}</a></li>
+                                <li><a href="{{ path('fos_user_profile_show') }}#/?friends" class="icon-user-plus2">{{ 'nav.friends'|trans({},translation_name~'nav') }}</a></li>
+                            </ul>
+                            <hr>
+                            <div class="clearfix">
+                                <button type="button" class="btn btn-menu btn-icon pull-right help-popover icon-question4" data-toggle="modal" data-target="#helpModal">{{ 'button.help'|trans({},translation_name~'global') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <!--</div>-->
+            {% if visibility.help_problem %}
+                {# Bloc d'aide #}
+                <!--<div class="panel-group" id="accordionHelp">-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseHelp" class="icon-bug {% if 'naturapass_help'|isCurrentRoute == false %}collapsed{% endif %}">
+                                {{ 'menu.title'|trans({},translation_name~'help') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseHelp" class="panel-collapse collapse {% if 'naturapass_help'|isCurrentRoute %}in{% endif %}">
+                        <div class="panel-body">
+                            <p>
+                                {{ 'menu.description'|trans({},translation_name~'help') }}
+                            </p>
+                            <ul class="nav nav-stacked">
+                                {#<li><a href="#" class="icon-home3">{{ 'menu.submenu1'|trans({},translation_name~'help') }}</a></li>#}
+                                <li><a href="#" class="icon-bug" ng-click="reportProblem()">{{ 'menu.submenu2'|trans({},translation_name~'help') }}</a></li>
+                                <li><a href="#" class="icon-warning" ng-click="reportAbuse()">{{ 'menu.submenu3'|trans({},translation_name~'help') }}</a></li>
+                                <li><a href="#" class="icon-quill3" ng-click="contactNaturapass()">{{ 'menu.submenu4'|trans({},translation_name~'help') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if visibility.game %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapseGame" class="icon-medal2 {% if 'naturapass_concours'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                {{ 'menu.title'|trans({}, translation_name~'game') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseGame" class="panel-collapse collapse {% if 'naturapass_concours'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('naturapass_concours_listing') }}" class="icon-home2">{{ 'menu.listing'|trans({}, translation_name~'game') }}</a></li>
+                            </ul>
+                            <hr>
+                            {% verbatim %}
+                            <ul class="nav nav-stacked">
+                                <li ng-repeat="gameMenu in gamesMenuOpen | orderBy: '-created'" ng-cloak>
+                                    <a href="{{ 'naturapass_concours_detail'|route: {game: gameMenu.id, name: gameMenu.titleFormat} }}" ng-class="{'icon-trophy': {{ gameMenu.type }} == 1, 'icon-podium': {{ gameMenu.type }} == 0}" title="{{ gameMenu.title }}">
+                                        {{ gameMenu.title }}
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endverbatim %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if visibility.partner %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionMenuGauche" href="#collapsePartner" class="icon-users4 {% if 'naturapass_partners'|isCurrentRouteGroup == false %}collapsed{% endif %}">
+                                {{ 'menu.title'|trans({}, translation_name~'partner') }} <i class="icon-arrow-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapsePartner" class="panel-collapse collapse {% if 'naturapass_partners'|isCurrentRouteGroup %}in{% endif %}">
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                <li><a href="{{ path('naturapass_partner_listing') }}" class="icon-users4">{{ 'menu.title'|trans({}, translation_name~'partner') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+{% endif %}

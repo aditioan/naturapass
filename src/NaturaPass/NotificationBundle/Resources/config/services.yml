@@ -1,0 +1,14 @@
+services:
+    naturapass.notification.sender:
+        class: NaturaPass\NotificationBundle\EventListener\NotificationSenderListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
+    naturapass.notification.pool:
+        class:      NaturaPass\NotificationBundle\Component\NotificationMemoryPool
+    naturapass.notification.push:
+        class:      NaturaPass\NotificationBundle\Component\PushNotificationService
+        arguments: ["@logger", "@rms_push_notifications", "@doctrine.orm.entity_manager"]
+    naturapass.notification:
+        class:      NaturaPass\NotificationBundle\Component\NotificationService
+        arguments:  ["@security.token_storage", "@doctrine.orm.entity_manager", "@router", "@translator", "@naturapass.notification.pool", "%translation_name%", "%project_id%"]

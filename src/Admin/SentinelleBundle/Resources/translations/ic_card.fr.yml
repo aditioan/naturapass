@@ -1,0 +1,38 @@
+card:
+    title:
+        edit:                   |
+                                Modification de la fiche : %card%
+        add:                    Ajout d'une fiche
+        order:                  Ordre de la fiche
+    description:
+        creation:               Description
+        list:                   Description
+        closecard:              |
+                                Attention, vous allez supprimer définitivement la fiche <span style="color: red">%card%</span>. <br>
+                                Etes-vous sûr de supprimer cette fiche?
+        closecardlabel:         |
+                                Attention, vous allez supprimer définitivement le label <span style="color: red">%cardlabel%</span>. <br>
+                                Etes-vous sûr de supprimer ce label?
+    all_cards:                  Liste des fiches
+    action:
+        order:                  Ordre
+        administer:             Editer
+        close:                  Supprimer
+    close_card:                 Supprimer la fiche
+    close_card_label:           Supprimer le label
+    placeholder:
+        name:                   Nom de la fiche
+    label:
+        list:                   Liste des labels
+        placeholder:            Nom du label
+
+title:
+    no_more:                    Vous avez chargé l'intégralité des fiches
+
+filter:
+    label:                      Filtre
+filter-card:
+    placeholder:                Nom de la fiche recherché puis tapez Entrée
+
+
+

@@ -1,0 +1,46 @@
+{% extends "NaturaPassPublicationBundle::layout.html.twig" %}
+
+{% block title %}{{ 'title.publication'|trans({},translation_name~'publication') }}{% endblock title %}
+
+{% block corps %}
+    <div id="corps-container" ng-controller="PublicationController" ng-init="init({{ publication }})">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <ul class="sharing-data hide" data-default="{{ app.user.parameters.publicationSharing.share }}">
+            {% for i in 0..3 %}
+                {% if i != 2 %}
+                    {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                        <li data-sharing="{{ i }}" class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="container container-bulle container-index">
+            <div class="row">
+                <div ng-cloak class="media publication container-md"
+                        ng-class="{loading: !loaded}" ng-hide="!loaded">
+                    {% include 'NaturaPassPublicationBundle:Prototype:angular.publication.html.twig' %}
+                </div>
+            </div>
+        </div>
+
+        {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+        {% include 'NaturaPassPublicationBundle:Modal:angular.map.html.twig' %}
+        {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+        {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+        {% include 'NaturaPassPublicationBundle:Modal:angular.publication.html.twig' %}
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/Publications/PublicationController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

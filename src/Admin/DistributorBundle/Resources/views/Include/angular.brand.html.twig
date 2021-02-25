@@ -1,0 +1,39 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="brand in entities" ng-cloak>
+    <a ng-href="{{'admin_distributor_brand_edit' | route:{brand: brand.id} }}" class="media-object pull-left"
+       title="{{ brand.name }}">
+        <img class="media-object pull-left" ng-show="brand.logo" ng-src="{{ brand.logo.path }}" width="90" height="90">
+        <img class="media-object pull-left" ng-hide="brand.logo" ng-src="/img/interface/default-media.jpg" width="90" height="90">
+    </a>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_distributor_brand_edit' | route: {brand: brand.id} }}">{{ brand.name }}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+        <div class="row row-btn">
+            <div class="col-sm-4">
+                <a ng-href="{{ 'admin_distributor_brand_edit'|route: {brand: brand.id} }}" {% endverbatim %}
+class="btn-access btn btn-primary btn-block">
+{{ 'brand.action.administer'|trans({}, translation_name~'brand') }}
+                    {% verbatim %}
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, brand)"
+                   np-submit-loader="brand.loading">
+                   {% endverbatim %}
+                    {{ 'brand.action.close'|trans({}, translation_name~'brand') }}
+</a>
+</div>
+</div>
+
+{% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

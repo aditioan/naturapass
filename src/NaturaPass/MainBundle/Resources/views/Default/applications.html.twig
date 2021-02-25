@@ -1,0 +1,43 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Une gamme d'applications dédiée à la nature{% endblock %}
+{% block description %}Découvrez toute la gamme d'applications dédiées à la nature : partage des espaces, remontées d'informations, collisions... Cliquez ici pour en savoir plus !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">À propos de</li>
+        <li class="active">Gamme d'applications nature</li>
+    </ol>
+
+    <h1>Une gamme d'applications dédiée à la nature</h1>
+    <h2>Application de remontée des collisions routières</h2>
+    <p>Grâce à l’application de remontées des collisions routières, n’importe quelle personne identifiée sur l’application peut remontrer un lieu de collision entre une voiture et un animal. Cette information peut être enrichie d’une photo, et comprend la description de l’animal, ainsi que sa géolocalisation.</p>
+    <p><strong>Pourquoi l’utiliser ?</strong></p>
+    <p>- Pour identifier les trames vertes et bleues sur votre territoire</p>
+    <p>- Pour améliorer la connaissance des infrastructures de transport dangereuses pour la faune</p>
+    <p>- Pour enrayer la perte de la biodiversité dans un paysage de plus en plus fragmenté</p>
+    <p></p>
+    <h2>Recensement des chemins ruraux</h2>
+    <p>Avec l’application de recensement des chemins ruraux, toute personne identifiée sur l’application peut lancer un tracé lui permettant de dessiner le chemin parcouru en temps réel sur la carte, de le spécifier (largeur, état, revêtement, …) et de le référencer (nom, numéro, catégorie, …).</p>
+    <p><strong>Pourquoi l’utiliser ?</strong></p>
+    <p>- Pour améliorer la connaissance des chemins ruraux pour l’ensemble des usagers de la nature</p>
+    <p>- Pour sensibiliser aux multiples intérêts écologiques, paysagers, historiques, touristiques et agricoles des chemins</p>
+    <p>- Pour accompagner les élus ou autres volontaires à mener à bien des actions de valorisation et de préservation de leur patrimoine communal</p>
+    <p></p>
+    <h2>Sentinelle</h2>
+    <p>La solution Sentinelle utilise les personnes présentes sur le terrain (en particulier les chasseurs mais aussi les autres usagers) pour faire remonter de l’information qualifiée (présence de nuisibles, prélèvements sanitaires, géolocalisation d’ordures, …). La fédération reçoit cette information dans un outil de restitution mis à disposition ou dans ses bases de données actuelles.</p>
+    <p><strong>Pourquoi l’utiliser ?</strong></p>
+    <p>- Pour améliorer la sécurité et la connaissance de vos territoires par des missions qualitatives</p>
+    <p>- Pour faciliter la communication auprès de vos chasseurs et vos adhérents</p>
+    <p>- Pour alimenter et qualifier vos bases de données (formulaires et cartographie)</p>
+    <p></p>
+    <h2>Application de partage de la nature</h2>
+    <p>L’application de partage de la nature permet à tous les usagers de voir en temps réel les zones chassées, mais aussi en différé (demain, week-end prochain, …). L’idée est de faire cohabiter toutes ces personnes qui partage l’espace naturel, et qu’elles puissent communiquer afin d’éviter de potentielles tensions.</p>
+    <p><strong>Pourquoi l’utiliser ?</strong></p>
+    <p>- Faciliter la communication entre les usagers de la nature, chasseurs, randonneurs, cyclistes, …</p>
+    <p>- Démocratiser l’image de la chasse auprès du grand public</p>
+    <p>- Sécuriser les territoires les jours de chasse et ainsi éviter des accidents potentiels</p>
+    <p></p>
+{% endblock corps %}

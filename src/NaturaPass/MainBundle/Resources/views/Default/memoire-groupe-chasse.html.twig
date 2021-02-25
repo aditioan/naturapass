@@ -1,0 +1,24 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'memoiregroupechasse.title'|trans({},translation_name~'memoiregroupechasse') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'memoiregroupechasse.description'|trans({},translation_name~'memoiregroupechasse') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                {{ 'memoiregroupechasse.raw'|trans({'%url%': url('naturapass_main_map')},translation_name~'memoiregroupechasse') | raw }}
+                <div class="row">
+                    <div class="col-sm-6"><img src="{{ asset("img/interface/journal1.jpg") }}" class="img-responsive center-block"></div>
+                    <div class="col-sm-6"><img src="{{ asset("img/interface/journal2.png") }}" class="img-responsive center-block"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

@@ -1,0 +1,91 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+{% block stylesheets %}
+<style>
+    .btn {
+        margin-right: 8px;
+    }
+
+    .angular-ui-tree-handle {
+        background: #f8faff;
+        border: 1px solid #dae2ea;
+        color: #7c9eb2;
+        padding: 10px 10px;
+    }
+
+    .angular-ui-tree-handle:hover {
+        color: #438eb9;
+        background: #f4f6f7;
+        border-color: #dce2e8;
+    }
+
+    .angular-ui-tree-placeholder {
+        background: #f0f9ff;
+        border: 2px dashed #bed2db;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+    .group-title {
+        background-color: #687074 !important;
+        color: #FFF !important;
+    }
+</style>
+{% endblock stylesheets %}
+{% block corps %}
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-md"  ng-controller="AnimalTreeController"  ng-init="init()" ng-cloak>
+            <h1>Arborescence des animaux <span class="pull-right glyphicon glyphicon-plus btn btn-primary" ng-click="openNewAnimal()"></span></h1>
+            {% verbatim %}
+                <script type="text/ng-template" id="nodes_renderer.html">
+                    <div ui-tree-handle class="tree-node tree-node-content">
+                      <a class="btn btn-success btn-xs" ng-if="node.nodes.length > 0" data-nodrag ng-click="toggle(this)">
+                        <span class="glyphicon"
+                              ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}">
+                        </span>
+                      </a>
+                      {{node.title}}
+                      <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="openDeleteModal($index, node, this)"><span
+                          class="glyphicon glyphicon-remove" title="Supprimer le niveau"></span></a>
+                      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="openNewModal($index, node, 1)" style="margin-right: 8px;"><span
+                          class="glyphicon glyphicon-plus" title="Ajouter un niveau"></span></a>
+                      <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="openNewModal($index, node, 0)">
+                        <i class="glyphicon glyphicon-pencil" title="Modifier le niveau"></i>
+                      </a>
+                    </div>
+                    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+                      <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+                      </li>
+                    </ol>
+                </script>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                      <div ui-tree id="tree-root">
+                        <ol ui-tree-nodes ng-model="data">
+                          <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </ol>
+                      </div>
+                    </div>
+                </div>
+                <form action="{% endverbatim %}{{ path('admin_animal_tree') }}{% verbatim %}" method="POST" name="tree" role="form" enctype="multipart/form-data">
+                    <input type="hidden" name="tree" value="{{ data | json }}">
+                    <button class="btn btn-primary btn-right btn-icon icon-checkmark" type="submit">{% endverbatim %}{{ 'button.validate'|trans({}, 'global')}}</button>
+                </form>
+        </div>
+    </div>
+    {% include "AdminAnimalBundle:Modal:angular.add-entity.html.twig" %}
+    {% include "AdminAnimalBundle:Modal:angular.remove-entity.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Animal/AnimalControllers.js'
+    'js/app/controllers/Admin/Receiver/Animal/AnimalModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

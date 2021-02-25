@@ -1,0 +1,7 @@
+parameters:
+#    natura_pass_email.example.class: NaturaPass\EmailBundle\Example
+
+services:
+    naturapass.email:
+        class:      NaturaPass\EmailBundle\Component\EmailService
+        arguments:  [@logger, "@doctrine.orm.entity_manager", "@translator", "@mailer", "@twig", "@security.token_storage", "@kernel", "%translation_name%"]

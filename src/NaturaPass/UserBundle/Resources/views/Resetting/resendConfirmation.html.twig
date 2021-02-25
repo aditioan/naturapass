@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container container-md">
+            <h1>{{ 'user.action.activate'|trans({},translation_name~'user') }}</h1>
+            <form action="{{ path('fos_user_resetting_resend_confirmation') }}" method="POST" class="loader" role="form" ng-non-bindable>
+                <div>
+                    {% if invalid_username is defined %}
+                        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                    {% endif %}
+                    {% if request_sent is defined %}
+                        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+                        <input type="text" id="username" name="username" required="required" class="form-control"/>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 btn-right">{{ 'user.confirmation.resend'|trans({}, 'user') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}

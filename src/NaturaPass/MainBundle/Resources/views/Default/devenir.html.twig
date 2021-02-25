@@ -1,0 +1,23 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Devenir Partenaire{% endblock %}
+{% block description %}Vous voulez devenir partenaire de Naturapass et rejoindre l'aventure ? En savoir plus sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Devenir Partenaire</li>
+    </ol>
+
+    <h1>Devenir Partenaire</h1>
+    <p>Vous voulez devenir partenaire de Naturapass, connaître les modalités et en savoir plus, contactez : </p>
+    <p></p>
+    <address>
+        <strong class="text-primary">Responsable des Partenariats :</strong><br>
+        <strong>Julien PARIS</strong><br>
+        <a href="mailto:julien@naturapass.com">julien@naturapass.com</a><br>
+        06 62 56 05 40
+    </address>
+
+{% endblock corps %}

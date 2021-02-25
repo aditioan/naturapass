@@ -1,0 +1,72 @@
+codes:
+    401:    No user is connected
+    403:    The connected user is not allowed to do this action
+    404:    Requested API is missing
+
+errors:
+    unknown:      An unknown error has occured
+    parameters:   Some parameters are missing
+
+    conversation:
+        nonexistent:    This conversation doest not exist
+
+    group:
+        subscriber:
+            already:        The user is already a subscriber to this group
+            unregistered:   The user is not a subscriber to this group
+            unregister_owner:   Vous ne pouvez pas supprimer le propriétaire de ce groupe de la liste des membres
+            unadmin_owner:      Vous ne pouvez pas enlever les droits d'administration au propriétaire de ce groupe
+        private:  This group is a private group
+
+    lounge:
+        message:
+            empty:          The message content is empty
+        comment:
+            empty:          The comment content is empty
+        subscriber:
+            already:        The user is already a subscriber to this hunt
+            unregistered:   The user is not a subscriber to this hunt
+        private:  This hunt is a private hunt
+        map:
+            bad_identifier: Identifiant non valide
+
+    publication:
+        empty:
+            comment:  The comment is empty
+            media:    No media found
+        nogeolocation:  This publication do not have a geolocation
+        geolocation:  Specified geolocation is not a valid one
+        sharing:      The sharing value is not a valid one
+        signal:       You have already reported this publication or you are the owner of it, so you can report it
+
+    user:
+        groupfilter:
+            nonexistent:  Aucun filtre de groupe correspondant
+        sharingfilter:
+            nonexistent:  Aucun filtre de partage correspondant
+        addresses:
+            nofavorite: Cet utilisateur n'a aucune adresse spécifiée
+        nonexistent:    Cet email n'existe pas. Si vous n'avez pas encore de compte, nous vous invitons à en créer un nouveau
+        passwordnonexistent:    Le mot de passe que vous avez entré est éronné. Si vous avez oublié votre mot de passe, vous pouvez en générer un nouveau
+        email:          Cet email est déjà utilisé
+        geolocation:    La géolocalisation spécifiée n'est pas correcte
+        password:
+            requested:  Un mot de passe à déjà été demandé durant ces 24h
+            old:        L'ancien mot de passe n'est pas valide
+            both:       Les deux mots de passe ne correspondent pas
+        empty:
+            problem:      Le message du problème ne peut pas être vide
+        recommendation:
+            nonexistent:  Aucune recommendation entre ces deux personnes
+        friendship:
+            nowaiting:    L'amitié concernée n'est pas en attente de confirmation
+            already:      Une amitié existe déjà entre ceux deux utilisateurs
+            nonexistent:  Aucune amitié entre ces deux utilisateurs
+        device:
+            unverified:   Cet appareil n'a pas été vérifié pour cet utilisateur
+
+    notification:
+        notreceived:  Cet utilisateur n'a pas reçu cette notification
+
+    media:
+        upload:   Une erreur s'est produite lors de l'upload du média

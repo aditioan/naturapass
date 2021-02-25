@@ -1,0 +1,78 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if add == 0 %}
+        {{ 'title.edit'|trans({'%receiver%': form.name.vars.value},translation_name~'receiver') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'receiver') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="ReceiverFormController" ng-init="init({{ cities  }})">
+            {% if add != 0 %}
+                <h1>{{ 'receiver.title.creation'|trans({}, translation_name~'receiver') }}</h1>
+            {% elseif add == 0 %}
+                <h1>{{ 'receiver.title.edition'|trans({}, translation_name~'receiver') }}</h1>
+            {% endif %}
+
+            <form name="receiver" method="post" action="" class="form-naturapass_receiver_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <h2>{{ 'receiver.description.creation'|trans({}, translation_name~'receiver') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+                        <div class="over-file" style="background-image: url({% if form.photo.vars.value is not null %}{{ form.photo.vars.value.getWebPath }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %})">
+                        </div>
+                        <div class="hide-file">
+                            {{ form_widget(form.photo.file) }}
+                        </div>
+                        {{ form_label(form.photo.file) }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label required" for="receiver_locality">{{ 'receiver.attributes.localities'|trans({}, translation_name~'receiver') }}</label>
+                            {% verbatim %}
+                            <input ngcloak id="modal-cities-select2" ui-select2="citiesOptions" class="modal-cities-select2" ng-model="addressSelect" class="form-control" style="width:200px;" value="{{ data.json.cities }}">
+                            <input id="hiddenCities" type="hidden" name="cities" value=""/>
+                            {% endverbatim %}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="users">{{ 'receiver.attributes.users'|trans({}, translation_name~'receiver') }}</label>
+                            {% verbatim %}
+                            <input ngcloak id="modal-users-select2" ui-select2="usersOptions" class="modal-users-select2" ng-model="usersSelect" class="form-control" style="width:200px;" value="{{ data.json.users }}">
+                            <input id="hiddenUsers" type="hidden" name="users" value=""/>
+                            {% endverbatim %}
+                        </div>
+                        {% verbatim %}
+                        {% endverbatim %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Receiver/ReceiverFormController.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

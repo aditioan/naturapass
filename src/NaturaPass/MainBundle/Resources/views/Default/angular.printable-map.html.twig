@@ -1,0 +1,103 @@
+{% extends "NaturaPassMainBundle::layout-no-menu-new.html.twig" %}
+
+{% block title %}{{ 'title.map'|trans({},translation_name~'main') }} | {{ parent() }}{% endblock %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .angular-google-map {
+            height: 100%;
+            display: block;
+        }
+        .angular-google-map-container {
+            height: 100%;
+            display: block;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block corps %}
+
+    <div class="printable" ng-controller="MapController" ng-class="{loading: map.loading}"  ng-init="initGoogleMaps()"
+         style="height: 100%; width: 100%; display: block;">
+        <ui-gmap-google-map
+                center="map.center"
+                zoom="map.zoom"
+                bounds="map.bounds"
+                draggable="true"
+                dragging="map.dragging"
+                events="map.events"
+                pan="true"
+                options="map.options">
+
+            <ui-gmap-markers
+                    models="publications"
+                    coords="'coords'"
+                    icon="'icon'"
+                    type="'spider'"
+                    typeEvents="spiderEvents"
+                    typeOptions="spiderOptions"
+                    events="markersEvents"
+                    options="'options'"
+                    click="clickMarkerPublication">
+            </ui-gmap-markers>
+
+            <ui-gmap-markers
+                    models="distributors"
+                    coords="'coords'"
+                    icon="'icon'"
+                    type="'spider'"
+                    typeEvents="spiderEvents"
+                    options="'options'"
+                    click="clickMarkerDistributor">
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+    </div>
+
+    <div id="google-maps-controls-new" class="hide" ng-cloak>
+        <div class="controls-right">
+            <div class="satellite hidden-print" ng-show="map.data.type == 'roadmap'"
+                 title="{{ 'map.satellite'|trans({}, translation_name~'map') }}"
+                 style="cursor: pointer;">
+                <button class="btn btn-primary btn-icon icon-earth"
+                        ng-click="changeMapType('hybrid')">{{ 'map.satellite'|trans({}, translation_name~'map') }}
+                </button>
+            </div>
+            <div class="plan hidden-print" ng-show="map.data.type == 'hybrid'"
+                 title="{{ 'map.plan'|trans({}, translation_name~'map') }}">
+                <button class="btn btn-primary btn-icon icon-map"
+                        ng-click="changeMapType('roadmap')">{{ 'map.plan'|trans({}, translation_name~'map') }}
+                </button>
+            </div>
+            <div class="hidden-print">
+                <a href="javascript:window.print()" class="btn btn-primary btn-icon icon-print">{{ 'map.action.print'|trans({}, translation_name~'map') }}
+                </a>
+            </div>
+            <div>
+                <img src="{{ asset('uploads/global/logo-application-print.png') }}" />
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Modal/ModalObservationController.js'
+    'js/vendor/angular-gmap-new.js'
+    'js/app/controllers/Map/BaseMapControllerNew.js'
+    'js/app/controllers/Map/MapControllerNew.js'
+    'js/app/controllers/Publications/PublicationFormController.js'
+    'js/app/controllers/Publications/PublicationController.js'
+    'js/app/controllers/Distributors/DistributorController.js'
+    'js/angular.rangeSlider.js'
+    'js/app/controllers/Publications/PublicationListController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="publications" infinite-scroll="loadPublications()"
+        infinite-scroll-distance="1"
+        infinite-scroll-disabled="atEnd">
+    <div class="small-loading" ng-show="busy && !atEnd && !publications.length"></div>
+    <div style="overflow: visible" ng-cloak class="media publication container-md"
+            ng-repeat="p in publications | orderBy: '-created'"
+            ng-class="{loading: publication.loading}"
+            ng-controller="PublicationController"
+            ng-init="init(p)">
+        {% include 'NaturaPassPublicationBundle:Prototype:angular.publication.html.twig' %}
+    </div>
+</div>
+<div class="small-loading" ng-if="!atEnd && busy && publications.length" ng-cloak></div>
+<div class="alert alert-success text-center" ng-if="atEnd && !busy && publications.length" ng-cloak>
+    {{ 'label.nothing_else'|trans({},translation_name~'publication') }}
+</div>
+<div class="alert alert-success text-center" ng-if="atEnd && !busy && !publications.length" ng-cloak>
+    {{ 'label.nothing'|trans({},translation_name~'publication') }}
+</div>

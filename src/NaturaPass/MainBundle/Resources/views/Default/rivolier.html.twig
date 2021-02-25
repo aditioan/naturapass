@@ -1,0 +1,265 @@
+{% extends "NaturaPassMainBundle::layout-revolier.html.twig" %}
+
+{% block title %}{{ parent() }} - Rivolier{% endblock %}
+{% block description %} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <style>
+        #title:after {
+            content: '';
+            display: block;
+            position: relative;
+            height: 0.25%;
+            background-color: #84c24b;
+            width: 100%;
+            margin: auto;
+        }
+
+        #search {
+            background-color: #84c24b;
+            width: 100%;
+            margin: auto;
+            /*height: 25%;*/
+            /*min-height: 195px;*/
+            margin-bottom: 15px;
+            padding-bottom: 20px;
+        }
+
+        #subtitle h1 {
+            border-bottom: none;
+        }
+
+        #search h1 {
+            color: #fff;
+            border-bottom: none;
+            margin: 9px auto;
+            padding: 10px auto;
+        }
+
+        #search .input-group {
+            margin: 0 auto;
+            width: 65%;
+        }
+
+        #search .input-group input {
+            box-shadow: none;
+            border-right: 0;
+            outline: 0;
+        }
+
+        #search .input-group .input-group-btn button {
+            border: 0px;
+            outline: 0;
+            line-height: 18px;
+            border: 1px solid rgb(204, 204, 204);
+            border-left: 0;
+        }
+
+        #result {
+        }
+
+        .armory {
+            background-color: #fff;
+            border-width: 1px;
+            border-color: silver;
+            border-style: solid;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .subscribe{
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .empty-result {
+            text-align: center;
+            border: 0;
+            margin-bottom: 25px
+        }
+
+        .armory h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .armory  img {
+            /*height: 2.5%;*/
+            width: 20px;
+            margin-top: -4px;
+        }
+
+        #footer img {
+            max-width: 100%;
+        }
+
+        #footer {
+        }
+        .bg {
+            background-color: #fff;
+            border-width: 1px;
+            border-color: silver;
+            border-style: solid;
+            border-radius: 10px;
+            margin-top: 2.5%;
+        }
+        .validate {
+            margin-left: 30.835%;
+        }
+        .subscribe input {
+            margin-top: 1.5%;
+            margin-bottom: 1.5%;
+        }
+        .text-box {
+            text-align:center;
+        }
+    </style>
+{% endblock %}
+
+{% block corps %}
+    <div ng-controller="RevolierController" ng-cloak>
+        <div id="title" class="text-center">
+            <a href="https://www.rivolier.com/"><img src="/img/rivolier.png"></a>
+        </div>
+        <div id="subtitle" class="text-center">
+            </br>
+            <h1>Test de modérateurs de son avec RIVOLIER</h1>
+            <h4> À partir du 1er septembre</h4>
+        </div>
+
+        <div id="search" class="text-center" ng-class="{loading: loading}">
+            <div class="container">
+                <div class="row">
+                    <h1>Entrez votre ville pour voir les armureries participantes</br> près de chez vous!</h1>
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <input type="text" ng-model="input" class="form-control"
+                                   placeholder="Entrez votre ville"
+                                   places-autocomplete
+                            />
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn icon-search3"></button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row ">
+                <div ng-repeat="item in result" class=" col-md-4 col-xs-12">
+                    {% verbatim %}
+                    <div class=" armory">
+                        <h2 ng-if="item.distributor_id == 1585">FDC82 et {{ item.name }}</h2>
+                        <h2 ng-if="item.distributor_id != 1585">{{ item.name }}</h2>
+                        <p ng-bind-template="{{ item.address }}, "></p>
+                        <p ng-bind-template="{{item.cp}} {{ item.city }} "></p>
+                        <p><b>Tél.</b>: <span ng-bind="item.telephone"></span></p>
+                        <p><img src="/img/geoloc.png"> <span ng-bind-template="à {{ item.dist | number: 1 }} km"></span></p>
+                        <p ng-if="!item.isSameDay"><img src="/img/calendar.png"> Du <span ng-bind="item.startDate | date:'DD MMMM YYYY'"></span> <span ng-if="item.endDate">au <span ng-bind="item.endDate | date:'DD MMMM YYYY'"></span></span></p>
+                        <p ng-if="item.isSameDay"><img src="/img/calendar.png"> Le <span ng-bind="item.startDate | date:'DD MMMM YYYY'"></span></p>
+                        <p ng-if="item.placeName"><b>Lieu de l'événement:</b> {{ item.placeName }}</p>
+                        <p ng-if="item.PlaceAddress"><b>Adresse:</b> {{ item.placeAddress }}</p>
+                        <p ng-if="item.hours"><b>Horaires:</b> {{ item.hours }}</p>
+                        <p ng-if="item.description">{{ item.description }}</p>
+                        <p class="text-center">
+                            <a ng-href="/landing_subscribe/{{item.id}}"><button class="inscription btn btn-primary btn-block btn-icon icon-marker2">S'inscrire
+                            </button></a>
+                        </p>
+                    </div>
+                    {% endverbatim %}
+                </div>
+                {% verbatim %}
+                     <h1 ng-show="resultEmpty" class="empty-result">Il n'y a pas de résultats.</h1>
+                {% endverbatim %}
+            </div>
+        </div>
+        <h3 style="text-align:center;border-bottom:none;">Si vous ne trouvez pas d'événements qui vous conviennent, veuillez remplir ce formulaire pour être prévenu des futurs événements dans votre région.</h3>
+        <div class="container bg" style="width:40%;">
+            <div class="subscribe col-md-11 col-xs-11">
+                <div class="alert alert-success" ng-if="message.success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    Votre inscription a bien été envoyée
+                </div>
+                <input type="text" id="firstname"
+                       placeholder="Nom" ng-model="form.firstName"
+                       required="required"
+                       class="form-control"/>
+                <input type="text" id="lastname"
+                       placeholder="Prénom" ng-model="form.lastName"
+                       required="required"
+                       class="form-control"/>
+                <input type="email" id="email"
+                       placeholder="Adresse email" ng-model="form.email"
+                       required="required"
+                       class="form-control"/>
+                <input type="text" id="phone"
+                       placeholder="Téléphone" ng-model="form.phoneNumber"
+                       required="required"
+                       class="form-control"
+                       onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"/>
+                <input type="text" id="birthdate"
+                       placeholder="Date de naissance" ng-model="form.birthDate"
+                       required="required"
+                       class="form-control"/>
+                <input type="number" id="codePostal"
+                       placeholder="Code postal" ng-model="form.zipCode"
+                       required="required"
+                       class="form-control"/>
+                <div class="checkbox">
+                    <input type="checkbox" id="accept_cgu" ng-model="acceptCgu"/>
+                    <label for="accept_cgu">En cochant cette case vous acceptez les
+                        <a href="" ng-click="openCgu()">conditions</a></label>
+                </div>
+            </div>
+            <p class=" validate text-center col-md-4 col-xs-4">
+                <button class="inscription btn btn-primary btn-block btn-icon icon-marker2" np-submit-loader="loading" ng-click="onSubmitAnyPlace()">S'inscrire</button>
+            </p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="footer" class="text-center col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
+                    <a href="https://www.naturapass.com/"><img src="/img/global/logo-naturapass_big.png"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'NaturaPassUserBundle:Modal:angular.cgu.html.twig' %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/RevolierController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {# <script type="text/javascript" src="/js/app/controllers/RevolierController.js"></script> #}
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        !function (a) {
+            a.fn.datepicker.dates.fr = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+                daysMin: ["D", "L", "Ma", "Me", "J", "V", "S", "D"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                monthsShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                monthsTitle: "Mois",
+                clear: "Effacer",
+                weekStart: 1,
+                format: "dd/mm/yyyy"
+            }
+        }(jQuery);
+    </script>
+    <script>
+        $('#birthdate').datepicker({
+            format: 'dd/mm/yyyy',
+            language: "fr-FR",
+            autoclose: true,
+            startView: "decade",
+        });
+    </script>
+{% endblock %}

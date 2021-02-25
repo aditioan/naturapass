@@ -1,0 +1,57 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.invite-groups.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'title.invite'|trans({}, translation_name~'group') }}</h4>
+    </div>
+    <div class="modal-body" ng-class="{loading: loadingSendInvitation}">
+        <div class="media" ng-repeat="group in data.groups" ng-hide="data.loading && !data.loaded">
+            <div class="row">
+                {% verbatim %}
+                <div class="col-md-6">
+                    <a ng-href="{{ 'naturapass_group_show'| route: {'grouptag': group.grouptag} }}" target="_blank" class="pull-left" title="{{ group.name }}">
+                        <img class="media-object" ng-src="{{ group.photo }}" width="30" height="30" alt="{{ group.name }}">
+                    </a>
+                    <div class="media-body">
+                        <a target="_blank" ng-href="{{ 'naturapass_group_show'| route: {'grouptag': group.grouptag} }}">{{ group.name }}</a>
+                        <p>{{ group.description }}</p>
+                    </div>
+                </div>
+                {% endverbatim %}
+                <div class="col-md-3">
+                    {% verbatim %}
+                    <button class="btn btn-primary" href="#" role="button" ng-click="openSubscribersModal(group)">
+                        {{ 'group.attributes.subscribers'|transchoice: group.nbSubscribers: {'count': group.nbSubscribers}: 'group' }}
+                    </button>
+                    {% endverbatim %}
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-icon icon-paperplane"
+                            ng-if="group.invited < group.nbSubscribers"
+                            data-icon="icon-paperplane"
+                            np-submit-loader="group.inviting"
+                            ng-click="inviteGroup(group)">
+                        {{ 'button.send'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-icon icon-paperplane"
+                            ng-if="group.invited >= group.nbSubscribers"
+                            data-icon="icon-paperplane"
+                            disabled>
+                        {{ 'button.sent'|trans({},translation_name~'global') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="small-loading" ng-show="data.loading"></div>
+        <div class="media" style="text-align: center;">
+            <a href="#" role="button" ng-click="loadGroups()" ng-hide="data.noMoreGroups">{{ 'group.action.load_more'|trans({}, translation_name~'group') }}</a>
+            <span ng-show="data.noMoreGroups"><b>{{ 'group.state.no_more'|trans({}, translation_name~'group') }}</b></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" ng-click="ok()" ng-class="{disabled: data.loading}">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

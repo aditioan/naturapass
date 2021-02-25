@@ -1,0 +1,33 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.card-view.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">{% verbatim %}
+            {{ 'receiver.tree.card' | trans:{card: card.name}: 'receiver' }}
+            {% endverbatim %}</h4>
+    </div>
+    <div class="modal-body">
+        {% verbatim %}
+            <table class="table table-condensed table-semi-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">Nom</th>
+                        <th class="col-sm-8">Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="node in card.labels">
+                        <th class="col-sm-4">{{ node.name }}</th>
+                        <td class="col-sm-8">{{ convertType(node.type) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endverbatim %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="cancel()" np-submit-loader="data.loading">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

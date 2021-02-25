@@ -1,0 +1,47 @@
+menu:
+    title:                      Distributeurs
+    list:                       Listing
+title:
+    no_more:                    Vous avez chargé l'intégralité des distributeurs
+    edit:                       Modification du distributeur %distributor%
+    add:                        Ajout d'un distributeur
+
+filter:
+    label:                      Filtre
+filter-distributor:
+    placeholder:                Nom du distributeur recherché puis tapez Entrée
+distributor:
+    all_distributors:           Liste des distributeurs
+    action:
+        administer:             Editer
+        close:                  Supprimer
+    title:
+        list:                   Liste des distributeurs
+        description:            Description
+        creation:               Ajoutez un distributeur
+        edition:                Edition d'un distributeur
+        list:                   Distributeurs
+        close_distributor:      Supprimer le distributeur
+    description:
+        creation:               Description
+        list:                   Liste des distributeurs
+        closedistributor:      |
+                                Attention, vous allez supprimer définitivement le distributeur <span style="color: red">%distributor%</span>. <br>
+                                Etes-vous sûr de supprimer ce distributeur?
+    placeholder:
+        name:                   Nom du distributeur
+        description:            Description du distributeur
+        email:                  Adresse email
+        city:                   Ville
+        cp:                     Code postal
+        address:                Adresse
+        telephone:              Téléphone
+    attributes:
+        meetingAddress:         Adresse du distributeur
+        updategeoloc:           Repositionner son point sur la carte
+        email:                  Email
+        name:                   Nom
+        city:                   Ville
+        cp:                     Code postal
+        address:                Adresse
+        telephone:              Téléphone

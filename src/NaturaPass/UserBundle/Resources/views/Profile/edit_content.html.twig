@@ -1,0 +1,146 @@
+<div id="corps-container">
+
+    {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+    <div class="container container-bulle {% if visibility.social_network == false %}hide-right{% endif %}">
+        <div class="container-edit-profil container-md">
+            <h1>{{ 'user.edit_profil.title'|trans({},translation_name~'user') }}</h1>
+
+            <p>{{ 'user.edit_profil.description'|trans({},translation_name~'user') }}</p>
+        </div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li {% if tab is null or tab == 'general' %}class="active"{% endif %}><a href="#general" data-toggle="tab">{{ 'user.edit_profil.info_general'|trans({},translation_name~'user') }}</a></li>
+            <li {% if tab == 'photo' %}class="active"{% endif %}><a href="#photo" data-toggle="tab">{{ 'user.edit_profil.photo'|trans({},translation_name~'user') }}</a></li>
+            <li {% if tab == 'password' %}class="active"{% endif %}><a href="#password" data-toggle="tab">{{ 'user.edit_profil.password'|trans({},translation_name~'user') }}</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content container-md container-edit-profil">
+            <div class="tab-pane clearfix {% if tab is null or tab == 'general' %}active{% endif %}" id="general">
+                <h2>{{ 'user.edit_profil.info_general'|trans({},translation_name~'user') }}</h2>
+                {{ form_start(formGeneral, { 'style': 'horizontal','label_col': 2,'col_size': 'sm', attr: {class: 'loader'} }) }}
+                {{ form_errors(formGeneral) }}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ 'user.attributes.gender'|trans({},translation_name~'user') }}</label>
+
+                    <div class="col-sm-10">
+                        {% for courtesy in formGeneral.courtesy %}
+                            {% if loop.first == false %}
+                                <label class="radio-inline">
+                                    {{ form_widget(courtesy) }} {% if (courtesy.vars.value == 1) %}{{ 'user.courtesy.mister'|trans({},translation_name~'user') }}{% else %}{{ 'user.courtesy.madam'|trans({},translation_name~'user') }}{% endif %}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {{ form_errors(formGeneral.courtesy) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(formGeneral.firstname) }}
+                    <div class="col-sm-4">
+                        {{ form_widget(formGeneral.firstname) }}
+                    </div>
+                    {{ form_label(formGeneral.lastname) }}
+                    <div class="col-sm-4">
+                        {{ form_widget(formGeneral.lastname) }}
+                    </div>
+                </div>
+                {{ form_errors(formGeneral.firstname) }}
+                {{ form_errors(formGeneral.lastname) }}
+                <div class="form-group">
+                    {{ form_label(formGeneral.birthday, '', { 'label_col': 3 }) }}
+                    <div class="col-sm-9">
+                        <div class="row profil-edit-date">
+                            <div class="col-sm-2">
+                                {{ form_widget(formGeneral.birthday.day) }}
+                            </div>
+                            <div class="col-sm-2">
+                                {{ form_widget(formGeneral.birthday.month) }}
+                            </div>
+                            <div class="col-sm-3">
+                                {{ form_widget(formGeneral.birthday.year) }}
+                            </div>
+                        </div>
+                        {{ form_errors(formGeneral.birthday) }}
+                    </div>
+                </div>
+                <a href="{{ path('fos_user_profile_remove') }}" class="btn btn-danger btn-left btn-icon icon-remove">
+                    {{ 'user.action.remove_account'|trans({}, translation_name~'user') }}
+                </a>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.edit'|trans({},translation_name~'global') }}</button>
+                <div class="hide">
+                    {{ form_rest(formGeneral) }}
+                </div>
+                {{ form_end(formGeneral) }}
+            </div>
+            <div class="tab-pane clearfix {% if tab == 'photo' %}active{% endif %}" id="photo">
+                {{ form_start(formPhoto, {'attr': {'class': 'form-horizontal loader'} }) }}
+                {{ form_errors(formPhoto) }}
+                <h2>{{ 'user.edit_profil.photo'|trans({},translation_name~'user') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="pull-right over-file" style="background-image: url( {% if app.user.getProfilePicture %}{{ app.user.getProfilePicture.getThumb() }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %} )"></div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="new-profil-container">
+                            <div class="new-profil-img btn btn-primary">
+                                <div class="hide-file">
+                                    {{ form_widget(formPhoto.photo.file) }}
+                                </div>
+                                {{ form_label(formPhoto.photo.file, 'user.action.photo', {'label_attr': {'class': 'control-label-center'} }) }}
+                            </div>
+                            <div class="hide">
+                                <div class="hr"><span>{{ 'user.action.or'|trans({},translation_name~'user') }}</span></div>
+                                <button type="button" class="btn btn-primary btn-block take-snapshot"
+                                        disabled="disabled">{{ 'user.action.webcam'|trans({},translation_name~'user') }}</button>
+                                <p class="text-center help-block">{{ 'user.action.webcam_info'|trans({},translation_name~'user') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_errors(formPhoto.photo.file) }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.edit'|trans({},translation_name~'global') }}</button>
+                <div class="hide">
+                    {{ form_rest(formPhoto) }}
+                </div>
+                {{ form_end(formPhoto) }}
+            </div>
+            <div class="tab-pane clearfix {% if tab == 'password' %}active{% endif %}" id="password">
+                <h2>{{ 'user.edit_profil.password'|trans({},translation_name~'user') }}</h2>
+
+                {{ form_start(formPassword, { 'style': 'horizontal','label_col': 4,'col_size': 'sm', attr: {class: 'loader'} }) }}
+                {{ form_errors(formPassword) }}
+                <div class="form-group">
+                    {{ form_label(formPassword.current_password) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(formPassword.current_password) }}
+                        {{ form_errors(formPassword.current_password) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(formPassword.new.first) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(formPassword.new.first) }}
+                        {{ form_errors(formPassword.new.first) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(formPassword.new.second) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(formPassword.new.second) }}
+                        {{ form_errors(formPassword.new.second) }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.edit'|trans({},translation_name~'global') }}</button>
+                <div class="hide">
+                    {{ form_rest(formPassword) }}
+                </div>
+                {{ form_end(formPassword) }}
+            </div>
+        </div>
+    </div>
+</div>

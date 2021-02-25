@@ -1,0 +1,79 @@
+{% extends "NaturaPassLoungeBundle::layout.html.twig" %}
+
+{% block title %}
+    {% if 'naturapass_lounge_homepage' | isCurrentRoute %}
+        {{ 'title.all_lounges'|trans({},translation_name~'lounge') }}
+    {% else %}
+        {{ 'title.my_lounges'|trans({},translation_name~'lounge') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container"  {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="LoungeListController"
+         data-invited="{{ ('naturapass_lounge_invite' | isCurrentRouteGroup) }}"
+         data-owning="{{ 'naturapass_lounge_owning' | isCurrentRoute }}">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                    {% if 'naturapass_lounge_invite_wait' | isCurrentRoute %}
+                        <h1>{{ 'lounge.title.invitedListe'|trans({}, translation_name~'lounge') }}</h1>
+                        <p>{{ 'lounge.description.invitedListe'|trans({}, translation_name~'lounge') }}</p>
+                    {% else %}
+                        {% if 'naturapass_lounge_homepage' | isCurrentRoute %}
+                            <h1>{{ 'lounge.title.allListe'|trans({}, translation_name~'lounge') }}</h1>
+                            <p>{{ 'lounge.description.allListe'|trans({}, translation_name~'lounge') }}</p>
+                        {% else %}
+                            <h1>{{ 'lounge.title.myListe'|trans({}, translation_name~'lounge') }}</h1>
+                            <p>{{ 'lounge.description.myListe'|trans({}, translation_name~'lounge') }}</p>
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="lounges" ng-cloak>
+                        <div class="media media-list container-md" >
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'lounge') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-lounge.placeholder'|trans({},translation_name~'lounge') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lounges" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "NaturaPassLoungeBundle:Include:angular.lounge.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="params.owning && !loading && !entities.length && !filterNoMore" ng-cloak>
+                        {{ 'title.no_owning'|trans({}, translation_name~'lounge') }}
+                    </div>
+                    <div class="alert alert-info" ng-show="params.invited && !loading && !entities.length && !filterNoMore" ng-cloak>
+                        {{ 'title.no_pending'|trans({}, translation_name~'lounge') }}
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'lounge') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/LoungeGroup/LoungeGroupListController.js'
+    'js/app/controllers/Lounges/LoungeListController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

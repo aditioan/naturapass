@@ -1,0 +1,33 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.distributor.html{% endblock %}
+
+{% block template_body %}
+    {% verbatim %}
+    <a href="#" class="close distributor-close" ng-click="ok()">&times;</a>
+<div class="media modal-distributor"
+     ng-controller="DistributorController"
+     ng-init="init()"
+     ng-class="{'float-img': distributor.logo.height <= 578, 'full-img': distributor.logo.height > 578, 'modal-distributor-map': distributor.fromMap}">
+    <div class="media-body modal-distributor-media"
+         ng-if="distributor.logo"
+         ng-class="{loading: distributor.logo.loading}">
+    <div class="modal-distributor-media-ctn">
+    <img class="img-responsive img-center"
+         ng-if="distributor.logo.type == 100"
+         ng-show="!distributor.logo.cropping"
+         ng-src="{{ distributor.logo.original }}">
+    <np-video np-video-data="distributor.logo" ng-if="distributor.logo.type == 101"
+              np-width="578" np-height="distributor.logo.height"></np-video>
+
+    <div class="modal-distributor-legend" ng-if='distributor.logo.legend || distributor.logo.tags'>
+        {{ distributor.logo.legend}}
+        <small class="media-tags" ng-if="distributor.logo.tags">
+            <span class="media-tag" ng-repeat="tag in distributor.logo.tags">{{ tag.name}} </span>
+        </small>
+    </div>
+    </div>
+    </div>
+    {% endverbatim %}
+</div>
+{% endblock %}

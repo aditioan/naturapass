@@ -1,0 +1,26 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez la carte !{% endblock %}
+{% block description %}Retrouvez toutes les possibilités qu'offre la fonctionnalité carte de l'application et du site internet Naturapass !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Carte Naturapass</li>
+    </ol>
+
+    <h1>La carte – Cartographier son territoire et partager avec ses invités</h1>
+    <h2>« Un bon chasseur connaît son territoire »</h2>
+    <p>Le chasseur moderne, de façon générale, est une personne qui possède moins de temps qu’auparavant pour s’adonner à sa passion et qui, surtout, passe moins de temps sur le terrain. Pour les auteurs de Naturapass, un bon chasseur doit connaître son territoire et Naturapass est là pour l’y aider.<br> C’est pourquoi, grâce à la carte (votre carte), vous pourrez géolocaliser à tout moment un élément de ce territoire pour vous en rappeler ultérieurement et surtout savoir le retrouver. Vous pourrez ainsi matérialiser par des photos, vidéos, et textes, des postes, des miradors, des passages de gibier, des coins à champignons, des terriers de renard, des points d’eau, des souilles,… Vous pouvez également mettre des zones sur votre Carte, comme vos limites de chasse, vos traques, vos zones de sécurité,…</p>
+    <p>Petit à petit, vous et les autres personnes qui partagez ce territoire (si elles vous laissent accéder aux informations qu’elles ont enregistrées), créerez une carte complète et interactive de votre territoire. Vous pourrez donc avoir une carte complète sur votre smartphone, mais vous pourrez aussi l’imprimer de chez vous en format A4 et la distribuer à qui vous le souhaitez. Si vous désirez l’imprimer en grand format, contactez-nous à <a title="team@naturapass.com" href="href=" target="_blank">team@naturapass.com</a>.</p>
+    <p>Très important : vous pourrez partager provisoirement tout ou partie de votre carte avec des invités sur votre territoire (voir partie Agenda).</p>
+    <p>Toutes vos publications postées sur la Carte se retrouveront sur le Mur.</p>
+    <p>Si vous n’avez pas de réseau, vous pouvez quand même publier, consulter votre carte et ajouter des points sur celle-ci !</p>
+    <p></p>
+    <p><strong>Comment ?</strong></p>
+    <p>Le chasseur utilise son smartphone sur le terrain pour géolocaliser en temps réel les informations.</p>
+    <p><img src="{{ asset('img/pages/carte.jpg') }}" width="500" height="665" alt="La carte Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

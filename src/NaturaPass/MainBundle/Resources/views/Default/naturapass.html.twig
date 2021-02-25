@@ -1,0 +1,36 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - A propos de Naturapass{% endblock %}
+{% block description %}Découvrez sur cette page tout ce que vous devez savoir sur Naturapass, l'outil ultime du chasseur !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">À propos de</li>
+        <li class="active">Naturapass</li>
+    </ol>
+
+    <h2>Naturapass : la 1ère start-up de la chasse</h2>
+    <p>Naturapass a été créé par un pôle international de professionnels et de passionnés de chasse (chasseurs dans différents pays, gestionnaires de territoires, guides de chasse, membres et administrateurs d’associations cynégétiques,…). Ces personnes ont comme point commun leur vision de la chasse (moderne et éthique) et le constat que les nouvelles technologies de communication permettent de mieux chasser.</p>
+    <p>Après un 1er tour de table en 2013 auprès des associés fondateurs, la 1ère version du site internet a été lancée au Game Fair de Chambord en juin 2014 et les applications smartphones en septembre 2014.</p>
+    <p>Devant l’engouement généré par ces 1ers déploiements, et les nombreuses opportunités se présentant, une levée de fonds de 250 000 euros a été faite auprès d’investisseurs en juillet 2015.</p>
+    <h2>Naturapass, l'application ultime du chasseur</h2>
+    <p>Naturapass est à la fois un site internet (<a href="http://www.naturapass.com">www.naturapass.com</a>) et une application pour smartphones (actuellement pour iOS et Android soit les iPhone, Samsung, LG,…).</p>
+    <p>Naturapass allie l'ancestralité de la chasse avec les nouvelles technologies pour équiper le chasseur de demain. Naturapass vous propose des outils améliorant la gestion et l’organisation des chasses, en ayant une attention particulière pour la sécurité et l’éthique.</p>
+    <p>Ce service est totalement gratuit pour le chasseur.</p>
+    <h2>Naturapass, l'outil du chasseur de demain</h2>
+    <p>Naturapass permet notamment de :</p>
+    <ul>
+        <li>Faciliter l’organisation de ses chasses et en particulier des battues,</li>
+        <li>Cartographier son territoire et partager ses cartes avec ses invités,</li>
+        <li>Créer sa communauté et communiquer avec,</li>
+        <li>Discuter en temps réel avec les autres membres,</li>
+        <li>Partager ses photos, ses souvenirs, ses informations...</li>
+        <li>…</li>
+    </ul>
+    <p>Naturapass a pour vocation d'évoluer et de nouveaux services seront créés régulièrement.</p>
+    <p><strong><em>Les services proposés par Naturapass sont totalement gratuits pour les chasseurs. Il est possible de s’inscrire sur le site internet et de télécharger les applications iPhone sur l’Apple Store et Android sur le Play Store.</em></strong></p>
+    <p><img src="{{ asset('img/pages/visuel.jpg') }}" width="620" height="677" alt="A propos de Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

@@ -1,0 +1,20 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.valid-invitedmember.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">{{ 'lounge.title.valid_invitedmember'|trans({}, translation_name~'lounge') }}</h4>
+    </div>
+    <div class="modal-body">
+        {% verbatim %}
+        <p np-bind-html="'lounge.description.valid_invitedmember'|trans: {member: data.member.fullname}: 'lounge'">
+        </p>
+        {% endverbatim %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="validInvitedMember(data.member)" np-submit-loader="data.loading">{{ 'button.yes'|trans({}, translation_name~'global') }}</button>
+        <button class="btn btn-danger" ng-click="cancel()" np-submit-loader="data.loading">{{ 'button.no'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

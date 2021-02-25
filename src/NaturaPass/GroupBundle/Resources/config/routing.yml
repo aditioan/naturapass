@@ -1,0 +1,51 @@
+naturapass_group_homepage:
+    path:  /
+    defaults: { _controller: NaturaPassGroupBundle:Groups:index }
+
+naturapass_group_owning:
+    path:  /owning
+    defaults: { _controller: NaturaPassGroupBundle:Groups:index }
+
+naturapass_group_invite_wait:
+    path:  /invited
+    defaults: { _controller: NaturaPassGroupBundle:Groups:index }
+
+naturapass_group_add:
+    path:  /add
+    defaults: { _controller: NaturaPassGroupBundle:Groups:add }
+
+naturapass_group_edit:
+    path:  /edit/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:edit }
+
+naturapass_group_invite:
+    path:  /invite/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:invite }
+
+naturapass_group_show:
+    path:  /{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:show }
+
+naturapass_group_exit:
+    path:  /exit/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:exit }
+
+naturapass_group_close:
+    path:  /close/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:close }
+
+naturapass_group_wait_validation:
+    path:  /wait/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:validation }
+
+naturapass_group_invited:
+    path:  /invited/{grouptag}
+    defaults: { _controller: NaturaPassGroupBundle:Groups:invited }
+
+naturapass_group_invite_email:
+    path:  /invite-email/{grouptag}/{fullname}/{message}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:invite }
+
+naturapass_group_invite_email_without_message:
+    path:  /invite-email-members/{grouptag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailGroup:inviteWithoutMessage }

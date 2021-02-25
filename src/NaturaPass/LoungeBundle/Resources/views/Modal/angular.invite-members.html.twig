@@ -1,0 +1,62 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.invite-members.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'user.attributes.members'|transchoice(2, {}, translation_name~'user') }}</h4>
+    </div>
+    <div class="modal-body" ng-class="{loading: loadingSendInvitation}">
+        <div class="small-loading" ng-show="data.loading"></div>
+        <div class="row">
+            <label for="inputFilter" class="col-sm-2 control-label panel-body">{{ 'filter.label'|trans({},translation_name~'lounge') }}</label>
+            {% verbatim %}
+            <div class="col-sm-10 panel-body">
+                <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filter" ng-keydown="persistSearchMember($event)" placeholder="{% endverbatim %}{{ 'filter.placeholder'|trans({},translation_name~'lounge') }}{% verbatim %}" />
+            </div>
+            <br>
+            <div class="col-xs-4" ng-repeat="member in data.members" ng-hide="data.loading">
+                <div class="media">
+                    <div class="pull-left">
+                        <a ng-href="{{ 'fos_user_profile_show_name' | route: {usertag: member.usertag } }}" class="pull-left" title="{{ member.firstname }} {{ member.lastname }}">
+                            <img class="media-object" ng-src="{{ member.profilepicture }}" width="40" height="40" alt="{{ member.firstname }} {{ member.lastname }}">
+                        </a>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <a href="{{ 'fos_user_profile_show_name' | route: {usertag: member.usertag } }}">
+                        {{ member.firstname }} {{ member.lastname }}
+                    </a>
+                </div>
+                {% endverbatim %}
+                <div>
+                    <button class="btn btn-primary btn-sm btn-block btn-icon icon-paperplane"
+                            ng-if="!member.invited && !member.subscriber"
+                            data-icon="icon-paperplane"
+                            np-submit-loader="friend.inviting"
+                            ng-click="inviteMember(member)">
+                        {{ 'button.send'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-if="member.invited && !member.subscriber"
+                            disabled>
+                        {{ 'button.sent'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-if="member.invited && member.subscriber"
+                            disabled>
+                        {{ 'group.state.subscriber'|trans({},translation_name~'group') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-12 clearfix alert alert-info" ng-show="showAlert" ng-cloak>
+                {{ 'alert.minFilter'|trans({}, translation_name~'lounge')|raw }}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()" ng-class="{disabled: data.loading}">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

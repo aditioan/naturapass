@@ -1,0 +1,133 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'title.complete'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'description.complete'|trans({},translation_name~'user') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container container-md">
+            <h1>{{ 'user.new_profil.title'|trans({},translation_name~'user') }}</h1>
+
+            <p>{{ 'user.new_profil.description'|trans({},translation_name~'user') }}</p>
+            {{ form_start(form, {'attr': {'class': 'form-horizontal loader'} }) }}
+            {{ form_errors(form) }}
+            <h2>{{ 'user.new_profil.photo'|trans({},translation_name~'user') }}</h2>
+
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="pull-right new-profil-preview over-file" style="background-image: url( {{ asset('img/interface/default-media.jpg') }} )"></div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="new-profil-container">
+                        <div class="new-profil-img btn btn-primary">
+                            <div class="hide-file">
+                                {{ form_widget(form.photo.file) }}
+                            </div>
+                            {{ form_label(form.photo.file, 'user.action.photo', {'label_attr': {'class':'control-label-center'} }) }}
+                        </div>
+                        <div class="hide">
+                            <div class="hr"><span>{{ 'user.action.or'|trans({},translation_name~'user') }}</span></div>
+                            <button type="button" class="btn btn-primary btn-block take-snapshot" disabled="disabled">{{ 'user.action.webcam'|trans({},translation_name~'user') }}</button>
+                            <p class="text-center help-block">{{ 'user.action.webcam_info'|trans({},translation_name~'user') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {#
+            <div class="preview-snapshot hide"><img src="" width="700" height="394" class="img-responsive" ></div>
+            <div id="webcam"></div>
+            #}
+
+            <h2>{{ 'user.new_profil.info'|trans({},translation_name~'user') }}</h2>
+
+            <div class="form-group">
+                {#<label for="inputDate" class="col-sm-3 control-label">{{ 'user.attributes.birthday'|trans }}
+                    :</label>
+
+                <div class="col-sm-9">
+                    {{ form_widget(form.birthday) }}
+                </div>#}
+
+                <label for="inputDate" class="col-sm-3 control-label">{{ form_label(form.birthday, '', { 'label_col': 3 }) }} :</label>
+                <div class="col-sm-9">
+                    <div class="row profil-edit-date">
+                        <div class="col-sm-2">
+                            {{ form_widget(form.birthday.day) }}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_widget(form.birthday.month) }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_widget(form.birthday.year) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{ 'user.attributes.gender'|trans({},translation_name~'user') }} :</label>
+
+                <div class="col-sm-9">
+                    {% for courtesy in form.courtesy %}
+                        <label class="radio-inline">
+                            {{ form_widget(courtesy,{'attr': {'required': 'required'} }) }} {% if (courtesy.vars.value == 1) %}{{ 'user.courtesy.mister'|trans({},translation_name~'user') }}{% else %}{{ 'user.courtesy.madam'|trans({},translation_name~'user') }}{% endif %}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr>
+            <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 pull-right">{{ 'button.end'|trans({},translation_name~'global') }}</button>
+
+            <div class="hide">
+                {{ form_rest(form) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#    <script type="text/javascript" src="{{ asset('js/vendor/scriptcam.min.js') }}"></script>#}
+    <script type="text/javascript">
+        (function($) {
+            'use strict';
+
+        {#$('.take-snapshot').on('click', getSnapshot);
+
+        $('#webcam').scriptcam({
+            path: '/uploads/users/',
+            width: 700,
+            height: 394,
+            cornerRadius: 0,
+            showDebug: true,
+            onWebcamReady: showHWA,
+            onError: oopsError,
+            showMicrophoneErrors: false
+
+        });
+
+        function showHWA() {
+            console.log($.scriptcam.hardwareacceleration());
+        }
+
+        function oopsError(errorId, errorMsg) {
+            console.log(errorMsg);
+        }
+
+        function getSnapshot() {
+            $('.preview-snapshot').removeClass('hide').find('img').attr('src', 'data:image/jpg;base64,' + $.scriptcam.getFrameAsBase64())
+            console.log($.scriptcam.getFrameAsBase64());
+        }#}
+
+            })(jQuery);
+    </script>
+{% endblock %}

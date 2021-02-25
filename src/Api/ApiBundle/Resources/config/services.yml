@@ -1,0 +1,13 @@
+services:
+    kernel.request_listener:
+        class: Api\ApiBundle\EventListener\RequestListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+
+    naturapass.doctrine.event_subscriber:
+        class: Api\ApiBundle\EventListener\ConnectionAbortedListener
+        arguments: [@logger]
+        tags:
+            - { name: doctrine.event_subscriber }

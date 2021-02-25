@@ -1,0 +1,156 @@
+{% spaceless %}
+    <!DOCTYPE html>
+    <html class="no-js" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#">
+        {% set
+        IS_GRANTED, USERFRIENDWAY_FRIENDTOUSER, FRIENDSHIP_ASKED, FRIENDSHIP_TYPE_BOTH, TYPE_KNOWING, TYPE_FRIEND,STATE_ASKED, STATE_CONFIRMED, STATE_REJECTED, USERTOFRIEND, FRIENDTOUSER =
+        app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED"),
+        constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_BOTH'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_KNOWING'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_FRIEND'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::CONFIRMED'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::REJECTED'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_USERTOFRIEND'),
+        constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER') %}
+
+        <head>
+            <meta charset="UTF-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+            <title>{% block title %}Naturapass{% endblock %}</title>
+            <meta name="description" content="{% block description %}{{ 'description.home'|trans({}, translation_name~'main') }}{% endblock %}"/>
+            <meta name="viewport" content="width=340, initial-scale=0.75, minimum-scale=0.5, maximum-scale=1.0"/>
+            <meta data-uid="{% if IS_GRANTED %}{{ app.user.id }}{% endif %}"/>
+
+            <link rel="canonical" href="http://www.naturapass.com/"/>
+
+            {% block meta %}
+                <meta property="og:title" content="{{ 'title.home'|trans({}, translation_name~'main') }}"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}"/>
+            {% endblock meta %}
+            <meta property="og:site_name" content="NaturaPass"/>
+            <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('uploads/global/icone-application-600.jpg') }}"/>
+            <meta property="fb:app_id" content="{{ facebook_id }}"/>
+            <meta property="og:locale" content="{{ app.request.locale }}_{{ app.request.locale | upper }}"/>
+            <meta property="og:description" content="{{ 'home.logo'|trans({}, translation_name~'main') }}"/>
+
+            <link rel="icon" type="image/x-icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+            <link rel="shortcut icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+            <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}"/>
+
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass.min.css') }}"/>
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass-theme.min.css') }}"/>
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,700">
+            <link rel="stylesheet" type="text/css" href="/bower_components/bxslider-4/jquery.bxslider.css">
+
+            {% block stylesheets %}
+            {% endblock stylesheets %}
+
+            <script async src="{{ asset('js/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-8827106-4']);
+                _gaq.push(['_trackPageview']);
+
+                (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        </head>
+        <body id="page-container" ng-app="app">
+            <div id="fb-root"></div>
+            {% block navbar %}
+                {% include "NaturaPassMainBundle:Include:nav-bar.html.twig" %}
+            {% endblock navbar %}
+
+            {% block body %}{% endblock body %}
+
+            {% block footer %}
+                {% include "NaturaPassMainBundle:Include:footer.html.twig" %}
+            {% endblock footer %}
+
+            {#{% include "NaturaPassMainBundle:Modal:angular.contact-naturapass.html.twig" %}#}
+
+            <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modal-register-label">S'inscrire à Naturapass</h4>
+                        </div>
+                        <div class="modal-body" ng-controller="RegisterController">
+                            <p>{{ 'home.register.description'|trans({},translation_name~'user') }}</p>
+                            {#{{ render(controller("NaturaPassUserBundle:Registration:register")) }}#}
+                            {% include "NaturaPassUserBundle:Registration:register_content.html.twig" %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery.min.js') }}"><\/script>');</script>
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjLDepA84nKbUQXB-IsXKOic3Ab4OH57U&sensor=true"></script>
+            <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+            {% block javascripts %}
+                {% set asset_version = 'v2.0.0.1' %}
+                {% javascripts package='assetic'
+                'js/vendor/naturapass.min.js'
+                'js/vendor/plugin.min.js'
+                'bundles/bazingajstranslation/js/translator.min.js'
+                'bundles/fosjsrouting/js/router.js'
+                'js/vendor/angular-gmap.min.js' %}
+                <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+                {% endjavascripts %}
+                <script src="{{ asset('js/vendor/translations.' ~ app.request.locale ~ '.min.js') }}"></script>
+
+                {% if app.environment == 'dev' %}
+                <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+                {% else %}
+                <script src="{{ asset('static/js/fos_js_routes.js') }}"></script>
+                {% endif %}
+                {% javascripts filter='?yui_js' package='assetic'
+                'js/main.js'
+                'js/app/filters/naturapass.filters.js'
+                'js/app/directives/naturapass.directives.js'
+                'js/app/app.js'
+                'js/app/controllers/MenuController.js'
+                'js/app/controllers/Navbar/NavbarController.js'
+                'js/app/controllers/Navbar/SearchController.js'
+                'js/app/factories/UserFriendshipFactory.js'
+                'js/app/controllers/RightColumnController.js'
+                'js/app/controllers/DockingPanelController.js' %}
+                <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+                {% endjavascripts %}
+
+            {% endblock javascripts %}
+
+
+            <script>
+                $(document).ready(function(){
+                    $('.slider-blog').bxSlider({
+                        pager    : true,
+                        controls : false,
+                        auto     : true,
+                        autoHover: true
+                    });
+
+                    $('.slider-boutique').bxSlider({
+                        pager    : true,
+                        controls : false,
+                        auto     : true,
+                        autoHover: true
+                    });
+                });
+            </script>
+        </body>
+    </html>
+{% endspaceless %}

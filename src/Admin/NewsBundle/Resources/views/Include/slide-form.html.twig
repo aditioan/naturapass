@@ -1,0 +1,44 @@
+<div class="container container-salon container-md">
+    <form enctype="multipart/form-data" role="form" method="POST" class="loader" ng-non-bindable>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <input type="file" name="slide[media][file]">
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <input type="text" name="slide[media][name]" pattern="[a-zA-Z0-9-_]*" placeholder="Nom du fichier">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <span>Active :</span>
+
+                    <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+                         data-after="{{ 'button.no'|trans({},translation_name~'global') }}">
+                        <input type="checkbox" id="slideActive" autocomplete="off" name="slide[active]">
+                        <label for="slideActive"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+
+        <div class="row pull-right">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary btn-icon icon-paperplane" data-icon="icon-paperplane">
+                    {{ 'button.validate'|trans({}, translation_name~'global') }}
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

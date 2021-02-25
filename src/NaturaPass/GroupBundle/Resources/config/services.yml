@@ -1,0 +1,7 @@
+parameters:
+#    natura_pass_group.example.class: NaturaPass\GroupBundle\Example
+
+services:
+    naturapass.exception_controller:
+        class: NaturaPass\MainBundle\Controller\ExceptionController
+        arguments: ["@service_container", "@twig", %kernel.debug%]

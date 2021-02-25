@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_user_register', {'fullname': fullname }) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'user.register_confirmation.body'|trans({'%fullname%': fullname},translation_name~'email')|raw }}</p>
+{% endblock body %}

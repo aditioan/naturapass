@@ -1,0 +1,24 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'territoireespacechasse.title'|trans({},translation_name~'territoireespacechasse') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'territoireespacechasse.description'|trans({},translation_name~'territoireespacechasse') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                {{ 'territoireespacechasse.raw'|trans({},translation_name~'territoireespacechasse') | raw }}
+                <div class="row">
+                    <div class="col-sm-6"><img src="{{ asset("img/interface/carto1.png") }}" class="img-responsive center-block"></div>
+                    <div class="col-sm-6"><img src="{{ asset("img/interface/carto2.jpg") }}" class="img-responsive center-block"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

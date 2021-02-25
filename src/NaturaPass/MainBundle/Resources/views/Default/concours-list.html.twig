@@ -1,0 +1,100 @@
+{% extends connect ? "NaturaPassMainBundle::layout.html.twig" : "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'title.concours'|trans({},translation_name~'main') }}{% endblock %}
+{% block description %}{{ 'description.concours'|trans({},translation_name~'main') }}{% endblock %}
+
+{% block corps %}
+    {% if connect == 0 %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+            <li class="active">À propos de</li>
+            <li class="active">{{ 'title.concours'|trans({},translation_name~'main') }}</li>
+        </ol>
+    {% endif %}
+<div {% verbatim %} ng-controller="GameListingController" ng-init="init()"{% endverbatim %}>
+    {% if connect == 1 %}
+    <div id="corps-container">
+        <div class="container">
+            {% endif %}
+            <h1>{{ 'concours.title.progress'|trans({},translation_name~'main') }}</h1>
+
+            <div class="alert alert-info" {% verbatim %} ng-show="!loadingOpen && openSize == 0" ng-cloak{% endverbatim %}>
+                {{ 'game.no_game'|trans({}, translation_name~'game') }}
+            </div>
+
+            <div class="small-loading" {% verbatim %} ng-show="loadingOpen"{% endverbatim %}></div>
+            <div class="panel panel-concours panel-default" {% verbatim %}ng-hide="loadingOpen" ng-repeat="game in gamesOpen | orderBy: '-created'" ng-cloak{% endverbatim %}>
+                {% verbatim %}<div class="panel-heading" style="background-color: {{ game.color }}">{{ game.title }}</div>{% endverbatim %}
+                <div class="panel-body">
+                    <a href="{% verbatim %}{{ 'naturapass_concours_detail'|route: {game: game.id, name: game.titleFormat} }}{% endverbatim %}">
+                        <div width="650" class="img-responsive center-block" {% verbatim %}np-bind-html="game.visuel"{% endverbatim %}></div>
+                    </a>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6 text-center">
+                            <a {% verbatim %}href="{{ 'naturapass_concours_detail'|route: {game: game.id, name: game.titleFormat} }}" style="background-color: {{ game.color }}"{% endverbatim %} class="btn btn-default">{{ 'concours.btn.join'|trans({},translation_name~'main') }}</a>
+                        </div>
+                        <div class="col-xs-6 text-center date-concours" {% verbatim %}np-bind-html="game.finFormat"{% endverbatim %}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1 {% verbatim %} ng-if="closedSize"{% endverbatim %}>{{ 'concours.title.complet'|trans({},translation_name~'main') }}</h1>
+
+            <div class="small-loading" {% verbatim %} ng-show="loadingClosed"{% endverbatim %}></div>
+            <div class="panel panel-concours panel-default" {% verbatim %} ng-hide="loadingClosed" ng-repeat="game in gamesClosed | orderBy: '-created'" ng-cloak{% endverbatim %}>
+                <div class="panel-heading">{% verbatim %}{{ game.title }}{% endverbatim %}</div>
+                <div class="panel-body">
+                    <div width="650" class="img-responsive center-block" {% verbatim %}np-bind-html="game.visuel"{% endverbatim %}></div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6 text-center">
+                            <button type="button" data-toggle="modal" {% verbatim %}data-target="#modalResult{{game.id}}"{% endverbatim %} class="btn btn-default">{{ 'concours.btn.result'|trans({},translation_name~'main') }}</button>
+                        </div>
+                        <div class="col-xs-6 text-center date-concours">
+                            <strong>{{ 'concours.date.stop'|trans({},translation_name~'main') }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if connect == 1 %}
+    </div>
+    {% endif %}
+    <div class="modal fade" {% verbatim %}id="modalResult{{gameModal.id}}"{% endverbatim %} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" {% verbatim %} ng-repeat="gameModal in gamesClosed | orderBy: '-created'" ng-cloak{% endverbatim %}>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'button.close'|trans({},translation_name~'global') }}</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'concours.title.result'|trans({},translation_name~'main') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div {% verbatim %}np-bind-html="gameModal.resultat"{% endverbatim %}></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if connect == 1 %}
+    </div>
+    {% endif %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Game/GameControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('.fancybox').fancybox();
+        });
+    </script>
+{% endblock javascripts %}

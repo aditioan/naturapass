@@ -1,0 +1,48 @@
+imports:
+    - { resource: config.yml }
+
+#framework:
+#    validation:
+#        cache: apc
+
+rms_push_notifications:
+    android:
+        gcm:
+            api_key:    %api_key_android%
+    ios:
+        sandbox:    false
+        pem:        "%kernel.root_dir%/Resources/certificates/ios/%ios_prefix%ios_push_prod.pem"
+        passphrase: ""
+
+monolog:
+    handlers:
+        main:
+            type:  rotating_file
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: error
+            # max number of log files to keep
+            # defaults to zero, which means infinite files
+            max_files: 10
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    globals:
+        naturapass_group: true
+        naturapass_lounge: false
+        naturapass_parametre: true
+        naturapass_edit_profile: true
+        naturapass_test_size: false
+        naturapass_friends: true
+        naturapass_help: false
+        naturapass_dev: false
+        naturapass_facebook: %naturapass_facebook%
+        application: %application%
+        translation_name: %translation_name%
+        facebook_id: %facebook_id%
+        facebook_secret: %facebook_secret%
+        facebook_version: %facebook_version%
+        app_store_link: %app_store_link%
+        play_store_link: %play_store_link%
+        visibility: %visibility%

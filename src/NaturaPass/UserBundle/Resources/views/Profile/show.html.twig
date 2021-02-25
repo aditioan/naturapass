@@ -1,0 +1,41 @@
+{% set
+STATE_ASKED, STATE_CONFIRMED, STATE_REJECTED, TYPE_BOTH, TYPE_KNOWING, TYPE_FRIEND, USERTOFRIEND, FRIENDTOUSER =
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::CONFIRMED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::REJECTED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_BOTH'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_KNOWING'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_FRIEND'),
+constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_USERTOFRIEND'),
+constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER')
+%}
+{% extends "NaturaPassUserBundle::layout.html.twig" %}
+
+{% block title %}NaturaPass - {{ user.getFullname }}{% endblock %}
+
+{% block corps %}
+    {% include "FOSUserBundle:Profile:angular.show_content.html.twig" %}
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include 'NaturaPassUserBundle:Modal:angular.profile-friends.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.map.html.twig' %}
+    {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.publication.html.twig' %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/User/ProfileController.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Publications/PublicationController.js'
+    'js/app/controllers/Publications/EditPublicationFormController.js'
+    'js/app/controllers/Publications/PublicationListController.js'
+    'js/app/controllers/Publications/MediaPublicationFormController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,11 @@
+naturapass_recovery_publication:
+    path:  /recovery/publication
+    defaults: { _controller: NaturaPassMediaBundle:Recovery:publication }
+
+naturapass_recovery_user:
+    path:  /recovery/user
+    defaults: { _controller: NaturaPassMediaBundle:Recovery:user }
+
+naturapass_recovery_lounge:
+    path:  /recovery/lounge
+    defaults: { _controller: NaturaPassMediaBundle:Recovery:lounge }

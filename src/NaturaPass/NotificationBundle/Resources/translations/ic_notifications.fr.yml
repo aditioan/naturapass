@@ -1,0 +1,97 @@
+description:
+    user:
+        friendship:
+            asked:        Demande d'amitié
+            confirmed:    Confirmation d'amitié
+    lounge:
+        status:
+            admin:      Nommé administrateur d'un événement
+            changed:    Changement de statut sur un événement
+        join:
+            accepted:   Acceptation de participation à un événement
+            refused:    Refus de participation à un événement
+            invited:    Invitation de participation à un événement
+            asked:      Demande de participation à un événement
+            valid-asked:    Demande de validation de participation à un événement
+        chat:
+            new_message:    Nouveau message sur un événement
+    group:
+        status:
+            admin:      Nommé administrateur d'un groupe
+        subscriber:
+            banned:      Exclu d'un groupe
+        join:
+            accepted:   Acceptation de participation à un groupe
+            refused:    Refus de participation à un groupe
+            invited:    Invitation de participation à un groupe
+            asked:      Demande de participation à un groupe
+            valid-asked:    Demande de validation de participation à un groupe
+        chat:
+            new_message:    Nouveau message sur un groupe
+    publication:
+        processed:
+            success:      Publication d'une vidéo traitée
+            error:        Erreur lors d'une publication vidéo en tâche de fond
+        commented:      Nouveau commentaire sur votre publication
+        same_commented: Réponse à un commentaire sur une publication
+        liked:          Nouveau j'aime sur une publication
+    chat:
+        new_message:    Nouvelle discussion
+
+user:
+    friendship:
+        asked:        %sender% vous a demandé en ami
+        confirmed:    %sender% a confirmé votre demande en ami
+
+lounge:
+    join:
+        accepted:   %sender% a accepté votre demande de participation à "%lounge%"
+        refused:    %sender% a refusé votre demande de participation à "%lounge%"
+        invited:    %sender% vous invite à participer à "%lounge%"
+        asked:      %sender% souhaite participer à "%lounge%"
+        valid-asked:    %sender% souhaite participer à "%lounge%"
+    joined:         test
+    invitation:
+        refused:        %sender% a refusé votre invitation à "%lounge%"
+    status:
+        changed:        Le statut de %sender% pour "%lounge%" a changé en %status%
+        admin:          Vous venez d'être nommé administrateur de "%lounge%"
+    chat:
+        new_message:    |
+                        %sender% dans "%lounge%": %text%
+        new_message_content:    |
+                                %sender% vient de publier un message sur la chasse "%lounge%" : %contentMessage%
+group:
+    subscriber:
+        banned:     Vous venez d'être exclu du groupe "%group%"
+    join:
+        accepted:   %sender% a accepté votre demande d'adhésion au groupe "%group%"
+        refused:    %sender% a refusé votre demande d'adhésion au groupe "%group%"
+        invited:    %sender% vous invite à rejoindre le groupe "%group%"
+        asked:      %sender% souhaite rejoindre le groupe "%group%"
+        valid-asked:    %sender% souhaite rejoindre le groupe "%group%"
+    status:
+        admin:          Vous venez d'être nommé administrateur du groupe "%group%"
+    chat:
+        new_message:    %sender% dans "%group%": %text%
+        new_message_content:    |
+                                %sender% vient de publier un message sur le groupe %group% : %contentMessage%
+publication:
+    processed:
+        success:      Votre publication "%content%" à été traitée et est maintenant visible
+        error:        Une erreur s'est produite durant le traitement de votre publication "%content%". Merci de réessayer plus tard
+    commented:      %sender% a commenté votre publication|]1,+Inf[%senders% ont commenté votre publication
+    same_commented: %sender% a également commenté la publication de %owner% du %date%|]1,+Inf[%senders% ont également commenté la publication de %owner% du %date%
+    liked:          %sender% a aimé votre publication|]1,+Inf[%senders% ont aimé votre publication
+    shared:        Nouveau partage d'une publication
+
+chat:
+    new_message:    |
+                    %sender% : %text%
+plural:
+    persons:        %count% autre personne|]1,+Inf[%count% autres personnes
+
+
+title:              Liste des notifications
+list:
+    nbresult:       %count% notification|]1,+Inf[%count% notifications

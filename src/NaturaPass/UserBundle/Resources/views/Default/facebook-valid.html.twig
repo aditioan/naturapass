@@ -1,0 +1,72 @@
+{% extends "::base-without-login.html.twig" %}
+
+{% block title %}{{ 'title.inscription'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+    <style>
+        h1 {
+            font-family: Oswald, Arial, sans-serif;
+            color: #8dbb1c;
+            font-size: 32px;
+            border: none;
+            margin-top: 30px;
+        }
+
+        .l1 {
+            font-family: Oswald, Arial, sans-serif;
+            font-size: 30px;
+        }
+
+        hr {
+            width: 100px;
+        }
+
+        .l2 {
+            font-family: Oswald, Arial, sans-serif;
+            font-size: 24px;
+            text-transform: none;
+        }
+
+        .lapp {
+            margin: 30px -15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container home-container">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h1>FELICITATIONS ! </h1>
+                    <p class="l1">
+                        Vous participez maintenant<br>
+                        au tirage au sort quotidien
+                    </p>
+                    <hr>
+                    <p class="l2">
+                        Pour connaitre les resultats<br>
+                        <strong>telecharger l'application Naturapass</strong><br>
+                        les résultats seront annoncés sur le mur et par e-mail aux gagnants
+                    </p>
+                    <div class="row lapp">
+                        <div class="col-sm-6 text-center"><a href="https://itunes.apple.com/fr/app/naturapass/id883300083?mt=8" title="Télécharger dans l'App Store" target="_blank"><img src="/img/interface/mobile-app_store-fr.png" title="Télécharger dans l'App Store" alt="Télécharger dans l'App Store" width="153" height="45"></a></div>
+                        <div class="col-sm-6 text-center"><a href="https://play.google.com/store/apps/details?id=fr.appsolute.naturapass" title="Disponible sur Google play" target="_blank"><img src="/img/interface/mobile-google_play-fr.png" title="Disponible sur Google play" alt="Disponible sur Google play" width="132" height="45"></a></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts package='assetic' filter='?yui_js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock javascripts %}

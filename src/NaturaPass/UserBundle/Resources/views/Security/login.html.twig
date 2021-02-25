@@ -1,0 +1,49 @@
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert alert-danger alert-nav">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {% if error == 'User account is disabled.' %}
+                {{ 'user.state.disabled'|trans({}, translation_name~'user') }}
+                <br>
+                <a href="{{ path('fos_user_resetting_resend_confirmation') }}">{{ 'user.confirmation.resend'|trans({}, translation_name~'user') }}</a>
+            {% else %}
+                {{ error|trans({}, 'fosuser') }}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="form-connexion" ng-non-bindable>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+        <div>
+            <div class="form-group">
+                <label for="username">{{ 'user.attributes.email'|trans({}, translation_name~'user') }}</label>
+                <input type="text" id="username" name="_username" placeholder="{{ 'user.attributes.email'|trans({}, translation_name~'user') }} :" value="{{ email | default(last_username) }}" required="required" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="password" id="password" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" required="required" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <p class="form-control-static">
+                            <a href="{{ path('fos_user_resetting_request') }}">{{ 'home.connexion.password_lost'|trans({}, translation_name~'user') }}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group text-right">
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary"/>
+                        <button type="button" ng-click="test()" class="btn btn-info">Test</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock fos_user_content %}

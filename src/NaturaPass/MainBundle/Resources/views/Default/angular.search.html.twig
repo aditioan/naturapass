@@ -1,0 +1,83 @@
+{% extends "NaturaPassMainBundle::layout.html.twig" %}
+
+{% block title %}{{ 'title.search'|trans({},translation_name~'main') }} | {{ parent() }}{% endblock title %}
+
+{% block corps %}
+    <div id="corps-container">
+
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <div class="container container-bulle container-search" ng-controller="UserSearchController" ng-init="initUserSearch()">
+            <div class="container-lg">
+                <h1>{{ 'search.form.title'|trans({},translation_name~'main') }}</h1>
+                <p>{{ 'search.form.description'|trans({},translation_name~'main') }}</p>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputSearch" class="col-sm-2 control-label">{{ 'search.form.label'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="inputSearch" name="q" placeholder="{{ 'search.form.placeholder'|trans({},translation_name~'main') }}" value="{{ search }}" ng-model="search">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary btn-block btn-icon icon-search3" np-submit-loader="loading" ng-click="doSearch()" data-icon="icon-search3">{{ 'button.search'|trans({},translation_name~'global') }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="container-lg container-result">
+                <h1>{{ 'search.list.title.allresults'|trans({},translation_name~'main') }}
+                    <small class="pull-right" ng-cloak>{% verbatim %}{{ 'search.list.nbresult'|transchoice: users.length: {'count': users.length}: 'main' }}{% endverbatim %}</small>
+                </h1>
+                <div class="row line-result" ng-repeat="user in users" ng-cloak ng-class="{loading: user.loading}">
+                    {% include "NaturaPassUserBundle:Include:angular.friends.html.twig" %}
+                </div>
+            </div>
+            {% if visibility.social_network %}
+            <div class="container-lg container-result" ng-cloak>
+                <h1>{{ 'search.list.title.proposal'|trans({},translation_name~'main') }}
+                    <small class="pull-right" ng-cloak>{% verbatim %}{{ 'search.list.nbresult'|transchoice: recommendations.length: {'count': recommendations.length}: 'main' }}{% endverbatim %}</small>
+                </h1>
+                <div class="small-loading" ng-show="recommendationLoading">
+                </div>
+                <div class="row" ng-cloak>
+                    <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="user in recommendations | orderBy: '-pertinence'" ng-class="{loading: user.friendship.loading}">
+                        <div class="thumbnail">
+                            {% verbatim %}
+                                <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: user.usertag } }}">
+                                    <img ng-src="{{ user.profilepicture }}" alt="{{ user.fullname }}">
+                                </a>
+                                <div class="caption">
+                                    <p>
+                                        <button type="button" class="close pull-right" ng-click="removeRecommendation(user, $index)">
+                                            <span aria-hidden="true">&times;</span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                        <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: user.usertag } }}">
+                                            <strong>{{ user.lastname }}</strong>
+                                            <br>
+                                            {{ user.firstname }}
+                                        </a>
+                                        <br>
+                                        <small>{{ 'search.list.friend'|transchoice: user.mutualFriends: {'count': user.mutualFriends}: 'main' }}</small><br>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm btn-block" ng-click="addRecommendation(user, $index)" ng-class="{disabled: user.friendship.loading}">{% endverbatim %}{{ 'button.add'|trans({}, translation_name~'global') }}{% verbatim %}</button>
+                                </div>
+                                {% endverbatim %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            {% include 'NaturaPassUserBundle:Modal:angular.profile-friends.html.twig' %}
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/User/UserSearchController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+{% set
+    ACCESS_INVITED, ACCESS_RESTRICTED, ACCESS_DEFAULT, ACCESS_ADMIN, ACCESS_PROTECTED, ACCESS_SEMIPROTECTED, ACCESS_PUBLIC =
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_INVITED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_RESTRICTED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_DEFAULT'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\GroupUser::ACCESS_ADMIN'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\Group::ACCESS_PROTECTED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\Group::ACCESS_SEMIPROTECTED'),
+    constant('\\NaturaPass\\GroupBundle\\Entity\\Group::ACCESS_PUBLIC')
+%}
+
+{% block body %}
+
+    {% include "NaturaPassMainBundle:Include:angular.menu-gauche.html.twig" %}
+
+    {% block corps %}
+
+    {% endblock corps %}
+
+    {% include "NaturaPassGroupBundle:Modal:angular.subscribers.html.twig" %}
+    {% include "NaturaPassGroupBundle:Modal:angular.remove-entity.html.twig" %}
+
+{% endblock body %}

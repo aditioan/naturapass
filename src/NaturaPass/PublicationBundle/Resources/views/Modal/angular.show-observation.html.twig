@@ -1,0 +1,87 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.show-observation.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <a href="#" class="close" ng-click="ok()">&times;</a>
+        <h4 class="modal-title">{{ 'publication.observation.show'|trans({}, translation_name~'publication') }}</h4>
+    </div>
+    <div class="modal-body" style="min-height: 300px">
+
+        <div style="font-size: 18px; line-height:1.42857">
+            <table>
+                <tr style="height:30px;">
+                    <td>
+                        <img src="/img/ic_share_mur.png" style="width:25px;"/>
+                    </td>
+                    <td style="padding-left: 5px;"> 
+                        <span>{{ 'publication.observation.part'|trans({}, translation_name~'publication') }}.:</span>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        <span ng-bind="currentSharing.text"></span>
+                    </td>
+                </tr>
+                <tr ng-if="publication.savedGroups">
+                    <td></td>
+                    <td></td>
+                    <td style="padding-left: 5px;"><strong>{{ 'publication.observation.group'|trans({}, translation_name~'publication') }}:</strong> <span ng-repeat="group in publication.savedGroups" np-bind-html="group.text"></span> </td>
+                </tr>
+                <tr ng-if="publication.hunts">
+                    <td></td>
+                    <td></td>
+                    <td style="padding-left: 5px;"><strong>{{ 'publication.observation.hunt'|trans({}, translation_name~'publication') }}:</strong> <span ng-repeat="chass in publication.hunts" np-bind-html="chass.name"></span> </td>
+                </tr>
+            </table>       
+        </div>
+
+        <div ng-repeat="observation in publication.observations">
+            <div ng-show="publication.observations.length">
+
+
+                <div style="font-size: 18px; line-height:1.42857; color: #333">
+                    <table>
+                        <tr style="height:30px;">
+                            <td>
+                                <img src="/img/ic_binoculars.png" style="width:25px;"/>
+                            </td>
+                            <td  style="padding-left: 5px;"> 
+                                <span>{{ 'publication.observation.obs'|trans({}, translation_name~'publication') }}.:</span>
+                            </td>
+                            <td style="padding-left: 5px;">
+                                <h2 style="border-bottom: 0px;">
+                                <span ng-cloak class="" ng-repeat="select in observation.tree">
+                                    {% verbatim %}
+                                        <strong>{{ select}}</strong> /
+                                    {% endverbatim %}
+                                </span>
+                                </h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td  style="padding-left: 5px; border-left: 1px solid silver">
+                                <table>
+                                    <tr ng-repeat="attachment in observation.attachments">
+                                        <td style="width:50%"> 
+                                            <span style="font-size: 16px;" np-bind-html="attachment.label"></span>
+                                        </td>
+                                        <td style="width:50%">
+                                            <span style="padding-left: 10px;font-size: 16px;" np-bind-html="attachment.value"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>       
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary"
+                ng-click="ok()">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

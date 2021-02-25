@@ -1,0 +1,56 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+        {{ 'distributor.all_distributors'|trans({},translation_name~'distributor') }} | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container" ng-controller="DistributorListController">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                        <h1>{{ 'distributor.title.list'|trans({}, translation_name~'distributor') }}</h1>
+                        <p>{{ 'distributor.description.list'|trans({}, translation_name~'distributor') }}</p>
+
+                    <div class="distributors" ng-cloak>
+                        <div class="media media-list container-md" >
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'distributor') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-distributor.placeholder'|trans({},translation_name~'distributor') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="distributors" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "AdminDistributorBundle:Include:angular.distributor.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'distributor') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "AdminDistributorBundle:Modal:angular.remove-entity.html.twig" %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Distributor/DistributorListController.js'
+    'js/app/controllers/Admin/Distributor/DistributorModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

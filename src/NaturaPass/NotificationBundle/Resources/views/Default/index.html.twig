@@ -1,0 +1,43 @@
+{% extends "NaturaPassNotificationBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'title'|trans({},translation_name~'notifications') }}
+    | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle container-search">
+            <div class="container-lg container-result">
+                <h1>{{ 'title'|trans({},translation_name~'notifications') }}<small class="pull-right">{{ 'list.nbresult'|transchoice(notifications.count,{},translation_name~'notifications') }}</small></h1>
+                    {% for receive in notifications %}
+                        {% set notification =
+                            receive.getNotification()
+                        %}
+                    <div class="row line-result">
+                        <div class="col-sm-12">
+                            <div class="media notification clearfix">
+                                <a href="{{ notification.link }}" class="pull-left">
+                                    <img src="{{ notification.sender.getProfilePicture()|bProfilePict }}" width="50" height="50" class="media-object" >
+                                </a>
+                                <div class="media-body clearfix">
+                                    <div class="notification-fullname"><a href="{{ notification.link }}">{{ notification.content }}</a></div>
+                                    <div class="notification-time">{{ notification.created|relativeTime }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock javascripts %}
+

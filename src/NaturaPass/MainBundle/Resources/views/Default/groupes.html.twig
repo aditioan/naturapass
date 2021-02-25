@@ -1,0 +1,47 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez les groupes !{% endblock %}
+{% block description %}Découvrez les groupes de l'application et du site internet Naturapass, une fonctionnalité qui vous offre beaucoup de possibilités, sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Groupes Naturapass</li>
+    </ol>
+
+    <h1>Les groupes – Organiser au mieux son activité cynégétique</h1>
+    <h2>« Un bon chasseur est sociable »</h2>
+    <p>Comme dans la réalité, Naturapass fait la part belle aux groupes afin de faciliter l’organisation de la vie sociale autour de la chasse.</p>
+    <p>Vous pourrez à tout moment créer ou rejoindre un groupe. Si vous êtes administrateur d’un groupe, vous pouvez choisir qui peut consulter et qui peut publier dans ce groupe.</p>
+    <p>Les groupes permettent aux membres de se réunir par centres d’intérêt, affinités, organisations…</p>
+    <p>Ils permettent de recréer sur Naturapass, les communautés de chasseurs auxquelles vous appartenez dans la réalité :</p>
+    <ul>
+        <li>les chasseurs avec lesquels vous chassez (par exemple : les membres de votre chasse)</li>
+        <li>les chasseurs avec lesquels vous partagez une passion (par exemple : les chasseurs en Afrique, les chasseurs de gros gibier, les passionnés de balistique,…)</li>
+        <li>les chasseurs d’une de vos organisations (par exemple : les chasseurs de votre fédération, les piégeurs de votre département, les huttiers…)</li>
+        <li>…</li>
+    </ul>
+    <p></p>
+    <p>Dans chacun de vos groupes, vous retrouverez :</p>
+    <ul>
+        <li>le mur</li>
+        <li>la carte</li>
+        <li>les discussions</li>
+        <li>l’agenda</li>
+        <li>les paramètres (qui permettent d’ajouter, de retirer des membres,…)</li>
+    </ul>
+    <p></p>
+    <p>Exemples d’utilisations :</p>
+    <ul>
+        <li>Suivi de l’actualité d’une association de chasse</li>
+        <li>Se tenir informé sur une thématique (chasse aux migrateurs, chasse à l’étranger…)</li>
+        <li>Compte-rendu de réunion, de journée de chasse…</li>
+        <li>Répartition des tâches,</li>
+        <li>Partage de cartes,</li>
+        <li>…</li>
+    </ul>
+    <p><img src="{{ asset('img/pages/groupes.jpg') }}" width="704" height="987" alt="Les groupes Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

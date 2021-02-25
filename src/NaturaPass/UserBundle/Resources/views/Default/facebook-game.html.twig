@@ -1,0 +1,55 @@
+{% extends "::base-without-login.html.twig" %}
+
+{% block title %}{{ 'title.inscription'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+
+    <style>
+        .l1, .l2, .lfb {
+            font-family: Oswald, Arial, sans-serif;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .l1 {
+            font-weight: 300;
+        }
+
+        .l2 {
+            font-weight: 400;
+            color: #8dbb1c;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container home-container">
+            <div class="panel panel-concours panel-default" ng-controller="RegisterController">
+                <div class="panel-body">
+                    <p><img class="img-responsive center-block" src="/img/interface/top-iscr-jeu-concours.jpg" width="682" height="286"></p>
+                    <p class="l1">POUR PARTICIPER AU JEU CONCOURS,</p>
+                    <p class="l2">CONNECTEZ-VOUS A NATURAPASS</p>
+                    {% if naturapass_facebook %}
+                        <p class="lfb">
+                            <button class="btn btn-fb btn-icon icon-facebook" data-icon="icon-facebook" np-submit-loader="loading" ng-click="fbRegister()">{{ 'home.register.connect'|trans({}, translation_name~'user') }}</button>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/User/RegisterController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock javascripts %}

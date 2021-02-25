@@ -1,0 +1,11 @@
+admin_game_homepage:
+    path:     /
+    defaults: { _controller: AdminGameBundle:Default:index }
+
+admin_game_add:
+    path:     /add
+    defaults: { _controller: AdminGameBundle:Default:add }
+
+admin_game_edit:
+    path:     /edit/{game}
+    defaults: { _controller: AdminGameBundle:Default:edit }

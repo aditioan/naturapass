@@ -1,0 +1,7 @@
+backoffice_fdc_search:
+    path:     /search
+    defaults: { _controller: BackofficeFdcBundle:Default:search }
+    
+backoffice_fdc_listing:
+    path:     /listing
+    defaults: { _controller: BackofficeFdcBundle:Default:listing }

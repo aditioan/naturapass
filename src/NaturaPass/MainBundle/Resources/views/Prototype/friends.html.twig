@@ -1,0 +1,26 @@
+{# Prototype d'ajout #}
+<div class="add-user-search clearfix prototype hide" data-uid="">
+    <button type="button" class="btn btn-primary pull-right btn-icon dropdown-toggle icon-user-plus2" id="dropdownModalFriends" data-toggle="dropdown">{{ 'button.add'|trans({},translation_name~'global') }} <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownModalFriends">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users add-user-friend" data-type="{{ TYPE_FRIEND }}">{{ 'label.dropdown_friend.friend'|trans({},translation_name~'global') }}</a></li>
+            {#<li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users2 add-user-friend" data-type="{{ TYPE_KNOWING }}">{{ 'label.dropdown_friend.knowing'|trans({},translation_name~'global') }}</a></li>#}
+    </ul>
+</div>
+{# Prototype demande envoyé #}
+<div class="send-user-search clearfix prototype hide" data-uid="">
+    <button type="button" class="btn btn-primary pull-right btn-icon dropdown-toggle icon-user-plus2" id="dropdownModalFriends" data-toggle="dropdown">{{ 'label.dropdown_friend.asked'|trans({},translation_name~'global') }} <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownModalFriends">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete delete-user-friend">{{ 'label.dropdown_friend.cancel'|trans({},translation_name~'global') }}</a></li>
+    </ul>
+</div>
+{# Prototype de modification #}
+<div class="edit-user-search clearfix prototype hide" data-uid="">
+    <button type="button" class="btn btn-primary pull-right btn-icon dropdown-toggle icon-user-plus2" id="dropdownModalFriends" data-toggle="dropdown">{{ 'label.dropdown_friend.edit'|trans({},translation_name~'global') }} <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownModalFriends">
+        {#
+        <li role="presentation" class="type-friend{{ TYPE_FRIEND }}"><a role="menuitem" tabindex="-1" href="#" class="icon-users change-user-type-friend" data-type="{{ TYPE_FRIEND }}">{{ 'label.dropdown_friend.friend'|trans({},translation_name~'global') }}</a></li>
+        <li role="presentation" class="type-friend{{ TYPE_KNOWING }}"><a role="menuitem" tabindex="-1" href="#" class="icon-users2 change-user-type-friend" data-type="{{ TYPE_KNOWING }}">{{ 'label.dropdown_friend.knowing'|trans({},translation_name~'global') }}</a></li>
+        #}
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete delete-user-friend">{{ 'label.dropdown_friend.delete'|trans({},translation_name~'global') }}</a></li>
+    </ul>
+</div>

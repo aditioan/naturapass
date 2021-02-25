@@ -1,0 +1,15 @@
+admin_animal_add:
+    path:     /add
+    defaults: { _controller: AdminAnimalBundle:Animal:add }
+
+admin_animal_edit:
+    path:     /edit/{animal}
+    defaults: { _controller: AdminAnimalBundle:Animal:edit }
+
+admin_animal_list:
+    path:     /
+    defaults: { _controller: AdminAnimalBundle:Animal:list }
+
+admin_animal_tree:
+    path:     /tree
+    defaults: { _controller: AdminAnimalBundle:Animal:tree }

@@ -1,0 +1,54 @@
+<div class="popover bottom popover-invitations">
+    <div class="arrow"></div>
+    <h3 class="popover-title" ng-show="invitations.length">
+        {{ 'nav.pop_invite.title'|trans({},translation_name~'nav') }}
+    </h3>
+
+    <h3 class="popover-title" ng-hide="invitations.length">
+        {{ 'nav.pop_invite.no_invite'|trans({},translation_name~'nav') }}
+    </h3>
+
+    <div class="popover-content">
+        <div class="list-group">
+            {% verbatim %}
+            <div class="list-group-item" ng-repeat="invitation in invitations">
+                <div class="media">
+                    <div class="pull-left">
+                        <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: invitation.usertag} }}">
+                            <img ng-src="{{ invitation.profilepicture }}" width="40" height="40">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: invitation.usertag} }}">{{ invitation.fullname }}</a><br>
+
+                        <span class="icon-users" ng-show="invitation.validated">
+                            {% endverbatim %}{{ 'button.validated'|trans({},translation_name~'global') }}{% verbatim %}
+                        </span>
+
+                        <span class="icon-user-minus" ng-show="invitation.deleted">
+                            {% endverbatim %}{{ 'button.deleted'|trans({},translation_name~'global') }}{% verbatim %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="btn-group btn-group-justified" ng-hide="invitation.validated || invitation.deleted">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm icon-checkmark"
+                                ng-class="{'btn-loader': invitation.loading, 'disabled': invitation.loading}"
+                                ng-click="acceptInvitation(invitation)">
+                            {% endverbatim %}{{ 'button.validate'|trans({},translation_name~'global') }}{% verbatim %}
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-sm"
+                                ng-class="{'btn-loader': invitation.loading, 'disabled': invitation.loading}"
+                                ng-click="refuseInvitation(invitation)">
+                            {% endverbatim %}{{ 'button.delete'|trans({},translation_name~'global') }}{% verbatim %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endverbatim %}
+        </div>
+    </div>
+</div>

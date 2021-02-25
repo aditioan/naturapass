@@ -1,0 +1,22 @@
+menu:
+  title:                    Export
+title:
+  search:                   Rechercher une remontée d'information
+  listing:                  Restitution des remontées d'informations terrain
+search:
+  form:
+    title:                  Rechercher une remontée d'information
+    description:            Pour rechercher une personne, veuillez entrer son nom et prénom
+  title:
+    date:                   Rechercher par date
+    user:                   Rechercher par émetteur
+    zone:                   Rechercher par zone géographique
+    category:               Rechercher par zone catégories
+  attributes:
+    date:                   Date
+    users:                  Utilisateur
+    groups:                 Groupe
+    localities:             Communes
+    insees:                 Code INSEE
+listing:
+  title_card:               Restitution de la fiche "%card%"

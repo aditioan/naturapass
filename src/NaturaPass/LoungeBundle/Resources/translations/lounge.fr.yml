@@ -1,0 +1,209 @@
+menu:
+    title:                      Agenda
+    my_lounges:                 Mon agenda
+    all_lounges:                Tous les événements
+    add_lounge:                 Organiser mon agenda
+    invited_lounges:            Invitations
+
+label:
+    allow_add:      Qui peut publier?
+    allow_show:     Qui peut consulter?
+    allow_add_chat:      Qui peut publier dans la discussion de l'evenement ?
+    allow_show_chat:     Qui peut consulter la discussion de l'evenement ?
+    all_members:    Tous les membres
+    admin:          Administrateurs
+title:
+    my_lounges:                 Liste de mes événements
+    all_lounges:                Liste de tous les événements
+    invited_lounge:             Liste des invitations aux événements
+    no_owning:                  Vous n'appartenez à aucun événement
+    no_pending:                 Vous n'avez ni demandé l'accès à un événement, ni reçu d'invitation
+    no_more:                    Vous avez chargé l'intégralité des événements
+    add:                        Organisation d'un événement
+    edit:                       Édition de l'agenda %lounge%
+    invite:                     Inviter de nouveau membre à votre événement
+    show:                       Agenda %lounge%
+    invited:                    Valider l'invitation
+
+filter-lounge:
+    placeholder:                Nom de l'événement recherchée puis tapez Entrée
+
+filter:
+    label:                      Rechercher
+    placeholder:                Nom ou prénom de la personne recherché puis tapez Entrée
+
+alert:
+    no_addresses:                  |
+                                Vous n'avez pas d'adresses favorites, vous pouvez en ajouter en <a href="%lien%">cliquant ici</a>
+    add_addresses:                  |
+                                Pour configurer vos adresses favorites, <a href="%lien%">cliquez ici</a>
+    minFilter:                  Merci de saisir au minimum 3 caractères !
+lounge:
+    btn:
+        showMembers:            Listez les membres
+        hideMembers:            Cachez les membres
+        adminMembers:           Administrez les membres
+        showNotMembers:         Listez les non-membres
+        hideNotMembers:         Cachez les non-membres
+        adminNotMembers:        Administrez les non-membres
+        showInvited:            Listez les invités
+        hideInvited:            Cachez les invités
+        notmember:              Ajoutez des non-membres
+        invite:                 Invitez des membres
+        revive-invited:             Relancer
+        valid-invited:              Valider
+    name:                       Chasses
+    title:
+        participants:           Participation
+        participation:          Participants à l'événement
+        publications:           Mur de l'événement
+        you:                    Moi
+        creation:               organiser mon agenda
+        edition:                Edition d'un agenda
+        invite:                 Invitez des membres Naturapass dans votre événement
+        invitenotmember:        Invitez des non-membres Naturapass dans votre événement
+        inviteGroup:            Invitez de nouveaux membres à votre événement
+        information:            Informations
+        date:                   Dates
+        allListe:               Tous les événements
+        myListe:                Mon agenda
+        invitedListe:           Liste des invitations aux événements
+        invited:                Validez l'invitation à l'événement
+        members:                Membres
+        membersdetail:          Participants à l'événement
+        chat:                   Discussion de l'événement
+        map:                    Carte de l'événement
+        listemembers:           Membres Naturapass
+        listenotmembers:        Non-membres Naturapass
+        listeinvited:           Invités qui n'ont pas répondu
+        close_lounge:           Fermeture de l'événement
+        remove_member:          Supprimez un membre de l'événement
+        remove_notmember:       Supprimez un non-membre de l'événement
+        remove_invitedmember:   Annulez une invitation à l'événement
+        valid_invitedmember:   Validez une invitation à l'événement
+    description:
+        address:                |
+                                Lieu de rdv :
+        close_lounge:           |
+                                Attention, vous allez fermer définitivement l'événement <span style="color: red">%lounge%</span>. <br>
+                                Etes-vous sûr de fermer cet événement?
+        allListe:               Vous retrouverez ci-dessous l'ensemble des événements disponibles
+        myListe:                Vous retrouverez ci-dessous l'ensemble de vos événements
+        invitedListe:           Vous retrouverez ci-dessous l'ensemble des événements auxquels vous avez été invité ou les événements en attente de validation
+        invited:                Vous pouvez valider ou refuser l'invitation à cet événement
+        creation:               Description
+        invite:                 |
+                                Vous pouvez inviter des membres Naturapass à rejoindre votre événement.<br>
+                                Soit des amis Naturapass, soit des groupes auxquels vous appartenez, soit des membres Naturapass..
+        invitenotmember:        |
+                                Vous pouvez inviter des non-membres Naturapass à rejoindre votre événement en leur envoyant un email.<br>
+                                Pour savoir si une personne est membre Naturapass, vous pouvez la chercher en cliquant sur le bouton "Invitez d'autres membres" ci-dessus.
+        liste:                  Voici la liste des événements
+        remove_member:          |
+                                Attention, vous allez Supprimer le membre : <span style="color: red">%member%</span> de cet événement. <br>
+                                Etes-vous sûr de vouloir le supprimer?
+        remove_notmember:       |
+                                Attention, vous allez Supprimer le non-membre : <span style="color: red">%member%</span> de cet événement. <br>
+                                Etes-vous sûr de vouloir le supprimer?
+        remove_invitedmember:   |
+                                Attention, vous allez annuler l'invitation du membre : <span style="color: red">%member%</span> de cet événement. <br>
+                                Etes-vous sûr de vouloir l'annuler?
+        valid_invitedmember:   |
+                                Attention, vous allez valider l'invitation du membre : <span style="color: red">%member%</span> de cet événement. <br>
+                                Etes-vous sûr de vouloir valider ce membre?
+    placeholder:
+        name:                   Nom de l'événement
+        description:            Description de l'événement
+        meetingAddress:         Lieu de rendez-vous
+        meetingDate:            Date de rendez-vous
+        endDate:                Date de fin de l'événement
+        publicComment:          Commentaire public
+        privateComment:         Commentaire privé
+        quiet:                  Vous êtes en status silencieux
+    attributes:
+        date:
+            meetingDate:            Rdv le
+            endDate:                Fini le
+            at:                     à
+        chooseAddress:          Choisir une adresse favorite
+        updategeoloc:           Repositionner son point sur la carte
+        geolocinfo:             |
+                                Si vous activez la géolocalisation, les personnes qui participent à votre événement seront géolocalisées sur la carte, si elles ont également activé la géolocalisation.
+                                Vous pouvez activer la géolocalisation plus tard.
+
+                                Conseil + : Activez la géolocalisation le jour de votre événement.
+        accessinfo:             |
+                                Privé: seules les personnes que vous inviterez verront et pourront participer à votre événement.
+                                Semi-privé: tout le monde verra votre événement et pourra s'inscrire, mais seules les personnes que vous validerez pourront entrer dans votre événement.
+                                Public: tout le monde peut voir et entrer librement dans votre événement.
+
+                                Conseil + : Utilisez Privé pour les événements où vous limitez le nombre de personnes. Utilisez semi-privé pour les événements régulièrs, par exemple, battues en ACCA. Utilisez Public pour des manifestations libres comme par exemple un rassemblement de chasseurs
+        validation :            Valider
+        geolocation:            Géolocalisation
+        quiet:                  Silencieux
+        administrator:          Administrateur
+        participateNotMember:   Participe à l'événement
+        participateMember:      Participe à l'événement
+        participate:            Je participe à l'événement
+        participe:              Participation
+        administrator:          Administrateur
+        owner:                  Hôte
+        admin:                  '{0} Administré par <b>Vous</b>|{1} Administré par <b>Vous</b> et <b>%other%</b>|]1,Inf] Administré par <b>Vous</b> et <b>%count% personnes</b>'
+        name:                   Nom
+        description:            Description
+        dateEnd:                Fin le %date% à %hour%
+        notification:           Notification
+        meetingDate:            Date de rendez-vous
+        meetingAddress:         Adresse de rendez-vous
+        endDate:                Fin de l'événement
+        beginGeolocation:       Date de début de la géolocalisation
+        endGeolocation:         Date de fin de la géolocalisation
+        members:                %count% membre|]1,+Inf[%count% membres
+        subscribers:             %count% personne|]1,+Inf[%count% personnes
+        asks:                   %count% Demande|]1,+Inf[%count% Demandes
+        wait:                   en attente de validation
+        tchat:
+            admin:              Administrateur
+    state:
+        geolocate:              Géolocalisation désactivée
+        geolocation:            '{0} Géolocalisation désactivée|{1} Géolocalisation activée'
+        participate:
+            long:               '{0} ne participe pas|{1} participe|{2} ne sais pas'
+            short:              '{0} non|{1} oui|{2} peut-être'
+        joined:                 Inscrit
+        join_asked:             Demande envoyée
+        invite_sended:          Invitation envoyée
+        admin:                  Vous êtes administrateur de cet événement
+        subscriber:             Membre
+        no_more_validation:      Il n'y a plus aucun personne en attente de validation
+    action:
+        add_not_member:
+            name:               Ajouter un non-membre Naturapass
+        delete:                 Supprimez l'événement
+        back:                   Sortez de l'événement
+        administer:             Administrez l'événement
+        edit:                   Éditez l'événement
+        access:                 Entrez dans l'événement
+        access2:                Accédez à l'événement
+        message_delete :        Etes-vous sur de vouloir supprimer l'événement
+        removeuser:             Supprimez le participant
+        add_media:              Ajoutez un média
+        remove_ask:             Annulez la demande
+        remove_invitation:      Refusez l'invitation
+        join:                   Inscrivez-vous à l'événement
+        valid_invite_join:      Acceptez l'invitation à l'événement
+        ask_join:               Demandez à rejoindre
+        exit:                   Désinscrivez-vous de l'événement
+        close:                  Fermez cet événement
+        map:
+            subscribers:         participants
+            medias:             médias
+        invite:
+            friends:    Invitez des amis
+            send:       Envoyez une invitation
+            email:
+                name:       Invitation par email
+                subject:     NaturaPass - Invitation pour rejoindre l'événement %lounge%
+    validation:
+        comment:
+            empty:              Le contenu du commentaire est vide

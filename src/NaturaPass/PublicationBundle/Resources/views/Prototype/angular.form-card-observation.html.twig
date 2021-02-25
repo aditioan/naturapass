@@ -1,0 +1,45 @@
+{% verbatim %}
+    <div>
+        <label class="ng-binding">{{ label.name }} <span class="btn-danger" ng-show="label.required == 1">{% endverbatim %}{{ 'publication.observation.required'|trans({}, translation_name~'publication') }}{% verbatim %}</span></label>
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 0" type="text" class="form-control">
+        <textarea ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 1" rows="3" class="form-control"></textarea>
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 10" type="number" class="form-control">
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 11" type="number" class="form-control">
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 20" type="text" np-datetime-picker="false" class="form-control">
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 21" type="text" np-datetime-picker-hour="true" class="form-control">
+        <input ng-required="label.required == 1" ng-model="label.value" ng-if="label.type == 22" type="text" np-datetime-picker="true" class="form-control">
+        <select ng-required="label.required == 1"  class="form-control" ng-model="label.value" ng-if="label.type == 30" ng-options="content.name for content in label.contents">
+            <option value="">-- Choisir une fiche --</option>
+        </select>
+        <select multiple ng-required="label.required == 1"  class="form-control" ng-model="label.value" ng-if="label.type == 31" ng-options="content.name for content in label.contents">
+            <option value="">-- Choisir une fiche --</option>
+        </select>
+        <!--<select multiple ng-required="label.required == 1"  class="form-control" ng-model="label.value" ng-if="label.type == 32" ng-options="content.name for content in label.contents">-->
+            <!--<option value="">&#45;&#45; Choisir une fiche &#45;&#45;</option>-->
+        <!--</select>-->
+        <ui-select multiple ng-model="label.value" theme="select2" ng-if="label.type == 32" class="form-control">
+            <ui-select-match>{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="content in label.contents | filter:$select.search">
+                {{content.name}}
+            </ui-select-choices>
+        </ui-select>
+
+        <!--<input ng-required="label.required == 1" ng-if="label.type == 32" id="modal-labelcontent-select2{{ label.id }}" data-labelId="{{ label.id }}" ui-select2="labelcontentsOptions" class="modal-labelcontents-select2" ng-model="labelcontentsSelect[label.id]" class="form-control" ng-cloak>-->
+        <div class="row" ng-if="label.type == 40">
+            <div class="col-sm-12" ng-repeat="content in label.contents">
+                <div class="checkbox">
+                    <input id="labelcheckbox{{ content.id }}" checklist-value="content.id" type="checkbox" checklist-model="contentArray[label.id]"/>
+                    <label for="labelcheckbox{{ content.id }}">{{ content.name }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="label.type == 50">
+            <div id="group_access" class="form-access">
+                <div class="radio" ng-repeat="content in label.contents">
+                        <input name="labelradio{{ label.id }}" id="labelradio{{ content.id }}" type="radio"  ng-model="label.value" value="{{ content.id }}" />
+                        <label for="labelradio{{ content.id }}">{{ content.name }}</label>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endverbatim %}

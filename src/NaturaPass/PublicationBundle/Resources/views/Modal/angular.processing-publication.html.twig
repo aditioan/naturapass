@@ -1,0 +1,22 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.processing-publication.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'publication.processing.title'|trans({}, translation_name~'publication') }}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <p>
+                    {{ 'publication.processing.content'|trans({}, translation_name~'publication') | raw }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+    </div>
+{% endblock %}

@@ -1,0 +1,162 @@
+title:
+    inscription:        Inscrivez-vous sur Rodypass
+    invitation:         Invitez et retrouvez vos amis
+    complete:           Détail de votre profil
+    password_lost:      Mot de passe oublié
+    password_new:       Nouveau mot de passe
+    parameter:          Paramètres utilisateur
+
+description:
+    invitation:         Vous pouvez inviter directement vos amis depuis Facebook sur le site de chantier pour constituer votre groupe de chantier sur l'espace de chantier Rodypass
+    complete:           Complétez votre profil pour accéder au site de chantier Rodypass et commencer à utiliser votre espace de chantier et à constituer votre groupe de chantier
+    resetting:          Vous pouvez réinitialiser votre mot de passe pour vous connecter au site de chantier Rodypass et à votre espace de chantier
+
+validator:
+    name:
+        naturapass:   Ce champ ne peut pas contenir "Rodypass"
+
+user:
+    profil:             Mon profil
+    attributes:
+        userlock:           Membres bloqués
+        favoriteAddress:    Adresses favorite
+        email:              Adresse email
+        firstname:          Prénom
+        lastname:           Nom
+        birthday:           Date de naissance
+        gender:             Genre
+        profile_picture:    Photo de profil
+        friends:            Ami|]1,+Inf[Amis
+        members:            Membres Rodypass
+        mutualfriends:      Ami en commun|]1,+Inf[Amis en commun
+        courtesy:           Civilité
+        password:           Mot de passe
+        passverif:          Mot de passe (validation)
+        old_password:       Ancien mot de passe
+        new_password:       Nouveau mot de passe
+        addresses:          Adresses
+        address:
+            title:          Nom de votre adresse
+            placeholder:    |
+                            Par exemple : "Ma chantier", "Chantier de Chambord", "Cabane"...
+        verif_password:     Vérification nouveau mot de passe
+        parameters:
+            sharing:        Partage par défaut de vos publications
+    courtesy:
+        mister:             Monsieur
+        madam:              Madame
+    edit_profil:
+        title:              Modifiez votre profil
+        description:        Pour une utilisation optimale de l’application, il est recommandé de remplir les champs suivants.
+        info_general:       Informations générales
+        photo:              Photo de profil
+        password:           Mot de passe de connexion
+    new_profil:
+        title:              Remplissez votre profil
+        description:        Pour une utilisation optimale de l’application, il est recommandé de remplir les champs suivants.
+        photo:              Photo de profil
+        info:               Informations complémentaires
+    invitation:
+        title:
+            add_friends:        Invitez vos amis à rejoindre RodyPass
+            email:              Par email
+            mail:               Par messagerie
+            social_networks:    Par les réseaux sociaux
+        description:
+            add_friends:        Connectez-vous avec votre messagerie préférée et envoyer un message à vos amis.
+            email:              |
+                                Pour partager vos photos, vos vidéos, vos points de géolocalisation, vos chasses,... invitez vos amis à vous rejoindre sur Rodypass!<br>
+                                Inscrivez ci-dessous leur adresse email.
+        no_friends:
+            facebook:           Aucun de vos amis Facebook ne fait partit de RodyPass
+    device:
+        verify:             Vérifier un appareil
+        nonexistent:        Aucun appareil trouvé avec les données fournies.
+        nonverified:        Cet appareil n'a pas été vérifié.
+        verified:           L'appareil %name% est maintenant marqué comme étant un appareil vérifié.
+    action:
+        favorite_address:   Cliquez sur une adresse pour la définir comme favorite
+        add_address:        Ajoutez une adresse
+        contact:            Ajoutez un contact
+        ignore:             Ignorez cette étape
+        photo:              Téléchargez une photo
+        or:                 ou
+        webcam:             Prenez une photo
+        webcam_info:        avec votre webcam
+        activate:           Activer son compte RodyPass
+        remove_account:     Supprimer mon compte RodyPass
+        confirm_removing:   Confirmer la suppression de votre compte RodyPass ?
+        confirm_remove:     Le fait de supprimer votre compte RodyPass est définitif et irréversible. Tous vos contenus — publications, commentaires, chantiers, groupes — seront supprimés.
+    state:
+        no_user_lock:       Vous n'avez pas bloqué de membre pour le moment
+        no_mutualfriends:   Vous n'avez aucun ami en commun avec cet utilisateur
+        no_friends:         "{0}Vous n'avez aucun ami sur RodyPass|{1}Cet utilisateur n'a aucun ami"
+        disabled:           Cet utilisateur est désactivé
+        incorrect_password: Le mot de passe saisi n'est pas valide
+        no_addresses:       |
+                            Saisissez ici vos adresses favorites. <br />
+                            Elles vous permettront de naviguer plus rapidement sur la carte.<br />
+                            Quand vous vous connectez sur la carte, vous êtes centré automatiquement sur l'adresse par défaut.
+    password_lost:
+        title:              Récupération de votre mot de passe
+    confirmation:
+        resend:         Renvoyer un lien de confirmation
+    parameter:
+        title:          Paramètres utilisateur
+        description:    Gérez les paramètres par défaut de vos publications ainsi que des notifications par email.
+        sharing:        Publication
+        sharing_param:  Partage des publications par défaut
+        email:          Email
+        notification:   Notification smartphone
+        friends:        Amis visibles publiquement
+
+home:
+    register:
+        title:          Inscrivez-vous à Rodypass
+        description:    Pour vous inscrire à Rodypass et profiter de tous ses avantages, remplissez les champs suivants
+        accept_cgu:     En cochant cette case, vous acceptez les <a href="%link%" target="_blank" title="Conditions générales d'utilisation">conditions générales d'utilisation</a>
+        connect:        Se connecter avec Facebook
+    connexion:
+        password_lost:      Mot de passe oublié
+    footer:         2014 Tous droits réservés - Rodypass est un site internet et une application propulsée par
+
+registration:
+    can_resend:     Si vous ne recevez pas l'email d'ici quelques minutes, vous pouvez demander à en recevoir un autre en <a href="%link%">cliquant ici</a>. Si vous rencontrez un problème, veuillez envoyer un email à <a href="mailto:rodypass@e-conception.fr">rodypass@e-conception.fr</a>.
+
+friendship:
+    action:
+        add:                Ajouter en ami
+        delete:             Supprimer cet ami
+        reject_request:     Rejeter la demande d'ami
+        confirm_request:    Confirmer la demande en ami
+    state:
+        friend:             Ami
+        request_rejected:   Demande en ami rejetée
+        request_sended:     Demande en ami envoyée
+        deleted:            Ami supprimé
+    notification:
+        added_you:          %sender% vous a ajouté en ami
+        confirmed_request:  %receiver% a confirmé votre demande d'ami
+
+validation:
+    general:        Votre profil a été sauvegardé!
+    photo:          Votre photo a été modifié!
+    password:       Votre mot de passe a bien été modifié!
+
+search:
+    form:
+        title:              Recherchez une personne
+        description:        Pour rechercher une personne, veuillez entrer son nom et/ou prénom.
+        label:              Recherche
+        placeholder:        Nom et/ou prénom de la personne recherché
+        total:              Affichez les <b>%count% résultats</b>
+        inviteFriends:      Vous n'avez pas trouvé la personne que vous cherchez ?<br>Invitez-la à rejoindre Rodypass
+
+friends:
+    title:              Amis
+    description:        Vous pouvez voir, modifier ou supprimer des amis.
+    list:               Liste de mes amis
+    no_friends:         Vous n'avez pas encore d'amis!
+
+invite:
+    title:          Invitez des amis

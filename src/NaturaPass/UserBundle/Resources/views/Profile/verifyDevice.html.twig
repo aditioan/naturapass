@@ -1,0 +1,34 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'user.device.verify'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container container-md">
+            <h1>{{ 'user.device.verify'|trans({},translation_name~'user') }}</h1>
+
+            {% if existent == false %}
+                <p class="alert alert-danger">
+                    {{ 'user.device.nonexistent'|trans({}, translation_name~'user') }}
+                </p>
+
+            {% elseif verified == true %}
+                <p class="alert alert-info">
+                    {{ 'user.device.verified'|trans({'%name%': device.name}, translation_name~'user') }}
+                </p>
+
+            {% elseif verified == false %}
+                <p class="alert alert-info">
+                    {{ 'user.device.unverified'|trans({}, translation_name~'user') }}
+                </p>
+
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock body %}

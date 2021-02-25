@@ -1,0 +1,10 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_main_homepage', {}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>Contact : </p>
+    <p>{{ body|escape }}</p><br />
+{% endblock body %}

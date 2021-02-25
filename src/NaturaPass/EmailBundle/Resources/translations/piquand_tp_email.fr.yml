@@ -1,0 +1,343 @@
+email:
+    to:         À
+    subject:    Sujet
+    hello:      Bonjour %member%
+    thanks:     Merci de rejoindre notre communauté et n'hésitez pas à inviter des amis. L'union fait la force !
+    comeback:   A bientôt sur
+    salutation: Bien naturellement
+    team:       L'équipe Piquand TP
+    application:      Piquand TP
+    mention:    Conformément à la loi "Informatique et Liberté" N°78-017 du 6 janvier 1978, vous disposez d'un droit d'accès et de rectification à toute communication des informations personnelles vous concernant en vous adressant à <a href="%url%">Piquand TP.com</a>, 5 chemin de la Tactière, 44470 Carquefou ou par mail <a href="mailto:piquand-tp@e-conception.fr">piquand-tp@e-conception.fr</a>.
+
+invitation:
+    new:
+        from:       piquand-tp@e-conception.fr
+        subject:    %fullname% vous invite sur Piquand TP
+        body:       |
+                    Bonjour,<br><br>
+                    <i>%email_body%</i><br />
+                    <b>%fullname%</b> vous invite à rejoindre Piquand TP.<br>
+                    Avec Piquand TP, vous pourrez:
+                        <ul>
+                            <li>Organiser vos chantiers,</li>
+                            <li>Géolocaliser vos chantiers,</li>
+                            <li>Tenir un journal de bord,</li>
+                            <li>...</li>
+                        </ul>
+                    Pour vous inscrire et rejoindre le réseau Piquand TP, <a href="%lien%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                    %lien%<br>
+    friend:
+        description:  Invitation pour être ami
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% veut vous rejoindre sur Piquand TP
+        body:         |
+                      Bonjour %user_fullname%,<br><br>
+                      <i>%email_body%</i><br />
+                      <b>%fullname%</b> voudrait que vous fassiez partie de son réseau sur Piquand TP.<br>
+                      Cliquez sur <a href="%lien%">ce lien</a> pour rejoindre <a href="%lien%">%fullname%</a> ou allez dans vos notifications sur Piquand TP.<br>
+user:
+    recommendation:
+        from:       piquand-tp@e-conception.fr
+        subject:    Piquand TP - Recommendations d'amis
+        body_before:  |
+                      Bonjour %fullname%,
+                      Piquand TP vous propose quelques amis:
+        body_after:   Vous pouvez les ajouter en allant sur Piquand TP.com !
+    changepassword:
+        from:       piquand-tp@e-conception.fr
+        subject:    Mot de passe Piquand TP
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Vous avez demandé de regénérer votre mot de passe.<br>
+                    Si vous avez bien fait cette demande, cliquez sur <a href="%lien%">ce lien</a> afin de générer à nouveau votre mot de passe.<br>
+    api_changepassword:
+        from:       piquand-tp@e-conception.fr
+        subject:    Mot de passe Piquand TP
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Vous avez demandé de regénérer votre mot de passe.<br>
+
+                    Si vous avez bien fait cette demande, entrez ce code: <br><b>%token%</b><br> dans l'application Piquand TP afin de générer à nouveau votre mot de passe.<br>
+
+    verify_device:
+        from:       piquand-tp@e-conception.fr
+        subject:    Vérification de connexion
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Une connexion inhabituelle a été détectée sur votre compte Piquand TP depuis un dispositif non identifié avec l'appareil suivant: %device%.<br><br>
+                    Merci de <a href="%link%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                    %link%<br> pour confirmer qu'il s'agit bien d'un de vos appareils.<br>
+    register_confirmation:
+        from:           piquand-tp@e-conception.fr
+        subject:        Inscription à Piquand TP
+        body:           |
+                        Bonjour %fullname%,<br><br>
+
+                        Vous venez de rejoindre Piquand TP.<br><br><br>
+
+                        Pour valider votre inscription et rejoindre le réseau Piquand TP, <a href="%link%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                        %link%<br><br><br>
+
+                        <b>Avec Piquand TP vous pouvez :</b>
+
+                        <ul>
+                            <li>Cartographier votre territoire,</li>
+                            <li>Organiser vos chantiers,</li>
+                            <li>Géolocaliser vos chantiers,</li>
+                            <li>Tenir un journal de bord,</li>
+                            <li>Vous regroupez à travers des thématiques,</li>
+                            <li>...</li>
+                        </ul>
+                        <br>
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Découvrir Piquand TP en quelques instants</span><br><br>
+
+                        <span style="color:#c11616;"><b>Important</b> : toutes les informations que vous publiez sur Piquand TP sont votre propriété et ne sont partagées avec d’autres membres que si vous le prévoyez. Vous pouvez à tout moment les départager, les supprimer, les modifier… nous ne gardons pas d’archives.</span><br><br>
+
+                        <br>
+
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Pour conclure</span><br><br>
+
+                        Ajoutez dès à présent <a href="mailto:piquand-tp@e-conception.fr" style="color:#8dbb1c" target="_blank">piquand-tp@e-conception.fr</a> à votre courrier désirable afin de ne manquer aucune actualité, et n’hésitez pas à nous contacter à cette adresse pour vos remarques, commentaires et besoin d’aide.
+    register_without_confirmation:
+        from:           piquand-tp@e-conception.fr
+        subject:        Inscription à Piquand TP
+        body:           |
+                        Bonjour %fullname%,<br><br>
+
+                        Vous venez de rejoindre Piquand TP.<br><br><br>
+
+                        <b>Avec Piquand TP vous pouvez :</b>
+
+                        <ul>
+                            <li>Cartographier votre territoire,</li>
+                            <li>Organiser vos chantiers,</li>
+                            <li>Géolocaliser vos chantiers,</li>
+                            <li>Tenir un journal de bord,</li>
+                            <li>Vous regroupez à travers des thématiques,</li>
+                            <li>...</li>
+                        </ul>
+                        <br>
+
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Pour conclure</span><br><br>
+
+                        Ajoutez dès à présent <a href="mailto:piquand-tp@e-conception.fr" style="color:#8dbb1c" target="_blank">piquand-tp@e-conception.fr</a> à votre courrier désirable afin de ne manquer aucune actualité, et n’hésitez pas à nous contacter à cette adresse pour vos remarques, commentaires et besoin d’aide.
+
+
+
+lounge:
+    valid-invite:
+        description:  Demande d'adhésion à un chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% souhaite rejoindre le chantier %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> souhaite rejoindre le chantier %loungename%%description% sur Piquand TP.<br>
+                      Pour valider la demande à ce chantier, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    invite:
+        description:  Invitation à rejoindre un chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Piquand TP
+        body:         |
+                      Message de <b>%fullname%</b>:<br>
+                      %message%<br><br>
+
+                      <b>%fullname%</b> vous invite à rejoindre le chantier %loungename%%description% sur Piquand TP.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                      Pour rejoindre ce chantier, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    revive-invite:
+        description:    Relance d'invitation à rejoindre un chantier
+        from:           piquand-tp@e-conception.fr
+        subject:        %fullname% vous relance pour participation au chantier %loungename% sur Piquand TP
+        body:           |
+                        Message de <b>%fullname%</b>:<br>
+                        %message%<br><br>
+
+                        <b>%fullname%</b> vous invite à rejoindre le chantier %loungename%%description% sur Piquand TP.<br>
+                        Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                        Pour rejoindre ce chantier, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                        %lien%<br><br>
+
+    invite_unregistered:
+        description:  Invitation à rejoindre un chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre le chantier %loungename%%description% sur Piquand TP.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                      Pour rejoindre ce chantier, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+                      Avec Piquand TP, vous pourrez:
+                          <ul>
+                              <li>Cartographier votre territoire,</li>
+                              <li>Organiser vos chantiers,</li>
+                              <li>Géolocaliser vos chantiers,</li>
+                              <li>Tenir un journal de bord,</li>
+                              <li>Vous regroupez à travers des thématiques,</li>
+                              <li>...</li>
+                          </ul>
+    invite_members:
+        description:  Invitation à rejoindre un chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre le chantier %loungename%%description% sur Piquand TP.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                      Pour rejoindre ce chantier, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+                      Avec Piquand TP, vous pourrez:
+                          <ul>
+                              <li>Cartographier votre territoire,</li>
+                              <li>Organiser vos chantiers,</li>
+                              <li>Géolocaliser vos chantiers,</li>
+                              <li>Tenir un journal de bord,</li>
+                              <li>Vous regroupez à travers des thématiques,</li>
+                              <li>...</li>
+                          </ul>
+    geolocate_active:
+        description:  Activation de la géolocalisation dans vos chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% vient d'activer la géolocalisation de %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vient d'activer la géolocalisation du chantier %loungename%%description% sur Piquand TP.<br>
+                      Pour vous rendre dans ce chantier, <a href="%lien%">cliquez ici</a>.
+    participate:
+        description:  Changement de statut de présence d'un inscrit de vos chantiers
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% a changé le statut de %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> qui participe au chantier %loungename% à changer de statut. Son nouveau statut est "%statut%".<br>
+                      Pour vous rendre dans ce chantier, <a href="%lien%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+    chat:
+        description:  Récapitulatif quotidien des messages d'un chantier
+        from:         piquand-tp@e-conception.fr
+        subject:      Discussions dans le chantier %loungename% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      Il y a eu des discusssions aujourd'hui dans le chantier %loungename%.<br>
+                      Pour vous rendre dans ce chantier, <a href="%lien%">cliquez ici</a>.
+
+group:
+    access-validated:
+        description:  Demande d'adhésion à un groupe
+        from:         piquand-tp@e-conception.fr
+        subject:      Votre invitation au Groupe %groupname% est validée
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a validé votre accés au Groupe %groupname%.<br><br>
+                      Pour entrer dans ce groupe, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :
+                      %lien%
+                      <br>br>
+                      Pour rappel, les groupes vous permettent d'échanger avec les autres membres:
+                        <ul>
+                          <li>Photos, vidéos et textes,</li>
+                          <li>Points de géolocalisation,</li>
+                          <li>Invitations à des chantiers,</li>
+                          <li>...</li>
+
+    valid-invite:
+        description:  Demande d'adhésion à un groupe
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% souhaite rejoindre le groupe %groupname% sur Piquand TP
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> souhaite rejoindre le groupe %groupname%%description% sur Piquand TP.<br>
+                      Pour valider la demande à ce groupe, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    invite:
+        description:  Invitation à rejoindre un groupe
+        from:         piquand-tp@e-conception.fr
+        subject:      %fullname% vous invite à rejoindre %groupname% sur Piquand TP
+        body:         |
+                      Message de votre ami:<br>
+                      %message%<br><br>
+
+                      <b>%fullname%</b> vous invite à rejoindre le groupe %groupname%%description% sur Piquand TP.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                      Pour rejoindre ce groupe, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+                      Avec Piquand TP, vous pourrez:
+                          <ul>
+                              <li>Cartographier votre territoire,</li>
+                              <li>Organiser vos chantiers,</li>
+                              <li>Géolocaliser vos chantiers,</li>
+                              <li>Tenir un journal de bord,</li>
+                              <li>Vous regroupez à travers des thématiques,</li>
+                              <li>...</li>
+                          </ul>
+        body_wm:      |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre le groupe %groupname%%description% sur Piquand TP.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Piquand TP.<br>
+                      Pour rejoindre ce groupe, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+                      Avec Piquand TP, vous pourrez:
+                          <ul>
+                              <li>Cartographier votre territoire,</li>
+                              <li>Organiser vos chantiers,</li>
+                              <li>Géolocaliser vos chantiers,</li>
+                              <li>Tenir un journal de bord,</li>
+                              <li>Vous regroupez à travers des thématiques,</li>
+                              <li>...</li>
+                          </ul>
+    publication_added:
+        description:    Nouvelle(s) publication(s) dans un groupe
+        from:           piquand-tp@e-conception.fr
+        subject:        Il y a des nouvelles publications dans votre groupe %group%
+        body:           |
+                        Bonjour,
+                        %senders% de votre groupe %group% a/ont publié aujourd'hui des informations.<br><br>
+                        Pour voir ces publications et vous rendre dans ce groupe, <a href="%link%">cliquez ici</a>.
+                        <br><br>
+                        Si vous ne voulez plus recevoir les notifications par email concernant ce groupe, rendez-vous dans la rubrique "<a href="%owninggroups%">Mes groupes</a>" et décochez la case "Je souhaite recevoir les notifications par email pour ce groupe" correspondant à ce groupe.
+publication:
+    comment:
+        description:  Commentaire sur votre publication
+        from:         piquand-tp@e-conception.fr
+        subject:      Nouveau commentaire sur votre publication
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a posté un commentaire sur votre publication.<br>
+                      <b>"%comment%"</b><br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+    same_comment:
+        description:  Réponse à votre commentaire
+        from:         piquand-tp@e-conception.fr
+        subject:      Réponse à votre commentaire
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a également commenté la publication de <b>%owner%</b> du %date%<br>
+                      <b>"%comment%"</b><br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+    comment_reversible:
+        description:  Commentaire sur votre publication
+        from:         piquand-tp@e-conception.fr
+        subject:      Nouveau(x) commentaire(s) sur la publication de %owner%
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a également commenté la publication de %owner%.<br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+
+    report:
+        description:  Signal d'un abus sur une publication
+        subject:      Abus signalé
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> signalé un abus sur une publication.<br>
+                      Avec comme explication:<br>
+                      <b>%explanation%</b>
+                      <br>
+                      Pour la consulter, <a href="%link%">cliquez ici</a>.

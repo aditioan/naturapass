@@ -1,0 +1,114 @@
+{% if IS_GRANTED %}
+<div id="docking-panel" resize class="docking-panel bottom" ng-app="" ng-controller="DockingPanelController">
+    {% verbatim %}
+    <div class="minimize" ng-cloak ng-class="{opened: minimizeCount}" ng-show="minimizeCount">
+        <div>
+            <a ng-click="showMinizeItem=!showMinizeItem" href="#"><i class="icon-bubbles"></i> {{minimizeCount}}</a>
+        </div>
+        <div ng-show="showMinizeItem" class="popover minimize-item top">
+            <div class="arrow"></div>
+            <div ng-repeat="chatItem in chatData" ng-if="chatItem.minimize">
+                <a href="#" ng-click="reOpenChat(chatItem);">{{chatItem.title}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="npChatTab" ng-cloak ng-show="chatData.length">
+        <div class="npChat" id="chattab-{{chatItem.id}}" chattab-repeat-finished="minimizeTabs()" ng-class="{opened: chatItem.opened}" ng-repeat="chatItem in chatData" ng-if="chatItem.opened&&!chatItem.minimize">
+            <div class="npChatLayout" ng-class="{focused: !chatItem.minimizedTab&&(chatItem.focus||chatItem.headerFocus), blink: chatItem.hasIncomingMessage}">
+                <div class="npChatLayoutOuter">
+                    <div class="npChatLayoutInner" ng-click="focusChat(chatItem)">
+                            <div class="npChatLayoutTitleBar">
+                                <span ng-show="chatItem.participants.length > 1" class="title">
+                                    <a href="#" id="participantToggle-{{chatItem.id}}" ng-click="participantToggle(chatItem)">
+                                        {{chatItem.title}}
+                                    </a>
+                                </span>
+                                <span ng-show="chatItem.participants.length==1" class="title">
+                                    <a href="{{ 'fos_user_profile_show_name'|route: {usertag: chatItem.participants[0].usertag } }}">
+                                        {{chatItem.title}}
+                                    </a>
+                                </span>
+                                <span ng-hide="chatItem.participants.length" class="title">
+                                        {{chatItem.title}}
+                                </span>
+
+                                <a href="#" class="icon-cancel link-icon-close" ng-click="closeChat(chatItem.id);"></a>
+                                <a href="#" ng-show="chatItem.id" title="{% endverbatim %}{{ 'chat.header.title_add_more_participants'|trans({},translation_name~'message') }}{% verbatim %}" ng-cloak class="icon-user-plus link-icon-user-plus" title="" ng-click="chatItem.showHeader=true;maximizeTab(chatItem);resizeChatBody(chatItem);"></a>
+                                <a href="#" class="icon-minus link-icon-minimize" ng-cloak ng-click="minimizeTab(chatItem);$event.stopPropagation();" ng-hide="chatItem.minimizedTab"></a>
+                                <a href="#" class="icon-plus link-icon-maximize" ng-cloak ng-click="maximizeTab(chatItem)" ng-show="chatItem.minimizedTab"></a>
+
+                                <div class="popover top" ng-show="chatItem.participantToggle">
+                                    <div class="arrow"></div>
+                                    <div ng-repeat="participant in chatItem.participants">
+                                        <a href="{{ 'fos_user_profile_show_name'|route: {usertag: participant.usertag } }}">{{participant.fullname}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="npChatLayoutHeader">
+                                <div class="adding-participants clearfix" ng-show="chatItem.showHeader">
+                                    <button ng-show="chatItem.id" ng-cloak class="btn btn-primary btn-icon btn-done pull-right" ng-click="addMoreParticipants(chatItem)">
+                                        {% endverbatim %}
+                                        {{ 'chat.header.text_done'|trans({},translation_name~'message') }}
+                                    </button>
+                                    <div class="to-label pull-left">
+                                        <span>{{ 'chat.header.text_to'|trans({},translation_name~'message') }}</span>
+                                        {% verbatim %}
+                                    </div>
+                                    <div class="pull-left">
+                                        <div class="clearfix">
+                                            <div class="pending-participants">
+                                                <span ng-repeat="pendingParticipant in chatItem.pendingParticipants">
+                                                    {{ pendingParticipant.text }}
+                                                    <a href="#" class="icon-cancel link-icon-close" ng-click="removeParticipant(chatItem, pendingParticipant.id);"></a>
+                                                </span>
+                                            </div>
+                                            <div class="inputarea pull-left">
+                                                <input class="textinput" ng-keyup="searchUsers($event, chatItem.query, chatItem)" ng-focus="chatItem.headerFocus=true" ng-model="chatItem.query" focus-me="chatItem.showHeader" ng-blur="chatItem.headerFocus=false" autocomplete="off">
+                                            </div>
+                                            <div class="suggestion toogle" scroll-to-bottom="searchUsers(null, chatItem.query, chatItem)" ng-show="chatItem.query&&friends.length">
+                                                <span ng-click="addParticipant(chatItem, friend)" ng-repeat="friend in chatItem.searchParticipantResults=(friends | filter:{fullname: chatItem.query})">
+                                                <img  width="40" height="40" ng-src="{{friend.photo}}"/>{{friend.fullname}}</span>
+
+                                                <div class="small-loading ng-hide" ng-show="searchUserOption.loadingUsers"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="small-loading ng-hide" ng-show="chatItem.loadingMessage"></div>
+
+                            <div class="npChatLayoutBody" message-cursor="{{chatItem.messageCursor}}" scroll-to-bottom="enableAutoScroll(chatItem)" scroll-to-top="loadMoreConversationMessages(chatItem)" ng-class="{hasHeader: chatItem.showHeader}" hasHeader>
+                                <ul class="media-list">
+                                    <li class="media" messages-repeat-finished="{{chatItem.id}}" ng-repeat="message in chatItem.messages">
+                                        <div ng:class="{true:'pull-right', false:'pull-left'}[connectedUser.id==message.owner.ownerId]" class="">
+                                            <a ng-href="{{ 'fos_user_profile_show_name'| route:{'usertag': message.owner.usertag } }}"><img ng-if="connectedUser.id==message.owner.ownerId" data-toggle="tooltip" data-placement="left" title="{{ message.owner.fullname }}" ng-src="{{ message.owner.profilepicture }}" width="40" height="40"></a>
+                                            <a ng-href="{{ 'fos_user_profile_show_name'| route:{'usertag': message.owner.usertag } }}"><img ng-if="connectedUser.id!=message.owner.ownerId" data-toggle="tooltip" data-placement="right" title="{{ message.owner.fullname }}" ng-src="{{ message.owner.profilepicture }}" width="40" height="40"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="arrow-container">
+                                                <span class="icon-remove2 pull-right" ng-if="connectedUser.id==message.owner.ownerId" ng-click="deleteMessage(chatItem,message)" style="cursor: pointer;" ></span>
+                                                <p class="message-date" ng-if="message.updated.date">{{ message.updated.date | date:'D/M/YYYY à HH:mm' }}</p>
+                                                <p class="message-date" ng-if="!message.updated.date">{{ message.updated | date:'D/M/YYYY à HH:mm' }}</p>
+                                                <p class="message-content">{{ message.content }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="small-loading margin-top-up ng-hide" ng-show="chatItem.sendingMessage"></li>
+                                </ul>
+                            </div>
+
+                            <div class="npChatLayoutFooter">
+                                <div class="textarea" ng-visible="chatItem.participants.length||chatItem.pendingParticipants.length">
+                                    <textarea ng-keyup="sendMessage($event, chatItem)" ng-focus="chatItem.focus=true;$('html, body').animate({ scrollTop: $(document).height() }, 'slow');" ng-blur="chatItem.focus=false" id="ta-{{chatItem.id}}" focus-me="chatItem.focus&&!chatItem.headerFocus" placeholder="{% endverbatim %}{{ 'chat.message.text_placeholder'|trans({},translation_name~'message') }}"></textarea>
+                                </div>
+                            {% verbatim %}
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endverbatim %}
+    </div>
+</div>
+{% endif %}

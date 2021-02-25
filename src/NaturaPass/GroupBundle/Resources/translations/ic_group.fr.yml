@@ -1,0 +1,128 @@
+menu:
+    title:                      Groupes
+    my_groups:                  Mes groupes
+    all_groups:                 Tous les groupes
+    add_group:                  Créez un groupe
+    invited_groups:             Invitations
+
+filter-group:
+    placeholder:                Nom du groupe recherché puis tapez Entrée
+
+filter:
+    label:                      Rechercher
+label:
+    allow_add:      Qui peut publier?
+    allow_show:     Qui peut consulter?
+    allow_add_chat:      Qui peut publier sur le chat?
+    allow_show_chat:     Qui peut consulter le chat?
+    all_members:    Tous les membres
+    admin:          Administrateurs
+title:
+    my_groups:      Liste de mes groupes
+    all_groups:     Liste de tous les groupes
+    add:            Création d'un groupe
+    edit:           Édition du groupe %groupe%
+    invite:         Invitez de nouveaux membres à votre groupe
+    show:           Groupe %group%
+    administrator:  Administrez les membres
+    banish:         Exclure les membres
+    no_owning:      Vous n'appartenez à aucun groupe
+    no_pending:     Vous n'avez ni demandé l'accès à un groupe, ni reçu d'invitation
+    no_more:        Vous avez chargé l'intégralité des groupes publics et semi-privés. Les groupes privés ne sont accessibles que par invitation et donc pas visibles dans cette rubrique.
+    invited:        Valider l'invitation
+    invited_group:  Liste des invitations aux groupes
+
+group:
+    title:
+        creation:       Création d'un groupe
+        edition:        Modification d'un groupe
+        invite:         Invitez des personnes dans votre groupe
+        invitenotmember:        Invitez des non-membres I-C dans votre groupe
+        allListe:       Tous les groupes
+        myListe:        Mes groupes
+        members:        Membres
+        close_group:    Fermeture du groupe
+        invited:        Valider l'invitation au groupe
+        invitedListe:   Liste des invitations aux groupes
+    description:
+        invited:        Vous pouvez valider ou refuser l'invitation à ce groupe
+        close_group:    |
+                        Attention, vous allez fermer définitivement le groupe <span style="color: red">%group%</span>. <br>
+                        Etes-vous sûr de fermer ce groupe?
+        allListe:       Vous retrouverez ci-dessous l'ensemble des groupes disponibles
+        myListe:        Vous retrouverez ci-dessous l'ensemble de vos groupes
+        invitedListe:   Vous retrouverez ci-dessous l'ensemble de vos groupes auxquels vous avez été invité ou les groupes en attente de validation
+        creation:       Description de création
+        edition:        Description de l'administration
+        invite:                 |
+                                Vous pouvez inviter des membres I-C à rejoindre votre groupe.<br>
+                                Soit des amis I-C, soit des groupes auxquels vous appartenez, soit des membres I-C..
+        invitenotmember:        |
+                                Vous pouvez inviter des non-membres I-C à rejoindre votre groupe en leur envoyant un email.<br>
+                                Pour savoir si une personne est membre I-C, vous pouvez la chercher en cliquant sur le bouton "Invitez d'autres membres" ci-dessus.
+        liste:                  Voici la liste des agendas
+    attributes:
+        name:           Nom
+        owner:          Propriétaire
+        description:    Description
+        thematic:       Thématique
+        subscribers:     %count% Membre|]1,+Inf[%count% Membres
+        asks:           %count% Demande|]1,+Inf[%count% Demandes
+        admin:          '{0} Administré par <b>Vous</b>|{1} Administré par <b>Vous</b> et <b>%other%</b> autre personne|]1,Inf] Administré par <b>Vous</b> et <b>%count% personnes</b>'
+        members:        %count% membre|]1,+Inf[%count% membres
+        banish:         Exclure
+        countAdmin:     %count% Administrateur|]1,+Inf[%count% Administrateurs
+        administrator:  Administrateur
+        wait:           en attente de validation
+    placeholder:
+        name:           Nom du groupe
+        description:    Description du groupe
+    state:
+        subscriber:      Membre
+        invite_sended:  Invitation envoyée
+        user_removed:   Membre supprimé
+        dont_know:      Ne sais pas
+        joined:         Inscrit
+        join_asked:     Demande envoyée
+        admin:          Vous êtes administrateur de ce groupe
+        no_more_validation: Il n'y a plus aucun personne en attente de validation
+        no_more:        Il n'y a plus de groupes à charger
+    action:
+        admin:          Gérer les administrateurs
+        promote:        Promouvoir
+        destitute:      Destituer
+        banish:         Exclure
+        mailable:       Je souhaite recevoir les notifications par email pour ce groupe.
+        load_more:      Charger plus de groupes...
+        delete:         Supprimez le groupe
+        back:           Sortez du groupe
+        administer:     Administrez le groupe
+        edit:           Éditez le groupe
+        access:         Entrez dans le groupe
+        access2:        Accéder au groupe
+        message_delete :        Etes-vous sur de vouloir supprimer le groupe
+        remove_ask:     Annulez la demande
+        remove_invitation:      Refusez l'invitation
+        join:           Inscrivez-vous au groupe
+        valid_invite_join:      Acceptez l'invitation au groupe
+        ask_join:       Demandez à rejoindre
+        exit:           Désinscrivez-vous du groupe
+        close:          Fermez ce groupe
+        delete:         Supprimez le groupe
+        join:           Rejoindre le groupe
+        valid_join :    |
+                        Vous avez rejoint le groupe.
+                        Il apparaîtra dans la rubrique "Mes groupes"
+        invite:
+            friends:    Invitez des amis
+            send:       Envoyez une invitation
+            email:
+                name:       Invitation par email
+                subject:     I-C - Invitation pour rejoindre le groupe %group%
+                body:       |
+                            Bonjour,
+                            Vous êtes invités à rejoindre le groupe <a href="%grouppath%" title="%group%">%group%</a> de la part de <a href="%userpath%" title="%user%">%user%</a>
+                footer:     test
+
+invite:
+    title:          Invitez des groupes

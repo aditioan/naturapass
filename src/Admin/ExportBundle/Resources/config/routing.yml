@@ -1,0 +1,7 @@
+admin_export_search:
+    path:     /search
+    defaults: { _controller: AdminExportBundle:Default:search }
+
+admin_export_listing:
+    path:     /listing
+    defaults: { _controller: AdminExportBundle:Default:listing }

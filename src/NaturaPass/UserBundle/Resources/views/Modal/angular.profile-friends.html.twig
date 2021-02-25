@@ -1,0 +1,95 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.profile-friends.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title" ng-if="data.mutual">{{ 'user.attributes.mutualfriends'|transchoice(2, {}, translation_name~'user') }}</h4>
+        <h4 class="modal-title" ng-if="!data.mutual">{{ 'user.attributes.friends'|transchoice(2, {}, translation_name~'user') }}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row" ng-show="data.friends.length && !data.loading">
+            <div class="col-xs-4" ng-repeat="friend in data.friends" ng-class="{loading: friend.relation.friendship.loading}">
+                <div class="media">
+                    {% verbatim %}
+                    <div class="pull-left">
+                        <a class="pull-left" ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: friend.usertag } }}">
+                            <img ng-src="{{ friend.photo }}" width="40" height="40">
+                        </a>
+                    </div>
+                    {% endverbatim %}
+                    <div class="media-body">
+
+                        <button type="button" class="close pull-right"
+                                ng-class="{disabled: friend.relation.friendship.loading}"
+                                ng-if="friend.relation.friendship.state == 2"
+                                ng-hide="friend.relation.friendship.deleting"
+                                ng-click="friend.relation.friendship.deleting = true">&times;
+                        </button>
+
+                        <button type="button" class="pull-right btn btn-xs icon-cancel"
+                                ng-class="{disabled: friend.relation.friendship.loading}"
+                                ng-if="friend.relation.friendship.state == 2"
+                                ng-show="friend.relation.friendship.deleting"
+                                ng-click="friend.relation.friendship.deleting = false">
+                        </button>
+
+                        <button type="button" class="pull-right btn btn-xs icon-checkmark"
+                                ng-class="{disabled: friend.relation.friendship.loading}"
+                                ng-if="friend.relation.friendship.state == 2"
+                                ng-show="friend.relation.friendship.deleting"
+                                ng-click="removeFriendship(friend)">
+                        </button>
+
+                        {% verbatim %}
+                        <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: friend.usertag } }}" target="_blank">{{ friend.fullname }}</a>
+                        {% endverbatim %}
+                        <div class="btn-group btn-group-sm" ng-if="connectedUser.id != friend.id">
+                            <button type="button" class="btn btn-primary btn-sm"
+                                    ng-class="{disabled: friend.relation.friendship.loading}"
+                                    ng-click="addFriendship(friend)"
+                                    ng-if="!friend.relation.friendship.state || friend.relation.friendship.state == 3">{{ 'button.add'|trans({}, translation_name~'global') }}
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-sm"
+                                    ng-class="{disabled: friend.relation.friendship.loading}"
+                                    ng-click="confirmFriendship(friend)"
+                                    ng-if="friend.relation.friendship.state == 1 && friend.relation.friendship.way == 3">{{ 'button.valid'|trans({}, translation_name~'global') }}
+                            </button>
+
+                            <button type="button" class="btn btn-warning btn-sm"
+                                    ng-class="{disabled: friend.relation.friendship.loading}"
+                                    data-icon="icon-close"
+                                    ng-click="cancelFriendship(friend, $index)"
+                                    ng-if="friend.relation.friendship.state == 1 && friend.relation.friendship.way == 2">{{ 'button.cancel'|trans({}, translation_name~'global') }}
+                            </button>
+
+                            <button type="button" class="btn btn-warning btn-sm"
+                                    ng-class="{disabled: friend.relation.friendship.loading}"
+                                    ng-click="rejectFriendship(friend)"
+                                    ng-if="friend.relation.friendship.state == 1 && friend.relation.friendship.way == 3">{{ 'button.reject'|trans({}, translation_name~'global') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="small-loading" ng-show="data.loading"></div>
+        <div class="alert alert-info"
+                ng-show="!data.loading && !data.friends.length && !data.mutual && connectedUser.id != friend.id">
+            {{ 'user.state.no_friends'|transchoice(1, {}, translation_name~'user') }}
+        </div>
+        <div class="alert alert-info"
+                ng-show="!data.loading && !data.friends.length && !data.mutual && connectedUser.id == friend.id">
+            {{ 'user.state.no_friends'|transchoice(0, {}, translation_name~'user') }}
+        </div>
+        <div class="alert alert-info"
+                ng-show="!data.loading && !data.friends.length && data.mutual">
+            {{ 'user.state.no_mutualfriends'|trans({}, translation_name~'user') }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

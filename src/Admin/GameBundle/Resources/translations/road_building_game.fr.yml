@@ -1,0 +1,40 @@
+menu:
+    title:                      Jeux concours
+    listing:                    Accueil jeux concours
+title:
+    add:                        Ajout d'un jeu
+    edit:                       Modification d'un jeu
+game:
+    no_game:                    Auncun jeu en cours pour le moment
+    title:
+        creation:               Création d'un jeu
+        edition:                Modification d'un jeu
+    placeholder:
+        title:                  Titre du jeu
+        color:                  Couleur d'arrière plan
+        debut:                  Date de début
+        fin:                    Date de fin
+        top1:                   Champ haut pour la page d'inscription
+        top2:                   Champ haut pour la page d'inscription
+        explanation:            Champ gauche pour la page d'inscription
+        titleExplanation:       Titre de la colonne gauche d'inscription
+        reglement:              Réglement
+        challenge:              Description des challenges
+    attributes:
+        visuel:                 Visuel d'accueil (600px)
+        resultat:               Resultat
+        title:                  Titre
+        color:                  Couleur hexadecimal
+        debut:                  Début
+        fin:                    Fin
+        top1:                   Block d'accroche de l'inscription 1
+        top2:                   Block d'accroche de l'inscription 2
+        explanation:            Explication colonne gauche
+        titleExplanation:       Titre colonne gauche
+        reglement:              Réglement
+        challenge:              Description des challenges
+    type:
+        label:                  Type
+        type_list:
+            game:               jeu
+            challenge:          challenge

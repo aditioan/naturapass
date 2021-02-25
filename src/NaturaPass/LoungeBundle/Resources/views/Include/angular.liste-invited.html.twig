@@ -1,0 +1,29 @@
+{% verbatim %}
+<a href="{{ 'fos_user_profile_show_name'| route: {usertag: subscriber.user.usertag } }}"
+   class="pull-left">
+    <img ng-src="{{ subscriber.user.profilepicture }}" width="40" height="40">
+</a>
+
+<div class="media-body">
+    <button type="button" class="close pull-right ng-scope" ng-if="lounge.connected.access == 3" ng-click="openDeleteInvitedMemberModal(lounge , subscriber)">×</button>
+    <p>
+        <a href="{{ 'fos_user_profile_show_name'| route: {usertag: subscriber.user.usertag } }}">{{ subscriber.user.fullname }}</a><br>
+        <span class="lounge-user-public">{{ subscriber.publicComment }}</span><br>
+    </p>
+</div>
+{% endverbatim %}
+{% set
+    RANDOM = random()
+%}
+{% verbatim %}
+
+<div class="clearfix" ng-if="lounge.connected.access == 3">
+    <button type="button" data-toggle="collapse"
+            data-target="#infoUser{{ subscriber.user.id }}{% endverbatim %}{{ RANDOM }}{% verbatim %}"
+            class="btn btn-default btn-xs lounge-user-options icon-cog2 pull-left"></button>
+</div>
+<div id="infoUser{{ subscriber.user.id }}{% endverbatim %}{{ RANDOM }}{% verbatim %}" class="collapse" ng-if="lounge.connected.access == 3">
+    <a href="#" class="btn btn-primary btn-icon icon-spinner12" ng-click="openReviveInvitedMemberModal(lounge , subscriber)">{% endverbatim %}{{ 'lounge.btn.revive-invited'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+    <a href="#" class="btn btn-primary btn-icon icon-checkmark" ng-click="openValidInvitedMemberModal(lounge , subscriber)">{% endverbatim %}{{ 'lounge.btn.valid-invited'|trans({}, translation_name~'lounge') }}{% verbatim %}</a>
+</div>
+{% endverbatim %}

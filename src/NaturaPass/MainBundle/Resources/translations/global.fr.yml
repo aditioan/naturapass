@@ -1,0 +1,72 @@
+## Global translate FR
+button:
+    yes:            Oui
+    no:             Non
+    back:           Retour
+    accept:         Accepter
+    add:            Ajouter
+    added:          Ajouté
+    cancel:         Annuler
+    close:          Fermer
+    delete:         Supprimer
+    deleted:        Supprimé
+    edit:           Modifier
+    end:            Terminer
+    help:           Aide
+    load:           Chargement
+    next:           Suivant
+    prev:           Précédent
+    refuse:         Refuser
+    refused:        Refusé
+    save:           Enregistrer
+    search:         Rechercher
+    send:           Envoyer
+    sent:           Envoyé
+    update:         Mettre à jour
+    validate:       Valider
+    validated:      Validé
+    joined:         inscrit
+    asked:          Demande envoyée
+    annul:          Annuler la demande
+    valid:          Valider la demande
+    reject:         Rejeter la demande
+    previous:       Précédent
+    friends:
+        delete:         Retirer de la liste
+        friend:         Comme ami
+        knowing:        Comme connaissance
+
+words:
+    and:    et
+    title:  Titre
+
+socket:
+    reconnecting:       Reconnexion
+
+label:
+    participationGeoloc:    Géolocalisation des participants
+    sharing:
+        share:          Partage
+        shared:         Partagé
+        choice:         '{0}Moi|{1}Mes amis|{2}Mes connaissances|{3}Tout le monde|{4}Tout le monde'
+        perso:          Personnaliser
+    dropdown_friend:
+        delete:         Retirer de la liste
+        asked:          Demande envoyée
+        edit:           Modifier la demande
+        friend:         Comme ami
+        knowing:        Comme connaissance
+        cancel:         Annuler la demande
+        valid:          Valider la demande
+        reject:         Rejeter la demande
+    geoloc:         Géolocalisation
+    access:
+        label:              Accès
+        access_type:        '{0}privé|{1}semi-privé|{2}public'
+        access_list:
+            protected:          privé
+            semiprotected:      semi-privé
+            public:             public
+    confirm:        Êtes-vous sûr ?
+    load:           Chargement en cours...
+    others:         Autres

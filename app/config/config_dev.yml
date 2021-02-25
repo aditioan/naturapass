@@ -1,0 +1,78 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type:  rotating_file
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+            # max number of log files to keep
+            # defaults to zero, which means infinite files
+            max_files: 10
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: %kernel.root_dir%/data/data.db3
+        # path:     %database_path%
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    cache:  false
+    globals:
+        naturapass_lounge: false
+        naturapass_group: true
+        naturapass_parametre: true
+        naturapass_edit_profile: true
+        naturapass_test_size: true
+        naturapass_friends: true
+        naturapass_help: true
+        naturapass_dev: false
+        naturapass_facebook: %naturapass_facebook%
+        application: %application%
+        translation_name: %translation_name%
+        facebook_id: %facebook_id%
+        facebook_secret: %facebook_secret%
+        facebook_version: %facebook_version%
+        app_store_link: %app_store_link%
+        play_store_link: %play_store_link%
+        visibility: %visibility%
+
+assetic:
+    use_controller: true
+
+rms_push_notifications:
+    android:
+        gcm:
+            api_key:    %api_key_android%
+    ios:
+        sandbox:    true
+        pem:        "%kernel.root_dir%/Resources/certificates/ios/%ios_prefix%ios_push_dev.pem"
+        passphrase: "#2suNesp"
+
+#swiftmailer:
+#    delivery_address: me@example.com

@@ -1,0 +1,7 @@
+naturapass_publication_comment_email:
+    path:  /comment-email/{publication}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailPublication:comment }
+
+naturapass_publication_show:
+    path:  /{publication}
+    defaults: { _controller: NaturaPassPublicationBundle:Default:show }

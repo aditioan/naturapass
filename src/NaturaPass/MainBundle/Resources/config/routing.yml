@@ -1,0 +1,249 @@
+naturapass_main_homepage:
+    path:  /
+    defaults: { _controller: NaturaPassMainBundle:Default:index }
+
+naturapass_main_game_fair:
+    path:  /game-fair
+    defaults: { _controller: NaturaPassMainBundle:Default:gameFair }
+
+naturapass_main_findfriends:
+    path:  /find-friends
+    defaults: { _controller: NaturaPassMainBundle:Default:findFriends }
+
+naturapass_main_map:
+    path:  /map/
+    defaults: { _controller: NaturaPassMainBundle:Default:mapNew }
+
+naturapass_main_marker:
+    path:  /marker/
+    defaults: { _controller: NaturaPassMainBundle:Default:marker }
+
+naturapass_main_map_new:
+    path:  /map/old
+    defaults: { _controller: NaturaPassMainBundle:Default:mapOld }
+
+naturapass_main_printable_map:
+    path:  /map/printable/
+    defaults: { _controller: NaturaPassMainBundle:Default:printableMap }
+
+naturapass_main_search:
+    path:  /search
+    defaults: { _controller: NaturaPassMainBundle:Default:search }
+
+naturapass_mutualfriends:
+    path:  /mutual-friends/{usertag}
+    defaults: { _controller: NaturaPassMainBundle:Default:mutualfriends }
+
+naturapass_main_email:
+    path:  /email/{email}
+    defaults: { _controller: NaturaPassMainBundle:Default:email }
+
+naturapass_main_publication_show:
+    path: /
+    defaults: { _controller: NaturaPassMainBundle:Default:index }
+
+naturapass_main_site_chasse:
+    path: /site-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:siteChasse }
+
+naturapass_main_geolocalisation_groupe_chasse:
+    path: /geolocalisation-groupe-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:geolocChasse }
+
+naturapass_main_territoire_espace_chasse:
+    path: /territoire-espace-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:territoireChasse }
+
+naturapass_main_memoire_groupe_chasse:
+    path: /memoire-groupe-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:memoireChasse }
+
+naturapass_main_groupe_chasse:
+    path: /groupe-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:groupeChasse }
+
+naturapass_main_groupe_espace_chasse:
+    path: /groupe-espace-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:groupeEspaceChasse }
+
+naturapass_main_uploads_download:
+    path: /uploads/download.php
+    defaults: { _controller: NaturaPassMainBundle:Default:download }
+
+naturapass_main_uploads_download2:
+    path: /download
+    defaults: { _controller: NaturaPassMainBundle:Default:download }
+
+naturapass_main_uploads_download_road:
+    path: /download_road
+    defaults: { _controller: NaturaPassMainBundle:Default:downloadRoad }
+
+naturapass_main_uploads_download_piquand:
+    path: /download_piquand
+    defaults: { _controller: NaturaPassMainBundle:Default:downloadPiquand }
+
+naturapass_main_uploads_download_ic:
+    path: /download_ic
+    defaults: { _controller: NaturaPassMainBundle:Default:downloadIc }
+
+naturapass_main_uploads_download_jb:
+    path: /download_jb
+    defaults: { _controller: NaturaPassMainBundle:Default:downloadJb }
+
+naturapass_main_uploads_download_sm:
+    path: /download_sm
+    defaults: { _controller: NaturaPassMainBundle:Default:downloadSm }
+
+naturapass_main_cgu:
+    path: /{cgu}
+    defaults: { _controller: NaturaPassMainBundle:Default:cgu }
+    requirements:
+        cgu:  cgu|CGU
+
+naturapass_main_cgv:
+    path: /{cgv}
+    defaults: { _controller: NaturaPassMainBundle:Default:cgv }
+    requirements:
+        cgv:  cgv|CGV
+
+naturapass_main_privacy:
+    path: /privacy-policy
+    defaults: { _controller: NaturaPassMainBundle:Default:privacy }
+
+naturapass_main_fbchannel:
+    path: /fb-channel
+    defaults: { _controller: NaturaPassMainBundle:Default:channel }
+
+naturapass_concours_listing:
+    path:  /concours
+    defaults: { _controller: NaturaPassMainBundle:Default:concoursList }
+
+naturapass_concours_detail:
+    path:  /concours/{game}/{name}
+    defaults: { _controller: NaturaPassMainBundle:Default:concoursDetail }
+    options:
+        expose: true
+    requirements:
+        game: \d+
+
+naturapass_challenge_inscription:
+    path:  /challenge/{game}/{name}
+    defaults: { _controller: NaturaPassMainBundle:Default:challengeInscription }
+    options:
+        expose: true
+    requirements:
+        game: \d+
+
+naturapass_partner_listing:
+    path:  /partners
+    defaults: { _controller: NaturaPassMainBundle:Default:partnersList }
+
+naturapass_main_mur:
+    path: /fonctionnalites/mur
+    defaults: { _controller: NaturaPassMainBundle:Default:mur }
+
+naturapass_main_carte:
+    path: /fonctionnalites/carte
+    defaults: { _controller: NaturaPassMainBundle:Default:carte }
+
+naturapass_main_discussions:
+    path: /fonctionnalites/discussions
+    defaults: { _controller: NaturaPassMainBundle:Default:discussions }
+
+naturapass_main_groupes:
+    path: /fonctionnalites/groupes
+    defaults: { _controller: NaturaPassMainBundle:Default:groupes }
+
+naturapass_main_agenda:
+    path: /fonctionnalites/agenda
+    defaults: { _controller: NaturaPassMainBundle:Default:agenda }
+
+naturapass_main_amis:
+    path: /fonctionnalites/amis
+    defaults: { _controller: NaturaPassMainBundle:Default:amis }
+
+naturapass_main_naturapass:
+    path: /a-propos-de/naturapass
+    defaults: { _controller: NaturaPassMainBundle:Default:naturapass }
+
+naturapass_main_jaime:
+    path: /a-propos-de/jaime-la-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:jaime }
+
+naturapass_main_realisations:
+    path: /a-propos-de/nos-realisations
+    defaults: { _controller: NaturaPassMainBundle:Default:realisations }
+
+naturapass_main_applications:
+    path: /a-propos-de/gamme-applications-nature
+    defaults: { _controller: NaturaPassMainBundle:Default:applications }
+
+naturapass_main_partenaire:
+    path: /nos-partenaires
+    defaults: { _controller: NaturaPassMainBundle:Default:partenaire }
+
+naturapass_main_presse:
+    path: /presse
+    defaults: { _controller: NaturaPassMainBundle:Default:press }
+
+naturapass_main_contact:
+    path: /contact
+    defaults: { _controller: NaturaPassMainBundle:Default:contact }
+
+naturapass_main_request_information:
+    path: /request-information
+    defaults: { _controller: NaturaPassMainBundle:Default:requestInfomation }
+
+naturapass_main_success_contact:
+    path: /success-contact
+    defaults: { _controller: NaturaPassMainBundle:Default:successContact }
+
+naturapass_main_pro:
+    path: /espace-pro
+    defaults: { _controller: NaturaPassMainBundle:Default:pro }
+
+naturapass_main_devenir:
+    path: /devenir-partenaire
+    defaults: { _controller: NaturaPassMainBundle:Default:devenir }
+
+naturapass_main_sitemap:
+    path: /plan-du-site
+    defaults: { _controller: NaturaPassMainBundle:Default:sitemap }
+
+naturapass_main_mention:
+    path: /mentions-legales
+    defaults: { _controller: NaturaPassMainBundle:Default:mention }
+
+naturapass_main_rivolier:
+    path: /landing
+    defaults: { _controller: NaturaPassMainBundle:Default:rivolier }
+
+naturapass_main_rivolier_subscribe:
+    path: /landing_subscribe/{id}
+    defaults: { _controller: NaturaPassMainBundle:Default:rivolierSubscribe }
+
+# Smartpages
+
+naturapass_main_smartpage_application_chasse:
+    path: /application-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageApplicationChasse }
+
+naturapass_main_smartpage_application_de_chasse:
+    path: /application-de-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageApplicationDeChasse }
+
+naturapass_main_smartpage_application_pour_chasseur:
+    path: /application-pour-chasseur
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageApplicationPourChasseur }
+
+naturapass_main_smartpage_reseau_chasse:
+    path: /reseau-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageReseauChasse }
+
+naturapass_main_smartpage_site_chasse:
+    path: /site-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageSiteChasse }
+
+naturapass_main_smartpage_site_de_chasse:
+    path: /site-de-chasse
+    defaults: { _controller: NaturaPassMainBundle:Default:smartpageSiteDeChasse }

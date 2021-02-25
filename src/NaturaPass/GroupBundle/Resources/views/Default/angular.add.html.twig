@@ -1,0 +1,167 @@
+{% extends "NaturaPassGroupBundle::layout.html.twig" %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({'%groupe%': form.name.vars.value},translation_name~'group') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'group') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="GroupController" {% if ajout == 0 %}data-group="{{ group.id }}"{% endif %} ng-cloak ng-init="initGroup()">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+        <div class="container container-md">
+            <div class="row">
+                {# #}
+                <div class="col-md-12 small-loading" ng-hide="loaded"></div>
+                <div class="col-md-12" ng-show="loaded" ng-cloak>
+                    {% if ajout != 0 %}
+                        <h1>{{ 'group.title.creation'|trans({}, translation_name~'group') }}</h1>
+                        <h2>{{ 'group.description.creation'|trans({}, translation_name~'group') }}</h2>
+                    {% elseif ajout == 0 %}
+                        <h1>{{ 'group.title.edition'|trans({}, translation_name~'group') }}</h1>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="#administrator" class="btn btn-primary btn-right btn-icon" ng-click="openAdministrationModal()">
+                                    {{ 'group.action.admin'|trans({}, translation_name~'group') }}
+                                </a>
+                            </div>
+                        </div>
+                        <h2>{{ 'group.description.edition'|trans({}, translation_name~'group') }}</h2>
+                    {% endif %}
+
+                    <form name="group" method="POST" action="" class="loader form-naturapass_group_add" role="form" enctype="multipart/form-data" ng-controller="GroupFormController" ng-submit="submit()">
+                        {{ form_errors(form) }}
+                        <div class="row">
+                            <div class="col-sm-3 overide-file">
+                                <div class="pull-right over-file" style="background-image: url( {% if form.photo.vars.value is not null %}{{ form.photo.vars.value.getThumb() }}{% else %}{{ asset('img/interface/default-media.jpg') }}{% endif %} )"></div>
+                                <div class="hide-file">
+                                    {{ form_widget(form.photo.file) }}
+                                </div>
+                                {{ form_label(form.photo.file) }}
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    {{ form_widget(form.name) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(form.description,{'attr': {'rows': '6'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_row(form.access,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_add,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_show,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_add_chat,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_show_chat,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_add_chat,{'attr':{'class':'form-access'} }) }}
+                        {{ form_row(form.allow_show_chat,{'attr':{'class':'form-access'} }) }}
+
+                        <!-- <h2>{{ 'user.parameter.notification'|trans({},translation_name~'user') }}</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    {% verbatim %}
+                                <div ng-repeat="notification in notifications" ng-cloak>
+                                    <label class="control-label col-sm-9 required" ng-class="{'loading-inner': notification.loading, 'loading-ok': notification.success, 'loading-ko': notification.error}">
+                                        {{ notification.description }}
+                                    </label>
+                                    <div class="col-sm-3">
+                                           <input type="hidden" name="group[notifications][{{ $index }}][type]" value="{{ notification.type }}">
+                                           <select ng-if="notification.period" required="required" name="group[notifications][{{ $index }}][wanted]" class="form-control" ng-model="notification.wanted">
+                                                <option value="1">{% endverbatim %}{{ 'label.notification.choice'|transchoice(1, {},translation_name~'global') }}{% verbatim %}</option>
+                                                <option value="2">{% endverbatim %}{{ 'label.notification.choice'|transchoice(2, {},translation_name~'global') }}{% verbatim %}</option>
+                                                <option value="3">{% endverbatim %}{{ 'label.notification.choice'|transchoice(3, {},translation_name~'global') }}{% verbatim %}</option>
+                                                <option value="0">{% endverbatim %}{{ 'label.notification.choice'|transchoice(0, {},translation_name~'global') }}{% verbatim %}</option>
+                                            </select>
+                                            <select ng-if="!notification.period" required="required" name="group[notifications][{{ $index }}][wanted]" class="form-control" ng-model="notification.wanted">
+                                                <option value="1">{% endverbatim %}{{ 'label.notification.choice'|transchoice(1, {},translation_name~'global') }}{% verbatim %}</option>
+                                                <option value="0">{% endverbatim %}{{ 'label.notification.choice'|transchoice(0, {},translation_name~'global') }}{% verbatim %}</option>
+                                            </select>
+                                    </div>
+                                </div>
+                            {% endverbatim %}
+                                    <ul class="hide notifications-data">
+                                        {% for notification,period in notifications %}
+                                            {% set description = 'description.' ~ notification %}
+                                            {% set option = group.getNotificationByType(notification) %}
+                                            <li data-type="{{ notification }}" data-period="{{ period }}" data-wanted="{% if (option != false and option.wanted==1) or option == false %}1{% elseif option != false %}{{ option.wanted }}{% else %}0{% endif %}">{{ description|trans({}, translation_name~'notifications') }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- <h2>{{ 'user.parameter.email'|trans({},translation_name~'user') }}</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    {% verbatim %}
+                                <div ng-repeat="email in emails"  ng-cloak>
+                                    <label class="control-label col-sm-9" ng-class="{'loading-inner': email.loading, 'loading-ok': email.success, 'loading-ko': email.error}">
+                                        {{ email.description }}
+                                    </label>
+                                    <div class="col-sm-3">
+                                       <input type="hidden" name="group[emails][{{ $index }}][type]" value="{{ email.type }}">
+                                       <select ng-if="email.period" required="required" name="group[emails][{{ $index }}][wanted]" class="form-control" ng-model="email.wanted">
+                                            <option value="1">{% endverbatim %}{{ 'label.notification.choice'|transchoice(1, {},translation_name~'global') }}{% verbatim %}</option>
+                                            <option value="2">{% endverbatim %}{{ 'label.notification.choice'|transchoice(2, {},translation_name~'global') }}{% verbatim %}</option>
+                                            <option value="3">{% endverbatim %}{{ 'label.notification.choice'|transchoice(3, {},translation_name~'global') }}{% verbatim %}</option>
+                                            <option value="0">{% endverbatim %}{{ 'label.notification.choice'|transchoice(0, {},translation_name~'global') }}{% verbatim %}</option>
+                                        </select>
+                                        <select ng-if="!email.period" required="required" name="group[emails][{{ $index }}][wanted]" class="form-control" ng-model="email.wanted">
+                                            <option value="1">{% endverbatim %}{{ 'label.notification.choice'|transchoice(1, {},translation_name~'global') }}{% verbatim %}</option>
+                                            <option value="0">{% endverbatim %}{{ 'label.notification.choice'|transchoice(0, {},translation_name~'global') }}{% verbatim %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endverbatim %}
+                                    <ul class="hide emails-data">
+                                        {% for email in emails %}
+                                            {% set description = email.type ~ '.description' %}
+                                            {% set option = group.getEmailByType(email.type) %}
+                                            <li data-id="{{ email.id }}" data-period="{{ email.period }}" data-type="{{ email.type }}" data-periodicity="{{ email.periodicity }}" data-wanted="{% if (option != false and option.wanted==1) or option == false %}1{% elseif option != false %}{{ option.wanted }}{% else %}0{% endif %}">{{ description|trans({}, 'email') }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        {% if ajout == 0 %}
+                            <a href="#" class="btn btn-danger btn-icon btn-left icon-remove" ng-click="openDeleteGroupModal({{ group.id }}, '{{ group.name }}')">
+                                {{ 'group.action.close'|trans({}, translation_name~'group') }}
+                            </a>
+                            <a href="{{ path('naturapass_group_homepage') }}" class="btn btn-danger btn-right btn-icon icon-exit3" style="margin-left: 15px">
+                                {{ 'button.cancel'|trans({}, translation_name~'global') }}
+                            </a>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+                        {#{{ form_rest(form) }}#}
+
+                        {{ form_row(form._token) }}
+                    </form>
+                </div>
+                {# fixe #}
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Groups/GroupController.js'
+    'js/app/controllers/Groups/GroupFormController.js'
+    'js/app/controllers/Groups/GroupModalControllers.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

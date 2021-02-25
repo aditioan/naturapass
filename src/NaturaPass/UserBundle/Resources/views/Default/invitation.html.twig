@@ -1,0 +1,211 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'title.invitation'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+{% block description %}{{ 'description.invitation'|trans({},translation_name~'user') }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+    <link href="{{ asset('bundles/naturapassuser/css/invitation.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container" ng-controller="InvitationController">
+        <div class="container container-md">
+            <h2>{{ 'user.invitation.title.add_friends'|trans({},translation_name~'user') }}</h2>
+
+            {% if naturapass_dev %}
+                <h3>{{ 'user.invitation.title.social_networks'|trans({},translation_name~'user') }}</h3>
+                <p></p>
+                <div clas="row">
+                    <div class="col-md-4">
+                        <button ng-click="facebook()" np-submit-loader="facebook.loading" data-icon="icon-facebook" class="btn btn-icon btn-fb icon-facebook">Facebook</button>
+                    </div>
+                </div>
+
+                <br>
+                <hr/>
+            {% endif %}
+
+            {#<h3>{{ 'user.invitation.title.mail'|trans({},translation_name~'user') }}</h3>
+            <p>{{ 'user.invitation.description.add_friends'|trans({},translation_name~'user') }}</p>
+            <div class="row social-links">
+                <div class="col-md-4"><a href="#" class="text-hide yahoo" data-service="yahoo"><span></span>Yahoo</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide gmail" data-service="gmail"><span></span>Gmail</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide windowslive" data-service="windowslive"><span></span>Outlook.com (Hotmail/MSN/Windows Live)</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide aol" data-service="aol"><span></span>Aol</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide plaxo" data-service="plaxo"><span></span>Plaxo</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide addressbook" data-service="addressbook"><span></span>Address Book</a></div>
+                <div class="col-md-4"><a href="#" class="text-hide outlook" data-service="outlook"><span></span>Outlook</a></div>
+            </div>
+
+            <hr/>#}
+
+            <h3>{{ 'user.invitation.title.email'|trans({},translation_name~'user') }}</h3>
+            <p>{{ 'user.invitation.description.email'|trans({},translation_name~'user')|raw }}</p>
+            {{ form_start(form, {'method': 'POST', 'action':path('naturapass_user_invitation'), 'class':'loader'}) }}
+            <div id="listContact" class="list-unstyled" data-prototype="{{ form_widget(form.invitations.vars.prototype)|e }}"></div>
+
+            <hr/>
+
+            {{ form_rest(form) }}
+
+            {% if registration %}
+                <a href="{{ url('naturapass_user_complement') }}" class="btn btn-link btn btn-primary">{{ 'user.action.ignore'|trans({}, translation_name~'user') }}</a>
+            {% endif %}
+            <button type="submit" id="invitation_task_send" class="btn btn-primary btn-lg btn-icon icon-paperplane pull-right btn btn-primary">
+                {% if registration %}{{ 'button.next'|trans({}, translation_name~'global') }}{% else %}{{ 'button.validate'|trans({}, translation_name~'global') }}{% endif %}
+            </button>
+            {{ form_end(form) }}
+            {{ form_end(form) }}
+        </div>
+
+        {% include 'NaturaPassUserBundle:Modal:angular.invite-facebook-friends.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/User/InvitationController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        // Récupère le div qui contient la collection de contacts
+        var contactHolder = $('#listContact');
+
+        // ajoute un lien « ajouter un contact »
+        var $addInvitationLink = $('<a href="#" class="btn btn-primary">' + Translator.trans('user.action.contact', {}, $('html').data("translation") + 'user') + '</a>');
+        var $newLinkDiv = $('<div class="input-group"></div>').append($addInvitationLink);
+
+        // Initialisation du widget CloudSponge
+        var csPageOptions = {
+            // naturapass.e-conception.fr
+            /*domain_key: "4JFQ4X5DMCKSMSP8QQEY",*/
+            // naturapass.com
+            domain_key         : "FBWJNPMJK87EF5HYH3P3",
+            // textarea_id: "invitation_task_contact_list",
+            locale             : "French",
+            mobile_render      : true,
+            skipSourceMenu     : true,
+            floatbox           : {
+                controlsType: 'international',
+                controlsPos : 'tr'
+            },
+            afterSubmitContacts: populateListCS
+        };
+
+        $(document).ready(function () {
+
+            // on ajoute l'ancre « ajouter un contact » et div.input-group à la liste des contacts
+            contactHolder.find('div.input-group').each(function () {
+                addInvitationFormDeleteLink($(this));
+            });
+
+            // on ajoute le bouton "ajouter un contact" a la liste contactHolder
+            contactHolder.append($newLinkDiv);
+
+            // au click sur le bouton "ajouter un contact"
+            $addInvitationLink.on('click', function (e) {
+                e.preventDefault();
+
+                var emails = getContactHolderEmails(),
+                        email = "",
+                        valid = true,
+                        re = /([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})/i;
+
+                // on verifie que les precedents emails sont valides
+                while (emails.length) {
+                    email = emails.pop();
+                    // l'email est invalide
+                    if (!re.test(email)) {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                // tous les emails entres precedemment sont valides
+                if (valid) {
+                    // on ajoute un nouveau div.input-group dans la liste contactHolder
+                    addInvitationForm(contactHolder, $newLinkDiv);
+                } else {
+                    // on focus sur l'input du dernier email invalide
+                    contactHolder.find('div.input-group').eq(emails.length).find('input').focus();
+                }
+            });
+
+        });
+
+        // gestion des liens de messageries
+        $('.social-links a').click(function (e) {
+            e.preventDefault();
+
+            // lancement du Widget CloudSponge en fonction du service (gmail, yahoo, windowslive, aol, plaxo, outlook, addressbook)
+            cloudsponge.launch($(this).data('service'));
+        });
+
+        function addInvitationForm(contactHolder, newLinkDiv) {
+            var prototype = contactHolder.attr('data-prototype');
+
+            // Remplace '__name__' dans le HTML du prototype par un nombre basé sur la longueur de la collection courante
+            var newForm = prototype.replace(/__name__/g, contactHolder.children().length);
+
+            // Affiche le formulaire d'une invitation dans un div.input-group, avant le lien "ajouter un contact"
+            var $newFormDiv = $('<div class="input-group"></div>').append(newForm);
+            newLinkDiv.before($newFormDiv);
+
+            // ajoute un lien de suppression au nouveau formulaire
+            addInvitationFormDeleteLink($newFormDiv);
+
+            return $newFormDiv;
+        }
+
+        function addInvitationFormDeleteLink(invitationFormDiv) {
+            var $removeFormA = $('<span class="input-group-btn"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-remove"></span></button></span>');
+            invitationFormDiv.append($removeFormA);
+
+            $removeFormA.on('click', function (e) {
+                e.preventDefault();
+
+                // supprime l'élément div.input-group pour le formulaire d'invitation
+                invitationFormDiv.remove();
+            });
+        }
+
+        function populateListCS(contacts, source, owner) {
+            var contact, email,
+                    emails = getContactHolderEmails();
+
+            // boucle sur les emails
+            for (var i = 0; i < contacts.length; i++) {
+                contact = contacts[i];
+
+                // on recupere l'adrese email
+                email = contact.selectedEmail();
+
+                // insertion du mail de l'invitation si il n'est pas deja present dans la liste contactHolder contenant les invitations
+                if (emails.indexOf(email) < 0) {
+                    emails.push(email);
+
+                    // ajoute un nouveau formulaire Invitation dans la liste des contacts
+                    var newForm = addInvitationForm(contactHolder, $newLinkDiv);
+
+                    // on rempli le champ inpput avec l'email
+                    newForm.find('input').val(email);
+
+                }
+            }
+        }
+
+        function getContactHolderEmails() {
+            var emails = [];
+
+            contactHolder.find('input').each(function () {
+                emails.push($(this).val());
+            });
+
+            return emails;
+        }
+    </script>
+    <script type="text/javascript" src="//api.cloudsponge.com/address_books.js"></script>
+{% endblock %}

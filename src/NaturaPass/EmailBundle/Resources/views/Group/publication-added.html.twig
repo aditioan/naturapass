@@ -1,0 +1,14 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_group_publication_added', {'senders': senders, 'grouptag': group.grouptag}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'group.publication_added.body'|trans({
+        '%senders%': senders,
+        '%group%': group.name,
+        '%link%': app.request.schemeAndHttpHost~path('naturapass_group_show', {'grouptag': group.grouptag}),
+        '%owninggroups%': app.request.schemeAndHttpHost~path('naturapass_group_owning'),
+        },translation_name~'email')|raw }}</p>
+{% endblock body %}

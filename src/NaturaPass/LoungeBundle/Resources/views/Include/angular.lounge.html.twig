@@ -1,0 +1,130 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="lounge in entities" ng-cloak>
+    <div class="list-admin" ng-if="lounge.connected.access == 3">
+        <i class="icon-king" data-title="{% endverbatim %}{{ 'lounge.state.admin'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+           data-toggle="tooltip"
+           data-placement="right" data-container="body"></i>
+        <span np-bind-html="lounge.texts.admins"></span>
+    </div>
+    <a ng-href="{{ params.routing.show| route:{loungetag: lounge.loungetag} }}" class="media-object pull-left"
+       title="{{ lounge.name }}" ng-if="lounge.connected.access == 3 || lounge.connected.access == 2">
+        <img class="media-object pull-left" ng-src="{{ lounge.photo }}" width="90" height="90">
+    </a>
+    <img class="media-object pull-left" ng-if="lounge.connected.access != 3 && lounge.connected.access != 2" ng-src="{{ lounge.photo }}"
+         width="90" height="90">
+
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="media-heading" ng-if="(entity.connected | isEmpty) || entity.connected.access < 2">{{ lounge.name }}</h4>
+                <h4 class="media-heading" ng-if="entity.connected.access >= 2">
+                    <a ng-href="{{ 'naturapass_lounge_show' | route: {loungetag: lounge.loungetag} }}">{{ lounge.name }}</a>
+                </h4>
+                <ul class="list-unstyled lounge-info">
+                    <li class="icon-lock2"> {% endverbatim %}{{ 'label.access.label'|trans({}, translation_name~'global') }}{% verbatim %} {{ 'label.access.access_type'|transchoice: lounge.access: {}: 'global' }}</li>
+                    <li class="icon-clock4"> {% endverbatim %}{{ 'lounge.attributes.date.meetingDate'|trans({}, translation_name~'lounge') }} {% verbatim %}{{ lounge.meetingDate|date:'DD/MM/YYYY' }} {% endverbatim %}{{ 'lounge.attributes.date.at'|trans({}, translation_name~'lounge') }} {% verbatim %} {{ lounge.meetingDate|date:'HH:mm' }}</li>
+                    <li> {% endverbatim %}{{ 'lounge.attributes.date.endDate'|trans({}, translation_name~'lounge') }} {% verbatim %}{{ lounge.endDate|date:'DD/MM/YYYY' }} {% endverbatim %}{{ 'lounge.attributes.date.at'|trans({}, translation_name~'lounge') }} {% verbatim %} {{ lounge.endDate|date:'HH:mm' }}</li>
+                    <li class="icon-users" ng-if="lounge.connected && lounge.connected.access==3">
+                    <!--<li class="icon-users">-->
+                        <a href="#subscribers" ng-click="openSubscribersModal(lounge)" ng-hide="entity.access == 0 && entity.connected.access < 2">
+                            {{ 'lounge.attributes.members'|transchoice: lounge.nbSubscribers: {'count': lounge.nbSubscribers}: 'lounge' }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <a href="#validation" class="btn btn-info btn-block btn-validation"
+                   ng-click="openValidationModal(lounge)"
+                   ng-if="lounge.nbPending && lounge.connected.access == 3">
+                        <span class="icon-user-plus">
+                            <b>{{ 'lounge.attributes.subscribers'|transchoice: lounge.nbPending: {'count': lounge.nbPending}: 'lounge' }}</b><br>
+                            {% endverbatim %}{{ 'lounge.attributes.wait'|trans({}, translation_name~'lounge') }}{% verbatim %}
+                        </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+        <p np-bind-html="lounge.description"></p>
+
+        {% endverbatim %}
+<div class="row row-btn" ng-if="lounge.connected.access == 3">
+    <div class="col-sm-4">
+        <a ng-href="{% verbatim %}{{ 'naturapass_lounge_show'|route: {loungetag: lounge.loungetag} }}{% endverbatim %}"
+                class="btn-access btn btn-primary btn-block">
+            {{ 'lounge.action.access'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a ng-href="{% verbatim %}{{ 'naturapass_lounge_edit'|route: {loungetag: lounge.loungetag} }}{% endverbatim %}"
+                class="btn btn-primary btn-block">
+            {{ 'lounge.action.administer'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                ng-click="openDeleteModal($index, lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.close'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="lounge.connected.access == 2">
+    <div class="col-sm-4">
+        <a ng-href="{% verbatim %}{{ 'naturapass_lounge_show'|route: {loungetag: lounge.loungetag} }}{% endverbatim %}"
+                class="btn-access btn btn-primary btn-block">
+            {{ 'lounge.action.access'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+
+    <div class="col-sm-5">
+        <a href="#" class="btn-exit btn btn-danger btn-block"
+                ng-click="removeSubscriber(lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.exit'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="lounge.connected.access == 1">
+    <div class="col-sm-5">
+        <a href="#" class="btn-warning btn btn-primary btn-block btn-remove-ask btn-remove-invitation"
+                ng-click="removeSubscriber(lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.remove_ask'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="lounge.connected.access == 0">
+    <div class="col-sm-4">
+        <a href="#" class="btn btn-primary btn-block ask-invite-join"
+                ng-click="validateInvitation(lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.valid_invite_join'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+    <div class="col-sm-5">
+        <a href="#" class="btn-warning btn btn-primary btn-block btn-remove-ask btn-remove-invitation"
+                ng-click="removeSubscriber(lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.remove_invitation'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="lounge.connected | isEmpty">
+    <div class="col-sm-4">
+        <a href="#" class="btn btn-primary btn-block ask-join"
+                ng-click="join(lounge)"
+                np-submit-loader="lounge.loading">
+            {{ 'lounge.action.join'|trans({}, translation_name~'lounge') }}
+        </a>
+    </div>
+</div>
+
+{% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

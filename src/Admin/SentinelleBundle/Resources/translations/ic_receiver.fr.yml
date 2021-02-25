@@ -1,0 +1,49 @@
+title:
+    no_more:                    Vous avez chargé l'intégralité des entités
+    edit:                       Modification d'une entité %receiver%
+    add:                        Ajout d'une entité
+
+filter:
+    label:                      Filtre
+filter-receiver:
+    placeholder:                Nom de l'entité recherché puis tapez Entrée
+receiver:
+    tree:
+        close_tree:             Supprimer une catégorie
+        description:
+            closedistributor:   |
+                                Attention, vous allez supprimer la catégorie <span style="color: red">%category%</span>. <br>
+                                Etes-vous sûr de supprimer cette catégorie?
+        card:                   |
+                                Description de la fiche : '%card%'
+        edit_card:              Changer de fiche
+        add_card:               Ajouter une fiche
+        edit_group:             Affecter des groupes
+    all_receivers:              Liste des entités
+    action:
+        administer:             Editer
+        close:                  Supprimer
+        tree:                   Arborescence
+    title:
+        list:                   Liste des entités
+        description:            Description
+        creation:               Ajoutez une entité
+        edition:                Edition d'une entité
+        list:                   Entités
+        close_receiver:              Supprimer l'entité
+    description:
+        creation:               Description
+        list:                   Liste des entités
+        closereceiver:      |
+                                Attention, vous allez supprimer définitivement l'entité <span style="color: red">%receiver%</span>. <br>
+                                Etes-vous sûr de supprimer cette entité?
+    placeholder:
+        name:                   Nom de l'entité
+        description:            Description de l'entité
+    attributes:
+        name:                   Nom
+        localities:                  Communes
+        zone:                   Liste des zones
+        users:                  Utilisateurs admin
+        groups:                  Liste des groupes
+        departments:             Départements

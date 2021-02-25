@@ -1,0 +1,28 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="animal in entities" ng-cloak>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_sentinelle_animal_edit' | route: {animal: animal.id} }}">{{ animal.name_fr }}</a>
+                </h4>
+            </div>
+            <div class="col-sm-3">
+                <a ng-href="{{ 'admin_sentinelle_animal_edit'|route: {animal: animal.id} }}" {% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'animal.action.administer'|trans({}, translation_name~'animal') }}
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, animal)"
+                   np-submit-loader="animal.loading">
+                    {{ 'animal.action.close'|trans({}, translation_name~'animal') }}
+                </a>
+            </div>
+        </div>
+
+        {% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

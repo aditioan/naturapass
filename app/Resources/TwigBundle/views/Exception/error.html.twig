@@ -1,0 +1,27 @@
+{% extends "::base-error.html.twig" %}
+
+{% block body %}
+    <div id="corps-container" class="large-container">
+        <div class="container container-error">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>{{ 'error.general.h1'|trans({},'main') }}</h1>
+                    <h2>{{ 'error.general.h2'|trans({},'main')|raw }}</h2>
+                    <div class="block-icon text-center">
+                        <div class="block-chien icon-chien-seul"></div>
+                        <div class="block-general">
+                            <div class="block-general-1 icon-cloud2"></div>
+                            <div class="block-general-2 icon-cloud2"></div>
+                            <div class="block-general-3 icon-cone"></div>
+                        </div>
+                    </div>
+                    <p class="text-center">
+                        <a href="{{ path('naturapass_main_homepage') }}" title="{{ 'nav.home'|trans({}, 'nav') }}" class="btn btn-primary">{{ 'error.link.home'|trans({},'main') }}</a>
+                        <a role="menuitem" tabindex="-1" href="#email-problem" data-toggle="modal" class="btn btn-primary">{{ 'error.link.bug'|trans({},'main') }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

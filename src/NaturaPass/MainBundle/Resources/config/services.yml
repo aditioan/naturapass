@@ -1,0 +1,20 @@
+parameters:
+#    natura_pass_main.example.class: NaturaPass\MainBundle\Example
+services:
+    naturapass.exception_controller:
+        class: NaturaPass\MainBundle\Controller\ExceptionController
+        arguments: ["@service_container", "@twig", %kernel.debug%]
+
+    naturapass.redis:
+        class:      NaturaPass\MainBundle\Component\RedisService
+        arguments:  [@session]
+
+    naturapass.main.request_listener:
+        class: NaturaPass\MainBundle\EventListener\KernelListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    naturapass.geolocation:
+        class:      NaturaPass\MainBundle\Component\GeolocationService
+        arguments:  ["@doctrine.orm.entity_manager", "@translator", "@service_container" ]

@@ -1,0 +1,38 @@
+zone:
+    tree:
+        add_parent:         Ajouter une fiches à des enfants
+    title:
+        edit:                   |
+                                Modification de la zone : %zone%
+        add:                    Ajout d'une zone
+    attributes:
+        name:                   Nom
+        localities:                  Communes
+    description:
+        creation:               Description
+        list:                   Description
+        closezone:              |
+                                Attention, vous allez supprimer définitivement la zone <span style="color: red">%zone%</span>. <br>
+                                Etes-vous sûr de supprimer cette zone?
+    all_zones:                  Liste des zones
+    action:
+        administer:             Editer
+        close:                  Supprimer
+        tree:                   Arborescence
+    close_zone:                 Supprimer la zone
+    placeholder:
+        name:                   Nom de la zone
+
+title:
+    no_more:                    Vous avez chargé l'intégralité des zones
+
+filter:
+    label:                      Filtre
+filter-zone:
+    placeholder:                Nom de la zone recherché puis tapez Entrée
+
+
+
+
+
+

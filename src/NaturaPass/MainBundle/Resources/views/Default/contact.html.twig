@@ -1,0 +1,52 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Nous contacter{% endblock %}
+{% block description %}Vous avez des questions sur Naturapass et n'avez pas vu la réponse sur notre site ? Retrouvez nos coordonnées sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Contact</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <h1>CONTACT</h1>
+            <p>Tél : 04 74 46 38 00<br>Mobile : 06 62 56 05 40<br>Email : team@naturapass.com<br><a href="http://www.naturapass.com">www.naturapass.com</a></p>
+        </div>
+        <div class="col-md-4 text-center">
+            <h1>AGENCE EST</h1>
+            <p>Impasse du Jura<br>01800 Charnoz-sur-Ain</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <h1>AGENCE OUEST</h1>
+            <p>5 chemin de la Tactière<br>44470 Carquefou</p>
+        </div>
+    </div>
+
+    <form method="post" action="{{ path('naturapass_main_request_information') }}">
+        <div class="modal-body">
+            <div class="form-group">
+             <label>Nom:</label>
+             <input type="text" class="form-control" name="requestInfomation[lastname]" required="">
+            </div>
+            <div class="form-group">
+             <label>Prenom:</label>
+             <input type="text" class="form-control" name="requestInfomation[firstname]" required="">
+            </div>
+            <div class="form-group">
+             <label>Email:</label>
+             <input type="email" class="form-control" name="requestInfomation[email]" required="">
+            </div>
+            <div class="form-group form-textarea">
+             <label>Message:</label>
+             <textarea class="form-control" name="requestInfomation[message]" required="" rows="5"></textarea>
+           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" name="submit" class="btn btn-primary">ENVOYER</button>
+        </div>
+    </form>
+
+{% endblock corps %}

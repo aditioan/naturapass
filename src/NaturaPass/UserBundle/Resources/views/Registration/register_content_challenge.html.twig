@@ -1,0 +1,26 @@
+
+
+<form name="fos_user_registration_form" method="post" action="{{ url('naturapass_user_register', {game : game.id, connect:0}) }}" class="fos_user_registration_register loader" role="form" enctype="multipart/form-data" ng-submit="submit()">
+{{ form_errors(form) }}
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.lastname) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.firstname) }}
+    </div>
+</div>
+
+{{ form_row(form.email, {value : email}) }}
+{{ form_row(form.plainPassword) }}
+<div class="form-group">
+    <div class="checkbox">
+        <input type="checkbox" name="cgu" id="cgu" required />
+        <label for="cgu">{{ 'home.register.accept_cgu'|trans({'%link%': path('naturapass_main_cgu', {cgu: 'cgu'})}, translation_name~'user')|raw }}</label>
+    </div>
+</div>
+<div class="clearfix">
+    <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 pull-right" np-submit-loader="loading" data-icon="icon-lock5">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+</div>
+{{ form_widget(form._token) }}
+    </form>

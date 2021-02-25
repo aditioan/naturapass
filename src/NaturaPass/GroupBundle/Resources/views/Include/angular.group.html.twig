@@ -1,0 +1,113 @@
+{% verbatim %}
+    <div class="media media-list container-md" ng-repeat="group in entities" ng-cloak>
+        <div class="list-admin" ng-if="group.connected.access == 3">
+            <i class="icon-king" data-title="{% endverbatim %}{{ 'group.state.admin'|trans({}, translation_name~'group') }}{% verbatim %}" data-toggle="tooltip" data-placement="right" data-container="body"></i>
+            <span np-bind-html="group.texts.admins"></span>
+        </div>
+        <a ng-href="{{ 'naturapass_group_show' | route:{grouptag: group.grouptag} }}" class="media-object pull-left" title="{{ group.name}}" ng-if="group.connected.access == 3 || group.connected.access == 2">
+            <img class="" ng-src="{{ group.photo}}" width="90" height="90">
+        </a>
+        <img class="pull-left media-object" ng-if="group.connected.access != 3 && group.connected.access != 2" ng-src="{{ group.photo}}" width="90" height="90">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4 class="media-heading" ng-if="(group.connected | isEmpty) || group.connected.access < 2">{{ group.name}}</h4>
+                    <h4 class="media-heading" ng-if="group.connected.access >= 2">
+                        <a ng-href="{{ 'naturapass_group_show' | route: {grouptag: group.grouptag} }}">{{ group.name}}</a>
+                    </h4>
+                    <ul class="list-unstyled group-info">
+                        <li class="icon-lock2"> {% endverbatim %}{{ 'label.access.label'|trans({}, translation_name~'global') }}{% verbatim %} {{ 'label.access.access_type' | transchoice: group.access: {}: 'global'}}</li>
+                        <li class="icon-users">
+                            <a href="#subscribers" ng-click="openSubscribersModal(group)" ng-hide="entity.access == 0 && entity.connected.access < 2">
+                                {{ 'group.attributes.members' | transchoice: group.nbSubscribers: {'count': group.nbSubscribers}: 'group'}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#validation" class="btn btn-info btn-block btn-validation" ng-click="openValidationModal(group)" ng-if="group.nbPending && group.connected.access == 3">
+                        <span class="icon-user-plus">
+                            <b>{{ 'group.attributes.subscribers' | transchoice: group.nbPending: {'count': group.nbPending}: 'group'}}</b><br>
+                        {% endverbatim %}{{ 'group.attributes.wait'|trans({}, translation_name~'group') }}{% verbatim %}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="list-link">
+            <p np-bind-html="group.description"></p><br>
+
+        {% endverbatim %}
+<div class="row row-btn" ng-if="group.connected.access == 3">
+    <div class="col-sm-4">
+        <a ng-href="{#fix#}{% verbatim %}{{ 'naturapass_group_show' | route: {grouptag: group.grouptag} }}{% endverbatim %}" class="btn-access btn btn-primary btn-block">
+            {{ 'group.action.access'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a ng-href="{#fix#}{% verbatim %}{{ 'naturapass_group_edit' | route: {grouptag: group.grouptag} }}{% endverbatim %}" class="btn btn-primary btn-block">
+            {{ 'group.action.administer'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block" ng-click="openDeleteModal($index, group)" np-submit-loader="group.loading">
+            {{ 'group.action.close'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="group.connected.access == 2">
+    <div class="col-sm-4">
+        <a ng-href="{#fix#}{% verbatim %}{{ 'naturapass_group_show' | route: {grouptag: group.grouptag} }}{% endverbatim %}" class="btn-access btn btn-primary btn-block">
+            {{ 'group.action.access'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+
+    <div class="col-sm-4">
+        <a href="#" class="btn-exit btn btn-danger btn-block" ng-click="removeSubscriber(group)" np-submit-loader="group.loading">
+            {{ 'group.action.exit'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="group.connected.access == 1">
+    <div class="col-sm-4">
+        <a href="#" class="btn-warning btn btn-primary btn-block btn-remove-ask btn-remove-invitation" ng-click="removeSubscriber(group)" np-submit-loader="group.loading">
+            {{ 'group.action.remove_ask'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="group.connected.access == 0">
+    <div class="col-sm-4">
+        <a href="#" class="btn btn-primary btn-block ask-invite-join" ng-click="validateInvitation(group)" np-submit-loader="group.loading">
+            {{ 'group.action.valid_invite_join'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#" class="btn-warning btn btn-primary btn-block btn-remove-ask btn-remove-invitation" ng-click="removeSubscriber(group)" np-submit-loader="group.loading">
+            {{ 'group.action.remove_invitation'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+</div>
+
+<div class="row row-btn" ng-if="group.connected | isEmpty">
+    <div class="col-sm-4">
+        <a href="#" class="btn btn-primary btn-block ask-join" ng-click="join(group)" np-submit-loader="group.loading">
+            {{ 'group.action.join'|trans({}, translation_name~'group') }}
+        </a>
+    </div>
+</div>
+</div>
+<div class="checkbox list-notif bg-success" ng-if="group.connected && group.connected.access >= 2">
+    <input type="checkbox" id="check{#fix#}{% verbatim %}{{group.id}}{% endverbatim %}"
+            ng-class="{disabled: group.connected.loading}"
+            ng-model="group.connected.mailable"
+            ng-checked="group.connected.initMailable"
+            ng-false-value="0"
+            ng-true-value="1"
+            ng-init="group.connected.initMailable = group.connected.mailable"
+            ng-change="updateMailable(group)">
+    <label class="text-success" for="check{#fix#}{% verbatim %}{{group.id}}{% endverbatim %}">{{ 'group.action.mailable'|trans({}, translation_name~'group') }}</label>
+</div>
+</div>

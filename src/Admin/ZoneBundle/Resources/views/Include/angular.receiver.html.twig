@@ -1,0 +1,44 @@
+{% verbatim %}
+<div class="media media-list container-md" ng-repeat="receiver in entities" ng-cloak>
+    <a ng-href="{{ params.routing.show | route:{receiver: receiver.id} }}" class="media-object pull-left"
+       title="{{ receiver.name }}">
+        <img class="media-object pull-left" ng-show="receiver.logo" ng-src="{{ receiver.logo.path }}" width="90" height="90">
+        <img class="media-object pull-left" ng-hide="receiver.logo" ng-src="/img/interface/default-media.jpg" width="90" height="90">
+    </a>
+    <div class="media-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="media-heading">
+                    <a ng-href="{{ 'admin_entity_receiver_edit' | route: {receiver: receiver.id} }}">{{ receiver.name }}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="list-link">
+
+        <div class="row row-btn">
+            <div class="col-sm-3">
+                <a ng-href="{{ 'admin_entity_receiver_edit'|route: {receiver: receiver.id} }}" {% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'receiver.action.administer'|trans({}, translation_name~'receiver') }}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                {% verbatim %}<a ng-href="{{ 'admin_entity_receiver_tree'|route: {receiver: receiver.id} }}"{% endverbatim %}
+                   class="btn-access btn btn-primary btn-block">
+                    {{ 'receiver.action.tree'|trans({}, translation_name~'receiver') }}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="#" data-toggle="modal" class="btn-close btn btn-danger btn-block"
+                   ng-click="openDeleteModal($index, receiver)"
+                   np-submit-loader="receiver.loading">
+                    {{ 'receiver.action.close'|trans({}, translation_name~'receiver') }}
+                </a>
+            </div>
+        </div>
+
+        {% verbatim %}
+    </div>
+</div>
+{% endverbatim %}

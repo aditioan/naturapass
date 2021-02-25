@@ -1,0 +1,56 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+        {{ 'receiver.all_receivers'|trans({},translation_name~'receiver') }} | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+
+    <div id="corps-container" ng-controller="ReceiverListController" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-bulle">
+            <div class="row">
+                <div id="corps" class="col-md-12">
+                        <h1>{{ 'receiver.all_receivers'|trans({}, translation_name~'receiver') }}</h1>
+                        <p>{{ 'receiver.description.list'|trans({}, translation_name~'receiver') }}</p>
+
+                    <div class="receivers" ng-cloak>
+                        <div class="media media-list container-md" >
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="panel-title">{{ 'filter.label'|trans({},translation_name~'receiver') }}</h3>
+                                </div>
+                                {% verbatim %}
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control ng-pristine ng-valid" id="inputFilter" ng-model="input.filterList" ng-keydown="persistSearchList($event)" placeholder="{% endverbatim %}{{ 'filter-receiver.placeholder'|trans({},translation_name~'receiver') }}{% verbatim %}" />
+                                </div>
+                                {% endverbatim %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="receivers" infinite-scroll="loadEntities()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                        {% include "AdminZoneBundle:Include:angular.receiver.html.twig" %}
+                    </div>
+                    <div class="small-loading" ng-show="loading">
+                    </div>
+                    <div class="alert alert-info" ng-show="(!loading && busy && entities.length) || filterNoMore" ng-cloak>
+                        {{ 'title.no_more'|trans({}, translation_name~'receiver') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "AdminZoneBundle:Modal:angular.remove-receiver.html.twig" %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Receiver/ReceiverListController.js'
+    'js/app/controllers/Admin/Receiver/Receiver/ReceiverModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+

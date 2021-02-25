@@ -1,0 +1,25 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+{{ url('naturapass_main_search') }}
+{% endblock visu_site %}
+
+{% block body %}
+<p>
+    {{ 'user.recommendations.body_before'|trans({'%fullname%': fullname}, translation_name~'email') }}
+    {% for recommendation in recommendations %}
+        <div class="row">
+            <div class="col-md-1">
+                <img src="{{ recommendation.profilepicture }}" width="40" height="40">
+            </div>
+            <div class="col-md-5">
+                <span>{{ recommendation.fullname }}</span>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url('fos_user_profile_show_name', {usertag: recommendation.usetag}) }}">{{ recommendation.fullname }}</a>
+            </div>
+        </div>
+    {% endfor %}
+    {{ 'user.recommendations.body_after'|trans({}, translation_name~'email') }}
+</p>
+{% endblock body %}

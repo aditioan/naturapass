@@ -1,0 +1,53 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.invite-friends.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'user.attributes.friends'|transchoice(2, {}, translation_name~'user') }}</h4>
+    </div>
+    <div class="modal-body" ng-class="{loading: loadingSendInvitation}">
+        <div class="small-loading" ng-show="data.loading"></div>
+        <div class="row">
+            {% verbatim %}
+            <div class="col-xs-4" ng-repeat="friend in data.friends" ng-hide="data.loading">
+                <div class="media">
+                    <div class="pull-left">
+                        <a ng-href="{{ 'fos_user_profile_show_name' | route: {usertag: friend.usertag } }}" class="pull-left" title="{{ friend.firstname }} {{ friend.lastname }}">
+                            <img class="media-object" ng-src="{{ friend.profilepicture }}" width="40" height="40" alt="{{ friend.firstname }} {{ friend.lastname }}">
+                        </a>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <a href="{{ 'fos_user_profile_show_name' | route: {usertag: friend.usertag } }}">
+                        {{ friend.firstname }} {{ friend.lastname }}
+                    </a>
+                </div>
+                {% endverbatim %}
+                <div>
+                    <button class="btn btn-primary btn-sm btn-block btn-icon icon-paperplane"
+                            ng-if="!friend.invited && !friend.subscriber"
+                            data-icon="icon-paperplane"
+                            np-submit-loader="friend.inviting"
+                            ng-click="inviteFriend(friend)">
+                        {{ 'button.send'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-if="friend.invited && !friend.subscriber"
+                            disabled>
+                        {{ 'button.sent'|trans({},translation_name~'global') }}
+                    </button>
+                    <button class="btn btn-primary btn-sm btn-block"
+                            ng-if="friend.invited && friend.subscriber"
+                            disabled>
+                        {{ 'group.state.subscriber'|trans({},translation_name~'group') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()" ng-class="{disabled: data.loading}">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

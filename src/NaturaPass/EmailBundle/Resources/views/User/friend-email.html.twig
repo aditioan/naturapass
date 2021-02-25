@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_user_friend', {'user_fullname': user_fullname, 'fullname': fullname, 'user_tag': user_tag }) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'invitation.friend.body'|trans({'%user_fullname%': user_fullname,'%email_body%': email_body ,'%fullname%': fullname , '%lien%':  app.request.schemeAndHttpHost~path('fos_user_profile_show_name', {usertag: user_tag}) },translation_name~'email')|raw }}</p>
+{% endblock body %}

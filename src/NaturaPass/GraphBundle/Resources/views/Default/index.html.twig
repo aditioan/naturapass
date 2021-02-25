@@ -1,0 +1,18 @@
+{% extends "NaturaPassGraphBundle::layout.html.twig" %}
+
+{% block title %}
+
+    | {{ parent() }}
+{% endblock title %}
+
+{% block corps %}
+    <div class="container container-bulle">
+        <div class="row">
+            <div id="corps" class="col-md-12">
+                {{ graph.name }}
+            </div>
+        </div>
+    </div>
+{% endblock corps %}
+
+

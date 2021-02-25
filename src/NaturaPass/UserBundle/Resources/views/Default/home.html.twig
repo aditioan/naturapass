@@ -1,0 +1,186 @@
+{% extends "::base-page.html.twig" %}
+
+{% block title %}{{ 'title.inscription'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="home-actu">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-offset-1 col-md-6 col-actu">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="slider-actu">
+                                {% for slider in news %}
+                                    <div class="item">
+                                        {% if slider.link != "" %}
+                                            <a href="{{ slider.link }}"><img src="{{ slider.photo.path }}" width="474" height="180" alt="{{ slider.title }}" class="img-responsive center-block"></a>
+                                            <div class="caption">
+                                                {#<span>Jeudi 9 mars</span>#}
+                                                <h4><a href="{{ slider.link }}">{{ slider.title }}</a></h4>
+                                                <p>{{ slider.sub_content }}</p>
+                                            </div>
+                                        {% else %}
+                                            <img src="{{ slider.photo.path }}" width="474" height="180" alt="{{ slider.title }}" class="img-responsive center-block">
+                                            <div class="caption">
+                                                {#<span>Jeudi 9 mars</span>#}
+                                                <h4>{{ slider.title }}</h4>
+                                                <p>{{ slider.sub_content }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="item">
+                                        <a href="#"><img src="/img/pages/actu-boutique.jpg" width="474" height="180" alt="Le Game Fair, le plus grand salon de la chasse en France" class="img-responsive center-block"></a>
+                                        <div class="caption">
+                                            <span>23, 24 & 25 juin</span>
+                                            <h4>Le Game Fair, le plus grand salon de la chasse en France</h4>
+                                            <p>Retrouvez toutes les nouveautés en armes, optiques, munitions, vêtements, et plus encore, les 23, 24 & 25 juin prochains à l’occasion de la 36e édition du Game Fair !</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-offset-1 col-md-4 col-btn">
+                    <div class="panel panel-default">
+                        <div class="panel-body" ng-controller="RegisterController" ng-cloak>
+                            <h3>Inscrivez vous<br>Gratuitement à naturapass</h3>
+
+                            <p class="text-center">
+                                <button class="btn btn-primary btn-block btn-icon icon-marker2" data-toggle="modal" data-target="#modal-register">S'inscrire à Naturapass</button>
+                            </p>
+
+                            <h3>Ou connectez-vous</h3>
+
+                            <p class="text-center">
+                                <button class="btn btn-primary btn-block btn-icon icon-enter3" ng-click="openLogin()">Se connecter à Naturapass</button>
+                            </p>
+                            {% if naturapass_facebook %}
+                                <p class="text-center">
+                                    <button class="btn btn-fb btn-block btn-icon icon-facebook" data-icon="icon-facebook" np-submit-loader="loading" ng-click="fbRegister()">{{ 'home.register.connect'|trans({}, translation_name~'user') }}</button>
+                                </p>
+                            {% endif %}
+                            {% if visibility.store %}
+                                <div class="row row-store">
+                                    <div class="col-xs-6 text-center"><a href="https://play.google.com/store/apps/details?id=fr.appsolute.naturapass" target="_blank"><img src="{{ asset('img/global/google-play.png') }}" alt="Google play" class="img-responsive"></a></div>
+                                    <div class="col-xs-6 text-center"><a href="https://itunes.apple.com/fr/app/naturapass/id883300083?mt=8" target="_blank"><img src="{{ asset('img/global/app-store.png') }}" alt="Apple Store" class="img-responsive"></a></div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-fonctionnalite">
+        <div class="container">
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_partage.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Partagez</strong><br>vos actualités, photos et vidéos</p>
+                <a href="{{ path("naturapass_main_mur") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_cartographie.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Cartographiez</strong><br>votre territoire</p>
+                <a href="{{ path("naturapass_main_carte") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_communique.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Communiquez</strong><br>en temps réel</p>
+                <a href="{{ path("naturapass_main_discussions") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_organise.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Organisez</strong><br>vos chasses</p>
+                <a href="{{ path("naturapass_main_groupes") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_gere.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Gérez</strong><br>votre calendrier</p>
+                <a href="{{ path("naturapass_main_agenda") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+            <div class="puce col-xs-6 col-sm-4 col-md-2">
+                <p><img src="/img/pages/icon_rencontre.jpg" width="140" height="140" class="center-block img-responsive"></p>
+                <p><strong>Rencontrez</strong><br>de nouveaux chasseurs</p>
+                <a href="{{ path("naturapass_main_amis") }}" class="btn btn-secondary">En savoir plus</a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'NaturaPassUserBundle:Modal:angular.login.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/User/RegisterController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script type="text/javascript">
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        var redirect = true;
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == "redirect") {
+                redirect = false;
+            }
+        }
+        if (redirect) {
+            if (navigator.userAgent.match(/iPhone|iPod/i)) {
+                if (document.cookie.indexOf("ios_redirect=false") == -1) {
+                    if (window.confirm("{{ 'home.ios'|trans({}, translation_name~'main')|raw }}")) {
+                        window.location = "{{ app_store_link }}"
+                    } else {
+                        document.cookie = "ios_redirect=false";
+                    }
+                }
+            } else if (navigator.userAgent.match(/Android/i)) {
+                if (document.cookie.indexOf("android_redirect=false") == -1) {
+                    if (window.confirm("{{ 'home.android'|trans({}, translation_name~'main')|raw }}")) {
+                        window.location = "{{ play_store_link }}"
+                    } else {
+                        document.cookie = "android_redirect=false";
+                    }
+                }
+            }
+        }
+        $(document).ready(function(){
+
+            $('.slider-actu').bxSlider({
+                pager    : true,
+                controls : false,
+                auto     : true,
+                autoHover: true
+            });
+
+            $('.slider-videos').bxSlider({
+                pager      : false,
+                controls   : true,
+                auto       : true,
+                autoHover  : true,
+                minSlides  : 2,
+                maxSlides  : 2,
+                slideWidth : 320,
+                slideMargin: 10
+            });
+
+            $('.slider-concours').bxSlider({
+                controls : false,
+                auto     : true,
+                autoHover: true
+            });
+
+        });
+    </script>
+    {% if not form.vars.valid %}
+        <script>
+            jQuery(document).ready(function() {
+                $('#modal-register').modal("show")
+            })
+        </script>
+    {%endif%}
+{% endblock javascripts %}

@@ -1,0 +1,24 @@
+admin_distributor_homepage:
+    path:     /
+    defaults: { _controller: AdminDistributorBundle:Default:index }
+
+admin_distributor_add:
+    path:     /add
+    defaults: { _controller: AdminDistributorBundle:Default:add }
+
+admin_distributor_edit:
+    path:     /edit/{distributor}
+    defaults: { _controller: AdminDistributorBundle:Default:edit }
+
+admin_distributor_brand_homepage:
+    path:     /brand
+    defaults: { _controller: AdminDistributorBundle:Brand:index }
+
+admin_distributor_brand_add:
+    path:     /brand/add
+    defaults: { _controller: AdminDistributorBundle:Brand:add }
+
+admin_distributor_brand_edit:
+    path:     /brand/edit/{brand}
+    defaults: { _controller: AdminDistributorBundle:Brand:edit }
+

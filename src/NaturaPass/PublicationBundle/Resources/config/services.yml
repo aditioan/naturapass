@@ -1,0 +1,4 @@
+parameters:
+#    natura_pass_publication.example.class: NaturaPass\PublicationBundle\Example
+
+services:

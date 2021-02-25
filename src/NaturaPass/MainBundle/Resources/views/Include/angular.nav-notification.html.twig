@@ -1,0 +1,36 @@
+<div class="popover popover-notifications bottom">
+    <div class="arrow"></div>
+    <h3 class="popover-title" ng-show="notifications.length">
+        {{ 'nav.pop_notification.title'|trans({},translation_name~'nav') }}
+        <a ng-click="readAllNotifications()" class="ng-binding pull-right">
+            {{ 'nav.pop_notification.readall'|trans({},translation_name~'nav') }}
+        </a>
+    </h3>
+    <h3 class="popover-title" ng-show="!notifications.length">
+        {{ 'nav.pop_notification.no_notif'|trans({},translation_name~'nav') }}
+    </h3>
+    <div class="popover-content">
+        <div class="small-loading" ng-show="notificationsLoading"></div>
+        <div class="list-group">
+            {% verbatim %}
+            <a ng-href="{{ notification.link }}" class="list-group-item"
+               ng-repeat="notification in notifications"
+               ng-mouseover="readNotification(notification)"
+               ng-class="{'list-group-item-success': !notification.readed}">
+                <div class="media">
+                    <div class="pull-left">
+                        <img ng-src="{{ notification.sender.photo }}" width="40" height="40">
+                    </div>
+                    <div class="media-body">
+                        <span>{{ notification.content }}</span><br>
+                        <span class="small">{{ notification.updated|relativetime }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endverbatim %}
+            <div class="list-group-item">
+                <a href="{{ path('naturapass_notification_all') }}" class="btn btn-primary btn-block">{{ 'nav.pop_notification.all'|trans({},translation_name~'nav') }}</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="fos_user_profile_edit" path="/edit">
+        <default key="_controller">NaturaPassUserBundle:Profile:edit</default>
+    </route>
+
+    <route id="fos_user_profile_parameters" path="/parameters">
+        <default key="_controller">NaturaPassUserBundle:Profile:parameters</default>
+    </route>
+
+    <route id="fos_user_profile_remove" path="/remove">
+        <default key="_controller">FOSUserBundle:Profile:remove</default>
+        <requirement key="methods">GET|POST</requirement>
+    </route>
+
+    <route id="fos_user_profile_show_name" path="/{usertag}">
+        <default key="_controller">FOSUserBundle:Profile:show</default>
+        <requirement key="methods">GET</requirement>
+    </route>
+
+    <route id="fos_user_profile_show" path="/">
+        <default key="_controller">FOSUserBundle:Profile:show</default>
+        <requirement key="methods">GET</requirement>
+    </route>
+
+    <route id="naturapass_user_profile_verify_device" path="/verify-device/{token}">
+        <default key="_controller">NaturaPassUserBundle:Profile:verifyDevice</default>
+        <requirement key="methods">GET</requirement>
+    </route>
+</routes>

@@ -1,0 +1,3 @@
+admin_permission_list:
+    path:     /permission/
+    defaults: { _controller: AdminPermissionBundle:Permission:list }

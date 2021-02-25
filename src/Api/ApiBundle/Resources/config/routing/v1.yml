@@ -1,0 +1,54 @@
+api_v1_users:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\UsersController
+
+api_v1_groups:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\GroupsController
+
+api_v1_categories:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\CategoriesController
+
+api_v1_cron:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\CronController
+
+api_v1_lounges:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\LoungesController
+
+api_v1_publications:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\PublicationsController
+
+api_v1_medias:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\MediasController
+
+api_v1_facebook:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\FacebookController
+
+api_v1_graphs:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\GraphsController
+
+api_v1_messages:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\MessagesController
+
+api_v1_observations:
+    type:       rest
+    name_prefix:  api_v1_
+    resource:   Api\ApiBundle\Controller\v1\ObservationsController

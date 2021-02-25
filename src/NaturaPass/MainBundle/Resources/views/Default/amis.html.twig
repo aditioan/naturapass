@@ -1,0 +1,24 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez les amis !{% endblock %}
+{% block description %}Retrouvez la fonctionnalité amis sur Naturapass (disponible sur application smartphone et site internet) sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Amis Naturapass</li>
+    </ol>
+
+    <h1>Les amis – Rencontrer de nouveaux chasseurs</h1>
+    <h2>« Un bon chasseur est amical»</h2>
+    <p>Naturapass a pour vocation de créer de la synergie dans la chasse. Nous voulons que les chasseurs discutent entre eux à la manière d’un réseau social classique, mais aussi qu’ils se rencontrent, s’invitent à la chasse, partagent sur l’actualité,… Afin de créer du lien et une réelle communauté de Natiz.</p>
+    <p>Nous avons pour cela développé un moteur ambitieux qui permet de rapprocher les Natiz en fonction :</p>
+    <ul>
+        <li>de leurs réseaux : les amis de mes amis,</li>
+        <li>mais aussi en fonction de leurs affinités (par exemple : les chasseurs de bécasse, les chasseurs à l’arc,…).</li>
+    </ul>
+    <p><img src="{{ asset('img/pages/amis.png') }}" width="756" height="987" alt="Les amis Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

@@ -1,0 +1,50 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if add == 0 %}
+        {{ 'animal.title.edit'|trans({'%animal%': form.name_fr.vars.value},translation_name~'animal') }}
+    {% else %}
+        {{ 'animal.title.add'|trans({},translation_name~'animal') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="AnimalFormController">
+            {% if add == 0 %}
+                <h1>{{ 'animal.title.edit'|trans({'%animal%': form.name_fr.vars.value},translation_name~'animal') }}</h1>
+            {% elseif add != 0 %}
+                <h1>{{ 'animal.title.add'|trans({},translation_name~'animal') }}</h1>
+            {% endif %}
+
+            <form name="animal" method="post" action="" class="form-naturapass_animal_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+
+                <h2>{{ 'animal.description.creation'|trans({}, translation_name~'animal') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            {{ form_widget(form.name_fr) }}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Animal/AnimalFormController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

@@ -1,0 +1,70 @@
+<!--[if lte IE 9]>
+<div class="alert alert-danger text-center"><p class="chromeframe">Vous utilisez un navigateur <strong> obsolète </strong>. Veuillez <a href="http://browsehappy.com/" class="alert-link">mettre à niveau votre navigateur</a> ou <a href="http://www.google.com/chromeframe/?redirect=true" class="alert-link">activez Google Chrome Frame</a> pour améliorer votre expérience.</p></div>
+<![endif]-->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-7 col-sm-4 col-md-4 col-lg-3">
+                <a href="{{ path('naturapass_main_homepage') }}" title="{{ 'home.logo'|trans({}, translation_name~'main') }}">
+                    <img src="{{ asset('img/global/logo-naturapass.jpg') }}" alt="{{ 'nav.logo'|trans({}, translation_name~'nav') }}" class="img-responsive">
+                </a>
+            </div>
+            <div class="hidden-xs col-sm-6 col-md-6 col-lg-7 text-center">
+                <h1>
+                    <span>Bienvenue sur Naturapass</span><br>
+                    <small>Le site des chasseurs et des amoureux de la nature</small>
+                </h1>
+            </div>
+            <div class="col-xs-5 col-sm-2 col-md-2 col-lg2 text-right">
+                <ul class="list-inline list-social">
+                    <li><a href="https://fr-fr.facebook.com/chasse.et.chasseurs/" target="_blank"><img src="{{ asset('img/global/btn-facebook.png') }}" alt="Facebook Naturapass"></a></li>
+                    <li><a href="http://blog-chasse.naturapass.com" target="_blank"><img src="{{ asset('img/global/btn-blog.png') }}" alt="Blog Naturapass"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header visible-xs hidden-sm">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('naturapass_main_homepage') }}">Naturapass</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FONCTIONNALITES <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path("naturapass_main_mur") }}">Mur</a></li>
+                        <li><a href="{{ path("naturapass_main_carte") }}">Carte</a></li>
+                        <li><a href="{{ path("naturapass_main_discussions") }}">Discussions</a></li>
+                        <li><a href="{{ path("naturapass_main_groupes") }}">Groupes</a></li>
+                        <li><a href="{{ path("naturapass_main_agenda") }}">Agenda</a></li>
+                        <li><a href="{{ path("naturapass_main_amis") }}">Amis</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">A PROPOS DE <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path("naturapass_main_naturapass") }}">Naturapass</a></li>
+                        <li><a href="{{ path("naturapass_main_jaime") }}">J'aime la chasse</a></li>
+                        <li><a href="{{ path("naturapass_main_realisations") }}">Réalisations</a></li>
+                        <li><a href="{{ path("naturapass_main_applications") }}">Gamme d'appli nature</a></li>
+                        <li><a href="{{ path("naturapass_concours_listing") }}">Jeux concours</a></li>
+                    </ul>
+                </li>
+                <li><a href="http://blog-chasse.naturapass.com" target="_blank">BLOG</a></li>
+                <li><a href="http://boutique.naturapass.com" target="_blank">BOUTIQUE</a></li>
+                <li><a href="{{ path("naturapass_main_partenaire") }}">PARTENAIRES</a></li>
+                <li><a href="{{ path("naturapass_main_presse") }}">PRESSE</a></li>
+                <li><a href="{{ path("naturapass_main_contact") }}">CONTACT</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

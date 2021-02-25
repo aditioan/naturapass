@@ -1,0 +1,36 @@
+<div id="email" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>{{ 'invite.modal.email.title'|trans({}, translation_name~'main') }}</h4>
+            </div>
+            <form method="POST" class="emailinvit form-horizontal" ng-non-bindable>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email[to]" class="col-sm-3 control-label">{{ 'invite.label.to'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="email[to]" placeHolder="{{ 'invite.placeholder.to'|trans({},translation_name~'main') }}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email[subject]" class="col-sm-3 control-label">{{ 'invite.label.subject'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="email[subject]" value="{{ 'invite.placeholder.subject'|trans({'%fullname%': app.user.getFullName(),'%lounge%': lounge.name},translation_name~'main') }}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email[body]" class="col-sm-3 control-label">{{ 'invite.label.body'|trans({},translation_name~'main') }}</label>
+                        <div class="col-sm-9">
+                            <textarea name="email[body]" class="form-control" placeholder="{{ 'invite.placeholder.body'|trans({},translation_name~'main') }}" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary sendmail">{{ 'button.send'|trans({}, translation_name~'global') }}</button>
+                    <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({}, translation_name~'global') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+naturapass_email_publication_comment:
+    path:  /comment/{publication}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailPublication:comment }
+
+naturapass_same_email_publication_comment:
+    path:  /same-comment/{publication}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailPublication:samecomment }
+
+naturapass_email_publication_like:
+    path:  /like/{publication}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailPublication:like }

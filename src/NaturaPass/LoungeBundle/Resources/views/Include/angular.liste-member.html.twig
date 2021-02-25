@@ -1,0 +1,115 @@
+{% verbatim %}
+<a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: subscriber.user.usertag } }}"
+   class="pull-left">
+    <img ng-src="{{ subscriber.user.profilepicture }}" width="40" height="40">
+</a>
+
+<div class="media-body">
+    <button type="button" class="close pull-right ng-scope" ng-if="lounge.connected.access == 3" ng-click="openDeleteMemberModal(lounge , subscriber)">×</button>
+    <p>
+    <span class="lounge-members-smiley pull-right"
+          ng-class="{'icon-sad2': subscriber.participation == 0, 'icon-smiley2': subscriber.participation == 1, 'icon-neutral2': subscriber.participation == 2}"></span>
+        <a href="{{ 'fos_user_profile_show_name'|route: {usertag: subscriber.user.usertag } }}">{{ subscriber.user.fullname }}</a><br>
+
+        <span ng-if="lounge.connected.access != 3" ng-bind="subscriber.publicComment"></span>
+
+    <span class="text-edit"
+          ng-if="!subscriber.editingPublicComment && lounge.connected.access == 3"
+          ng-click="editPublicComment(subscriber)"
+          ng-bind="subscriber.publicComment">
+          </span>
+
+    <span class="text-edit"
+          ng-if="(!subscriber.publicComment && !subscriber.editingPublicComment) && lounge.connected.access == 3"
+          ng-click="editPublicComment(subscriber)">{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}</span>
+
+        <input type="text"
+               placeholder="{% endverbatim %}{{ 'lounge.placeholder.publicComment'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+               ng-model="subscriber.publicComment"
+               ng-show="subscriber.editingPublicComment"
+               ng-keydown="updatePublicComment($event, subscriber)"
+               ng-blur="stopEditingPublicComment(subscriber)">
+    </p>
+</div>
+{% endverbatim %}
+{% set
+RANDOM = random() %}
+{% verbatim %}
+
+<div class="clearfix" ng-if="lounge.connected.access == 3">
+    <button type="button" data-toggle="collapse"
+            data-target="#infoUser{{ subscriber.user.id }}{% endverbatim %}{{ RANDOM }}{% verbatim %}"
+            class="btn btn-default btn-xs lounge-user-options icon-cog2 pull-left"></button>
+</div>
+<div id="infoUser{{ subscriber.user.id }}{% endverbatim %}{{ RANDOM }}{% verbatim %}" class="collapse" ng-if="lounge.connected.access == 3">
+<span class="text-edit" ng-hide="subscriber.editingPrivateComment"
+      ng-click="editPrivateComment(subscriber)" ng-bind="subscriber.privateComment"></span>
+
+<span class="text-edit" ng-hide="subscriber.privateComment || subscriber.editingPrivateComment"
+      ng-click="editPrivateComment(subscriber)">{% endverbatim %}{{ 'lounge.placeholder.privateComment'|trans({}, translation_name~'lounge') }}{% verbatim %}</span>
+
+    <input type="text"
+           placeholder="{% endverbatim %}{{ 'lounge.placeholder.privateComment'|trans({}, translation_name~'lounge') }}{% verbatim %}"
+           ng-model="subscriber.privateComment"
+           ng-show="subscriber.editingPrivateComment"
+           ng-keydown="updatePrivateComment($event, subscriber)"
+           ng-blur="stopEditingPrivateComment(subscriber)">
+
+    {% endverbatim %}
+<div class="geoloc-container">
+    <span>{{ 'lounge.attributes.quiet'|trans({}, translation_name~'lounge') }}: </span>
+
+    <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+            data-after="{{ 'button.no'|trans({},'global') }}">
+        {% verbatim %}
+            <input type="checkbox" id="slideCheckSilent{{ subscriber.user.id }}"
+                   ng-model="subscriber.quiet"
+                   ng-checked="subscriber.initQuiet"
+                   ng-init="subscriber.initQuiet = subscriber.quiet"
+                   ng-change="quietSubscriber(subscriber)">
+            <label for="slideCheckSilent{{ subscriber.user.id }}"></label>
+            {% endverbatim %}
+    </div>
+</div>
+<div class="geoloc-container" ng-if="subscriber.user.id != lounge.owner.id">
+    <span>{{ 'lounge.attributes.administrator'|trans({}, translation_name~'lounge') }}
+        : </span>
+
+    <div class="slideCheck" data-before="{{ 'button.yes'|trans({},translation_name~'global') }}"
+            data-after="{{ 'button.no'|trans({},'global') }}">
+        {% verbatim %}
+            <input type="checkbox" id="slideCheckAdmin{{ subscriber.user.id }}"
+                   ng-true-value="3"
+                   ng-false-value="2"
+                   ng-model="subscriber.access"
+                   ng-checked="subscriber.initAccess"
+                   ng-init="subscriber.initAccess = (subscriber.access == 3)"
+                   ng-change="promoteSubscriber(subscriber)">
+            <label for="slideCheckAdmin{{ subscriber.user.id }}"></label>
+            {% endverbatim %}
+    </div>
+</div>
+<div class="lounge-participe">
+    <span>{{ 'lounge.attributes.participateMember'|trans({}, translation_name~'lounge') }}{% verbatim %} : </span>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default btn-sm"
+                   ng-class="{active: subscriber.participation == 1}"
+                   ng-click="updateMemberParticipation(1, subscriber)">
+                <input type="radio"
+                       class="btn-participate">{% endverbatim %} {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_YES,{}, translation_name~'lounge') }}{% verbatim %}
+            </label>
+            <label class="btn btn-default btn-sm"
+                   ng-class="{active: subscriber.participation == 2}"
+                   ng-click="updateMemberParticipation(2, subscriber)">
+                <input type="radio" class="btn-participate"
+                       value="{{ PARTICIPATION_DONTKNOW }}">{% endverbatim %} {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_DONTKNOW,{}, translation_name~'lounge') }}{% verbatim %}
+            </label>
+            <label class="btn btn-default btn-sm"
+                   ng-class="{active: subscriber.participation == 0}"
+                   ng-click="updateMemberParticipation(0, subscriber)">
+                <input type="radio" class="btn-participate"
+                       value="{{ PARTICIPATION_NO }}">{% endverbatim %} {{ 'lounge.state.participate.short'|transchoice(PARTICIPATION_NO,{}, translation_name~'lounge') }}
+        </label>
+</div>
+</div>
+</div>

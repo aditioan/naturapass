@@ -1,0 +1,7 @@
+parameters:
+#    natura_pass_media.example.class: NaturaPass\MediaBundle\Example
+
+services:
+#    natura_pass_media.example:
+#        class: %natura_pass_media.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

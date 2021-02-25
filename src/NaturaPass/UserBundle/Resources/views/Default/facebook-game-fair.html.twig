@@ -1,0 +1,76 @@
+{% extends "::base-game-fair.html.twig" %}
+
+{% block title %}{{ 'title.inscription'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        #corps-container {
+            background: #410f0e url({{ asset('/img/interface/fond-game-fair.jpg') }}) center top no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+    <style>
+        .l1, .l2, .lfb {
+            font-family: Oswald, Arial, sans-serif;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .l3 {
+            font-family: Oswald, Arial, sans-serif;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .l1 {
+            font-weight: 300;
+        }
+
+        .l2 {
+            font-weight: 400;
+            color: #8dbb1c;
+        }
+
+        .btn {
+            padding: 14px 15px;
+            font-size: 15px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container home-container">
+            <div class="panel panel-concours panel-default" ng-controller="RegisterController">
+                <div class="panel-body">
+                    <p><img class="img-responsive center-block" src="/img/interface/top-iscr-jeu-game-fair.jpg"></p>
+                    <p class="l1"><strong>PLAN DU SALON, ACTUALITES, INFOTRAFIC, ...</strong></p>
+                    <p><img class="img-responsive center-block" src="/img/interface/green-bar.jpg"></p>
+                    <p class="l1">POUR SUIVRE LE <strong>GAME FAIR</strong> EN DIRECT,</p>
+                    <p class="l2">CONNECTEZ-VOUS A NATURAPASS</p>
+                    {% if naturapass_facebook %}
+                        <p class="lfb">
+                            <button class="btn btn-fb btn-icon icon-facebook" data-icon="icon-facebook" np-submit-loader="loading" ng-click="fbRegister()">{{ 'home.register.connect'|trans({}, translation_name~'user') }}</button>
+                        </p>
+                    {% endif %}
+                    <p class="l3">
+                        Ou <a href="{{ path('naturapass_main_game_fair') }}">inscrivez-vous</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/User/RegisterController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock javascripts %}

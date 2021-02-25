@@ -1,0 +1,85 @@
+codes:
+    401:    Aucun utilisateur connecté
+    403:    L'utilisateur n'est pas autorisé à effectuer cette action
+    404:    L'API demandée est introuvable
+
+errors:
+    partial_content:    Votre publication a bien été ajoutée, mais il se peut que certaines données soient manquantes
+    unknown:      Une erreur inconnue s'est produite
+    parameters:   Des paramètres sont manquants
+    undeletable:   Vous ne pouvez pas supprimer cet élément
+
+    conversation:
+        nonexistent:    Cette conversation n'existe pas
+    lounge_admin:        Vous devez être administrateur de votre chantier pour importer des points.
+    group_admin:        Vous devez être administrateur de votre groupe pour importer des points.
+    group:
+        message:
+            empty:          Le contenu du message est vide
+        subscriber:
+            already:        L'utilisateur est déjà inscrit dans ce groupe
+            unregistered:   L'utilisateur n'est pas inscrit dans ce groupe
+            unregister_owner:   Vous ne pouvez pas supprimer le propriétaire de ce groupe de la liste des membres
+            unadmin_owner:      Vous ne pouvez pas enlever les droits d'administration au propriétaire de ce groupe
+        private:  Ce groupe est privé
+
+    lounge:
+        message:
+            empty:          Le contenu du message est vide
+        comment:
+            empty:          Le contenu du commentaire est vide
+        subscriber:
+            already:        L'utilisateur est déjà inscrit dans ce chantier
+            unregistered:   L'utilisateur n'est pas inscrit dans ce chantier
+        private:  Ce chantier est privé
+        map:
+            bad_identifier: Identifiant non valide
+
+    publication:
+        empty:
+            comment:  Le commentaire est vide
+            media:    Aucun média trouvé
+        nogeolocation:  Cette publication n'est pas géolocalisée
+        geolocation:  La géolocalisation spécifiée n'est pas correcte
+        sharing:      La valeur de partage n'est pas correcte
+        signal:       Vous avez déjà signalé cette publication ou vous être le propriétaire, et ne pouvez donc pas la signaler
+
+    user:
+        current_password:   Votre mot de passe actuel est erroné
+        verification_password:   Vous avez tapé un mot de passe de validation different du premier
+        parameters:
+            notifications:
+                nonexistent:  Ce type de notification n'existe pas
+        no_friend_sharing:  Cet utilisateur ne souhaite pas que ses amis soient visibles publiquement
+        groupfilter:
+            nonexistent:  Aucun filtre de groupe correspondant
+        sharingfilter:
+            nonexistent:  Aucun filtre de partage correspondant
+        addresses:
+            nofavorite: Cet utilisateur n'a aucune adresse spécifiée
+        nonexistent:    Cet email n'existe pas. Si vous n'avez pas encore de compte, nous vous invitons à en créer un nouveau
+        passwordnonexistent:    Le mot de passe que vous avez entré est erroné. Si vous avez oublié votre mot de passe, vous pouvez en générer un nouveau
+        email:          Cet email est déjà utilisé
+        geolocation:    La géolocalisation spécifiée n'est pas correcte
+        password:
+            requested:  Un mot de passe à déjà été demandé durant ces 24h
+            old:        L'ancien mot de passe n'est pas valide
+            both:       Les deux mots de passe ne correspondent pas
+        empty:
+            problem:      Le message du problème ne peut pas être vide
+        recommendation:
+            nonexistent:  Aucune recommendation entre ces deux personnes
+        friendship:
+            self:         Un utilisateur ne peut pas être ami avec soi-même
+            nowaiting:    L'amitié concernée n'est pas en attente de confirmation
+            already:      Une amitié existe déjà entre ceux deux utilisateurs
+            nonexistent:  Aucune amitié entre ces deux utilisateurs
+        device:
+            unverified:   Cet appareil n'a pas été vérifié pour cet utilisateur
+            nonexistent:  Cet appareil n'existe pas
+
+    notification:
+        notreceived:  Cet utilisateur n'a pas reçu cette notification
+
+    media:
+        upload:   Une erreur s'est produite lors de l'upload du média

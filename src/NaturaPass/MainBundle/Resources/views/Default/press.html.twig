@@ -1,0 +1,40 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Espace presse{% endblock %}
+{% block description %}Vous êtes journaliste et vous souhaitez écrire un article sur Naturapass ? Découvrez ici les derniers dossiers et communiqués de presse !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Presse</li>
+    </ol>
+
+    <h1>Espace presse Naturapass</h1>
+    <p>Vous pouvez télécharger ci-dessous les éléments de presse relatifs à Naturapass.Vous pouvez télécharger ci-dessous les éléments de presse relatifs à Naturapass.</p>
+    <p>
+        27/11/2015 - <strong>{{ 'presse.communique'|trans({},translation_name~'main') }} - Naturapass fait peau neuve</strong><br>
+        <a href="{{ asset('presse/20151125-Naturapass-Communique-de-presse.docx') }}" class="btn btn-primary btn-icon icon-download">Télécharger</a>
+    </p>
+    <p>
+        11/2015 - <strong>{{ 'presse.dossier'|trans({},translation_name~'main') }}</strong><br>
+        <a href="{{ asset('presse/20151125-Naturapass-Dossier-de-Presse.docx') }}" class="btn btn-primary btn-icon icon-download">Télécharger</a>
+    </p>
+    <p>
+        11/2015 - <strong>{{ 'presse.visuels'|trans({},translation_name~'main') }}</strong><br>
+        <a href="{{ asset('presse/Visuels Naturapass.zip') }}" class="btn btn-primary btn-icon icon-download">Télécharger</a>
+    </p>
+    {#<p>#}
+    {#<a href="{{ asset('presse/Naturapass Dossier de presse - Communiqué de presse - Visuels.zip') }}" class="btn btn-primary btn-icon icon-download">#}
+    {#{{ 'presse.all'|trans({},translation_name~'main') }}#}
+    {#</a>#}
+    {#</p>#}
+    {#<p>Si vous souhaitez obtenir plus d’informations ou si vous avez des questions, contactez-nous :<br>Contact presse France :<br>Patrick BURDEYRON<br><a href="mailto:patrick@naturapass.com">patrick@naturapass.com</a></p>#}
+
+    {#<p>#}
+    {#<iframe src="https://fr.calameo.com/read/000765508907dc65b669f" frameborder="0" scrolling="no" allowtransparency allowfullscreen></iframe>#}
+    {#<iframe src="https://fr.calameo.com/read/0007655085e74d0a2b864" frameborder="0" scrolling="no" allowtransparency allowfullscreen></iframe>#}
+    {#</p>#}
+    {{ 'presse.suite'|trans({},translation_name~'main')|raw }}
+
+{% endblock corps %}

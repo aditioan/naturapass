@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_lounge_participate', {'fullname': fullname, 'loungetag': lounge.loungetag, 'statut': statut}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'lounge.participate.body'|trans({'%fullname%': fullname,'%loungename%': lounge.name,'%statut%': statutname, '%lien%': app.request.schemeAndHttpHost~path('naturapass_lounge_show', {'loungetag': lounge.loungetag})},translation_name~'email')|raw }}</p>
+{% endblock body %}

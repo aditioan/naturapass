@@ -1,0 +1,100 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if ajout == 0 %}
+        {{ 'title.edit'|trans({},translation_name~'news') }}
+    {% else %}
+        {{ 'title.add'|trans({},translation_name~'news') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+    <div id="corps-container">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container container-salon container-md" ng-controller="NewsFormController" ng-init="init()">
+            {% if ajout != 0 %}
+                <h1>{{ 'news.title.creation'|trans({}, translation_name~'news') }}</h1>
+            {% elseif ajout == 0 %}
+                <h1>{{ 'news.title.edition'|trans({}, translation_name~'news') }}</h1>
+            {% endif %}
+
+            <form name="news" method="post" action="" class="form-naturapass_news_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+                        <p>(954*352 px)</p>
+                        <div class="over-file">
+                        </div>
+                        <div class="hide-file">
+                            {{ form_widget(form.photo.file) }}
+                        </div>
+                        {{ form_label(form.photo.file) }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.active) }}
+                            </span>
+                            {{ form_widget(form.active,{'attr':{'class':'inputType form-access'} }) }}
+                        </div>
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.title) }}
+                                <label class="control-label required" for="news_title">(255 caracteres)</label>
+                            </span>
+                            {{ form_widget(form.title, {'class': 'inputType'}) }}
+                        </div>
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.date) }}
+                            </span>
+                            {{ form_widget(form.date, {attr: {'np-datetime-picker': 'true'} }) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="lounge-access">
+                                {{ form_label(form.content) }}
+                            </span>
+                            {{ form_widget(form.content) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="lounge-access">
+                        {{ form_label(form.link) }}
+                        <label class="control-label required" for="news_link"></label>
+                    </span>
+                    {{ form_widget(form.link, {'class': 'inputType'}) }}
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 overide-file">
+
+                    </div>
+                    <div class="col-sm-9">
+
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ tinymce_init() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/News/NewsControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

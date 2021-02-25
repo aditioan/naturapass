@@ -1,0 +1,23 @@
+{% extends "NaturaPassMainBundle::layout-no-menu.html.twig" %}
+
+{% block title %}{{ 'cgv.title'|trans({},translation_name~'cgv') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                <h1>{{ 'cgv.title'|trans({},translation_name~'cgv') }}</h1>
+
+                <p>{{ 'cgv.description'|trans({},translation_name~'cgv') }}</p>
+
+                {{ 'cgv.raw'|trans({},translation_name~'cgv') | raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock corps %}

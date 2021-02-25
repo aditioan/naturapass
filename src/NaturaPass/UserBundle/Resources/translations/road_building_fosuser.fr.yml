@@ -1,0 +1,15 @@
+user:
+    attributes:
+        email:              Adresse email
+        firstname:          Prénom
+        lastname:           Nom
+        birthday:           Date de naissance
+        gender:             Genre
+        courtesy:           Civilité
+        password:           Mot de passe
+        passverif:          Mot de passe (validation)
+        old_password:       Ancien mot de passe
+        new_password:       Nouveau mot de passe
+'Bad credentials.': 'Erreur de connexion'
+'The presented password is invalid.': 'Votre mot de passe est invalise'
+'The presented password cannot be empty.': 'Votre mot de passe ne peut pas être vide'

@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_email_publication_comment', {'fullname': fullname, 'publication': publication.id}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'publication.comment.body'|trans({'%fullname%': fullname, '%comment%': comment, '%lien%': app.request.schemeAndHttpHost~path('naturapass_publication_show', {'publication': publication.id})},translation_name~'email')|raw }}</p>
+{% endblock body %}

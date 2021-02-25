@@ -1,0 +1,17 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Nous contacter{% endblock %}
+{% block description %}Vous avez des questions sur Naturapass et n'avez pas vu la réponse sur notre site ? Retrouvez nos coordonnées sur cette page !{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="large-container">
+        {% if visibility.home %}
+            <div class="container home-container text-center">
+                <h1 style="margin-bottom:40px;">Votre message a été envoyé</h1>
+                <a class="btn btn-primary" href="{{path('naturapass_main_homepage')}}"><span class="text-contact">Retour à la page d'accueil</span></a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock corps %}

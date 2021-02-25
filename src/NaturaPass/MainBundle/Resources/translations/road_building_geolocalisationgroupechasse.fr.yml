@@ -1,0 +1,13 @@
+geolocalisationgroupechasse:
+    title:          Géolocaliser les participants de votre groupe de chantier
+    description:    Avec Rodypass, vous pouvez organiser vos chantiers et géolocaliser les participants de votre groupe de chantier
+    raw:            |
+                    <h1>Géolocalisez les autres personnes pendant la chantier</h1>
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <h2>Simplifiez l'organisation de vos chantiers</h2>
+                    <p>Avant le jour de chantier, vous allez simplifier votre organisation en vous connectant sur le site ou sur l’application Rodypass. Vous aurez à votre disposition un système d’invitations, de gestion des présences et de discussion en temps réel par un « chat ». Un gain de temps certain et, plus de chance d’être le bon nombre le jour du chantier.</p>
+                    <h2>Les atouts de la géolocalisation</h2>
+                    <p>Le jour du chantier, vous pourrez toujours utiliser le chat</p>
+                    </div>
+                    </div>

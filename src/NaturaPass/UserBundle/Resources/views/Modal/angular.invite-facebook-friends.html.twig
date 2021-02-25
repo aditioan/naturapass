@@ -1,0 +1,41 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.invite-facebook-friends.html{% endblock %}
+
+{% block template_body %}
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="ok()">&times;</button>
+        <h4 class="modal-title">{{ 'user.attributes.friends'|transchoice(2, {}, translation_name~'user') }}</h4>
+    </div>
+    <div class="modal-body">
+        <ul class="media-list" ng-if="data.friends.length && !data.loading">
+            <li class="media" ng-repeat="friend in data.friends">
+                {% verbatim %}
+                <a class="pull-left" ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: friend.usertag } }}"
+                   target="_blank">
+                    <img class="media-object" ng-src="{{ friend.profilepicture }}" width="30" height="30">
+                </a>
+
+                <div class="media-body">
+                    <a class="pull-left" ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: friend.usertag } }}"
+                       target="_blank">{{ friend.firstname }} {{ friend.lastname }}</a>
+                    {% endverbatim %}
+                    <button class="btn btn-primary" ng-click="data.sendInvitation(friend)"
+                            np-submit-loader="friend.loading"
+                            ng-hide="friend.success || friend.relation.friendship">{{ 'button.send'|trans({}, translation_name~'global') }}</button>
+                    <button class="btn btn-primary disabled"
+                            ng-show="friend.success || friend.relation.friendship == 1">{{ 'button.asked'|trans({}, translation_name~'global') }}</button>
+                    <button class="btn btn-primary disabled"
+                            ng-show="friend.relation.friendship == 2">{{ 'friendship.state.friend'|trans({}, translation_name~'user') }}</button>
+                </div>
+            </li>
+        </ul>
+        <div class="alert alert-info" ng-if="!data.friends.length && !data.loading">
+            {{ 'user.invitation.no_friends.facebook'|trans({}, translation_name~'user') }}
+        </div>
+        <div class="small-loading" ng-show="data.loading"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="ok()">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+    </div>
+{% endblock %}

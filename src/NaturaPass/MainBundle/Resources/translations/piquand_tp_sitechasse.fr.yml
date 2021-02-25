@@ -1,0 +1,35 @@
+sitechasse:
+    title:          Piquand TP
+    description:    Le site de chantier premier réseau social qui propose un véritable espace de chantier pour tout groupe de chantier
+    raw:            |
+                    <h1>Piquand TP, l'outil du chantier de demain</h1>
+                    <p>Piquand TP est à la fois un site internet et une application smartphone qui allie l'ancestralité de la chasse avec les nouvelles technologies pour équiper <strong>le chasseur de demain</strong>. Piquand TP vous propose des outils améliorant la gestion et l’organisation de vos chasses.</p>
+                    <p>Avec Piquand TP vous pouvez notamment:</p>
+                    <ul>
+                    <li>Faciliter l’organisation de vos chantier,</li>
+                    <li>Géolocaliser les participants durant les chantiers,</li>
+                    <li>Cartographier votre territoire de chantier,</li>
+                    <li>Créer votre communauté</li>
+                    <li>Tenir votre journal de chantier,</li>
+                    <li>Partager vos photos, souvenirs, dernières informations...</li>
+                    </ul>
+                    <p>Aujourd’hui les principales fonctionnalités de Piquand TP s’articulent autour de 5 axes majeurs:</p>
+                    <h2>Mur/Journal</h2>
+                    <p>Le mur de Piquand TP vous permet d’échanger avec vos amis et de constituer votre journal de chantier. Sur le mur, vous pouvez poster vos textes, photos et vidéos.</p>
+                    <p>Le mur est aussi une porte d’entrée pour la cartographie : chaque publication que vous géolocaliserez sera automatiquement positionnée sur votre carte.</p>
+
+                    <h2>Chantier</h2>
+                    <p>La rubrique "Chantier" permet d’organiser vos chantiers de manières efficaces et de suivre leur bon déroulement en temps réel. </p>
+                    <p>Le principe est de regrouper un certain nombre de personnes autour d’un événement.</p>
+                    <h2>Groupes</h2>
+                    <p>Les groupes vous permettent de choisir simplement avec qui vous voulez communiquer.</p>
+                    <p>L’idée des groupes est de réunir un certain nombre de personnes en fonction de thématique ou d’organisation.</p>
+                    <h2>Carte</h2>
+                    <p>Pour aider à connaître son territoire, nous permettons par le Mur ou sur la Carte de localiser les éléments qui vous paraissent importants.</p>
+                    <p>La carte est une extension de votre mémoire, vous pouvez l’alimenter en géolocalisant vos photos, vidéos et textes à l’intérieur de celle-ci.</p>
+    buttons:
+        organisez:      Organisez et géolocalisez vos chantiers
+        cartographiez:  Cartographiez votre territoire
+        journal:        Votre journal de chantier
+        groupes:        Créez et rejoignez des groupes
+        fondements:     Les fondements de Piquand TP

@@ -1,0 +1,83 @@
+{% extends "::base-regisrer-game-fair.html.twig" %}
+
+{% block meta %}
+    <meta property="og:title" content="{{ 'title.register_game_fair'|trans({}, translation_name~'main') }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}/users/facebook-2"/>
+{% endblock meta %}
+
+{% block title %}{{ 'title.inscription'|trans({},translation_name~'user') }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        #corps-container {
+            background: #410f0e url({{ asset('/img/interface/fond-game-fair.jpg') }}) center top no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="corps-container" class="large-container {% if app.request.get('_route') == 'naturapass_main_homepage' %}with-footer{% endif %}">
+        <div class="container home-container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="home-video-container">
+                        <p><img class="img-responsive center-block" src="/img/interface/visuel-game-fair.png"></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="container-md register-container" ng-controller="RegisterController">
+                        <h1>{{ 'home.register.title'|trans({},translation_name~'user') }}</h1>
+
+                        <div class="text-center">
+                            <button class="btn btn-fb btn-icon icon-facebook" data-icon="icon-facebook" np-submit-loader="loading" ng-click="fbRegister()">{{ 'home.register.connect'|trans({}, translation_name~'user') }}</button>
+                        </div>
+
+                        <p>{{ 'home.register.description'|trans({},translation_name~'user') }}</p>
+                        {{ include("NaturaPassUserBundle:Registration:register_content.html.twig") }}
+                    </div>
+                    {% if visibility.store %}
+                        <div class="container-md app-container">
+                            <a href="https://itunes.apple.com/fr/app/naturapass/id883300083?mt=8" title="Télécharger dans l'App Store" target="_blank"><img src="{{ asset("img/interface/mobile-app_store-fr.png") }}" title="Télécharger dans l'App Store" alt="Télécharger dans l'App Store" width="153" height="45"></a>
+                            <a href="https://play.google.com/store/apps/details?id=fr.appsolute.naturapass" title="Disponible sur Google play" target="_blank"><img src="{{ asset("img/interface/mobile-google_play-fr.png") }}" title="Disponible sur Google play" alt="Disponible sur Google play" width="132" height="45"></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if app.request.get('_route') == 'naturapass_main_homepage' %}
+            <footer>
+                <span>{{ 'home.footer'|trans({},translation_name~'user') }} <a href="http://www.e-conception.fr" target="_blank">e-Conception</a> - <a href="https://plus.google.com/103219838247109094898" rel="publisher">Google+</a></span>
+            </footer>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/User/RegisterController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('.home-visuel-slide').bxSlider({
+                pager   : false,
+                nextText: "&#xe3b1",
+                prevText: "&#xe3b3",
+                auto    : true
+            });
+            $('.home-info-slider').bxSlider({
+                nextText: "&#xe3b1",
+                prevText: "&#xe3b3",
+                auto    : true
+            });
+        });
+    </script>
+{% endblock javascripts %}

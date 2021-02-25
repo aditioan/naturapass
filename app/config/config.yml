@@ -1,0 +1,260 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+parameters:
+    pdo.db_options:
+        db_table:    session
+        db_id_col:   session_id
+        db_data_col: session_value
+        db_time_col: session_time
+
+framework:
+    #esi:             ~
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:
+        enable_annotations: true
+        strict_email: true
+    templating:
+        engines: ['twig']
+    assets:
+        packages:
+            assetic:
+                base_path: '/static'
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:
+        handler_id:     session.handler.pdo
+        cookie_lifetime:      2232000
+        gc_maxlifetime:       108000
+    fragments:       ~
+    http_method_override: true
+    translator: { fallback: %locale% }
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    exception_controller: naturapass.exception_controller:showAction
+    form:
+        resources:
+            - NaturaPassMainBundle:Bootstrap:bootstrap.html.twig
+
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    read_from:      %kernel.root_dir%/../web
+    write_to:       %kernel.root_dir%/../web/static
+    use_controller: false
+    #java: /usr/bin/java
+    filters:
+        less:
+            node: /usr/bin/node
+            node_paths: [/usr/lib/node_modules]
+            apply_to: "\.less$"
+        cssrewrite: ~
+        yui_js:
+            jar:    %kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar
+        #closure:
+        #    jar: %kernel.root_dir%/Resources/java/compiler.jar
+        #yui_css:
+        #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+
+# Braincrafted Bootstrap
+braincrafted_bootstrap:
+    output_dir:
+    assets_dir: %kernel.root_dir%/../vendor/twbs/bootstrap
+    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.10.2.min.js
+    less_filter: less
+    auto_configure:
+        assetic: false
+        twig: true
+        knp_menu: true
+        knp_paginator: true
+    customize:
+        variables_file: %kernel.root_dir%/Resources/less/variables.less
+        bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
+        bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: %kernel.root_dir%/data/data.db3
+        # path:     %database_path%
+
+    orm:
+        metadata_cache_driver: apc
+        query_cache_driver: apc
+        result_cache_driver: apc
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        dql:
+            datetime_functions:
+                #path to date functions as same as numeric function
+            numeric_functions:
+                acos: DoctrineExtensions\Query\Mysql\Acos
+                cos: DoctrineExtensions\Query\Mysql\Cos
+                radians: DoctrineExtensions\Query\Mysql\Radians
+                sin: DoctrineExtensions\Query\Mysql\Sin
+            string_functions:
+                #path to string functions as same as numeric function
+        mappings:
+            tree:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    encryption: tls
+    spool:     { type: memory }
+
+sensio_framework_extra:
+    view:   { annotations: false }
+    router: { annotations: true }
+
+# STOF Doctrine extensions
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable:  true
+            sluggable:      true
+
+jms_serializer:
+    visitors:
+            json:
+                options: [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE]
+
+# FOS REST Configuration
+# Gère l'API REST pour les webservices
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    access_denied_listener: true
+    format_listener:
+        rules:
+            - { path: "^/api", priorities: [json], fallback_format: json, prefer_extension: false }
+            - { path: "^/", priorities: [html], fallback_format: ~, prefer_extension: true }
+    view:
+        view_response_listener: 'force'
+        force_redirects:
+            html:   true
+            xml:    true
+        formats:
+            json:   true
+            jsonp:  true
+            xml:    false
+        templating_formats:
+            html:   true
+    service:
+        exception_handler:    fos_rest.view.exception_wrapper_handler
+    exception:
+        enabled: true
+        messages:
+            'Symfony\Component\HttpKernel\Exception\HttpException': true
+
+# FOS USER Configuration
+fos_user:
+    db_driver:      orm
+    firewall_name:  main
+    user_class:     NaturaPass\UserBundle\Entity\User
+    service:
+        mailer:     fos_user.mailer.twig_swift
+    from_email:
+        address:        team@naturapass.fr
+        sender_name:    NaturaPass
+    registration:
+        confirmation:
+            enabled:    false
+        form:
+            type:       user
+            handler:    naturapass_user.form.handler.registration
+    change_password:
+        form:
+            type:       change_password
+            handler:    naturapass_user.form.handler.change_password
+
+bazinga_js_translation:
+    locale_fallback:    fr
+    default_domain:     global
+
+doctrine_migrations:
+    dir_name:   %kernel.root_dir%/DoctrineMigrations
+    namespace:  NaturaPass\Migrations
+    table_name: migration_versions
+    name:       NaturaPass Migrations
+
+lexik_maintenance:
+    authorized:
+        ips: ['37.252.200.110']
+    driver:
+        ttl: 3600                                                                  # Optional ttl option, can be not set
+
+        class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'                # class for file driver
+        options: {file_path: %kernel.root_dir%/cache/lock}                         # file_path is the complete path for create the file
+
+    response:
+        code: 503
+        status: "Service Temporarily Unavailable"
+
+hwi_oauth:
+    firewall_name:  main
+    connect:
+        confirmation:       true
+        account_connector:  naturapass.oauth.user.provider
+    resource_owners:
+        facebook:
+            type:                 facebook
+            client_id:            %facebook_id%
+            client_secret:        %facebook_secret%
+            scope:                "email,public_profile,user_birthday,publish_actions,user_friends"
+            infos_url:            "https://graph.facebook.com/me?fields=id,email,first_name,last_name,gender,birthday"
+            options:
+                display: popup
+    fosub:
+        # mapping between resource owners (see below) and properties
+        properties:
+            facebook: facebook_id
+
+stfalcon_tinymce:
+    external_plugins:
+            filemanager:
+                url: "asset[filemanager/plugin.min.js]"
+    include_jquery: true
+    tinymce_jquery: true
+    selector: ".tinymce"
+    language: %locale%
+    theme:
+        simple:
+            theme:  "modern"
+        advanced:
+            plugins:
+                - "advlist autolink link image lists charmap print preview hr anchor pagebreak"
+                - "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking"
+                - "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+            toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect"
+            toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code "
+            image_advtab: true
+            external_filemanager_path:  "/filemanager/"
+            filemanager_title:  "Selection des médias"
+            relative_urls: false

@@ -1,0 +1,31 @@
+{% extends "NaturaPassMainBundle::layout-page.html.twig" %}
+
+{% block title %}{{ parent() }} - Découvrez l'agenda !{% endblock %}
+{% block description %}Pour découvrir la fonctionnalité agenda de l'application et du site internet Naturapass et toutes les possibilités qu'elle offre, cliquez ici !{% endblock %}
+
+{% block corps %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('naturapass_main_homepage') }}">Naturapass</a></li>
+        <li class="active">Fonctionnalités</li>
+        <li class="active">Agenda Naturapass</li>
+    </ol>
+
+    <h1>L’agenda – Gérer votre calendrier et vos invitations</h1>
+    <h2>« Un bon chasseur est organisé »</h2>
+    <p>Par l’intermédiaire de la partie « Agenda» vous pouvez organiser tous vos événements et en particulier vos chasses. Cela vous évitera de nombreux appels, sms, emails… et les incertitudes liées à cet exercice.</p>
+    <p></p>
+    <p><strong>Comment ?</strong></p>
+    <p>Quelques étapes pour créer une chasse dans votre agenda :</p>
+    <ul>
+        <li>Lui donner un nom, une date de début et de fin</li>
+        <li>Déterminer un lieu de rendez-vous : pratique pour les invités qui ne connaissent pas le lieu de rendez-vous !</li>
+        <li>Choisir les accès privés ou publics</li>
+        <li>Inviter des participants qui peuvent être des Natiz, des membres de vos groupes ou même des Non-Natiz</li>
+        <li>Importer tout ou partie de vos cartes pour que vos invités ne soient pas perdus sur votre chasse.</li>
+    </ul>
+    <p></p>
+    <p>Dans l’événement créé, vous retrouverez le mur, la carte, les discussions et les paramètres mais aussi la liste des participants et leur réponse à l’invitation (Je participe, Je ne sais pas, Je ne participe pas). Pratique pour se compter !</p>
+    <p><img src="{{ asset('img/pages/AGENDA1.png') }}" width="509" height="665" alt="L'agenda Naturapass" class="img-responsive center-block"></p>
+
+{% endblock corps %}

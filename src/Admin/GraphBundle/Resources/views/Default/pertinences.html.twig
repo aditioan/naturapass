@@ -1,0 +1,53 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block corps %}
+
+<div id="corps-container">
+    {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+    <div class="container container-bulle container-index">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="relevant" ng-controller="PertinenceListController" ng-init="loadPertinences()">
+                    <div ng-cloak class="container-md" ng-repeat="pertinence in pertinences | orderBy: 'type'" ng-class="{loading: pertinence.loading}">
+                        {% verbatim %}
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span>{{ pertinence.name }}</span>
+                            </div>
+                            <div class="col-xs-5">
+                                <label>Pertinence</label>
+                                <input type="range" min="0.00" max="10.00" ng-model="pertinence.value" step="0.1">
+                                <br />
+                                <label>Perte</label>
+                                <input type="range" min="0.00" max="1.00" ng-model="pertinence.loss" step="0.01">
+                            </div>
+                            <div class="col-xs-3">
+                                <span>Pertinence: {{ pertinence.value }}</span>
+                                <br>
+                                <span>Perte: {{ pertinence.loss }}</span>
+                            </div>
+                            {% endverbatim %}
+                            <div class="col-xs-2">
+                                <button class="btn btn-primary btn-icon icon-checkmark" data-icon="icon-checkmark"
+                                        np-submit-loader="pertinence.loading"
+                                        ng-click="updatePertinence(pertinence)">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/Admin/Graph/PertinenceListController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}

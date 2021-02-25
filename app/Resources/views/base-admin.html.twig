@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="{{ app.request.locale }}" data-translation="{{ translation_name }}" data-fid="{{ facebook_id }}" data-fvers="{{ facebook_version }}" prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}{{ 'title.home'|trans({}, translation_name~'main') }}{% endblock %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        {% block meta %}
+        {% endblock meta %}
+        <link rel="icon" type="image/x-icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+        <link rel="shortcut icon" href="{{ asset(translation_name~'favicon.ico') }}"/>
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor/naturapass-theme.min.css') }}"/>
+
+        {% block stylesheets %}
+        {% endblock stylesheets %}
+
+        <script async src="{{ asset('js/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+    </head>
+    <body ng-app="app">
+        <div id="fb-root"></div>
+        {% block navbar %}
+            {% include "AdminMainBundle:Include:angular.nav-bar.html.twig" %}
+        {% endblock navbar %}
+
+        {% block body %}
+        {% endblock body %}
+        {% block right_column %}{% endblock right_column %}
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery.min.js') }}"><\/script>');</script>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsUUAfUkh896f9tgx0qgV3tqmkRFoccGM&sensor=true"></script>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+        {% block javascripts %}
+            {% set asset_version = 'v2.0.0.1' %}
+            {% javascripts package='assetic'
+            'js/vendor/naturapass.min.js'
+            'js/vendor/plugin.min.js'
+            'js/tinymce/tinymce.min.js'
+            'js/tinymce/jquery.tinymce.min.js'
+            'bundles/bazingajstranslation/js/translator.min.js'
+            'bundles/fosjsrouting/js/router.js'
+            'js/vendor/angular-gmap.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+            {% endjavascripts %}
+            <script src="{{ asset('js/vendor/translations.' ~ app.request.locale ~ '.min.js') }}"></script>
+
+            {% if app.environment == 'dev' %}
+            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% else %}
+            <script src="{{ asset('static/js/fos_js_routes.js') }}"></script>
+            {% endif %}
+
+            {#  filter='?yui_js' #}
+            {% javascripts package='assetic' filter='?yui_js'
+            'js/main.min.js'
+            'js/app/filters/naturapass.filters.js'
+            'js/app/directives/naturapass.directives.js'
+            'js/app/app.js' %}
+            <script type="text/javascript" src="{{ asset_url }}?{{ asset_version }}"></script>
+            {% endjavascripts %}
+
+        {% endblock javascripts %}
+    </body>
+</html>

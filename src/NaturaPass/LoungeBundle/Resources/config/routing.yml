@@ -1,0 +1,55 @@
+naturapass_lounge_homepage:
+    path:  /
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:index }
+
+naturapass_lounge_owning:
+    path:  /owning
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:index }
+
+naturapass_lounge_invite_wait:
+    path:  /invited
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:index }
+
+naturapass_lounge_add:
+    path:  /add
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:add }
+
+naturapass_lounge_edit:
+    path:  /edit/{loungetag}
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:edit }
+
+naturapass_lounge_exit:
+    path:  /exit/{loungetag}
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:exit }
+
+naturapass_lounge_show:
+    path:  /{loungetag}
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:show }
+
+naturapass_lounge_invite:
+    path:  /invite/{loungetag}
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:invite }
+
+naturapass_lounge_invited:
+    path:  /invited/{loungetag}
+    defaults: { _controller: NaturaPassLoungeBundle:Lounges:invited }
+
+naturapass_lounge_invite_email:
+    path:  /invite-email/{loungetag}/{fullname}/{message}
+    defaults: { _controller: NaturaPassEmailBundle:EmailLounge:invite }
+
+naturapass_lounge_invite_email_without_message:
+    path:  /invite-email-members/{loungetag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailLounge:inviteWithoutMessage }
+
+naturapass_lounge_geolocate_email:
+    path:  /geolocate-email/{loungetag}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailLounge:geolocate }
+
+naturapass_lounge_participate_email:
+    path:  /participate-email/{loungetag}/{statut}/{fullname}
+    defaults: { _controller: NaturaPassEmailBundle:EmailLounge:participate }
+
+naturapass_lounge_chat_email:
+    path:  /chat-email/{loungetag}
+    defaults: { _controller: NaturaPassEmailBundle:EmailLounge:chat }

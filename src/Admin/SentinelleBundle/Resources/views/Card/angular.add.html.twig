@@ -1,0 +1,100 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if add == 0 %}
+        {{ 'card.title.edit'|trans({'%card%': form.name.vars.value},translation_name~'card') }}
+    {% else %}
+        {{ 'card.title.add'|trans({},translation_name~'card') }}
+    {% endif %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div id="idCardCategory" data-id="{% if add == 0 %}{{ id }}{% endif %}" class="container container-salon container-md" ng-controller="CardFormController" ng-init="init()">
+            {% if add == 0 %}
+                <h1>{{ 'card.title.edit'|trans({'%card%': form.name.vars.value},translation_name~'card') }}</h1>
+            {% elseif add != 0 %}
+                <h1>{{ 'card.title.add'|trans({},translation_name~'card') }}</h1>
+            {% endif %}
+
+            <form name="card" method="post" action="" class="form-naturapass_card_add" role="form" enctype="multipart/form-data" ng-submit="submit()">
+
+                <h2>{{ 'card.description.creation'|trans({}, translation_name~'card') }}</h2>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            {{ form_widget(form.name) }}
+                        </div>
+                    </div>
+                </div>
+
+                <h1>{{ 'card.label.list'|trans({},translation_name~'card') }} <span class="pull-right glyphicon glyphicon-plus btn btn-primary" ng-click="addNewLabel()" ng-hide="loadingLabels"></span></h1>
+
+                {% verbatim %}
+                <div class="small-loading" ng-show="loadingLabels">
+                </div>
+                <div ng-repeat="label in data.entity.labels" ng-cloak>
+                    <div class="row">
+                        <input type="hidden" name="label[id][{{$index}}]" value="{{label.id}}" />
+                                <input type="hidden" name="labeljson[]" class="form-control" value="{{ label | json }}">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="{% endverbatim %}{{ 'card.label.placeholder'|trans({}, translation_name~'card') }}{% verbatim %}" name="label[name][]" value="{{label.name}}" ng-model="label.name" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <select name="label[type][{{$index}}]" class="form-control" ng-model="label.type" ng-change="checkTypeSelect($index, label, this)">
+                                    <option ng-selected="{{label.type == operator.value}}"
+                                            ng-repeat="operator in alllabels"
+                                            value="{{operator.value}}">
+                                      {{operator.displayName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group" ng-show="label.allowContent">
+                                <a class="pull-left btn btn-info btn-xs" ng-click="openContentLabel($index, label, this)"><span
+                          class="glyphicon glyphicon-plus" title="Modifier le contenu"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input title="Obligatoire" name="label[required][{{$index}}]" type="checkbox" ng-model="label.required" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <a class="pull-left btn btn-danger btn-xs" ng-click="openDeleteModal($index, label, this)"><span
+                          class="glyphicon glyphicon-remove" title="Supprimer le label"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endverbatim %}
+
+                <button type="submit" class="btn btn-primary btn-right btn-icon icon-checkmark">{{ 'button.validate'|trans({}, translation_name~'global') }}</button>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+    {% include "AdminSentinelleBundle:Modal:angular.remove-card-label.html.twig" %}
+    {% include "AdminSentinelleBundle:Modal:angular.card-label-content.html.twig" %}
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Receiver/Card/CardFormController.js'
+    'js/app/controllers/Admin/Receiver/Card/CardLabelModalController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}

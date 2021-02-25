@@ -1,0 +1,98 @@
+{% verbatim %}
+<div class="{% endverbatim %}{% if visibility.social_network %}col-sm-9{% else %}col-sm-12{% endif %}{% verbatim %}" ng-mouseover="recommendationViewed(user)">
+            <div class="media">
+                <a href="#" class="pull-left">
+                    <img ng-src="{{ user.photo }}" class="media-object" width="60" height="60">
+                </a>
+                <div class="media-body">
+                    <a ng-href="{{ 'fos_user_profile_show_name'|route: {usertag: user.usertag } }}"><b>{{ user.lastname }}</b> {{ user.firstname }}</a><br>
+                    {% endverbatim %}
+                    {% if visibility.social_network %}
+                        {% verbatim %}
+                    <span>
+                        <p ng-if="user.relation.friendship.state == 2">{% endverbatim %}{{ 'search.list.isfriend'|trans({},translation_name~'main') }}{% verbatim %}</p>
+                        <p ng-if="user.relation.mutualFriends">
+                            {% endverbatim %}{{ 'search.list.have'|trans({},translation_name~'main') }}{% verbatim %}
+                            <a href="#" ng-click="openFriendsModal(user, true)">
+                            {{ 'search.list.friend'|transchoice: user.relation.mutualFriends: {'count': user.relation.mutualFriends}: 'main' }}
+                            </a>
+                        </p>
+                        <p ng-if="!user.relation.mutualFriends">{% endverbatim %}{{ 'search.list.have_not'|trans({},translation_name~'main') }}{% verbatim %}</p>
+                    </span>
+                    {% endverbatim %}
+                    {% endif %}
+                    {% verbatim %}
+                </div>
+            </div>
+        </div>
+        {% endverbatim %}
+        {% if visibility.social_network %}
+            <div class="col-sm-3">
+                <div class="dropdown clearfix" ng-if="connectedUser.id != user.id && user.relation.friendship.state">
+                    <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2"
+                            ng-if="user.relation.friendship.state == 2">{{ 'button.edit'|trans({},translation_name~'global') }} <span class="caret"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2"
+                            ng-if="user.relation.friendship.state == 1 && user.relation.friendship.way == 2">{{ 'button.asked'|trans({}, translation_name~'global') }} <span class="caret"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2"
+                            ng-if="user.relation.friendship.state == 1 && user.relation.friendship.way == 3">{{ 'button.valid'|trans({}, translation_name~'global') }} <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                            ng-if="user.relation.friendship.state == 1">
+                        <li role="presentation"
+                                ng-if="user.relation.friendship.way == 3">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-users"
+                                    ng-click="confirmFriendship(user)">
+                                {{ 'button.valid'|trans({}, translation_name~'global') }}
+                            </a>
+                        </li>
+                        <li role="presentation"
+                                ng-if="user.relation.friendship.way == 2">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                                    ng-click="cancelFriendship(user, $index)">
+                                {{ 'button.annul'|trans({}, translation_name~'global') }}
+                            </a>
+                        </li>
+                        <li role="presentation"
+                                ng-if="user.relation.friendship.way == 3">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                                    ng-click="rejectFriendship(user)">
+                                {{ 'button.reject'|trans({}, translation_name~'global') }}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                            ng-if="user.relation.friendship.state == 2">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete" ng-click="removeFriendship(user)">
+                                {{ 'button.friends.delete'|trans({}, translation_name~'global') }}
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="dropdown clearfix" ng-if="connectedUser.id != user.id && (!user.relation.friendship.state || user.relation.friendship.state == 3)">
+                    <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2"
+                            data-toggle="dropdown"
+                            np-submit-loader="user.relation.friendship.loading"
+                            data-icon="icon-user-plus2">{{ 'button.add'|trans({}, translation_name~'global') }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownUser">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users" ng-click="addFriendship(user)">{{ 'label.dropdown_friend.friend'|trans({}, translation_name~'global') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2" ng-if="user.pertinence">
+                <a href="#" class="close" ng-click="recommendationRemoved(user, $index)">&times;</a>
+            </div>
+        {% endif %}

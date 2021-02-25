@@ -1,0 +1,50 @@
+<form name="fos_user_registration_form" method="post" action="{{ url('fos_user_registration_register') }}" class="fos_user_registration_register loader" role="form" enctype="multipart/form-data" ng-submit="submit()">
+    {#{{ form_errors(form) }}#}
+    {% if not form.vars.valid %}
+        <ul class="help-block">
+            {# Loop through every form item #}
+            {% for child in form.children %}
+                {# Display the errors of the form item #}
+                {%for error in child.vars.errors%}
+                    {%  if error.message == "Le nom d'utilisateur est déjà utilisé" %}
+                        <li>L'adresse email est déjà utilisée</li>
+                    {% else %}
+                        <li>{{error.message}}</li>
+                    {% endif %}
+                {%endfor%}
+            {%endfor%}
+        </ul>
+    {%endif%}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_widget(form.lastname, { 'attr': {'placeholder': 'user.attributes.lastname'|trans({}, translation_name~'user')} }) }}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_widget(form.firstname, { 'attr': {'placeholder': 'user.attributes.firstname'|trans({}, translation_name~'user')} }) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.email, {value : email, 'attr': {'placeholder': 'user.attributes.email'|trans({}, translation_name~'user')} }) }}
+    </div>
+
+    {{ form_row(form.plainPassword) }}
+    {% if visibility.cgu %}
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" name="cgu" id="cgu" required/>
+                <label for="cgu">{{ 'home.register.accept_cgu'|trans({'%link%': path('naturapass_main_cgu', {cgu: 'cgu'})}, translation_name~'user')|raw }}</label>
+            </div>
+        </div>
+    {% else %}
+        <input type="hidden" name="cgu" id="cgu" value="1"/>
+    {% endif %}
+    <div class="clearfix">
+        <button type="submit" class="btn btn-primary btn-lg btn-icon icon-lock5 pull-right" np-submit-loader="loading" data-icon="icon-lock5">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </div>
+    {{ form_widget(form._token) }}
+</form>

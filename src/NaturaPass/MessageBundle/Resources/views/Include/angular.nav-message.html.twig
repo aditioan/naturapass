@@ -1,0 +1,33 @@
+<div class="popover popover-messages bottom">
+    <div class="arrow"></div>
+    <h3 class="popover-title" ng-show="messages.length">
+        {{ 'nav.pop_message.title'|trans({},translation_name~'nav') }}
+    </h3>
+    <h3 class="popover-title" ng-show="!messages.length">
+        {{ 'nav.pop_message.no_msg'|trans({},translation_name~'nav') }}
+    </h3>
+    <a class="new-message" href="javascript:void(0)" ng-click="openChat(null)">{{ 'nav.pop_message.new_message'|trans({},translation_name~'nav') }}</a>
+    <div class="popover-content" scroll-to-bottom="loadMoreConversation()">
+        <div class="list-group">
+            {% verbatim %}
+            <a ng-href="#" class="list-group-item"
+               ng-repeat="message in messages"
+               ng-click="openChat(message)"
+               ng-class="{'list-group-item-success': message.unreadCount>0}">
+                <div class="media">
+                    <div class="pull-left">
+                        <img ng-src="{{ message.owner.profilepicture }}" width="40" height="40">
+                    </div>
+                    <div class="media-body">
+                        <span>{{ message.conversation.title }}</span>
+                        <span class="small messageContent">{{ message.content }}</span>
+                        <span class="small" ng-if="message.updated.date">{{ message.updated.date|relativetime }}</span>
+                        <span class="small" ng-if="!message.updated.date">{{ message.updated|relativetime }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endverbatim %}
+        </div>
+        <div class="small-loading" ng-show="messagesLoading"></div>
+    </div>
+</div>

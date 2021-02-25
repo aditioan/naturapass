@@ -1,0 +1,25 @@
+{% extends '::base-ng-template.html.twig' %}
+
+{% block template_id %}modal.report-publication.html{% endblock %}
+
+{% block template_body %}
+    <form method="POST" class="emailproblem form-horizontal">
+        <div class="modal-header">
+            <a href="#" class="close" ng-click="cancel()">&times;</a>
+            <h4 class="modal-title">{{ 'report.title'|trans({},translation_name~'publication') }}</h4>
+        </div>
+        <div class="modal-body">
+            {{ 'report.explain'|trans({},translation_name~'publication')|raw }}
+            <div class="alert alert-danger" ng-show="vars.error" ng-bind="vars.error"></div>
+            <textarea ng-model="vars.explanation" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="vars.confirm = true"
+                    ng-hide="vars.confirm">{{ 'button.send'|trans({},translation_name~'global') }}</button>
+            <button type="submit" class="btn btn-primary" ng-click="ok()" ng-show="vars.confirm"
+                    np-submit-loader="vars.loading">{{ 'label.confirm'|trans({},translation_name~'global') }}</button>
+            <button class="btn btn-danger" ng-click="cancel()"
+                    ng-class="{disabled: vars.loading}">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+        </div>
+    </form>
+{% endblock %}

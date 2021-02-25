@@ -1,0 +1,147 @@
+<?php
+
+namespace NaturaPass\LoungeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as ORMExtension;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+
+/**
+ * UserTalkLounge
+ *
+ * @ORM\Table(name="user_talk_lounge")
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks
+ * @ExclusionPolicy("all")
+ */
+class UserTalkLounge {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
+     * @Groups({"UserTalkLoungeDetail", "UserTalkLoungeLess"})
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="NaturaPass\LoungeBundle\Entity\Lounge")
+     *
+     * @Expose
+     * @Groups({"UserTalkLoungeDetail"})
+     */
+    protected $lounge;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="NaturaPass\UserBundle\Entity\User")
+     *
+     * @Expose
+     * @Groups({"UserTalkLoungeDetail", "UserTalkLoungeLess"})
+     */
+    protected $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     *
+     * @Expose
+     * @Groups({"UserTalkLoungeDetail", "UserTalkLoungeLess"})
+     */
+    protected $content;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     * @ORMExtension\Timestampable(on="create")
+     *
+     * @Expose
+     * @Groups({"UserTalkLoungeDetail", "UserTalkLoungeLess"})
+     */
+    protected $created;
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return UserTalkLounge
+     */
+    public function setContent($content) {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent() {
+        return $this->content;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return UserTalkLounge
+     */
+    public function setCreated($created) {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated() {
+        return $this->created;
+    }
+
+    public function getLounge() {
+        return $this->lounge;
+    }
+
+    public function setLounge(\NaturaPass\LoungeBundle\Entity\Lounge $lounge) {
+        $this->lounge = $lounge;
+        return $this;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \NaturaPass\LoungeBundle\Entity\LoungeUser $user
+     * @return UserTalkLounge
+     */
+    public function setUser(\NaturaPass\UserBundle\Entity\User $user) {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \NaturaPass\LoungeBundle\Entity\LoungeUser
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+}

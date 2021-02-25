@@ -1,0 +1,140 @@
+{% extends "NaturaPassGroupBundle::layout.html.twig" %}
+
+{% block title %}{{ 'title.show'|trans({'%group%': group.name},'group') }} | {{ parent() }}{% endblock %}
+
+{% block corps %}
+    <style>
+        .btn-colorselector {
+            height: 26px;
+            width: 26px;
+        }
+    </style>
+    <div id="corps-container" {% if visibility.social_network == false %}class="hide-right"{% endif %} ng-controller="GroupController" data-group="{{ group.id }}" ng-cloak ng-init="initGroup()">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        {% verbatim %}
+            <div class="container container-bulle container-detail-groupe">
+                <div class="row">
+                    <div class="col-md-12 small-loading" ng-hide="loaded"></div>
+                    <div class="col-md-12" ng-show="loaded" ng-cloak>
+                        <div class="container-sm clearfix">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img ng-src="{{ group.photo}}" width="140" height="140">
+                                </div>
+                                <div class="media-body">
+                                    <a href="#validation" class="btn btn-info btn-group-validation pull-right"
+                                       ng-click="openValidationModal()"
+                                       ng-if="group.nbPending && group.connected.access == 3">
+                                        <span class="icon-user-plus">
+                                            <b>{{ 'group.attributes.subscribers' | transchoice: group.nbPending: {'count': group.nbPending}: 'group'}}</b><br>
+                                        {% endverbatim %}{{ 'group.attributes.wait'|trans({}, translation_name~'group') }}{% verbatim %}
+                                        </span>
+                                    </a>
+
+                                    <h1>{{ group.name}}</h1>
+
+                                    <ul class="list-unstyled list-inline group-info">
+                                        <li class="icon-lock2"> {% endverbatim %}{{ 'label.access.label'|trans({}, translation_name~'global') }}{% verbatim %} {{ 'label.access.access_type' | transchoice: group.access: {}: 'global'}}</li>
+                                        <li class="icon-users">
+                                            <a href="#subscribers" ng-click="openSubscribersModal()">
+                                                {{ 'group.attributes.members' | transchoice: group.nbSubscribers: {'count': group.nbSubscribers}: 'group'}}
+                                            </a>
+                                        </li>
+                                    {% endverbatim %}
+        <li class="icon-users" ng-if="group.connected.access == 3">
+            <a href="#banish"
+                    ng-click="openBanishModal()">
+                {{ 'group.attributes.banish'|trans({},translation_name~'group') }}
+            </a>
+        </li>
+        {# fix #}
+        {% verbatim %}
+                                        <li class="icon-users" ng-if="group.connected.access == 3">
+                                            <a href="#administrator" class="nb-admin"
+                                               ng-click="openAdministrationModal()">
+                                                {{ 'group.attributes.countAdmin' | transchoice: group.nbAdmins: {'count': group.nbAdmins}: 'group'}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <p>{% endverbatim %}{{ group.description|nl2br }}{% verbatim %}</p>
+
+                                </div>
+                            </div>
+                            <a ng-href="{{ 'naturapass_group_invite' | route: {grouptag: group.grouptag} }}"
+                               class="btn btn-primary btn-left btn-icon icon-user-plus"
+                               ng-if="group.connected.access == 3">
+                            {% endverbatim %}{{ 'invite.title_group'|trans({}, translation_name~'main') }}{% verbatim %}
+                            </a>
+                        {% endverbatim %}
+        <a href="{{ path('naturapass_group_homepage') }}"
+                class="btn btn-danger btn-right btn-icon icon-exit3 btn-exit">
+            {{ 'group.action.back'|trans({}, translation_name~'group') }}
+        </a>
+        {# fix #}
+        {% verbatim %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endverbatim %}
+
+        <div class="container container-bulle container-index" ng-controller="PublicationListController" ng-init="init()"
+                data-group="{{ group.id }}" data-name="{{ group.name }}" ng-cloak ng-show="loaded">
+            <ul class="sharing-data hide" data-default="0">
+                {% for i in 0..3 %}
+                    {% if i != 2 %}
+                        {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                            <li data-sharing="{{ i }}"
+                                    class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="row">
+                <div class="col-xs-12">
+                    {% if IS_GRANTED %}
+                        {% if all_add %}
+                            {% include "NaturaPassPublicationBundle:Include:angular.form.html.twig" %}
+                        {% endif %}
+                        {% include "NaturaPassPublicationBundle:Include:angular.form-edit.html.twig" %}
+                    {% endif %}
+
+                    {# LISTING DE PUBLICATIONS #}
+                    {% include "NaturaPassPublicationBundle:Include:angular.publications.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.processing-publication.html.twig' %}
+    {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.publication.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.map.html.twig' %}
+    {% include 'NaturaPassGroupBundle:Modal:angular.group-map.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.observation.html.twig' %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Groups/GroupController.js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/Map/MapController.js'
+    'js/app/controllers/Groups/GroupMapController.js'
+    'js/app/controllers/LoungeGroup/LoungeGroupModalControllers.js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Modal/ModalObservationController.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Publications/PublicationController.js'
+    'js/app/controllers/Publications/PublicationListController.js'
+    'js/app/controllers/Publications/PublicationFormController.js'
+    'js/app/controllers/Publications/EditPublicationFormController.js'
+    'js/app/controllers/Publications/MediaPublicationFormController.js'
+    'js/app/controllers/Publications/PublicationFormColorLabel.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

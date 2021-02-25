@@ -1,0 +1,103 @@
+{% extends 'AdminMainBundle::layout.html.twig' %}
+
+{% block title %}{{ 'title.listing'|trans({}, translation_name~'export') }} | {{ parent() }}{% endblock title %}
+{% block meta %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jqc-1.11.3,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,r-2.0.0/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css">
+    <style type="text/css">
+        table.table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
+{% endblock meta %}
+{% block corps %}
+    <div id="corps-container" class="admin-container no-right-column">
+        {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+        <div class="container-full" ng-controller="ExportListingController" ng-init="init()">
+            <h1>{{ 'title.listing'|trans({}, translation_name~'export') }}<a href="{{ path('admin_export_search', {} ) }}" class="btn btn-primary btn-right">{{ 'button.back'|trans({}, translation_name~'global') }}</a></h1>
+            {% verbatim %}
+            <div class="row" ng-cloak ng-repeat="(card, table) in tables">
+                <div class="col-sm-12">
+                    <div class="panel panel-back">
+                        <div class="panel-heading panel-heading-bg">
+                            <h2 class="panel-title">{{ 'listing.title_card'|trans: {card: card}: 'backoffice' }}  <span class="block-title btn-right"><span class="btn btn-bordered" ng-click="exportExcel(card)">Faire un export</span> <p class="btn glyphicon glyphicon-chevron-up" ng-if="showPanelCard[card]" ng-click="hide(card)" /> <p class="btn icon-arrow-down" ng-if="!showPanelCard[card]" ng-click="show(card)" /></span></h2>
+                        </div>
+                        <div class="panel-body table-responsive" ng-show="showPanelCard[card]">
+                            <table class="datatable table table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Commune</th>
+                                        <th>INSEE</th>
+                                        <th>Photo</th>
+                                        <th>Video</th>
+                                        <th>Long.</th>
+                                        <th>Lat.</th>
+                                        <th>Alt.</th>
+                                        <th>Com.</th>
+                                        <th>Legende</th>
+                                        <th>Observation</th>
+                                        <th ng-repeat="label in table.labels">{{ label.name }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in table.list">
+                                        <td class="text-left">{{ list.fullname }}</td>
+                                        <td class="text-left">{{ list.email }}</td>
+                                        <td class="text-left">{{ list.locality }}</td>
+                                        <td class="text-left">{{ list.insee }}</td>
+                                        <td class="text-center"><a ng-href="{{ list.urlPhoto }}" ng-if="list.urlPhoto" target="_blank">{{ list.photo }}</a><span ng-if="!list.urlPhoto">{{ list.photo }}</span></td>
+                                        <td class="text-center"><a ng-href="{{ list.urlVideo }}" ng-if="list.urlVideo" target="_blank">{{ list.video }}</a><span ng-if="!list.urlVideo">{{ list.video }}</span></td>
+                                        <td class="text-left">{{ list.longitude }}</td>
+                                        <td class="text-left">{{ list.latitude }}</td>
+                                        <td class="text-left">{{ list.altitude }}</td>
+                                        <td class="text-center">
+                                            <a href="#" class="icon-bubble-dots3" data-toggle="tooltip" data-placement="bottom" ng-attr-title="{{ list.content }}" ng-if="list.content"></a>
+                                            <span class="icon-bubble-dots3" ng-if="!list.content"></span>
+                                        </td>
+                                        <td class="text-left">{{ list.legend }}</td>
+                                        <td class="text-left">
+                                            <span ng-cloak ng-repeat="(key, select) in list.observation.tree"><span ng-if="key!=0">/</span>{{ select }}</span>
+                                        </td>
+                                        <td class="text-right" ng-repeat="label in table.labels">
+                                            <span ng-repeat="attachment in list.observation.attachments" ng-if="attachment.label==label.name">
+                                                <span ng-if="attachment.value">{{attachment.value}}</span>
+                                                <span ng-if="attachment.value == 0">{{attachment.value}}</span>
+                                                <span ng-if="attachment.values">
+                                                    <span ng-repeat="val in attachment.values">
+                                                        {{val}} <span ng-if="($index+1) != attachment.values.length">,<span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot ng-if="showTfoot[card]">
+                                    <tr class="danger">
+                                        <th colspan="12" class="text-right">SOMME</th>
+                                        <th class="text-right" ng-repeat="label in table.labels"><span ng-repeat="(labelName,labelSum) in tfoot[card]" ng-if="labelName==label.name">{{ labelSum }}</span></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endverbatim %}
+        </div>
+    </div>
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/controllers/Admin/Export/ExportListingController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    #}
+    <script type="text/javascript" src="/js/app/controllers/Admin/Export/ExportListingController.js"></script>
+    <script src="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-flash-1.1.0,b-html5-1.1.0,b-print-1.1.0,r-2.0.0/datatables.min.js"></script>
+{% endblock %}

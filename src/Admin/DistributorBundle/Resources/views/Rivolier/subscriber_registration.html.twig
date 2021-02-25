@@ -1,0 +1,3 @@
+{% block body %}
+    <p>{{ 'rivolier.subscriber_registration.to_armory.body'|trans({'%lastName%': lastName, '%firstName%': firstName, '%email%':email,'%phoneNumber%':phoneNumber,'%birthDate%':birthDate}, translation_name~'email')|raw }}</p>
+{% endblock body %}

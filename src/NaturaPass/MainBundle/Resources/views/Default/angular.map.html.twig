@@ -1,0 +1,160 @@
+{% extends "NaturaPassMainBundle::layout-no-recommendations.html.twig" %}
+
+{% block title %}{{ 'title.map'|trans({},translation_name~'main') }} | {{ parent() }}{% endblock %}
+
+{% block corps %}
+
+    <div id="corps-container" class="map-container no-right-column" ng-controller="MapController" ng-class="{loading: map.loading}" ng-init="initGoogleMaps()">
+        <div np-google-maps="map.ready"
+             center="map.center"
+             zoom="map.zoom"
+             draggable="true"
+             dragging="map.dragging"
+             bounds="map.bounds"
+             events="map.events"
+             options="map.options"
+             pan="true"
+             control="map.control">
+            </div>
+
+        <div class="windows-container hide">
+            {# fix #}
+            {% verbatim %}
+            <div ng-repeat="publication in publications" class="publication-infowindow infowindow{{ publication.id}}" ng-cloak>
+                <p class="publication-owner">
+                    <a ng-href="{{ 'fos_user_profile_show_name' | route: {usertag: publication.owner.usertag} }}">
+                        {{ publication.owner.firstname}} {{ publication.owner.lastname}}
+                    </a>
+                    <small>{{ publication.created | relativetime}}</small>
+                </p>
+
+                <p class="publication-content" np-bind-html="publication.content"></p>
+
+                <p class="media-media" ng-if="publication.media">
+                    <img ng-if="publication.media.type == 100" ng-src="{{ publication.media.path}}"
+                         class="img-responsive">
+
+                    <np-video np-video-data="publication.media" ng-if="publication.media.type == 101"></np-video>
+
+                    <small class="media-tags"></small>
+                </p>
+
+                <p>
+                    <a href="#" class="icon-image" ng-click="openPublicationModal(publication)">
+                        {% endverbatim %}{{ 'map.publication.show'|trans({},translation_name~'map') }}{% verbatim %}
+                    </a>
+                </p>
+            </div>
+            <div ng-repeat="distributor in distributors" class="distributor-infowindow infowindow{{ distributor.id}}" ng-cloak>
+                <p class="media-media" ng-if="distributor.logo">
+                    <img ng-if="distributor.logo.type == 100" ng-src="{{ distributor.logo.path}}" class="img-responsive img-distributor">
+                    <np-video np-video-data="distributor.logo" ng-if="distributor.logo.type == 101"></np-video>
+                    <small class="media-tags"></small>
+                </p>
+                <hr ng-if="distributor.logo">
+                <h2 class="distributor-name">{{ distributor.name}}</h2>
+                <p class="distributor-content">
+                    <ul class="list-unstyled lounge-info">
+                        <li> {{ distributor.address }}, {{ distributor.cp }} {{ distributor.city }}</li>
+                        <li ng-if="distributor.telephone != ''"> <strong>Tél.</strong> : {{ distributor.telephone }}</li>
+                        <li ng-if="distributor.email != ''"><strong>Email.</strong> : {{ distributor.email }}</li>
+                    </ul>
+                    <strong ng-if="distributor.brands.length > 0">PARTENAIRES :</strong>
+                    <ul class="list-unstyled lounge-info"  ng-if="distributor.brands.length > 0">
+                        <li ng-repeat="brand in distributor.brands" ng-if="brand.partner==1" ng-cloak>
+                            <p class="media-media" ng-if="brand.logo">
+                                <img ng-if="brand.logo.type == 100" ng-src="{{ brand.logo.path}}" class="img-responsive img-brand">
+                                <small class="media-tags">{{ brand.name }}</small>
+                            </p>
+                            <p ng-if="!brand.logo">{{ brand.name }}</p>
+                        </li>
+                    </ul>
+                </p>
+
+            </div>
+            {% endverbatim %}
+        </div>
+
+        <div id="google-maps-controls" class="hide" ng-cloak>
+            <div class="controls-right hidden-print">
+                <div class="add-publication"
+                     title="{{ 'map.action.click_add'|trans({}, translation_name~'map') }}"
+                     ng-hide="map.data.adding">
+                    <button class="btn btn-primary icon-map"
+                            ng-click="showMapOverlay()" title="{{ 'map.action.add'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="confirm-location"
+                     title="{{ 'map.action.confirm_location'|trans({}, translation_name~'map') }}"
+                     ng-show="map.data.adding && !map.data.confirmedGeolocation">
+                    <button class="btn btn-primary icon-checkmark"
+                            ng-click="openAddingModal()" title="{{ 'map.action.confirm_location'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="cancel-add"
+                     title="{{ 'map.action.cancel'|trans({}, translation_name~'map') }}"
+                     ng-show="map.data.adding">
+                    <button class="btn btn-warning icon-cancel"
+                            ng-click="hideMapOverlay()" title="{{ 'map.action.cancel'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="satellite" ng-show="map.data.type == 'roadmap'"
+                     title="{{ 'map.satellite'|trans({}, translation_name~'map') }}"
+                     style="cursor: pointer;">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('hybrid')" title="{{ 'map.satellite'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+                <div class="plan" ng-show="map.data.type == 'hybrid'"
+                     title="{{ 'map.plan'|trans({}, translation_name~'map') }}">
+                    <button class="btn btn-primary icon-earth"
+                            ng-click="changeMapType('roadmap')" title="{{ 'map.plan'|trans({}, translation_name~'map') }}">
+                    </button>
+                </div>
+
+                <div class="hidden-print hidden-xs hidden-sm">
+                    <a ng-href="{% verbatim %}{{ map.printable }}{% endverbatim %}" target="_blank" class="btn btn-primary icon-print" title="{{ 'map.action.print'|trans({}, translation_name~'map') }}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="controls-center hidden-print">
+            <div class="search-location" ng-hide="map.data.adding">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}"
+                           ng-keydown="searchAddress($event)"
+                           ng-model="map.data.input"/>
+                    <span class="input-group-btn">
+                        <button type="submit" title="{{ 'map.action.search_address'|trans({}, translation_name~'map') }}" class="btn btn-primary icon-search3"
+                                ng-click="searchAddress()">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'NaturaPassPublicationBundle:Modal:angular.like.html.twig' %}
+    {% include "NaturaPassMainBundle:Modal:angular.add-publication.html.twig" %}
+    {% include 'NaturaPassMainBundle:Modal:angular.sharing.html.twig' %}
+    {% include 'NaturaPassPublicationBundle:Modal:angular.report-publication.html.twig' %}
+    {% include "NaturaPassPublicationBundle:Modal:angular.publication.html.twig" %}
+    {% include "AdminDistributorBundle:Modal:angular.distributor.html.twig" %}
+
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts package='assetic' filter='?yui_js'
+    'js/app/factories/PublicationFactory.js'
+    'js/app/factories/PublicationCommentFactory.js'
+    'js/app/controllers/Modal/ModalSharingController.js'
+    'js/app/controllers/Map/BaseMapController.js'
+    'js/app/controllers/Map/MapController.js'
+    'js/app/controllers/Publications/PublicationFormController.js'
+    'js/app/controllers/Publications/PublicationController.js'
+    'js/app/controllers/Distributors/DistributorController.js'
+    'js/app/controllers/Publications/PublicationListController.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

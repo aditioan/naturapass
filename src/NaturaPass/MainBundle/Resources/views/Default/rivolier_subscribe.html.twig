@@ -1,0 +1,223 @@
+{% extends "NaturaPassMainBundle::layout-revolier.html.twig" %}
+
+{% block title %}{{ parent() }} - Rivolier{% endblock %}
+{% block description %} {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <style>
+        #subtitle {
+            background-color: #84c24b;
+            width: 100%;
+            margin: auto;
+            height: 15%;
+            overflow: auto;
+        }
+
+        #subtitle h1 {
+            color: #fff;
+            border-bottom: none;
+            display:inline-block;
+            margin-left: -15% ;
+            margin-top: 2% ;
+        }
+
+        #subtitle img {
+            float: left;
+            margin-left: 10% ;
+            margin-right: auto ;
+            margin-bottom: 12px;
+            display:inline-block;
+        }
+
+        .bg {
+            background-color: #fff;
+            border-width: 1px;
+            border-color: silver;
+            border-style: solid;
+            border-radius: 10px;
+            margin-top: 2.5%;
+        }
+
+        .text-box {
+            text-align:center;
+        }
+        .validate {
+            margin-left: 30.835%;
+        }
+
+        .armory {
+
+            margin: 2.5%;
+        }
+
+        .armory h2 {
+            text-align: center;
+        }
+
+        .armory-subtitle h3 {
+            text-align: center;
+            border: 0;
+            padding: 0; 
+        }
+
+        .armory img {
+            height: 2.5%;
+            margin-top: -2%;
+        }
+
+        .armory input {
+            margin-top: 1.5%;
+            margin-bottom: 1.5%;
+        }
+
+        #footer img {
+            max-width: 100%;
+        }
+        
+        .footer-logos {
+            background-color:  rgba(255,255,255,1);;
+        }
+        .footer-logos li{
+            list-style: none;
+            display: inline-block;
+            margin: 2% 2% 3% 7%;
+            Width: 9%;
+        }
+
+        .footer-logos li img {
+            Width: 100%;
+        }
+
+    </style>
+{% endblock %}
+
+{% block corps %}
+    <div ng-controller="RevolierController" data-id="{{id}}" data-city="{{city}}" ng-cloak>
+        <div id="title" class="text-center">
+            <a href="https://www.rivolier.com/"><img src="/img/rivolier.png"></a>
+        </div>
+        <div id="subtitle" class="text-center">
+            </br>
+            <img src="/img/logo/Silence_on_tire.png" height="80" width="100"/>
+            <h1>Test de modérateurs de son avec RIVOLIER
+            </h1>
+        </div>
+        <div class="armory-subtitle text-center">
+            <h3>En janvier 2018, suite à la modification de l’article 2 de l’arrêté du 1er août 1986, l’usage du modérateur est désormais autorisé pour la chasse en France. </h3>
+            <h3>Les opérations “Silence On tire” sont l’occasion de découvrir les avantages du modérateur de son en action de chasse. </h3>
+            <h3>Pour vous inscrire, merci de remplir les champs suivants. </h3>
+            <h3>Vos coordonnées seront envoyées à l’armurerie qui prendra contact avec vous pour définir l’heure du rendez-vous.</h3>
+        </div>
+        {% verbatim %}
+        <div class="container bg" ng-init="loadSIngleArmony()" ng-cloak>
+            <div class="armory col-md-5 col-xs-5">
+                <h2 ng-if="data.distributor_id == 1585">FDC82 et {{data.name}}</h2>
+                <h2 ng-if="data.distributor_id != 1585">{{data.name}}</h2>
+                <p>{{data.address}},</p>
+                <p><span ng-if="data.cp"></span> {{data.cp}}<span ng-if="data.city"> </span> {{data.city}}</p>
+                <p ng-if="data.telephone"><b>Tél.</b>: {{data.telephone}}</p>
+                <p ng-if="data.dist"><img src="/img/geoloc.png"> à {{ data.dist | number: 1 }} km</p>
+                <p ng-if="data.startDate && !data.isSameDay"><img src="/img/calendar.png"> Du {{data.startDate | date:'DD MMMM YYYY'}} <span ng-if="data.endDate ">au {{data.endDate | date:'DD MMMM'}}</span> </p>
+                <p ng-if="data.startDate && data.isSameDay"><img src="/img/calendar.png"> Le {{data.startDate | date:'DD MMMM YYYY'}} </p>
+                <p ng-if="data.placeName"><b>Lieu de l'événement:</b> {{ data.placeName }}</p>
+                <p ng-if="data.placeAddress"><b>Adresse:</b> {{ data.placeAddress }}</p>
+                <p ng-if="data.hours"><b>Horaires:</b> {{ data.hours }}</p>
+                <p ng-if="data.description">{{ data.description }}</p>
+            </div>
+            <div class="armory col-md-5 col-xs-5">
+                <div class="alert alert-success" ng-if="message.success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                     Votre inscription a bien été envoyée
+                </div>
+                <input type="text" id="firstname"
+                       placeholder="Nom" ng-model="form.firstName"
+                       required="required"
+                       class="form-control"/>
+                <input type="text" id="lastname"
+                       placeholder="Prénom" ng-model="form.lastName"
+                       required="required"
+                       class="form-control"/>
+                <input type="email" id="email"
+                       placeholder="Adresse email" ng-model="form.email"
+                       required="required"
+                       class="form-control"/>
+                <input type="text" id="phone"
+                       placeholder="Téléphone" ng-model="form.phoneNumber"
+                       required="required"
+                       class="form-control" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"/>
+                <input type="text" id="birthdate"
+                       placeholder="Date de naissance" ng-model="form.birthDate"
+                       required="required"
+                       class="form-control"/>
+                <input type="number" id="codePostal"
+                       placeholder="Code postal" ng-model="form.zipCode"
+                       required="required"
+                       class="form-control"/>
+                <div class="checkbox">
+                    <input type="checkbox" id="accept_cgu" ng-model="acceptCgu"/>
+                    <label for="accept_cgu">En cochant cette case vous acceptez les 
+                    <a href="" ng-click="openCgu()">conditions</a></label>
+                </div>
+
+            </div>
+            <p class=" validate text-center col-md-4 col-xs-4">
+                <button class="inscription btn btn-primary btn-block btn-icon icon-marker2" np-submit-loader="loading" ng-click="onSubmit()">S'inscrire</button>
+            </p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="footer" class="text-center col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
+                    <a href="https://www.naturapass.com/"><img src="/img/global/logo-naturapass_big.png"></a>
+                </div>
+            </div>
+        </div>
+        <div class="large-12 columns">
+                <ul class="footer-logos">
+                    <li><a href="https://www.rivolier.com/marques/freyr-devik.html"><img src="/img/logo/Freyr&devik.png" alt="Freyrdevik" /></a></li>
+                    <li><a href="https://www.rivolier.com/marques/luger.html"><img src="/img/logo/LUGER_LOGO_Vert2.png" alt="LUGER" /></a></li>
+                    <li><a href="https://www.rivolier.com/marques/remington.html"><img src="/img/logo/Remington_logo_2014_C80_M36_J100_N28.png" alt="Remington" /></a></li>
+                    <li><a href="https://www.rivolier.com/marques/sauer.html"><img src="/img/logo/SAUER_LOGO_Gold_2013.png" alt="SAUER" /></a></li>
+                    <li><a href="https://www.rivolier.com/marques/blaser.html"><img src="/img/logo/logo_BLASER_Anthracite.png" alt="BLASER" /></a></li>
+                </ul>
+            </div> 
+        {% endverbatim %}
+    </div>
+    {% include 'NaturaPassUserBundle:Modal:angular.cgu.html.twig' %}
+{% endblock corps %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts package='assetic' filter='?yui_js'
+        'js/app/controllers/RevolierController.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {# <script type="text/javascript" src="/js/app/controllers/RevolierController.js"></script> #}
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        !function (a) {
+            a.fn.datepicker.dates.fr = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+                daysMin: ["D", "L", "Ma", "Me", "J", "V", "S", "D"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                monthsShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                monthsTitle: "Mois",
+                clear: "Effacer",
+                weekStart: 1,
+                format: "dd/mm/yyyy"
+            }
+        }(jQuery);
+    </script>
+    <script>
+        $('#birthdate').datepicker({
+            format: 'dd/mm/yyyy',
+            language: "fr-FR",
+            autoclose: true,
+            startView: "decade",
+        });
+    </script>
+{% endblock %}

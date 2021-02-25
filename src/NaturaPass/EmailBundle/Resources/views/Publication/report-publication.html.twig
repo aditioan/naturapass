@@ -1,0 +1,9 @@
+{% extends "::base-email.html.twig" %}
+
+{% block visu_site %}
+    {{ url('naturapass_main_homepage', {}) }}
+{% endblock visu_site %}
+
+{% block body %}
+    <p>{{ 'publication.report.body'|trans({'%explanation%': explanation, '%fullname%': fullname, '%link%': url('naturapass_publication_show', {'publication': publication.id})},translation_name~'email')|raw }}</p>
+{% endblock body %}

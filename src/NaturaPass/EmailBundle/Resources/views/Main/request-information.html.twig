@@ -1,0 +1,16 @@
+{% extends "::base-email.html.twig" %}
+
+{% block body %}
+    <table border='0'>
+    	<tr>
+    		<td><strong>Nom</strong></td>
+    		<td> : {{ user_fullname}}</td>
+    	</tr>
+    	<tr colspan='2'>
+    		<td><br /></td>
+    	</tr>
+    	<tr colspan='2'>
+    		<td>{{ email_body }}</td>
+    	</tr>
+    </table>
+{% endblock body %}

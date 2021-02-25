@@ -1,0 +1,52 @@
+{% set
+STATE_ASKED, STATE_CONFIRMED, STATE_REJECTED, TYPE_BOTH, TYPE_KNOWING, TYPE_FRIEND, USERTOFRIEND, FRIENDTOUSER =
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::ASKED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::CONFIRMED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::REJECTED'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_BOTH'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_KNOWING'),
+constant('\\NaturaPass\\UserBundle\\Entity\\UserFriend::TYPE_FRIEND'),
+constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_USERTOFRIEND'),
+constant('\\NaturaPass\\UserBundle\\Entity\\User::USERFRIENDWAY_FRIENDTOUSER') %}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">{{ 'search.list.title.mutualfriends'|trans({},translation_name~'main') }}</h4>
+</div>
+<div class="modal-body">
+    <ul class="list-unstyled list-members">
+        {% for friend in mutualfriends %}
+            {% set FRIEND =
+            app.user.getStateFriendsWith(friend, [STATE_CONFIRMED]) %}
+            <li>
+                <a href="{{ path('fos_user_profile_show_name', {usertag: friend.getUserTag() }) }}" class="pull-left" title="{{ friend.getFullName() }}">
+                    <img class="media-object" src="{{ friend.profilePicture|bProfilePict }}" width="20" height="20" alt="{{ friend.getFullName() }}">
+                </a>
+                <a href="{{ path('fos_user_profile_show_name', {usertag: friend.getUserTag() }) }}">{{ friend.fullname }}</a>
+                <div class="dropdown pull-right" data-uid="{{ friend.id }}">
+                    {% if FRIEND.state is defined %}
+                        {# Les utilisateurs sont amis ou une demande à déja été fait #}
+                        {% set STATE, TYPE, USER_FRIEND =
+                        FRIEND.state,
+                        FRIEND.type,
+                        app.user.hasFriendshipWith(friend, [STATE_CONFIRMED]) %}
+                        <button type="button" class="btn btn-primary btn-xs btn-icon dropdown-toggle icon-user-plus2" id="dropdownModalFriends" data-toggle="dropdown">{{ 'label.dropdown_friend.edit'|trans({},translation_name~'global') }} <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownModalFriends">
+                            {#
+                            {% if TYPE == TYPE_FRIEND %}
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users change-user-type-friend" data-type="{{ TYPE_KNOWING }}">{{ 'label.dropdown_friend.knowing'|trans({},translation_name~'global') }}</a></li>
+                                {% elseif TYPE == TYPE_KNOWING %}
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users change-user-type-friend" data-type="{{ TYPE_FRIEND }}">{{ 'label.dropdown_friend.friend'|trans({},translation_name~'global') }}</a></li>
+
+                            {% endif %}
+                            #}
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete delete-user-friend">{{ 'label.dropdown_friend.delete'|trans({},translation_name~'global') }}</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" data-dismiss="modal">{{ 'button.close'|trans({},translation_name~'global') }}</button>
+</div>

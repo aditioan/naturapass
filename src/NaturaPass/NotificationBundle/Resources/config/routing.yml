@@ -1,0 +1,3 @@
+naturapass_notification_all:
+    path:  /
+    defaults: { _controller: NaturaPassNotificationBundle:Notifications:index }

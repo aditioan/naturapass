@@ -1,0 +1,131 @@
+<div id="corps-container">
+
+    {% include "NaturaPassMainBundle:Include:flash.html.twig" %}
+
+    <div class="container container-bulle {% if visibility.social_network == false %}hide-right{% endif %}" ng-controller="ProfileController" ng-init="initProfile()" data-profile="{{ user.id }}" ng-cloak>
+        {% verbatim %}
+        <div class="small-loading" ng-show="!loaded"></div>
+        <div class="container-view-profil container-md" ng-hide="!loaded">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="media">
+                        <a class="pull-left view-profil-img">
+                            <img ng-src="{{profile.photo }}" class="media-object" width="140" height="140" />
+                        </a>
+                        <div class="media-body" ng-cloak>
+                            <p class="view-profil-fullname">
+                                <b>{{ profile.fullname }}</b>
+                            </p>
+                            {% endverbatim %}
+        {% if visibility.social_network %}
+            {% verbatim %}
+                            <p>
+                                <a href="#" ng-if="(profile.friends|isset)" class="icon-users"
+                                   ng-click="openFriendsModal()">
+                                   {{ profile.friends }} {{ 'user.attributes.friends'|transchoice: profile.friends: {'count': profile.friends}: 'user' }}
+                                </a>
+                                <br>
+                                <a href="#" class="icon-users"
+                                   ng-if="connectedUser.id != profile.id"
+                                   ng-click="openFriendsModal(true)">
+                                   {{ profile.relation.mutualFriends }} {{ 'user.attributes.mutualfriends'|transchoice: profile.relation.mutualFriends: {'count': profile.relation.mutualFriends}: 'user' }}
+                                </a>
+                            </p>
+                            {% endverbatim %}
+        {% endif %}
+        {% verbatim %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    {% endverbatim %}
+        {% if visibility.social_network %}
+            <div class="dropdown btn-profil pull-right" ng-if="connectedUser.id != profile.id && profile.relation.friendship.state">
+                <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" data-toggle="dropdown"
+                        np-submit-loader="profile.relation.friendship.loading"
+                        data-icon="icon-user-plus2"
+                        ng-if="profile.relation.friendship.state == 2">{{ 'button.edit'|trans({},translation_name~'global') }} <span class="caret"></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                        np-submit-loader="profile.relation.friendship.loading"
+                        data-icon="icon-user-plus2"
+                        ng-if="profile.relation.friendship.state == 1 && profile.relation.friendship.way == 2">{{ 'button.asked'|trans({}, translation_name~'global') }} <span class="caret"></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                        np-submit-loader="profile.relation.friendship.loading"
+                        data-icon="icon-user-plus2"
+                        ng-if="profile.relation.friendship.state == 1 && profile.relation.friendship.way == 3">{{ 'button.valid'|trans({}, translation_name~'global') }} <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                        ng-if="profile.relation.friendship.state == 1">
+                    <li role="presentation"
+                            ng-if="profile.relation.friendship.way == 3">
+                        <a role="menuitem" tabindex="-1" href="#" class="icon-users"
+                                ng-click="confirmFriendship()">
+                            {{ 'button.valid'|trans({}, translation_name~'global') }}
+                        </a>
+                    </li>
+                    <li role="presentation"
+                            ng-if="profile.relation.friendship.way == 2">
+                        <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                                ng-click="cancelFriendship()">
+                            {{ 'button.annul'|trans({}, translation_name~'global') }}
+                        </a>
+                    </li>
+                    <li role="presentation"
+                            ng-if="profile.relation.friendship.way == 3">
+                        <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete"
+                                ng-click="rejectFriendship()">
+                            {{ 'button.reject'|trans({}, translation_name~'global') }}
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                        ng-if="profile.relation.friendship.state == 2">
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="#" class="icon-user-minus icon-delete" ng-click="removeFriendship()">
+                            {{ 'button.friends.delete'|trans({}, translation_name~'global') }}
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        {% endif %}
+        <div class="dropdown btn-profil pull-right" ng-if="connectedUser.id != profile.id && (!profile.relation.friendship.state || profile.relation.friendship.state == 3)">
+            <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-user-plus2" id="dropdownUser" data-toggle="dropdown"
+                    np-submit-loader="profile.relation.friendship.loading"
+                    data-icon="icon-user-plus2">{{ 'button.add'|trans({}, translation_name~'global') }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownUser">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="icon-users" ng-click="addFriendship()">{{ 'label.dropdown_friend.friend'|trans({}, translation_name~'global') }}</a></li>
+            </ul>
+        </div>
+        {% verbatim %}
+                    {% endverbatim %}
+        <a ng-if="connectedUser.id == profile.id" href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-icon btn-profil icon-user pull-right">{{ 'nav.drop_param.profil'|trans({},translation_name~'nav') }}</a>
+        <a ng-if="connectedUser.id != profile.id" ng-click="openNewMessage(profile)" class="btn btn-primary btn-icon btn-message icon-bubbles pull-right">
+            {{ 'nav.pop_message.new_message'|trans({},translation_name~'nav') }}</a>
+        {% verbatim %}
+                </div>
+            </div>
+            {% endverbatim %}
+    </div>
+
+    {# LISTING DE PUBLICATIONS #}
+    <div ng-controller="PublicationListController" ng-init="init()" data-profile="{{ user.id }}" ng-hide="!loaded">
+        <ul class="sharing-data hide" data-default="{{ app.user.parameters.publicationSharing.share }}">
+            {% for i in 0..3 %}
+                {% if i != 2 %}
+                    {% if (visibility.social_network == false and i != 1) or visibility.social_network == true %}
+                        <li data-sharing="{{ i }}" class="{{ 'sharing'|icomoon(i) }}">{{ 'label.sharing.choice'|transchoice(i,{},translation_name~'global') }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% include "NaturaPassPublicationBundle:Include:angular.form-edit.html.twig" %}
+        {% include "NaturaPassPublicationBundle:Include:angular.publications.html.twig" %}
+    </div>
+</div>
+</div>

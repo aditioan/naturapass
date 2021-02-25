@@ -1,0 +1,34 @@
+<!--[if lt IE 8]>
+<div class="alert alert-danger"><p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a
+        href="http://browsehappy.com/" class="alert-link">upgrade your browser</a> or <a
+        href="http://www.google.com/chromeframe/?redirect=true" class="alert-link">activate Google Chrome Frame</a> to
+    improve your experience.</p></div>
+<![endif]-->
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+            <div class="navbar-hide-menu">
+                <a href="#" class="icon-grid3"></a>
+            </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('naturapass_main_homepage') }}" data-toggle="tooltip"
+               data-placement="bottom" title="{{ 'home.logo'|trans({}, translation_name~'main') }}"><img
+                        src="{{ asset("uploads/global/logo-application.png") }}" alt="{{ 'nav.logo'|trans({}, translation_name~'nav') }}"
+                        width="180" height="25"></a>
+        </div>
+        <div class="navbar-right clearfix">
+                <div class="btn-group navbar-btn pull-left hidden-xs hidden-sm dropdown">
+                    <button type="button" class="btn btn-primary btn-icon dropdown-toggle icon-cog2"
+                            id="dropdownNavMenu" data-toggle="dropdown">{{ 'nav.drop_param.button'|trans({},translation_name~'nav') }}
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownNavMenu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="{{ path('fos_user_security_logout') }}"
+                                                   class="icon-exit3">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+        <!--/.navbar-right -->
+    </div>
+    <!--/.container -->
+</nav>

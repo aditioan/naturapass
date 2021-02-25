@@ -1,0 +1,475 @@
+email:
+    to:         À
+    subject:    Sujet
+    hello:      Bonjour %member%
+    thanks:     Merci de rejoindre notre communauté et n'hésitez pas à inviter des amis. L'union fait la force !
+    comeback:   A bientôt sur
+    salutation: Bien naturellement
+    team:       L'équipe interactions-citoyennes.com
+    application:      interactions-citoyennes.com
+    mention:    Conformément à la loi "Informatique et Liberté" N°78-017 du 6 janvier 1978, vous disposez d'un droit d'accès et de rectification à toute communication des informations personnelles vous concernant en vous adressant à <a href="%url%">interactions-citoyennes.com</a>, 5 chemin de la Tactière, 44470 Carquefou ou par mail <a href="mailto:team@interactions-citoyennes.com">team@interactions-citoyennes.com</a>.
+
+invitation:
+    new:
+        from:       team@interactions-citoyennes.com
+        subject:    %fullname% vous invite sur Interactions citoyennes
+        body:       |
+                    Bonjour,<br><br>
+                    <b>%fullname%</b> vous invite à rejoindre Interactions citoyennes<br /><br />
+                    <i>%email_body%</i><br /><br />
+                    Avec Interactions citoyennes, vous pourrez:
+                        <ul>
+                            <li>Faciliter l’organisation de vos agendas,</li>
+                            <li>Cartographier votre territoire et partager vos cartes avec vos invités,</li>
+                            <li>Créer votre communauté et communiquer avec,</li>
+                            <li>Discuter en temps réel avec les autres membres,</li>
+                            <li>Partager vos photos, vos souvenirs, vos informations</li>
+                            <li>...</li>
+                        </ul>
+                    Pour vous inscrire et rejoindre le réseau Interactions citoyennes, <a href="%lien%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                    %lien%<br>
+                    <br>
+                    Merci de rejoindre notre communauté et n'hésitez pas à inviter des amis. <br />L'union fait la force!<br />
+    friend:
+        description:  Invitation pour être ami
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% veut vous rejoindre sur Interactions citoyennes
+        body:         |
+                      Bonjour %user_fullname%,<br><br>
+                      <b>%fullname%</b> voudrait que vous fassiez partie de son réseau sur Interactions citoyennes.<br><br>
+                      <i>%email_body%</i><br /><br>
+                      Cliquez sur <a href="%lien%">ce lien</a> pour rejoindre <a href="%lien%">%fullname%</a> ou allez dans vos notifications sur Interactions citoyennes.<br>
+user:
+    recommendation:
+        from:       team@interactions-citoyennes.com
+        subject:    Interactions citoyennes - Recommendations d'amis
+        body_before:  |
+                      Bonjour %fullname%,
+                      Interactions citoyennes vous propose quelques amis:
+        body_after:   Vous pouvez les ajouter en allant sur interactions-citoyennes.com !
+    changepassword:
+        from:       team@interactions-citoyennes.com
+        subject:    Mot de passe Interactions citoyennes
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Vous avez demandé de regénérer votre mot de passe.<br>
+                    Si vous avez bien fait cette demande, cliquez sur <a href="%lien%">ce lien</a> afin de générer votre mot de passe.<br>
+    api_changepassword:
+        from:       team@interactions-citoyennes.com
+        subject:    Mot de passe Interactions citoyennes
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Vous avez demandé de regénérer votre mot de passe.<br>
+
+                    Si vous avez bien fait cette demande, entrez ce code: <br><b>%token%</b><br> dans l'application Interactions citoyennes afin de générer à nouveau votre mot de passe.<br>
+
+    verify_device:
+        from:       team@interactions-citoyennes.com
+        subject:    Vérification de connexion
+        body:       |
+                    Bonjour %fullname%,<br><br>
+                    Une connexion inhabituelle a été détectée sur votre compte Interactions citoyennes depuis un dispositif non identifié avec l'appareil suivant: %device%.<br><br>
+                    Merci de <a href="%link%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                    %link%<br> pour confirmer qu'il s'agit bien d'un de vos appareils.<br>
+    register_confirmation:
+        from:           team@interactions-citoyennes.com
+        subject:        Inscription à Interactions citoyennes
+        body:           |
+                        Bienvenue %fullname%,<br><br>
+
+                        Vous venez de rejoindre Interactions citoyennes,<br><br>
+
+                        Vous êtes maintenant un membre d'Interactions citoyennes.<br><br><br>
+
+                        Pour valider votre inscription et rejoindre le réseau Interactions citoyennes, <a href="%link%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                        %link%<br><br><br>
+
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">La philosophie d'Interactions citoyennes</span><br><br>
+                        Interactions citoyennes apporte des outils qui permettent de mieux gérer avec comme ligne conductrice le plaisir, l’éthique et la sécurité !<br><br>
+                        <b>Avec Interactions citoyennes vous pouvez :</b>
+                        <ul>
+                            <li>Faciliter l’organisation de vos agendas,</li>
+                            <li>Cartographier votre territoire et partager vos cartes avec vos invités,</li>
+                            <li>Créer votre communauté et communiquer avec,</li>
+                            <li>Discuter en temps réel avec les autres membres,</li>
+                            <li>Partager vos photos, vos souvenirs, vos informations</li>
+                            <li>...</li>
+                        </ul>
+                        <br>
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Découvrir Interactions citoyennes en quelques instants</span><br><br>
+                        <span style="color:#c11616;"><b>Important</b> : toutes les informations que vous publiez sur Interactions citoyennes sont votre propriété et ne sont partagées avec d’autres membres que si vous le prévoyez au moment du partage. </span><br><br>
+                        <br>
+                        <img src="https://ccpa.interactions-citoyennes.com/img/email/carte.gif" width="24" height="24" alt="carte" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">La Carte</b> - Cartographier son territoire et partager avec ses invités </span><br><br>
+                        <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_03.jpg" width="165" height="191" alt="visuels_03"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Sur votre carte, vous pourrez géolocaliser à tout moment un élément de votre territoire pour vous en rappeler ultérieurement et surtout savoir le retrouver. Vous pourrez ainsi matérialiser par des photos, vidéos, et textes,…<br><br>
+                                          Vous pouvez également ajouter une légende, une couleur, un pictogramme...
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table><br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/mur.gif" width="24" height="24" alt="mur" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Le Mur</b> - L’information en temps réel du réseau Interactions citoyennes</span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_07.jpg" width="185" height="148" alt="visuels_07"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Chaque membre a la possibilité de publier de l’information à destination de lui-même, de ses amis ou de l’ensemble du réseau Interactions citoyennes. <br><br>
+                                        Les informations publiées peuvent être à usage ludique (photo d’un paysage, d’un plan,…) ou plus pratiques (se former, se soigner, s'amuser, …).
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/salon.gif" width="24" height="24" alt="chasse" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Discussions</b> - Communiquer en temps réel </span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_10.jpg" width="180" height="210" alt="visuels_10"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>La fonctionnalité « Discussions » permet d’échanger en temps réel avec tous les membres. Cela remplace avantageusement les multiples coups de téléphone, sms, emails,…
+                                          <br><br>
+                                          <em><b>Avec les discussions, vous pouvez :</b>
+                                              <ul>
+                                                  <li>Communiquer avec n’importe quelle personne inscrite <br>Interactions citoyennes est un réseau social</li>
+                                                  <li>Communiquer avec ses groupes<br>Interactions citoyennes permet de faciliter l’organisation au quotidien et, notamment, la communication au sien d’un groupe en envoyant des messages en une seule manipulation à tous les membres (exemples : tâches, réunions, organisation…)</li>
+                                                  <li>Communiquer autour d’un événement (l’Agenda)<br>Cela permet de discuter en amont pour faciliter son organisation mais aussi pendant l'évenement. Vous pouvez communiquer avec tous les participants, même ceux que vous ne connaissez.</li>
+                                              </ul></em>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/groupe.gif" width="24" height="24" alt="groupe" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Les groupes</b> - Organiser au mieux son activité cynégétique</span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_13.jpg" width="185" height="148" alt="visuels_13"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Les groupes permettent aux membres d'Interactions citoyennes de se réunir par centres d’intérêt, affinités, organisations pour communiquer plus rapidement et échanger sur des thématiques de manière privée ou publique.
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/salon.gif" width="24" height="24" alt="chasse" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Agenda</b> - Gérer votre calendrier et vos invitations </span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_11.jpg" width="180" height="210" alt="visuels_11"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Par l’intermédiaire de la partie « Agenda» vous pouvez organiser tous vos événements. Cela vous évitera de nombreux appels, sms, emails… et les incertitudes liées à cet exercice.
+                                          <br><br>
+                                          <em><b>Exemples d’utilisation :</b>
+                                              <ul>
+                                                  <li>Envoyer des invitations et vérifier les participants</li>
+                                                  <li>Partager tout ou partie de la carte d'un de vos groupes</li>
+                                                  <li>Communiquer en temps réel</li>
+                                                  <li>...</li>
+                                              </ul></em>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br>
+                          <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Pour conclure</span><br><br>
+                          Ajoutez dès à présent <a href="mailto:team@interactions-citoyennes.com" style="color:#8dbb1c" target="_blank">team@interactions-citoyennes.com</a> à votre courrier désirable afin de ne manquer aucune actualité, et n’hésitez pas à nous contacter à cette adresse pour vos remarques, commentaires et besoin d’aide.
+                          <br><br>Vous pouvez également vous connecter sur le compte Aid'Interactions citoyennes pour avoir plus d'explications sur le fonctionnement.
+    register_without_confirmation:
+        from:           team@interactions-citoyennes.com
+        subject:        Inscription à Interactions citoyennes
+        body:           |
+                        Bienvenue %fullname%,<br><br>
+                        Vous venez de rejoindre Interactions citoyennes,<br>
+
+                        Vous êtes maintenant un membre d'Interactions citoyennes.<br><br><br>
+
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">La philosophie d'Interactions citoyennes</span><br><br>
+                        Interactions citoyennes apporte des outils avec comme ligne conductrice le plaisir, l’éthique et la sécurité !<br><br>
+                        <b>Avec Interactions citoyennes vous pouvez :</b>
+                        <ul>
+                            <li>Faciliter l’organisation de vos agendas,</li>
+                            <li>Cartographier votre territoire et partager vos cartes avec vos invités,</li>
+                            <li>Créer votre communauté et communiquer avec,</li>
+                            <li>Discuter en temps réel avec les autres membres,</li>
+                            <li>Partager vos photos, vos souvenirs, vos informations</li>
+                            <li>...</li>
+                        </ul>
+                        <br>
+                        <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Découvrir Interactions citoyennes en quelques instants</span><br><br>
+                        <span style="color:#c11616;"><b>Important</b> : toutes les informations que vous publiez sur Interactions citoyennes sont votre propriété et ne sont partagées avec d’autres membres que si vous le prévoyez au moment du partage. </span><br><br>
+                        <br>
+                        <img src="https://ccpa.interactions-citoyennes.com/img/email/carte.gif" width="24" height="24" alt="carte" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">La Carte</b> - Cartographier son territoire et partager avec ses invités </span><br><br>
+                        <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_03.jpg" width="165" height="191" alt="visuels_03"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Sur votre carte, vous pourrez géolocaliser à tout moment un élément de votre territoire pour vous en rappeler ultérieurement et surtout savoir le retrouver. Vous pourrez ainsi matérialiser par des photos, vidéos, et textes,…<br><br>
+                                          Vous pouvez également ajouter une légende, une couleur, un pictogramme...
+
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table><br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/mur.gif" width="24" height="24" alt="mur" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Le Mur</b> - L’information en temps réel du réseau Interactions citoyennes</span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_07.jpg" width="165" height="191" alt="visuels_07"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Chaque membre a la possibilité de publier de l’information à destination de lui-même, de ses amis ou de l’ensemble du réseau Interactions citoyennes. <br><br>
+                                        Les informations publiées peuvent être à usage ludique (photo d’un paysage, d’un tableau,…) ou plus pratiques (se former, se soigner, s'amuser, …).
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/salon.gif" width="24" height="24" alt="chasse" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Discussions</b> - Communiquer en temps réel </span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_10.jpg" width="165" height="191" alt="visuels_10"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>La fonctionnalité « Discussions » permet d’échanger en temps réel avec tous les membres. Cela remplace avantageusement les multiples coups de téléphone, sms, emails,….
+                                          <br><br>
+                                          <em><b>Avec les discussions, vous pouvez :</b>
+                                              <ul>
+                                                  <li>Communiquer avec n’importe quelle personne inscrite <br></li>
+                                                  <li>Communiquer avec ses groupes<br>Interactions citoyennes permet de faciliter l’organisation au quotidien et, notamment, la communication au sien d’un groupe en envoyant des messages en une seule manipulation à tous les membres (exemples : tâches, réunions, organisation…)</li>
+                                                  <li>Communiquer autour d’un événement (l’Agenda)<br>Cela permet de discuter en amont pour faciliter son organisation mais aussi pendant l'événement. Vous pouvez communiquer avec tous les participants, même ceux que vous ne connaissez.</li>
+                                              </ul></em>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br><br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/groupe.gif" width="24" height="24" alt="groupe" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Les groupes</b> - Organiser au mieux son activité cynégétique</span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_13.jpg" wwidth="165" height="191" alt="visuels_13"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Les groupes permettent aux membres d'Interactions citoyennes de se réunir par centres d’intérêt, affinités, organisations pour communiquer plus rapidement et échanger sur des thématiques de manière privée ou publique.
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br>
+                          <img src="https://ccpa.interactions-citoyennes.com/img/email/salon.gif" width="24" height="24" alt="chasse" style="display:initial; vertical-align:middle" /> <span style="font-size:14px; color: #8dbb1c;"><b style="font-size:18px; color: #2c2c2c;">Agenda</b> - Gérer votre calendrier et vos invitations </span><br><br>
+                          <table border="0" >
+                              <tbody>
+                                  <tr>
+                                      <td width="185"><img src="https://ccpa.interactions-citoyennes.com/img/email/visuels_11.jpg" width="165" height="191" alt="visuels_10"/>
+                                      </td>
+                                      <td width="5"></td>
+                                      <td>Par l’intermédiaire de la partie « Agenda» vous pouvez organiser tous vos événements. Cela vous évitera de nombreux appels, sms, emails… et les incertitudes liées à cet exercice.
+                                          <br><br>
+                                          <em><b>Exemples d’utilisation :</b>
+                                              <ul>
+                                                  <li>Envoyer des invitations et vérifier les participants</li>
+                                                  <li>Partager tout ou partie de la carte d'un de vos groupes</li>
+                                                  <li>Communiquer en temps réel</li>
+                                                  <li>...</li>
+                                              </ul></em>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <br>
+                          <span style="font-size:18px; font-weight: bold; color: #8dbb1c;">Pour conclure</span><br><br>
+                          Ajoutez dès à présent <a href="mailto:team@interactions-citoyennes.com" style="color:#8dbb1c" target="_blank">team@interactions-citoyennes.com</a> à votre courrier désirable afin de ne manquer aucune actualité, et n’hésitez pas à nous contacter à cette adresse pour vos remarques, commentaires et besoin d’aide.
+                          <br><br>Vous pouvez également vous connecter sur le compte Aid'Interactions citoyennes pour avoir plus d'explications sur le fonctionnement.
+
+lounge:
+    valid-invite:
+        description:  Demande pour rejoindre l'événement
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% souhaite rejoindre l'événement %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> souhaite rejoindre l'événement %loungename%%description% sur Interactions citoyennes.<br>
+                      Pour valider la demande à cet événement, rendez-vous dans vos notifications <br>ou cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    invite:
+        description:  Invitation à rejoindre un événement
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Interactions citoyennes
+        body:         |
+                      Message de <b>%fullname%</b>:<br>
+                      %message%<br><br>
+
+                      <b>%fullname%</b> vous invite à rejoindre l'événement <b>%loungename%</b> sur Interactions citoyennes.<br><br>
+                      <b>Début le</b> : %startdate%<br>
+                      <b>Fin le</b> : %enddate%<br>
+                      <b>Rendez-vous à</b> : %metting%<br>
+                      %description%<br><br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Interactions citoyennes.<br><br>
+                      Pour rejoindre cet événement, rendez-vous dans Agenda<br>
+                      ou cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    revive-invite:
+        description:    Relance d'invitation à rejoindre un événement
+        from:           team@interactions-citoyennes.com
+        subject:        %fullname% vous relance pour %loungename%
+        body:           |
+                        Message de <b>%fullname%</b>:<br>
+                        %message%<br><br>
+
+                        <b>%fullname%</b> attend votre réponse concernant votre participation à l'événement %loungename% sur Interactions citoyennes<br>
+                        Merci de vous rendre dans agenda et de renseigner votre participation en cliquant sur le smiley à côté de l'événement.<br><br>
+                        Vous pouvez aussi rejoindre cet événement, en cliquant sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                        %lien%<br><br>
+
+    invite_unregistered:
+        description:  Invitation à rejoindre un événement
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre l'événement %loungename%, %description% sur Interactions citoyennes.<br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Interactions citoyennes.<br>
+                      Pour rejoindre cet événement, cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+    invite_members:
+        description:  Invitation à rejoindre un événement
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% vous invite à rejoindre %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre <b>%loungename%</b> sur Interactions citoyennes.<br><br>
+                      <b>Début le</b> : %startdate%<br>
+                      <b>Fin le</b> : %enddate%<br>
+                      <b>Rendez-vous à</b> : %metting%<br>
+                      %description%<br><br>
+                      Cette inscription vous permettra de participer à cet événement et de suivre son évolution sur Interactions citoyennes.<br>
+                      Pour rejoindre cet événement, rendez-vous dans l'agenda ou<br>
+                      cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+    geolocate_active:
+        description:  Activation de la géolocalisation dans vos événements
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% vient d'activer la géolocalisation de %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vient d'activer la géolocalisation de l'événement %loungename%%description% sur Interactions citoyennes.<br>
+                      Pour vous rendre dans cet événement, <a href="%lien%">cliquez ici</a>.
+    participate:
+        description:  Changement de statut de présence d'un inscrit de vos événements
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% a changé le statut de %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> qui participe à l'événement %loungename% à changer de statut. Son nouveau statut est "%statut%".<br>
+                      Pour vous rendre dans cet événement, allez  dans l'agenda ou<br><a href="%lien%">cliquez ici</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+    chat:
+        description:  Récapitulatif quotidien des messages d'un événement
+        from:         team@interactions-citoyennes.com
+        subject:      Discussions dans l'événement %loungename% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      Il y a eu des discusssions aujourd'hui dans l'événement %loungename%.<br>
+                      Pour vous rendre dans cet événement, allez dans l'agenda ou<br><a href="%lien%">cliquez ici</a>.
+
+group:
+    access-validated:
+        description:  Demande d'adhésion à un groupe
+        from:         team@interactions-citoyennes.com
+        subject:      Votre invitation au groupe %groupname% est validée
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a validé votre accés au Groupe %groupname%.<br><br>
+                      Pour entrer dans ce groupe, allez dans Groupes ou<br>cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :
+                      %lien%
+                      <br>
+
+    valid-invite:
+        description:  Demande d'adhésion à un groupe
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% souhaite rejoindre le groupe %groupname% sur Interactions citoyennes
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> souhaite rejoindre le groupe %groupname%, %description% sur Interactions citoyennes.<br>
+                      Pour valider la demande à ce groupe, allez dans Groupes ou<br>cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+    invite:
+        description:  Invitation à rejoindre un groupe
+        from:         team@interactions-citoyennes.com
+        subject:      %fullname% vous invite à rejoindre %groupname% sur Interactions citoyennes
+        body:         |
+                      Message de votre ami:<br>
+                      %message%<br><br>
+
+                      <b>%fullname%</b> vous invite à rejoindre le groupe %groupname%, %description% sur Interactions citoyennes.<br>
+                      Pour rejoindre ce groupe, allez dans Groupes ou<br>cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+
+        body_wm:      |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> vous invite à rejoindre le groupe %groupname%, %description% sur Interactions citoyennes.<br>
+                      Pour rejoindre ce groupe, allez dans Groupes ou<br>cliquez sur <a href="%lien%">ce lien</a> ou copier dans votre navigateur l'url ci-dessous :<br>
+                      %lien%<br><br>
+    publication_added:
+        description:    Nouvelle(s) publication(s) dans un groupe
+        from:           team@interactions-citoyennes.com
+        subject:        Il y a des nouvelles publications dans votre groupe %group%
+        body:           |
+                        Bonjour,
+                        %senders% a/ont publié aujourd'hui dans votre groupe %group%.<br><br>
+                        Pour voir ces publications rendez-vous dans votre groupe, dans la rubrique Groupes ou<br><a href="%link%">cliquez ici</a>.
+                        <br><br>
+                        Si vous ne voulez plus recevoir les notifications par email concernant ce groupe, rendez-vous dans la rubrique Mes groupes et décochez la case "Je souhaite recevoir les notifications par email pour ce groupe" correspondant à ce groupe.
+publication:
+    comment:
+        description:  Commentaire sur votre publication
+        from:         team@interactions-citoyennes.com
+        subject:      Nouveau commentaire sur votre publication
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a posté un commentaire sur votre publication.<br><br>
+                      <i><b>"%comment%"</b></i><br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+    same_comment:
+        description:  Réponse à votre commentaire
+        from:         team@interactions-citoyennes.com
+        subject:      Réponse à votre commentaire
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a également commenté la publication de <b>%owner%</b> du %date%<br>
+                      <b>"%comment%"</b><br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+    comment_reversible:
+        description:  Commentaire sur votre publication
+        from:         team@interactions-citoyennes.com
+        subject:      Nouveau(x) commentaire(s) sur la publication de %owner%
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> a également commenté la publication de %owner%.<br>
+                      Pour le consulter, <a href="%lien%">cliquez ici</a>.
+
+    report:
+        description:  Signal d'un abus sur une publication
+        subject:      Abus signalé
+        body:         |
+                      Bonjour,<br><br>
+                      <b>%fullname%</b> signalé un abus sur une publication.<br>
+                      Avec comme explication:<br>
+                      <b>%explanation%</b>
+                      <br>
+                      Pour la consulter, <a href="%link%">cliquez ici</a>.

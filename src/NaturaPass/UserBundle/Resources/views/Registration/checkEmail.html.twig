@@ -1,0 +1,16 @@
+{% extends "NaturaPassUserBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {% include "NaturaPassMainBundle:Include:background.html.twig" %}
+{% endblock %}
+
+{% block corps %}
+    <div id="corps-container" class="large-container">
+        <div class="container">
+            <div class="container-md">
+                <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+                <p>{{ 'registration.can_resend'|trans({'%link%': path('fos_user_resetting_resend_confirmation')}, translation_name~'user')|raw }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock corps %}

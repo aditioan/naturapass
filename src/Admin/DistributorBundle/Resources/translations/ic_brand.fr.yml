@@ -1,0 +1,35 @@
+menu:
+    title:                      Marques
+    list:                       Listing
+title:
+    no_more:                    Vous avez chargé l'intégralité des marques
+    edit:                       Modification de la marque %brand%
+    add:                        Ajout d'une marque
+label:
+    partner:                    Partenaire
+filter:
+    label:                      Filtre
+filter-brand:
+    placeholder:                Nom de la marque recherchée puis tapez Entrée
+brand:
+    all_brands:           Liste des marques
+    action:
+        administer:             Editer
+        close:                  Supprimer
+    title:
+        list:                   Liste des marques
+        description:            Description
+        creation:               Ajoutez une marque
+        edition:                Edition d'une marque
+        list:                   Marques
+        close_brand:      Supprimer la marque
+    description:
+        creation:               Description
+        list:                   Liste des marques
+        closebrand:      |
+                                Attention, vous allez supprimer définitivement la marque <span style="color: red">%brand%</span>. <br>
+                                Etes-vous sûr de supprimer cette marque?
+    placeholder:
+        name:                   Nom de la marque
+    attributes:
+        name:                   Nom

@@ -1,0 +1,43 @@
+{
+  "name": "naturapass",
+  "version": "1.0.0",
+  "authors": [
+    "e-Conception"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1",
+    "bootstrap": "~3.1.*",
+    "momentjs": "2.10.6",
+    "jquery.visible": "~1.1.0",
+    "underscore": "~1.6.0",
+    "smalot-bootstrap-datetimepicker": ">= 2.*",
+    "select2": "~3.4.*",
+    "select2-bootstrap3-css": "~1.2.*",
+    "google-maps-utility-library-v3": "*",
+    "jquery-mousewheel": ">= 3.*",
+    "malihu-custom-scrollbar-plugin": ">= 2.*",
+    "jpanelmenu": ">=1.*",
+    "jquery-touchswipe": ">=1.*",
+    "jquery-file-upload": ">=9.*",
+    "bxslider-4": "*",
+    "swfobject": "*",
+    "twig.js": "~0.7.1",
+    "ngprogress": "~1.0",
+    "angular-strap": "~2.0.0",
+    "fancybox": "~2.1.5",
+    "angular-ui-tree": "2.4.0",
+    "angular-ui-select": "0.12.0",
+    "checklist-model": "0.2.4",
+    "angularjs": "~1.4.3",
+    "bootstrap-colorselector": "https://github.com/flaute/bootstrap-colorselector.git"
+  },
+  "private": true
+}
